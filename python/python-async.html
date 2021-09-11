@@ -1,0 +1,44 @@
+<hr>
+<p>title: Python 异步<br>date: 2021-5-22 14:24<br>tags:</p>
+<ul>
+<li>Python<br>category:</li>
+<li>Python<br>hidden: true</li>
+</ul>
+<hr>
+<p>最先接触到异步的，应该是前端，比如 JavaScript，连 Sleep 和 XMLHttpRequest 都是用异步的 Promise 写的。</p>
+<p>而这次我正在做的 Web 后端也得用到异步，因为这个后端用到了 Onedrive REST API，每次向 Onedrive 请求需要约 1s，如果不使用异步，这个线程就会卡 1s。如果出现高并发（如图片请求），延时也会成倍的增加。</p>
+<p>关于协程，还是推荐看 <a href="https://docs.python.org/zh-cn/3/library/asyncio-task.html" target="_blank" rel="noopener">协程和任务 - Python 3.9.5 文档</a>，了解其原理。至于下面的东西，只是一些语法糖的记录。</p>
+<h2 id="异步和同步"><a href="#异步和同步" class="headerlink" title="异步和同步"></a>异步和同步</h2><p>从语法上，同步函数和异步函数的区别只是一个 <code>async</code>。</p>
+<pre><code class="py">from time import sleep
+
+def sync_double(x):
+    sleep(1)
+    return x*2
+
+async def async_double(x):
+    sleep(1)
+    return x*2
+</code></pre>
+<h2 id="调用异步函数"><a href="#调用异步函数" class="headerlink" title="调用异步函数"></a>调用异步函数</h2><blockquote>
+<p><code>协程</code> 可用来表示两个紧密关联的概念:</p>
+<ol>
+<li>协程函数: 定义形式为 <code>async def</code> 的函数;</li>
+<li>协程对象: 调用 <code>协程函数</code> 所返回的对象。</li>
+</ol>
+</blockquote>
+<p>由上可见，调用异步函数（或者说，协程函数）并不是执行函数，而是生成了一个协程对象。</p>
+<pre><code class="py">coro = async_double(3)
+
+coro
+# &lt;coroutine object async_double at 0x000002779EC830C0&gt;
+</code></pre>
+<p>在同步函数中调用异步函数，使用 <code>asyncio.run()</code>：</p>
+<pre><code class="py">import asyncio
+result = asyncio.run(async_double(3))
+# result = 6
+</code></pre>
+<p>在异步函数中调用异步函数并等待其执行完成（就像是同步函数一样），使用 <code>await</code>：</p>
+<pre><code class="py">result = await async_double(3)
+# result = 6
+</code></pre>
+<p>请注意，同步函数是不能使用 <code>await</code> 关键字的，不然会报 <code>SyntaxError</code>。</p>

@@ -1,0 +1,122 @@
+<hr>
+<p>title: 全站添加 https<br>date: 2020-3-1 15:42:05<br>tags:</p>
+<ul>
+<li>服务器</li>
+<li>Nginx</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<blockquote>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://ksmx.me/letsencrypt-ssl-https/" target="_blank" rel="noopener">LET’S ENCRYPT 给网站加 HTTPS 完全指南</a></li>
+<li><a href="https://www.pbeta.me/docker-nextcloud-ssl/" target="_blank" rel="noopener">Docker 搭建私有云 Nextcloud</a></li>
+<li><a href="https://blog.csdn.net/wzy_1988/article/details/8549290" target="_blank" rel="noopener">nginx强制使用https访问(http跳转到https)</a></li>
+</ul>
+</blockquote>
+<p><del>哪个男孩不想要自己的网站全站 https 呢</del></p>
+<p>现在基本都要求各网站使用 <code>HTTPS</code> 、<code>SSL</code> 之类的。于是准备给自己的博客和网站也整一个。</p>
+<p>这篇博客就简单说一下，如何在自己的网站上使用 https。</p>
+<p>请把本文中出现的所有 <code>example.com</code> 替换为你的域名，将 <code>yourip</code> 替换为你的服务器的 ip。</p>
+<p>本文假定你清楚哪些网站是架在服务器上，并且这些网址的域名解析记录已以 <code>A</code> 的形式指向你的服务器。</p>
+<h2 id="HTTPS、SSL、TLS-相关术语介绍"><a href="#HTTPS、SSL、TLS-相关术语介绍" class="headerlink" title="HTTPS、SSL、TLS 相关术语介绍"></a>HTTPS、SSL、TLS 相关术语介绍</h2><p>参考<a href="https://blog.csdn.net/enweitech/article/details/81781405" target="_blank" rel="noopener">这篇博客</a>，可以知道 <code>HTTPS</code>、<code>SSL</code>、<code>TLS</code> 的定义和区别。</p>
+<p>简单来说，</p>
+<ul>
+<li>SSL 是指安全套接字层，简而言之，它是一项标准技术，可确保互联网连接安全；</li>
+<li>TLS（传输层安全）是更为安全的升级版 SSL。由于 SSL 这一术语更为常用，因此我们仍然可以将我们的 TLS 安全证书称作 SSL。但当您从赛门铁克购买 SSL 时，您真正购买的是最新的 TLS 证书；</li>
+<li>TLS/SSL是一种加密通道的规范；</li>
+<li>HTTPS 实际上就是 HTTP over SSL</li>
+</ul>
+<p>下面就开始正式内容。</p>
+<h2 id="关闭-Apache"><a href="#关闭-Apache" class="headerlink" title="关闭 Apache"></a>关闭 Apache</h2><p>Apache 和 Nginx 都属于 Web 服务器。二者可以同时安装，但是（一般）不能同时运行，因为对于 <code>http</code> 的 <code>80</code> 端口只能由一个软件监听，而 <code>https</code> 的 <code>443</code> 同理。</p>
+<p>由于本篇教材使用的是 Nginx，如果系统运行的是 Apache，则需要关闭。</p>
+<p>如何查看自己的电脑是否运行的是 Apache 呢？</p>
+<pre><code>lsof -i:80
+</code></pre>
+<p>如果看到了 <code>httpd</code> 或 <code>apache</code> 等字样，就说明你的服务器正运行了 Apache。</p>
+<p>如果运行了 Apache，则需要关闭 Apache。这里请读者自己百度完成。</p>
+<p>安装 Nginx 可以采用直接在系统上安装和使用 Docker 安装在容器里。</p>
+<h2 id="在系统上安装-Nginx"><a href="#在系统上安装-Nginx" class="headerlink" title="在系统上安装 Nginx"></a>在系统上安装 Nginx</h2><p>对于 CentOS 7，安装并运行 nginx 的命令为：</p>
+<pre><code class="sh">yum install nginx
+systemctl start nginx
+</code></pre>
+<p>停止 nginx 的命令为：<code>systemctl stop nginx</code><br>重启 nginx 的命令为：<code>systemctl restart nginx</code>  </p>
+<h2 id="测试-Nginx"><a href="#测试-Nginx" class="headerlink" title="测试 Nginx"></a>测试 Nginx</h2><p>在浏览器地址栏输入你的服务器 IP 并访问，如果看到了欢迎界面，则说明 Nginx 正常。</p>
+<h2 id="申请-SSL-证书"><a href="#申请-SSL-证书" class="headerlink" title="申请 SSL 证书"></a>申请 SSL 证书</h2><p>参考：<a href="https://www.pbeta.me/docker-nextcloud-ssl/#ssl" target="_blank" rel="noopener">Docker 搭建私有云 Nextcloud – 申请 SSL 证书</a>。</p>
+<blockquote>
+<p>2020.4.28 更新：<strong>如果需要自动定期更新证书的</strong>，请使用 <a href="https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au" target="_blank" rel="noopener">Certbot 自动脚本</a><strong>而不是以下讲的方法</strong>。自动脚本不适用于中文域名。</p>
+</blockquote>
+<p>在服务器上下载 <code>autocert</code> 软件并给予可执行权限：</p>
+<pre><code class="sh">wget https://dl.eff.org/certbot-auto
+chmod a+x certbot-auto
+</code></pre>
+<p>然后一行命令（记得替换两个 <code>example.com</code>）：</p>
+<pre><code>./certbot-auto certonly -d &quot;example.com&quot; -d &quot;*.example.com&quot; --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
+</code></pre>
+<p>这样可以申请到 <code>example.com</code> 及其下的所有子域名的证书。还可以继续增加域名（即使是别的域名）：<code>-d &quot;another.xyz&quot;</code>。</p>
+<p>注意：可以对中文域名申请 HTTPS 证书，但是域名不能使用中文，而应该是使用 <code>punycode</code> 转码后的结果，以 <code>xn--</code> 开头（也可以在 Chrome 中输入中文域名，复制出来的完整域名就是转码后的结果）。下文配置 Nginx 也应该使用 <code>punycode</code> 编码。</p>
+<p>过程中需要：</p>
+<ol>
+<li>输入你的邮箱（可选）</li>
+<li>是否同意条款（那必须得同意）</li>
+<li>是否加入邮件列表（看你）</li>
+<li>是否同意 IP 被公示（同意）</li>
+<li>往你的域名加入一段 TXT（需要到对应域名的解析页面添加 TXT 解析，照着做就可以了），然后回车继续。这是在验证这确实是你的网站。</li>
+</ol>
+<p>之后如果看到了 <code>Congratulations</code>，就是成功了。</p>
+<p>在完成这一步以后，文件夹 <code>/etc/letsencrypt/live/example.com</code> 会有以下文件</p>
+<pre><code># ls /etc/letsencrypt/live/example.com
+cert.pem  chain.pem  fullchain.pem  privkey.pem  README
+</code></pre>
+<p>这四个都是证书文件，请妥善保管。具体哪个是什么，可以先不追究这些细节。</p>
+<h2 id="域名解析添加-CAA-记录"><a href="#域名解析添加-CAA-记录" class="headerlink" title="域名解析添加 CAA 记录"></a>域名解析添加 CAA 记录</h2><p>接下来是可选、但是推荐的步骤。</p>
+<p><code>letsencrpyt.org</code> 签发了你的证书，随后会公布到全网。</p>
+<p>但是有个问题，如果别的人也伪造了你的网站的证书（HTTPS 劫持），该如何保证你的网站使用 <code>letsencrypt.org</code> 的而不是他的证书呢？</p>
+<p>我们可以在 DNS 解析中添加 <code>CAA</code> 记录，当别人访问你的网站时，你告诉他们，你的证书是 <code>letsencrypt.org</code> 签发的，就行了。</p>
+<p>添加的方法可看 <a href="https://help.aliyun.com/document_detail/65537.html" target="_blank" rel="noopener">使用CAA记录防止域名证书劫持_最佳实践_云解析DNS-阿里云</a>。</p>
+<p>顺便，如果你想把你的某域名作为 GitHub Pages 的别名（如这篇博客），需要在 pages 的仓库设置 <code>CNAME</code>。如果需要 <code>https</code>，还需要添加 <code>CAA</code> 记录指向 <code>letsencrypt.org</code>，否则可能无法启用 <code>https</code>。</p>
+<h2 id="对全站加载-SSL-证书"><a href="#对全站加载-SSL-证书" class="headerlink" title="对全站加载 SSL 证书"></a>对全站加载 SSL 证书</h2><p>接下来我们要用 Nginx 做两件事：</p>
+<ul>
+<li>将 <code>https://*.example.com/</code> 加载 SSL 证书</li>
+<li>将 <code>http://*.example.com/</code> 转发到 <code>https://*.example.com/</code></li>
+</ul>
+<p>我们要通过配置 nginx 服务来完成这一点。</p>
+<blockquote>
+<p>如果你已经搭建过 nginx 服务，请直接参考修改 nginx 配置文件即可。</p>
+</blockquote>
+<p>我们在 <code>/etc/nginx/conf.d/</code> 新建一个 <code>https.conf</code>。</p>
+<pre><code class="sh">nano /etc/nginx/conf.d/https.conf
+</code></pre>
+<p>然后添加以下内容）同样注意修改 3 个 <code>example.com</code>：</p>
+<pre><code class="m">server {
+    listen  80 default_server;
+    server_name _;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2 default_server;
+    server_name _;
+
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+    ssl_trusted_certificate  /etc/letsencrypt/live/example.com/chain.pem;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4:!DH:!DHE;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 30m;
+    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubdomains; preload&quot;;
+}
+</code></pre>
+<p>第三行的 <code>.example.com</code> 是 Nginx <a href="http://nginx.org/en/docs/http/server_names.html" target="_blank" rel="noopener">官方</a>给出的，可以同时匹配 <code>*.example.com</code> 和 <code>example.com</code> 的形式。好评！</p>
+<p>同时从官方链接可以看到 <code>server_name</code> 可以使用四种方式匹配，这里就提一笔，略过了。</p>
+<p><strong>读者需要自行修改第 3、10-13 行中的 <code>example.com</code></strong></p>
+<p>保存并退出后，（根据自己安装 Nginx 的形式）重启 Nginx。</p>
+<p>这之后，访问域名下的任意子域名都可以被强制跳转到 https 并且使用正确的加密。</p>
+<h2 id="自动定期更新证书"><a href="#自动定期更新证书" class="headerlink" title="自动定期更新证书"></a>自动定期更新证书</h2><p>方法请参考：<a href="https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au" target="_blank" rel="noopener">https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au</a></p>
+<p>由于更新证书也需要进行 DNS Challenge，即在自己的添加 TXT 解析，所以如果前文提到的纯手动添加 TXT 解析的方法，是不能自动定期更新证书的。</p>
+<p>只有使用以上方法调用阿里云/腾讯云/华为云/GoDaddy 的 API 添加解析，才可以实现自动更新证书。</p>
+<p>另外，经我测试，该方法似乎不支持中文域名（可能是 <code>certbot</code> 使用的是 <code>punycode</code> 编码，但阿里云 API 需要的是 <code>GBK</code> 编码，因此 API 对中文域名不能正常使用）。</p>

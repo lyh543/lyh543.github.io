@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>bitset | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,数据结构,C++语法,STL">
+    <meta name="description" content="数学的集合这个概念，可以用 C 的布尔数组实现。然而，使用 bool 类型，导致每一个元素都会占用一个字节。实际上，每一个字节理论上能存 8 个元素的状态，可以使用 char 或 int 数组来模拟。而 C++ STL 自带了一种数据结构，bitset，就不用自己手写啦。 声明12#include &lt;bitset&gt;using std::bitset;  定义和初始化1bitset&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bitset">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/bitset/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="数学的集合这个概念，可以用 C 的布尔数组实现。然而，使用 bool 类型，导致每一个元素都会占用一个字节。实际上，每一个字节理论上能存 8 个元素的状态，可以使用 char 或 int 数组来模拟。而 C++ STL 自带了一种数据结构，bitset，就不用自己手写啦。 声明12#include &lt;bitset&gt;using std::bitset;  定义和初始化1bitset&amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.099Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="C++语法">
+<meta property="article:tag" content="STL">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">bitset</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">bitset</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#声明"><span class="post-toc-text">声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义和初始化"><span class="post-toc-text">定义和初始化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#访问-bitset-的位"><span class="post-toc-text">访问 bitset 的位</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#bitset-的一堆函数"><span class="post-toc-text">bitset 的一堆函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#输出-bitset-的函数"><span class="post-toc-text">输出 bitset 的函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-to-string-char-zero-39-0-39-char-one-39-1-39"><span class="post-toc-text">1. to_string(char zero &#x3D; &#39;0&#39;, char one &#x3D; &#39;1&#39;)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-to-ullong"><span class="post-toc-text">2. to_ullong()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-b-to-ulong"><span class="post-toc-text">3. b.to_ulong()</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#题外话：bitset-any-none-all-count-的实现"><span class="post-toc-text">题外话：bitset::any(), none(), all(), count() 的实现</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/bitset"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">bitset</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-19 00:00:00" datetime="2019-08-18T16:00:00.000Z"  itemprop="datePublished">2019-08-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>数学的集合这个概念，可以用 C 的布尔数组实现。然而，使用 <code>bool</code> 类型，导致每一个元素都会占用一个字节。<br>实际上，每一个字节理论上能存 8 个元素的状态，可以使用 <code>char</code> 或 <code>int</code> 数组来模拟。<br>而 C++ STL 自带了一种数据结构，<code>bitset</code>，就不用自己手写啦。</p>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bitset&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">bitset</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义和初始化"><a href="#定义和初始化" class="headerlink" title="定义和初始化"></a>定义和初始化</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bitset</span>&lt;32&gt; b; <span class="comment">//32位，全为0。</span></span><br></pre></td></tr></table></figure>
+
+<p>给出的长度值必须是常量表达式。</p>
+<blockquote>
+<p>位集合的位置编号从 0 开始，因此，bs 的位序是从 0 到 31。以0位开始的位串是低阶位（low-order bit），以31位结束的位串是高阶位(high-order bit)。</p>
+</blockquote>
+<p>简单的来说就是，bitset 和数组一样，从 string 的角度看，<strong>string 的顺序和 bitset 顺序是相反的</strong>（string 的最后一位被赋给了 bitset 第一位）；从 unsigned long 的角度看，从左往右是从低位到高位。</p>
+<p>bitset 有以下构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bitset</span>&lt;n&gt; b;                                   <span class="comment">//b有 n 位，每位都为 0</span></span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;n&gt; <span class="title">b</span><span class="params">(unsighed <span class="keyword">long</span> u)</span></span>;                  <span class="comment">//b是 u 的一个副本</span></span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;n&gt; <span class="title">b</span><span class="params">(<span class="built_in">string</span> s)</span></span>;                         <span class="comment">//b是 s 中含有的位串的副本</span></span><br><span class="line"><span class="function"><span class="built_in">bitset</span>&lt;n&gt; <span class="title">b</span><span class="params">(<span class="keyword">const</span> * s, <span class="keyword">size_t</span> pos, <span class="keyword">size_t</span> n)</span></span>;  <span class="comment">//b是 s 中从位置 pos 开始的 n 位的副本</span></span><br></pre></td></tr></table></figure>
+
+<p>貌似不是很好懂，但只要记住以下形式等价即可：</p>
+<ol>
+<li><code>bitset&lt;8&gt; b(&quot;11000&quot;);</code></li>
+<li><code>bitset&lt;8&gt; b(24); //24(10) == 00011000(2)</code></li>
+<li><code>bitset&lt;8&gt; b; b[3] = b[4] = 1;</code></li>
+</ol>
+<p>并且记住“过多则忽略高位，过少则置高位为 0” 的原则。</p>
+<h2 id="访问-bitset-的位"><a href="#访问-bitset-的位" class="headerlink" title="访问 bitset 的位"></a>访问 bitset 的位</h2><p>使用 <code>b[]</code> 即可。</p>
+<h2 id="bitset-的一堆函数"><a href="#bitset-的一堆函数" class="headerlink" title="bitset 的一堆函数"></a>bitset 的一堆函数</h2><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>函数作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>bool b.all()</code></td>
+<td>检查 b 中是否全部位被设为 1</td>
+</tr>
+<tr>
+<td><code>bool b.any()</code></td>
+<td>检查 b 中是否任一位被设为 1</td>
+</tr>
+<tr>
+<td><code>bool b.none()</code></td>
+<td>检查 b 中是否无位被设为 1</td>
+</tr>
+<tr>
+<td><code>size_t b.count()</code></td>
+<td>返回设为 1 的位数</td>
+</tr>
+<tr>
+<td><code>size_t b.size()</code></td>
+<td>返回 bitset 的大小，即 bitset 定义参数中的 n</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>bool b.test(pos)</code></td>
+<td>类似 <code>operator[]</code>，但是进行越界检查，若越界则抛出 <code>std::out_of_range</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b.set()</code></td>
+<td>设置所有位为 1</td>
+</tr>
+<tr>
+<td><code>b.set(size_t pos, bool value = true)</code></td>
+<td>类似使用 <code>b[pos] = value</code> 赋值，但是进行越界检查，同上</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b.reset()</code></td>
+<td>设置所有位为 0</td>
+</tr>
+<tr>
+<td><code>b.reset(size_t pos)</code></td>
+<td>类似 于<code>b[pos] = 0</code> 赋值为 0，但是进行越界检查，同上</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>b.flip()</code></td>
+<td>类似于 <code>~b</code>，但是在原位，不进行 Copy Construction</td>
+</tr>
+<tr>
+<td><code>b[0].flip()</code></td>
+<td>等价于 <code>b[0] = ~b[0]</code></td>
+</tr>
+<tr>
+<td><code>b.flip(size_t pos)</code></td>
+<td>仅翻转 pos 位（翻转 1 和 0），进行越界检查</td>
+</tr>
+</tbody></table>
+<h2 id="输出-bitset-的函数"><a href="#输出-bitset-的函数" class="headerlink" title="输出 bitset 的函数"></a>输出 bitset 的函数</h2><h3 id="1-to-string-char-zero-39-0-39-char-one-39-1-39"><a href="#1-to-string-char-zero-39-0-39-char-one-39-1-39" class="headerlink" title="1. to_string(char zero = &#39;0&#39;, char one = &#39;1&#39;)"></a>1. <code>to_string(char zero = &#39;0&#39;, char one = &#39;1&#39;)</code></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">CharT</span> = <span class="title">char</span>,</span></span><br><span class="line"><span class="class">    <span class="title">class</span> <span class="title">Traits</span> = <span class="title">std</span>:</span>:char_traits&lt;CharT&gt;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Allocator</span> = <span class="title">std</span>:</span>:allocator&lt;CharT&gt;</span><br><span class="line">&gt; <span class="built_in">std</span>::basic_string&lt;CharT,Traits,Allocator&gt;</span><br><span class="line">    to_string(CharT zero = CharT(<span class="string">'0'</span>), CharT one = CharT(<span class="string">'1'</span>)) <span class="keyword">const</span>;</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>zero</code> 表示 0，用 <code>one</code> 表示 1，返回 bitset 的 basic_string （大概是广义的 string？）形式。<br>默认 <code>to_string()</code> 就是返回 bitset 的 01 串的 string。</p>
+<h3 id="2-to-ullong"><a href="#2-to-ullong" class="headerlink" title="2. to_ullong()"></a>2. <code>to_ullong()</code></h3><p><code>unsigned long long bitset::to_ullong()</code></p>
+<p>转换 bitset 的内容为 unsigned long long 整数。<br>和构造 bitset 一样，bitset 的首位对应数的最低位，而尾位对应最高位。</p>
+<p>如果不能用 unsigned long long 表示，则抛出 <code>std::overflow_error</code>。</p>
+<p>（有意思的是，只有 bitset 的这两个函数会抛出 <code>std::overflow_error</code> 异常）</p>
+<h3 id="3-b-to-ulong"><a href="#3-b-to-ulong" class="headerlink" title="3. b.to_ulong()"></a>3. <code>b.to_ulong()</code></h3><p>和上面一样，就是改下数据范围。</p>
+<p>为什么介绍这么草率呢？因为 MSVC 的实现是先强转为 unsigned long long 再转为 unsigned long 判越界。貌似也没什么毛病.jpg</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">to_ulong</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;    <span class="comment">// convert bitset to unsigned long</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> _Val = to_ullong();</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> _Ans = (<span class="keyword">unsigned</span> <span class="keyword">long</span>)_Val;</span><br><span class="line">    <span class="keyword">if</span> (_Ans != _Val)</span><br><span class="line">        _Xoflo();</span><br><span class="line">    <span class="keyword">return</span> (_Ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="题外话：bitset-any-none-all-count-的实现"><a href="#题外话：bitset-any-none-all-count-的实现" class="headerlink" title="题外话：bitset::any(), none(), all(), count() 的实现"></a>题外话：bitset::any(), none(), all(), count() 的实现</h2><p><code>bitset::any()</code>，<code>bitset::none()</code>，<code>bitset::all()</code>，<code>bitset::count()</code>，这四个函数都可以通过记录 <code>count</code>，每次修改时记录 <code>count</code> 的变化，来实现 <code>O(1)</code> 的时间复杂度，然而 MSVC 2017 和 GCC 4.7.1 的实现是 <code>O(n)</code> 的。</p>
+<p>猜测原因是记录 <code>count</code> 的变化会在修改 bitset 时花费更多的时间，对于不使用这四个函数的用户，这样会使程序变慢。而对于需要 <code>O(1)</code>时间复杂度的用户，手动实现类似功能是很方便的。</p>
+<p>但是平时使用的时候需要注意时间复杂度是 <code>O(1)</code> 的。</p>
+<p>另外，在 <code>bitset::count()</code> 的实现上，GCC 使用了汇编指令 <code>POPCNT</code>，而 MSVC 使用的是如下的神奇代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_NODISCARD <span class="keyword">size_t</span> <span class="title">count</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span></span></span><br><span class="line"><span class="function">    </span>&#123;    <span class="comment">// count number of set bits</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *<span class="keyword">const</span> _Bitsperbyte =</span><br><span class="line">        <span class="string">"\0\1\1\2\1\2\2\3\1\2\2\3\2\3\3\4"</span></span><br><span class="line">        <span class="string">"\1\2\2\3\2\3\3\4\2\3\3\4\3\4\4\5"</span></span><br><span class="line">        <span class="string">"\1\2\2\3\2\3\3\4\2\3\3\4\3\4\4\5"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\1\2\2\3\2\3\3\4\2\3\3\4\3\4\4\5"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\3\4\4\5\4\5\5\6\4\5\5\6\5\6\6\7"</span></span><br><span class="line">        <span class="string">"\1\2\2\3\2\3\3\4\2\3\3\4\3\4\4\5"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\3\4\4\5\4\5\5\6\4\5\5\6\5\6\6\7"</span></span><br><span class="line">        <span class="string">"\2\3\3\4\3\4\4\5\3\4\4\5\4\5\5\6"</span></span><br><span class="line">        <span class="string">"\3\4\4\5\4\5\5\6\4\5\5\6\5\6\6\7"</span></span><br><span class="line">        <span class="string">"\3\4\4\5\4\5\5\6\4\5\5\6\5\6\6\7"</span></span><br><span class="line">        <span class="string">"\4\5\5\6\5\6\6\7\5\6\6\7\6\7\7\x8"</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *_Ptr = &amp;<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>&amp;&gt;(_Array);</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *<span class="keyword">const</span> _End = _Ptr + <span class="keyword">sizeof</span> (_Array);</span><br><span class="line">    <span class="keyword">size_t</span> _Val = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( ; _Ptr != _End; ++_Ptr)</span><br><span class="line">        _Val += _Bitsperbyte[*_Ptr];</span><br><span class="line">    <span class="keyword">return</span> (_Val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实就是把每个 byte 的 256 种情况对应的 1 的数量打了个表。</p>
+<p><a href="https://stackoverflow.com/questions/48394450/why-does-msvc-not-use-popcnt-in-its-implementation-for-stdbitsetcount" target="_blank" rel="noopener">Stack Overflow</a> 上有人提到为什么 MSVC 不使用 <code>POPCNT</code>实现，<code>POPCNT</code> 比这样实现更快。</p>
+<p>回答是 <code>POPCNT</code> 在部分 CPU 架构上的结果是不可预测的，而 MSVC 更想要跨架构的通用解决方案。  </p>
+<p>这篇<a href="https://www.cnblogs.com/zyl910/archive/2012/11/02/testpopcnt.html" target="_blank" rel="noopener">博客</a>的测试中显示， <code>POPCNT</code> 比打表形式快了约 2.7 倍。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.099Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&title=《bitset》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&title=《bitset》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bitset》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/cpp-grammar/windows-console/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Windows 控制台常用操作</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/acm/%E8%AE%B0%E5%A4%A7%E5%AD%A6%E7%9F%AD%E6%9A%82%E7%9A%84ACM%E7%94%9F%E6%B6%AF/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">记大学短暂的ACM生涯</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&title=《bitset》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&title=《bitset》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《bitset》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/bitset/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aQU4DMQwF0N7/0mWLBMx820OlJC8rNKVpHkiuHfv1itf728qf5ztf7/bYwsDAWJbxvlw9RvWIP38zPxsGBsY5jOrWf733+tX80PkOGBgYGPnRr/dJgjgGBgbGU4zJIaoJKAYGBka1iK0mds8G5cdqcQwMjAUZvev7z/z8L/0NDAyMpRjv4pq3E6ohNToVBgbG1ow8wOXbXe9WTT0Lwx8YGBibMpKCMC8gq7D8+c0TDAyMYxi9a/3kQu06Eay+95dXMTAwtmbkwW7Szsyv8vOD3uyGgYGxHSNP46rNxWoIzgE3tTgGBsZ2jOpwWD5g0Rsjy5POV/6FgoGBsTgjD3m9FkIyWtEb9oruDjEwMLZgzMvIXoI4Oe7NnhgYGBsxeu3JSdpXvcIrVOEYGBibMnpXaRPwvJHZrJIxMDAWZyQJWV6aVoNyHvpH/yUMDIxlGb0L/VGV3Aq43Vs3DAyMfRi9I+btxvzqvznSioGBsTWjmsDlrYJqeTwfyMDAwNibMT9onm7OqTczIxgYGFszes2AarHaO3T0uRgYGAcw8hIxSR/zAYv8iq0w0YaBgbERoxdqkxI332HSLsXAwDiB0esSVgNx8qT3BTBqdmJgYCzFeCpE5kXs/E+GgYFxJiMvbufl7mQULKrFMTAwMAYp42RQozxsgYGBcTCjNzCRf2LewhylhhgYGAsyeiMRk2A9b45iYGCcwxiVjsFQRTX56zU1MTAwNmV8AQ7uvCpJdF9qAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

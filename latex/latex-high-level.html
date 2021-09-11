@@ -1,0 +1,21 @@
+<hr>
+<p>title: LaTeX 高阶部分<br>date: 2019-09-24 21:23:36<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<p>该文章记录 LaTeX 原理等部分，和前一篇的简单用法分开。</p>
+<h2 id="LaTeX-编译过程"><a href="#LaTeX-编译过程" class="headerlink" title="LaTeX 编译过程"></a>LaTeX 编译过程</h2><p>LaTeX 编译过程中会有六个文件：</p>
+<ol>
+<li><code>.aux</code>——存放交叉引用信息；  </li>
+<li><code>.dvi</code>——是 LaTeX 编译运行后的主要结果。用户可以使用 DVI 预览软件查看 <code>.dvi</code> 内容；  </li>
+<li><code>.log</code>——记录上一次编译器运行的日志；  </li>
+<li><code>.pdf</code>——PDF 文件，文件是 pdflatex 编译运行后的主要结果；  </li>
+<li><code>.synctex.gz</code>；  </li>
+<li><code>.tex</code>——LaTeX 和 TeX 源文件，进行编译处理。</li>
+</ol>
+<h2 id="手动导入宏包"><a href="#手动导入宏包" class="headerlink" title="手动导入宏包"></a>手动导入宏包</h2><p>一般情况下，如果使用到编译器没有自带的宏包的时候，编译器会自动进行下载。然而总会有一堆奇怪的原因导致不能下载。</p>
+<p>有一个方法就是手动下载然后导入。</p>
+<p>包的扩展名可能为 <code>sty</code> 或 <code>cls</code>。下载以后，放在编译器的根目录（具体在哪里我也没搞懂），或者放在需要的源文件的同一目录下也可以。</p>

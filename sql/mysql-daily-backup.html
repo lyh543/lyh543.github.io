@@ -1,0 +1,43 @@
+<hr>
+<p>title: MySQL 每日备份<br>date: 2021-02-06 14:31:36<br>tags:</p>
+<ul>
+<li>Linux</li>
+<li>服务器</li>
+<li>SQL</li>
+<li>转载<br>category:</li>
+<li>SQL</li>
+</ul>
+<hr>
+<p>转载备份。</p>
+<hr>
+<p>以下脚本保存为 <code>/etc/mysql_backup/mysql_backup.sh</code>：</p>
+<pre><code class="sh">#!/bin/bash
+
+dbserver=&#39;127.0.0.1&#39;
+dbuser=&#39;root&#39;
+dbpasswd=&#39;password&#39;
+dbname=&#39;test_db&#39;
+backtime=`date +%Y%m%d`
+logfile=&#39;/etc/mysql_backup/mysql_backup.log&#39;
+datapath=&quot;/etc/mysql_backup/data&quot;
+
+echo &quot;&quot; &gt;&gt; ${logfile}
+echo &quot;-------------------------------------------------&quot; &gt;&gt; ${logfile}
+echo &quot;备份时间为${backtime},备份数据库表 ${dbname} 开始&quot; &gt;&gt; ${logfile}
+for table in $dbname; do
+    cd $datapath
+    source=`mysqldump -h ${dbserver} -u ${dbuser} -p${dbpasswd} ${table} &gt; ${backtime}.sql` 2&gt;&gt; ${logfile};
+    if [ &quot;$?&quot; == 0 ];then
+        tar zcf ${backtime}-${table}.tar.gz ${backtime}.sql &gt; /dev/null # 进行压缩
+        rm -f ${backtime}.sql
+        find $datapath -name &quot;*.tar.gz&quot; -type f -mtime +30 -exec rm -rf {} \; &gt; /dev/null 2&gt;&amp;1  # 删除 30 天前备份
+        echo &quot;数据库表 ${dbname} 备份成功!!&quot; &gt;&gt; ${logfile}
+    else
+        echo &quot;数据库表 ${dbname} 备份失败!!&quot; &gt;&gt; ${logfile}
+    fi
+done
+</code></pre>
+<p>然后加入 <code>crontab</code>，凌晨四点执行：</p>
+<pre><code class="sh">0 4 * * * /etc/profile; bash /etc/mysql_backup/mysql_backup.sh
+</code></pre>
+<p>crontab 的使用方法可以参考 <a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html#id5" target="_blank" rel="noopener">crontab</a></p>

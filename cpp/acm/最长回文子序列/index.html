@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>最长回文子序列 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="搜索,C++,ACM,字符串">
+    <meta name="description" content="DP - O(n^2)1234567891011       for (int k &#x3D; 1; k &lt; n; k++)   	&amp;#123;    for (int i &#x3D; 0; i+k &lt; n; i++)    &amp;#123;        dp[i][i + k] &#x3D; max(dp[i][i + k - 1], dp[i + 1][i + k]);        if (a[i] &#x3D;&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最长回文子序列">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="DP - O(n^2)1234567891011       for (int k &#x3D; 1; k &lt; n; k++)   	&amp;#123;    for (int i &#x3D; 0; i+k &lt; n; i++)    &amp;#123;        dp[i][i + k] &#x3D; max(dp[i][i + k - 1], dp[i + 1][i + k]);        if (a[i] &#x3D;&#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.095Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="搜索">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="ACM">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">最长回文子序列</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">最长回文子序列</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-24T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-06-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DP-O-n-2"><span class="post-toc-text">DP - O(n^2)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Manacher-O-n"><span class="post-toc-text">Manacher O(n)</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/acm/最长回文子序列"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">最长回文子序列</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-25 00:00:00" datetime="2019-06-24T16:00:00.000Z"  itemprop="datePublished">2019-06-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="DP-O-n-2"><a href="#DP-O-n-2" class="headerlink" title="DP - O(n^2)"></a>DP - O(n^2)</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; n; k++)</span><br><span class="line">   	&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i+k &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        dp[i][i + k] = <span class="built_in">max</span>(dp[i][i + k - <span class="number">1</span>], dp[i + <span class="number">1</span>][i + k]);</span><br><span class="line">        <span class="keyword">if</span> (a[i] == a[i + k])</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i][i + k] = <span class="built_in">max</span>(dp[i][i + k], dp[i + <span class="number">1</span>][i + k - <span class="number">1</span>] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Manacher-O-n"><a href="#Manacher-O-n" class="headerlink" title="Manacher O(n)"></a>Manacher O(n)</h2><p>先在原串<code>str</code>每个字符左右加一个<code>#</code>，转化为奇数长度，新的字符串命名为<code>m</code>串</p>
+<p><code>abba -&gt;  #a#b#b#a#</code> ,长度为9</p>
+<p>最后记得把长度除以二</p>
+<p>首先,在字符串<code>m</code>中,用<code>p[i]</code>表示<code>m</code>串第<code>i</code>个字符的回文半径,即<code>p[i]</code>尽可能大,且满足:</p>
+<figure class="highlight plain"><figcaption><span>i-1]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">可~~观察出~~证明&#96;p[i]-1&#96;即为&#96;str&#96;的回文串长度。</span><br><span class="line"></span><br><span class="line">然后，从左往右遍历。执行完一步</span><br><span class="line"></span><br><span class="line">&#96;p[i] &#x3D; mx &gt; i ? min(p[2 * id - i], mx - i) : 1;&#96;</span><br><span class="line"></span><br><span class="line">以后，要把&#96;p[i]&#96;向两边扩展。嗯这个for套while不就O(N^2)了吗？？？？</span><br><span class="line"></span><br><span class="line">其实并没有。我们看一下每个字符被访问了几次。</span><br><span class="line"></span><br><span class="line">首先遍历的时候就有一次。主要是看while()语句中被访问了几次。</span><br><span class="line">执行完</span><br><span class="line"></span><br><span class="line">&#96;p[i] &#x3D; mx &gt; i ? min(p[2 * id - i], mx - i) : 1;&#96;</span><br><span class="line"></span><br><span class="line">以后，如果是下图这种情况，就不需要扩展（&#96;p[i]++&#96;）；</span><br><span class="line"></span><br><span class="line">![123](https:&#x2F;&#x2F;image-static.segmentfault.com&#x2F;406&#x2F;055&#x2F;4060550705-58b9671c71085)</span><br><span class="line"></span><br><span class="line">只有下图的这种情况，才会进行扩展，此时i右边的字符被访问了两次。但是扩展以后，相应的&#96;Mx&#96;也会变大，使得下次就扩展不会考虑到这个点。所以每个字符只会被访问两次。证毕。</span><br><span class="line"></span><br><span class="line">![123](https:&#x2F;&#x2F;image-static.segmentfault.com&#x2F;282&#x2F;937&#x2F;282937517-58b966b75cbb5)</span><br><span class="line"></span><br><span class="line">可以看出，</span><br><span class="line"></span><br><span class="line">&#96;p[i] &#x3D; mx &gt; i ? min(p[2 * id - i], mx - i) : 1;&#96;</span><br><span class="line"></span><br><span class="line">是Manacher的精髓，在朴素算法上加一行，即把O(n^2^)变成了O(n).</span><br><span class="line"></span><br><span class="line">代码如下：</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;c++</span><br><span class="line">#include &lt;bits&#x2F;stdc++.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn &#x3D; 1e7+5;</span><br><span class="line">int n;</span><br><span class="line">char str[maxn], m[maxn &lt;&lt; 1];</span><br><span class="line">int p[maxn] &#x3D; &#123; 0 &#125;;</span><br><span class="line"></span><br><span class="line">int manacher(char * str)</span><br><span class="line">&#123;</span><br><span class="line">    int len &#x3D; 2;</span><br><span class="line">    &#x2F;&#x2F;m[len] &#x3D; &#39;\0&#39;;</span><br><span class="line">    m[0] &#x3D; &#39;$&#39;, m[1] &#x3D; &#39;#&#39;;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        m[len++] &#x3D; str[i];</span><br><span class="line">        m[len++] &#x3D; &#39;#&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    int ans &#x3D; 1, id &#x3D; 0, mx &#x3D; 0;</span><br><span class="line"></span><br><span class="line">    for (int i &#x3D; 0; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p[i] &#x3D; mx &gt; i ? min(p[2 * id - i], mx - i) : 1;</span><br><span class="line">        while (m[i - p[i]] &#x3D;&#x3D; m[i + p[i]]) p[i]++;</span><br><span class="line">        if (i + p[i] &gt; mx)</span><br><span class="line">        &#123;</span><br><span class="line">            mx &#x3D; i + p[i];</span><br><span class="line">            id &#x3D; i;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;cout &lt;&lt; p[i];</span><br><span class="line">        if (p[i]&amp;1)</span><br><span class="line">            ans &#x3D; max(ans, p[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;cout &lt;&lt;endl &lt;&lt; m;</span><br><span class="line">    &#x2F;&#x2F;cout &lt;&lt; endl;</span><br><span class="line">    return ans - 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    ios::sync_with_stdio(0);</span><br><span class="line">    cin.tie(0);</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    cin &gt;&gt; str;</span><br><span class="line">    cout &lt;&lt; manacher(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.095Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/" rel="tag">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&title=《最长回文子序列》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&title=《最长回文子序列》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《最长回文子序列》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/acm/%E6%9C%80%E7%9F%AD%E8%B7%AF%E7%AE%97%E6%B3%95/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">最短路算法（坑）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/acm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%93%E9%A2%98%E9%A2%98%E8%A7%A3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">数据结构专题 题解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&title=《最长回文子序列》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&title=《最长回文子序列》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《最长回文子序列》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E5%BA%8F%E5%88%97/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADJElEQVR42u3aS27jQAwFwNz/0pnNLDLAWHkkW4BFl1aCnXR3KUAofr6+4uv7x5V8/vPb5JPqlex+4MLGxsZ+CLu6wTWyesRk5eufvD7ny5WxsbGx17Gvw8+r+wR8aq+cHe2LjY2N/fHsXnDKQ2PyoLGxsbGxe+z8uPmx5jUfbGxsbOxkg/LSwaNM0phqADtcS8PGxsZ+e3YeTt7//pb+NjY2NvYbs3uDMpMWb5725ClHWYGNjY29iF1NIXLYpFXQS2Dy82NjY2NvYifFmvlxq0M8kzQjalRgY2NjL2JfD9xcx71qO6GaiiS79waGsLGxsfex81JOwjhVlsp5eUgr/z2xsbGxH8U+u3SvUJWP48zDJDY2NvZW9uRFvzobU23T9gpShRIVNjY29sPZ+Uv/KXA1echL/4XAho2Njf1wdm+D6tVrJPRWwMbGxv40drJZ/lrfKyT1RnYONBKwsbGxV7CriUF1ZKdXSDrV+o2yLmxsbOyHs3shrZqo5JhquJonOdjY2Nib2NVmQG/LXlu3166I2hLY2NjYD2dXR2Guw1Ue8PIGwHwY6D9nw8bGxl7KnhR68mbAZOgnKXKVa2nY2NjYi9iTJmuvYXyqnZCnMX+/xcbGxl7ETv7191oFeai7o6gUpTTY2NjYK9jJcnlwOjXiM2nxFopK2NjY2KvZ1wfKyzrVFaqtgnz3f+6xsbGxl7Lzcn8+snmg9FMc6IySHGxsbOxF7MkoTC8I9VrCEx42Njb2bnby+p5f+W9Vmw3VwaBf1sfGxsZexO4tkTQGeqGu2jBOwmqU3mBjY2M/nN0r4uSN3l7qkpeumiEWGxsbeym7OhBzoDQ/adkWmwfY2NjYn8bOW7mTwyVpRq+A9YsLGxsbewX7u3hVDz1vP0yaxC/3wsbGxl7ErpZjJkvMxy57KUqveYyNjY39LHZeQqre54FtkuQ0h0SxsbGx17HviIf5Q6xG1xv729jY2Ngfzz6VA1UHQMvjm9jY2NjYcUu4OhLUo5YfHzY2NvY6dj5qmacHeaP3VEHqlloaNjY29tuzy+WY29q6vdSiOtaDjY2NvYj9Bz1GShVKQPoPAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

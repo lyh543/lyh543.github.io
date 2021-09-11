@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>服务器下载文件 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux,服务器">
+    <meta name="description" content="前言某些国外网站，虽然没有被墙，但是下载个东西，几十 KB 的网速很难顶。 于是想把东西下载服务器上，然后本地从服务器满速下载。这也就是离线下载的原理。 基础知识后台运行也是非常重要的，我就一笔带过，将原本的命令改为 nohup &lt;命令&gt; &amp; 即可后台执行（此时可以按 Ctrl+C 关掉 nohup 的前端）。 另外，如果服务器显示了“可以通过 127.0.0.1:8080 访">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器下载文件">
+<meta property="og:url" content="https://blog.lyh543.cn/linux/download-file-on-server/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="前言某些国外网站，虽然没有被墙，但是下载个东西，几十 KB 的网速很难顶。 于是想把东西下载服务器上，然后本地从服务器满速下载。这也就是离线下载的原理。 基础知识后台运行也是非常重要的，我就一笔带过，将原本的命令改为 nohup &lt;命令&gt; &amp; 即可后台执行（此时可以按 Ctrl+C 关掉 nohup 的前端）。 另外，如果服务器显示了“可以通过 127.0.0.1:8080 访">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-23T04:39:17.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.123Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="服务器">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">服务器下载文件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">服务器下载文件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-23T04:39:17.000Z" itemprop="datePublished" class="page-time">
+  2019-10-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基础知识"><span class="post-toc-text">基础知识</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器下载文件"><span class="post-toc-text">服务器下载文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wget-下载-Google-Drive-文件"><span class="post-toc-text">wget 下载 Google Drive 文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wget-下载-mediafire-com-的文件"><span class="post-toc-text">wget 下载 mediafire.com 的文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#qbittorrent-下载磁力链-种子"><span class="post-toc-text">qbittorrent 下载磁力链&#x2F;种子</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器、本机互传文件"><span class="post-toc-text">服务器、本机互传文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#scp-命令：通过-ssh-在服务器和本地互传文件"><span class="post-toc-text">scp 命令：通过 ssh 在服务器和本地互传文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#python3-http-server-一行建立-http-文件服务器（不支持断点续传、密码验证）"><span class="post-toc-text">python3 http.server 一行建立 http 文件服务器（不支持断点续传、密码验证）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#npm-http-server-一行建立-http-文件服务器（支持断点续传，不支持密码验证）"><span class="post-toc-text">npm http-server 一行建立 http 文件服务器（支持断点续传，不支持密码验证）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#给不支持密码验证的-http-server-增加密码验证"><span class="post-toc-text">给不支持密码验证的 http server 增加密码验证</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#webdav（支持断点续传、密码验证）"><span class="post-toc-text">webdav（支持断点续传、密码验证）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SMB"><span class="post-toc-text">SMB</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Syncthing"><span class="post-toc-text">Syncthing</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#给链接添加-HTTPS"><span class="post-toc-text">给链接添加 HTTPS</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linux/download-file-on-server"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">服务器下载文件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-23 12:39:17" datetime="2019-10-23T04:39:17.000Z"  itemprop="datePublished">2019-10-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些国外网站，虽然没有被墙，但是下载个东西，几十 KB 的网速很难顶。</p>
+<p>于是想把东西下载服务器上，然后本地从服务器满速下载。这也就是离线下载的原理。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>后台运行也是非常重要的，我就一笔带过，将原本的命令改为 <code>nohup &lt;命令&gt; &amp;</code> 即可后台执行（此时可以按 <code>Ctrl+C</code> 关掉 <code>nohup</code> 的前端）。</p>
+<p>另外，如果服务器显示了“可以通过 <code>127.0.0.1:8080</code> 访问……”，表示的是服务器本机的 8080 端口，就可以在你的电脑访问 <code>[服务器ip]:8080</code>（如 <code>39.1.2.3:8080</code>）来访问对应的网站。后文不再赘述。</p>
+<h2 id="服务器下载文件"><a href="#服务器下载文件" class="headerlink" title="服务器下载文件"></a>服务器下载文件</h2><p>服务器下载 http(s) 直链，最常用、也是最无脑的就是 <code>wget &lt;Link&gt;</code> 了。<br>对付非直链的情况，我们有非直链的解决方案；<br>对于种子/磁力链，我们可以使用</p>
+<h3 id="wget-下载-Google-Drive-文件"><a href="#wget-下载-Google-Drive-文件" class="headerlink" title="wget 下载 Google Drive 文件"></a>wget 下载 Google Drive 文件</h3><p>在时断时续的梯子上，Google Drive 的下载不是很方便，特别是需要下载一个大文件的时候。</p>
+<p>但是 Google Drive 是可以获取直链的。很香。</p>
+<p>服务器用 wget 从 Google Drive 下载小文件的命令为（需要替换链接中的 <code>FILEID</code>）：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget --<span class="keyword">no</span>-check-certificate ‘http<span class="variable">s:</span>//docs.google.<span class="keyword">com</span>/uc?export=download&amp;id=FILEID’</span><br></pre></td></tr></table></figure>
+
+<p>对于大文件，无法通过安全查杀，所以要用别的命令（注意 <code>FILEID</code> 有两处）：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">wget</span> --<span class="comment">load</span><span class="literal">-</span><span class="comment">cookies</span> <span class="comment">/tmp/cookies</span><span class="string">.</span><span class="comment">txt</span> <span class="comment">"https://docs</span><span class="string">.</span><span class="comment">google</span><span class="string">.</span><span class="comment">com/uc?export=download&amp;confirm=$(wget</span> --<span class="comment">quiet</span> --<span class="comment">save</span><span class="literal">-</span><span class="comment">cookies</span> <span class="comment">/tmp/cookies</span><span class="string">.</span><span class="comment">txt</span> --<span class="comment">keep</span><span class="literal">-</span><span class="comment">session</span><span class="literal">-</span><span class="comment">cookies</span> --<span class="comment">no</span><span class="literal">-</span><span class="comment">check</span><span class="literal">-</span><span class="comment">certificate</span> <span class="comment">'https://docs</span><span class="string">.</span><span class="comment">google</span><span class="string">.</span><span class="comment">com/uc?export=download&amp;id=FILEID'</span> <span class="literal">-</span><span class="comment">O</span><span class="literal">-</span> <span class="comment">|</span> <span class="comment">sed</span> <span class="literal">-</span><span class="comment">rn</span> <span class="comment">'s/</span><span class="string">.</span><span class="comment">*confirm=(</span><span class="title">[</span><span class="comment">0</span><span class="literal">-</span><span class="comment">9A</span><span class="literal">-</span><span class="comment">Za</span><span class="literal">-</span><span class="comment">z_</span><span class="title">]</span><span class="literal">+</span><span class="comment">)</span><span class="string">.</span><span class="comment">*/\1\n/p')&amp;id=FILEID"</span> <span class="comment">&amp;&amp;</span> <span class="comment">rm</span> <span class="literal">-</span><span class="comment">rf</span> <span class="comment">/tmp/cookies</span><span class="string">.</span><span class="comment">txt</span></span><br><span class="line"><span class="comment">1</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，需要替换其中的 <code>FILEID</code> 为公开分享的文件 ID，下面是实例：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//drive.google.<span class="keyword">com</span>/<span class="keyword">open</span>?id=FILEID</span><br><span class="line">http<span class="variable">s:</span>//drive.google.<span class="keyword">com</span>/<span class="keyword">file</span>/d/<span class="number">1</span>_wnCdMKB4_GQM9dtA4AOHxZ21NCGFNm9/<span class="keyword">edit</span></span><br></pre></td></tr></table></figure>
+
+<p>第二条的 <code>1_wnCdMKB4_GQM9dtA4AOHxZ21NCGFNm9</code> 即为 <code>FILEID</code>。</p>
+<p>就可以感受国外连服务器的 60M/s 的网速了。</p>
+<h3 id="wget-下载-mediafire-com-的文件"><a href="#wget-下载-mediafire-com-的文件" class="headerlink" title="wget 下载 mediafire.com 的文件"></a>wget 下载 mediafire.com 的文件</h3><blockquote>
+<p>参考链接：<a href="https://moeclub.org/2018/04/11/609/?spm=23.8" target="_blank" rel="noopener">https://moeclub.org/2018/04/11/609/?spm=23.8</a></p>
+</blockquote>
+<p>这个网站就属于一开始说那种的网站，没有被墙，但是国内访问速度平均不到 100 K/s。</p>
+<p>不过这个网站又不像 Google Drive，可以直接找到直链，而是需要你访问网站，然后生成一个直链网页中（这些网站都挺良心，直接把直链放网站上，不像国内某云）。但是不同端登录给的直链时不一样的，所以我们要在服务器访问网站。</p>
+<p>具体来说，就是在服务器用 <code>wget</code> 下载他分享的链接对应的 html，然后从 html 里面找到链接即可用 wget 下载。</p>
+<p>假设我们的直链如下（注意统一用 https）：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//www.mediafire.<span class="keyword">com</span>/<span class="keyword">file</span>/yrd1py7od5911zt/Catalina_Virtual_Disk_Image_by_Techsviewer.rar/<span class="keyword">file</span></span><br></pre></td></tr></table></figure>
+
+<p>可以用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LINE=https://www.mediafire.com/file/yrd1py7od5911zt/Catalina_Virtual_Disk_Image_by_Techsviewer.rar/file</span><br><span class="line"></span><br><span class="line">Index_data=<span class="string">"<span class="variable">$(wget --no-check-certificate -qO- "$LINE" | grep -o 'https://download.*.mediafire.com/.*/.*"' | cut -d'"' -f1</span></span></span><br><span class="line"><span class="string"><span class="variable"># 通过分享的链接获取页面 html，并通过正则表达式抓到下载链接</span></span></span><br></pre></td></tr></table></figure>
+
+<p>得到类似下面的 <code>Index_data</code>。其中 <code>download</code> 后的 <code>2331</code> 就是每个直链不同的地方。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>download2331.mediafire.com<span class="regexp">/chmg33d4airg/y</span>rd1py7od5911zt<span class="regexp">/Catalina+Virtual+Disk+Image+by+Techsviewer.rar</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以 <code>wget &quot;$Index_data&quot;</code> 或手动 <code>wget &lt;网址&gt;</code> 进行下载。</p>
+<p>如果需要后台下载，当然是用 nohup 了。这样，即使是几十 kb 的下载速度，服务器下个三天三夜，然后就可以以满速下到本地了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup wget <span class="string">"<span class="variable">$Index_data</span>"</span> &amp;</span><br></pre></td></tr></table></figure>
+
+<p>下载的进度可以 <code>tail nohup.out</code> 查看输出文件的最后几行。</p>
+<h3 id="qbittorrent-下载磁力链-种子"><a href="#qbittorrent-下载磁力链-种子" class="headerlink" title="qbittorrent 下载磁力链/种子"></a>qbittorrent 下载磁力链/种子</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install qbittorrent</span><br><span class="line">qbittorent-nox</span><br></pre></td></tr></table></figure>
+
+<p>安装 qbittorrent 以后，提供了两条命令 <code>qbittorrent</code> 和 <code>qbittorrent-nox</code> 的。前者是提供 GUI 的，后者是给命令行使用的（所谓 <code>no X</code>）。</p>
+<p>输入 <code>qbittorent-nox</code> 以后，就可以在本地通过访问对应的网站来管理服务器的 qbittorent 下载种子了。</p>
+<p>如果需要后台执行，可以使用 <code>qbittorrent-nox -d</code>。</p>
+<h2 id="服务器、本机互传文件"><a href="#服务器、本机互传文件" class="headerlink" title="服务器、本机互传文件"></a>服务器、本机互传文件</h2><p>如果想要知道最方便的方法，请跳到 <a href="#webdav%EF%BC%88%E6%94%AF%E6%8C%81%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0%E3%80%81%E5%AF%86%E7%A0%81%E9%AA%8C%E8%AF%81%EF%BC%89">webdav</a> 部分。</p>
+<h3 id="scp-命令：通过-ssh-在服务器和本地互传文件"><a href="#scp-命令：通过-ssh-在服务器和本地互传文件" class="headerlink" title="scp 命令：通过 ssh 在服务器和本地互传文件"></a>scp 命令：通过 ssh 在服务器和本地互传文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">scp /home/work/source.txt work@192.168.0.10:/home/work/</span><br><span class="line"><span class="comment">#把本地的source.txt文件拷贝到192.168.0.10机器上的/home/work目录下</span></span><br><span class="line"></span><br><span class="line">scp work@192.168.0.10:/home/work/source.txt /home/work/</span><br><span class="line"><span class="comment">#把192.168.0.10机器上的source.txt文件拷贝到本地的/home/work目录下</span></span><br><span class="line"></span><br><span class="line">scp work@192.168.0.10:/home/work/source.txt work@192.168.0.11:/home/work/</span><br><span class="line"><span class="comment">#把192.168.0.10机器上的source.txt文件拷贝到192.168.0.11机器的/home/work目录下</span></span><br><span class="line"></span><br><span class="line">scp -r /home/work/sourcedir work@192.168.0.10:/home/work/</span><br><span class="line"><span class="comment">#拷贝文件夹，加-r参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改端口用 -P 参数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="python3-http-server-一行建立-http-文件服务器（不支持断点续传、密码验证）"><a href="#python3-http-server-一行建立-http-文件服务器（不支持断点续传、密码验证）" class="headerlink" title="python3 http.server 一行建立 http 文件服务器（不支持断点续传、密码验证）"></a>python3 http.server 一行建立 http 文件服务器（不支持断点续传、密码验证）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python3</span><br><span class="line"></span><br><span class="line">python3 -m  http.server 8000</span><br></pre></td></tr></table></figure>
+
+<p>需要更多的选项，可以使用 <code>python3 -m  http.server --help</code></p>
+<p>看到 <code>Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</code> 以后即可。</p>
+<p>就可以在互联网上通过打开访问到当前文件夹了。后台运行同样是 <code>nohup</code>。</p>
+<p>注意这是没有密码验证的，也不支持断点续传（毕竟 <code>simple</code> ），所以<strong>不要长期开放！！！</strong></p>
+<h3 id="npm-http-server-一行建立-http-文件服务器（支持断点续传，不支持密码验证）"><a href="#npm-http-server-一行建立-http-文件服务器（支持断点续传，不支持密码验证）" class="headerlink" title="npm http-server 一行建立 http 文件服务器（支持断点续传，不支持密码验证）"></a>npm http-server 一行建立 http 文件服务器（支持断点续传，不支持密码验证）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt install npm</span><br><span class="line">npm install http-server -g</span><br><span class="line"></span><br><span class="line">http-server</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>http-server</code> 的常用参数为 <code>http-server [path] [-p port]</code>。<code>port</code> 默认为 8080。</p>
+<p>如果想要在后台运行，可以配合 <code>nohup</code> 使用：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup http-server &amp;</span><br></pre></td></tr></table></figure>
+
+<p>如果想要守护进程（如果被 kill 就立刻重启），可以使用：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt install npm</span><br><span class="line">npm install pm2 -g</span><br><span class="line">pm2 --name s1 -f start http-server <span class="comment"># 配置 pm2</span></span><br><span class="line">pm2 save <span class="comment"># 可选命令，作用是保存当前的 pm2 状态，下次开机的时候可以使用 pm2 startup 恢复到当前状态</span></span><br><span class="line">pm2 ls   <span class="comment"># 可选命令，列出当前 pm2 的任务</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，实现同样功能的还有：<a href="https://github.com/lwsjs/local-web-server" target="_blank" rel="noopener">https://github.com/lwsjs/local-web-server</a></p>
+<p>不过，需要注意的是，如果连接线程太多，会消耗大量服务器内存。在我的测试中：</p>
+<ul>
+<li>单线程下载一个文件，内存占用 36 MB</li>
+<li>16 线程下载一个文件，内存占用 40 MB</li>
+<li>下载三个文件，每个文件 128 线程，内存占用高达 250MB（不要问我为什么这么高，问就是某线程破解版下载软件默认）</li>
+</ul>
+<h3 id="给不支持密码验证的-http-server-增加密码验证"><a href="#给不支持密码验证的-http-server-增加密码验证" class="headerlink" title="给不支持密码验证的 http server 增加密码验证"></a>给不支持密码验证的 http server 增加密码验证</h3><p>这个方法是借助于 Nginx 的密码验证。实现思路是：</p>
+<ul>
+<li>使用 Nginx 服务器，将 <code>file.lyh543.cn</code> 反向代理到 <code>lyh543.cn:8080</code>，其中 <code>8080</code> 为上述 <code>http-server</code> 的访问端口。方法可参考<a href="../nginx">Nginx （萌新向）</a>。</li>
+<li>同时在 <code>file.lyh543.cn</code> 的配置文件中加入密码验证功能，可参考<a href="https://blog.csdn.net/dream8062/article/details/78416234" target="_blank" rel="noopener">nginx配置访问密码</a>。</li>
+<li>最后为安全起见，可在防火墙中关掉 <code>8080</code> 端口，避免直接从端口访问服务器。可参考<a href="../linux#%E9%98%B2%E7%81%AB%E5%A2%99">Linux 日常命令–防火墙</a>。</li>
+</ul>
+<h3 id="webdav（支持断点续传、密码验证）"><a href="#webdav（支持断点续传、密码验证）" class="headerlink" title="webdav（支持断点续传、密码验证）"></a>webdav（支持断点续传、密码验证）</h3><blockquote>
+<p>参考博客：<a href="https://blog.devzeng.com/blog/build-webdav-server-in-docker.html" target="_blank" rel="noopener">https://blog.devzeng.com/blog/build-webdav-server-in-docker.html</a></p>
+</blockquote>
+<p>我在 2020.6.14 发现了 webdav，最方便的应该就是 webdav 了。</p>
+<p>首先安装 Docker，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后运行一行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name webdav -v /path/to/directory:/var/webdav -e USERNAME=<span class="built_in">test</span> -e PASSWORD=<span class="built_in">test</span> -p 8888:80 morrisjobke/webdav</span><br></pre></td></tr></table></figure>
+
+<p>运行前修改上面的 <code>/path/to/directory</code> 为你的文件夹名；修改用户名和密码；修改端口为你想要的端口。</p>
+<p>然后就可以在浏览器中访问 <code>http://yourip:8888/webdav</code>（注意有个 <code>webdav</code>），再进行账户密码验证即可进行下载。</p>
+<p>对于支持 WebDAV 的应用，就可以用这个方法上传、下载了。</p>
+<h3 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h3><p>如果能使用 SMB，就可以把服务器的某个文件夹当做（Windows）本机的一个硬盘，上传下载都是非常的方便。</p>
+<p>然而，SMB 配置起来比较麻烦，一是 SMB 通常用于局域网内，在外网使用会麻烦一点；二是 SMB 的默认端口 445 被阿里云、腾讯云等封禁了，需要使用别的端口。但是确实有人实现过。还是使用 <code>scp</code> 或 webdav 吧。</p>
+<h3 id="Syncthing"><a href="#Syncthing" class="headerlink" title="Syncthing"></a>Syncthing</h3><p>如果需要两个设备的某些文件夹保持完全同步，可以考虑使用 <a href="https://syncthing.net/" target="_blank" rel="noopener">Syncthing</a>。</p>
+<p>这个软件可以让两个设备的文件夹保持完全同步，并且跨平台（Linux/Windows/macOS/FreeBSD/OpenBSD/NetBSD/Dragonfly BSD/Illumos/Solaris）。通过网页进行管理，非常方便。</p>
+<h3 id="给链接添加-HTTPS"><a href="#给链接添加-HTTPS" class="headerlink" title="给链接添加 HTTPS"></a>给链接添加 HTTPS</h3><p>上面都是通过 HTTP 协议 + 端口访问服务，如果需要 HTTPS，需要用 Nginx 做一次反向代理，参见 <a href="/Linux/nginx/#%E9%9A%90%E6%80%A7%E8%BD%AC%E5%8F%91-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">Nginx</a>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.123Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/download-file-on-server/&title=《服务器下载文件》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/download-file-on-server/&title=《服务器下载文件》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/download-file-on-server/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《服务器下载文件》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/download-file-on-server/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/download-file-on-server/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/mcm/getting-started-mcm/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">数学建模入门</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/linux/change-ssh-port/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">修改 ssh 的端口</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/download-file-on-server/&title=《服务器下载文件》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/download-file-on-server/&title=《服务器下载文件》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/download-file-on-server/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《服务器下载文件》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/download-file-on-server/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/download-file-on-server/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACGklEQVR42u3aQW7DMAwEwP7/0+4DAie7lFsg0uhkOGnM0YE1Kf78xOt6WXf3X7+T/ObdnYcXBgbG1zKSUK5y5UEn19FTMDAwDmDcPfip6/VvfogZAwMDI0ijK4l79lwMDAyM2avbUyUxBgYGxqyIzRlJqn24nYeBgbE1I0+R/3/9J+cbGBgYX8VYafe3STPflDoqDAyMrRl5gsvLy/djE/lhZxsPBgbGyYz8R9sGXM5I7mBgYJzDSF7p8obXrN2Wp/jbhIuBgbERYzb6kKfRtnE2PMLEwMA4hpEHMRvOaMe/hmMWGBgY2zGSNDo7HpiVxyuDYhgYGCcw1g8Xk0TZFsbFJmJgYGzNaNtkK+MXM2T7TwIDA2MnRjv0MBuwaEn1sQQGBsYBjGF7Kw5xNsBabCgGBsYBjDz9JY2wWdCzwdbbYQsMDIyNGHmgK0MYsxGKdlADAwPjBEbbvp8dBqwUsQUVAwNjO0bysPYYYDZakRe9w5dCDAyMTRltwr3ilZeyyTUGBsYJjGdTbV6O5sgPSRwDA+MARpJw85o4p0ZzaklUGBgYmzKucrUjYu3I13te1CPEwMDYjjE7E1wpONsjgTatY2Bg7MqYBTd71WtfAYv9xsDAOIAxS3z536605KKNwMDAwCjDXQ+u/jUMDAyMONzhUNfbT6ORMgwMjAMY7dDDerk7A2BgYJzJaF/dZkHkI1+zLcPAwNiU8Qu3xZNhukwXawAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

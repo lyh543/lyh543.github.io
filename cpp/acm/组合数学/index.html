@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>组合数学 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,ACM,数论,动态规划">
+    <meta name="description" content="定义排列数 $$A(n,m) &#x3D; A_n^m &#x3D; \frac{n!}{(n-m)!}$$ 组合数定义 $$C(n,m) &#x3D; C_n^m &#x3D; \left(\begin{smallmatrix}n\\m\end{smallmatrix}\right) &#x3D; \frac{n!}{m!(n-m)!}$$ （注意组合数记法中，$\left(\begin{smallmatrix}n\\m\end{smallma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组合数学">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="定义排列数 $$A(n,m) &#x3D; A_n^m &#x3D; \frac{n!}{(n-m)!}$$ 组合数定义 $$C(n,m) &#x3D; C_n^m &#x3D; \left(\begin{smallmatrix}n\\m\end{smallmatrix}\right) &#x3D; \frac{n!}{m!(n-m)!}$$ （注意组合数记法中，$\left(\begin{smallmatrix}n\\m\end{smallma">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f79ad49c8abc2c20f9358884e7735e320a74c6b3">
+<meta property="article:published_time" content="2019-07-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.095Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="ACM">
+<meta property="article:tag" content="数论">
+<meta property="article:tag" content="动态规划">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/f79ad49c8abc2c20f9358884e7735e320a74c6b3">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">组合数学</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">组合数学</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-22T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-07-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#求法"><span class="post-toc-text">求法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#最原始的求法"><span class="post-toc-text">最原始的求法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#递推"><span class="post-toc-text">递推</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#预处理阶乘、逆元，用公式算"><span class="post-toc-text">预处理阶乘、逆元，用公式算</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Lucas定理"><span class="post-toc-text">Lucas定理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Catlan-数"><span class="post-toc-text">Catlan 数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#N-球放-M-盒问题"><span class="post-toc-text">N 球放 M 盒问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stirling-数"><span class="post-toc-text">Stirling 数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#LGV-定理-——2019-7-23"><span class="post-toc-text">LGV 定理 ——2019.7.23</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/acm/组合数学"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">组合数学</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-23 00:00:00" datetime="2019-07-22T16:00:00.000Z"  itemprop="datePublished">2019-07-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>排列数</p>
+<p>$$A(n,m) = A_n^m = \frac{n!}{(n-m)!}$$</p>
+<p>组合数定义</p>
+<p>$$C(n,m) = C_n^m = \left(\begin{smallmatrix}n\\m\end{smallmatrix}\right) = \frac{n!}{m!(n-m)!}$$</p>
+<p>（注意组合数记法中，$\left(\begin{smallmatrix}n\\m\end{smallmatrix}\right)$ 是上 $n$ 下 $m$，$C_n^m$ 是上 $m$ 下 $n$）</p>
+<p>组合数的递推公式</p>
+<p>$$C_n^m = C_{n-1}^m + C_{n-1}^{m-1}$$</p>
+<h2 id="求法"><a href="#求法" class="headerlink" title="求法"></a>求法</h2><h3 id="最原始的求法"><a href="#最原始的求法" class="headerlink" title="最原始的求法"></a>最原始的求法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">comb</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">1</span>, q = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        p = p * (n - i + <span class="number">1</span>);</span><br><span class="line">        q = q * i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (p % q == <span class="number">0</span>) p /= q;</span><br><span class="line">    <span class="keyword">return</span> p / q;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="递推"><a href="#递推" class="headerlink" title="递推"></a>递推</h3><p>$$C_n^m = C_{n-1}^m + C_{n-1}^{m-1}$$</p>
+<p>仅能用于预处理小范围的组合数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ll C[maxn][maxn] = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++)</span><br><span class="line">            C[i][j]  = (j ? c[i - <span class="number">1</span>][j] + c[i - <span class="number">1</span>][j - <span class="number">1</span>] : <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="预处理阶乘、逆元，用公式算"><a href="#预处理阶乘、逆元，用公式算" class="headerlink" title="预处理阶乘、逆元，用公式算"></a>预处理阶乘、逆元，用公式算</h3><p>$$C(n,m) = C_n^m = \frac{n!}{m!(n-m)!}$$</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ll fac[maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fac[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i&lt; n; i++)</span><br><span class="line">        fac[i] = i * fac[i<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">C</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &gt;= b ? fac[a] * inv(fac[b]) % m * inv(fac[a-b]) % m : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Lucas定理"><a href="#Lucas定理" class="headerlink" title="Lucas定理"></a>Lucas定理</h3><p>$$C^{ap+b}_{cp+d} \equiv C^{a}_{c} \cdot C^{b}_{d} (mod\space p)$$</p>
+<p>或</p>
+<p>$$C^{m}_{n} \equiv C^{m/p}_{n/p} \cdot C^{m\%p}_{n\%p} (mod\space p)$$</p>
+<p>推导：费马小定理</p>
+<h3 id="Catlan-数"><a href="#Catlan-数" class="headerlink" title="Catlan 数"></a>Catlan 数</h3><p>Catlan</p>
+<h3 id="N-球放-M-盒问题"><a href="#N-球放-M-盒问题" class="headerlink" title="N 球放 M 盒问题"></a>N 球放 M 盒问题</h3><p>见<a href="../%E6%8A%8A%E7%90%83%E6%94%BE%E8%BF%9B%E7%9B%92%E7%9A%84%E5%85%AB%E7%B1%BB%E7%BB%84%E5%90%88%E9%97%AE%E9%A2%98">链接</a></p>
+<h3 id="Stirling-数"><a href="#Stirling-数" class="headerlink" title="Stirling 数"></a>Stirling 数</h3><h3 id="LGV-定理-——2019-7-23"><a href="#LGV-定理-——2019-7-23" class="headerlink" title="LGV 定理 ——2019.7.23"></a>LGV 定理 ——2019.7.23</h3><p><a href="https://codeforces.com/contest/348/problem/D" target="_blank" rel="noopener">CodeForces 348D</a><br>两只乌龟走路，要求不能相交。</p>
+<p>由 LGV 定理可得，如果起点集合为 $\{a_1,a_2,a_3,…,a_n\}$，终点集合为 $\{b_1,b_2,b_3,…,b_n\}$，则要求他们走路不相交的路径对 <code>pair</code> 总数有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/f79ad49c8abc2c20f9358884e7735e320a74c6b3" alt="LGV" title="">
+                </div>
+                <div class="image-caption">LGV</div>
+            </figure>
+
+<p>其中,$e(a,b)$ 表示从点 $a$ 到 点 $b$ 的边权（在这里即指可走路径数）。</p>
+<p>CodeForces 上这道题退化到只有两个起点即 $(1,2),(2,1)$ 和两个终点即 $(m-1,n),(n,,m-1)$，按照公式算一下路径即可。</p>
+<p>\begin{equation}<br>ans =<br>\left |<br>\begin{matrix}<br>e(1,2) \to e(n-1,m) &amp; e(1,2) \to e(m-1,n) \\<br>e(2,1) \to e(n-1,m) &amp; e(2,1) \to e(m-1,n)<br>\end{matrix}<br>\right |<br>\end{equation}</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.095Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/" rel="tag">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag">数论</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&title=《组合数学》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&title=《组合数学》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《组合数学》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/acm/%E6%8A%8A%E7%90%83%E6%94%BE%E8%BF%9B%E7%9B%92%E7%9A%84%E5%85%AB%E7%B1%BB%E7%BB%84%E5%90%88%E9%97%AE%E9%A2%98/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">把球放进盒的八类组合问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/acm/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">树状数组 (Binary Indexed Tree)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&title=《组合数学》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&title=《组合数学》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《组合数学》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwElEQVR42u3aS44bMQwFwNz/0gmQXTBw+z1SmjGQ6lUv+lcyINIkf/2Kj99/j6/nz9c/H89Pe77r8IGHh4c3+vT8I/bnz295vj7/Zjw8PLzbvCQYfL0y2eiTu5738zw44eHh4X0aL2E/b9Ptc/JFxMPDw/tM3vOGngePTRDCw8PD+xxeWyZI0t+24JvUYC/WWvDw8PBi3qYB9lPn39Tfw8PDwxs1+Ddp9CzwnDrw8PDwbvDyllVeoj3VNmuf/PIJeHh4eEd57WjUrE21GSxoG2z/PBMPDw/vGq+4YTRq0BZw8wV9E7Tw8PDwLvPyIapkm56dz8YLXj4HDw8P7wKvHXtK0uL2I5JC8D4I4eHh4d3g5UltO7DVbuVJkGiHt/Dw8PBO8WYNqrxZtRk+SIq8b0IaHh4e3gVe/oJ2o78REvIfo14/PDw8vJg3W482MLTl4H2hpI57eHh4eGtevru2wSAfvWoXa1h+wcPDwyt57cvaoat9qyxvfb35DfHw8PC+kdc+Li8l5Mu0Kezi4eHh3eBtEui8jJuEkNkwVp1e4+Hh4a15p8qy+VrmyzErBL+Je3h4eHhr3n5QYPMRbZDIlxgPDw/vBq/dxDetr3ZcYDY6gIeHh/c9vLpiEf/TTwoW+dDAqvWFh4eHd5S3SW2TFHxfSpgVi/Hw8PDu8TbjVvd4s3T/ZUqNh4eHd4h3o9yQ4PPsd1ZovlhNwcPD++957UokhYNZ4XWWA7/5Ejw8PLzLvFnDvk27Z6HiwBwEHh4e3iFeu+HmCXfb+mobXXUzDA8PD+8oLw8GbQK9Ke+2geHle/Hw8PCu8TYjWXnhtfisMo69DA94eHh4P8o71TBrt/vh0AAeHh7eh/HaRDxJx9slO5xS4+Hh4V0oRsyKrXmomA0fvLkSDw8P7wKv/avfDmDlhYnZ2w+PDuDh4eE93fsHE5zQdSqoie0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

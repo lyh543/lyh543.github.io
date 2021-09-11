@@ -1,0 +1,20 @@
+<hr>
+<p>title: vi 笔记（萌新向）<br>date: 2019-8-20<br>tags:</p>
+<ul>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<p>有一个特别经典的段子是，要想生成随机数，可以让一群没有用过 vi 的人尝试退出 vi 。<br>习惯了 Windows 写字板的用户，遇到没有 GUI 的 vi 时，确实很容易懵逼。但是 vi 这个神器，大佬用起来，秒杀其他一切编辑器。<br>但是对于刚入坑 linux 的同学，如何使用 vi 比高级操作更重要，于是今天我就简单总结一下 vi 的基本操作。  </p>
+<ol>
+<li><strong>在任何状态按 <code>esc</code> 就能回到初始状态</strong>。</li>
+<li>在初始状态按 <code>i</code> ，即可进行编辑。编辑完按 <code>esc</code> 退出。</li>
+<li>在初始状态按<code>:</code>，即进入功能菜单：<br> a. <code>:w</code> 为保存， <code>:w!</code> 为强制保存；<br> b. <code>:q</code> 为（不保存）退出，<code>:q!</code> 为（不保存）强制退出；<br> c. <code>:wq</code> 为保存并退出， <code>:wq!</code> 为强制保存并退出。</li>
+<li>字母键作方向键：上下左右是 <code>hjkl</code> 四个。其中，最左的 <code>h</code> 是左，最右的 <code>l</code> 是右；而剩下的 <code>jk</code> 中，左边的 <code>j</code> 是下，右边的 <code>k</code> 是上。</li>
+</ol>
+<p>有这些就基本够用了吧，还有新的就再来填坑。</p>
+<h2 id="deepin-无法在-vim-中使用-ctrl-shift-c-v-复制的解决办法"><a href="#deepin-无法在-vim-中使用-ctrl-shift-c-v-复制的解决办法" class="headerlink" title="deepin 无法在 vim 中使用 ctrl+shift+c/v 复制的解决办法"></a>deepin 无法在 vim 中使用 ctrl+shift+c/v 复制的解决办法</h2><p>我也不知道是什么原理，但是就是这样：</p>
+<pre><code class="sh">echo &quot;set clipboard=unnamed&quot; &gt;&gt; ~/.vimrc
+</code></pre>
+<h2 id="切换-sudo-并保存"><a href="#切换-sudo-并保存" class="headerlink" title="切换 sudo 并保存"></a>切换 sudo 并保存</h2><p>很多时候打开了一个只读文件，改完才发现没权限保存，要是退出了又得重改。</p>
+<p>可以在 vi 中使用命令 <code>:w !sudo tee %</code> 保存。</p>

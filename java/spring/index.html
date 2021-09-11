@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Spring 开发 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java,Spring">
+    <meta name="description" content="IoCIoC 全称 Inversion of Control，直译为控制反转。又被称为依赖注入（Dependency Injection 或 DI） 传统应用模式下，组件的创建（实例化）、使用和销毁都由程序员维护，非常复杂。IoC 将组件的创建交给 IoC 容器，由容器管理组件的创建、销毁。 IoC 可以使用 XML 进行配置，但更推荐使用注解进行配置，因此只介绍后面一种。 初始代码首先三个组件：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 开发">
+<meta property="og:url" content="https://blog.lyh543.cn/java/spring/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="IoCIoC 全称 Inversion of Control，直译为控制反转。又被称为依赖注入（Dependency Injection 或 DI） 传统应用模式下，组件的创建（实例化）、使用和销毁都由程序员维护，非常复杂。IoC 将组件的创建交给 IoC 容器，由容器管理组件的创建、销毁。 IoC 可以使用 XML 进行配置，但更推荐使用注解进行配置，因此只介绍后面一种。 初始代码首先三个组件：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-01T07:11:57.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.107Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Spring 开发</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Spring 开发</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-06-01T07:11:57.000Z" itemprop="datePublished" class="page-time">
+  2021-06-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#IoC"><span class="post-toc-text">IoC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始代码"><span class="post-toc-text">初始代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#装配-Bean"><span class="post-toc-text">装配 Bean</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#基础用法"><span class="post-toc-text">基础用法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#修改-Bean-的作用域"><span class="post-toc-text">修改 Bean 的作用域</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注入-List"><span class="post-toc-text">注入 List</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可选注入"><span class="post-toc-text">可选注入</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建第三方-Bean"><span class="post-toc-text">创建第三方 Bean</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注入资源文件"><span class="post-toc-text">注入资源文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注入配置文件"><span class="post-toc-text">注入配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#条件注入"><span class="post-toc-text">条件注入</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-java/spring"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Spring 开发</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-06-01 15:11:57" datetime="2021-06-01T07:11:57.000Z"  itemprop="datePublished">2021-06-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h2><p><code>IoC</code> 全称 <code>Inversion of Control</code>，直译为控制反转。又被称为依赖注入（<code>Dependency Injection</code> 或 <code>DI</code>）</p>
+<p>传统应用模式下，组件的创建（实例化）、使用和销毁都由程序员维护，非常复杂。IoC 将组件的创建交给 IoC 容器，由容器管理组件的创建、销毁。</p>
+<p>IoC 可以使用 XML 进行配置，但更推荐使用注解进行配置，因此只介绍后面一种。</p>
+<h3 id="初始代码"><a href="#初始代码" class="headerlink" title="初始代码"></a>初始代码</h3><p>首先三个组件：<code>User</code> <code>UserService</code> 和 <code>MailService</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">public</span> String email;</span><br><span class="line">    <span class="keyword">public</span> String password;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">long</span> id, String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.email = email;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其对应的 get 和 set 方法略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MailService mailService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(</span><br><span class="line">            <span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">"bob@example.com"</span>, <span class="string">"password"</span>, <span class="string">"Bob"</span>), <span class="comment">// bob</span></span><br><span class="line">            <span class="keyword">new</span> User(<span class="number">2</span>, <span class="string">"alice@example.com"</span>, <span class="string">"password"</span>, <span class="string">"Alice"</span>), <span class="comment">// alice</span></span><br><span class="line">            <span class="keyword">new</span> User(<span class="number">3</span>, <span class="string">"tom@example.com"</span>, <span class="string">"password"</span>, <span class="string">"Tom"</span>) <span class="comment">// tom</span></span><br><span class="line">    ));</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMailService</span><span class="params">(MailService mailService)</span> </span>&#123; <span class="keyword">this</span>.mailService = mailService; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">getUsers</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> users; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">register</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> maxUserId = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">            <span class="keyword">if</span> (user.getEmail().equalsIgnoreCase(email)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"email exists"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            maxUserId = Math.max(maxUserId, user.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        User user = <span class="keyword">new</span> User(maxUserId+<span class="number">1</span>, email, password, name);</span><br><span class="line">        users.add(user);</span><br><span class="line">        mailService.sendRegistrationMail(user);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">login</span><span class="params">(String email, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (User user: users) &#123;</span><br><span class="line">            <span class="keyword">if</span> (user.getEmail().equalsIgnoreCase(email) &amp;&amp; user.getPassword().equals(password)) &#123;</span><br><span class="line">                mailService.sendLoginMail(user);</span><br><span class="line">                <span class="keyword">return</span> user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"login failed."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setZoneId</span><span class="params">(ZoneId zoneId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.zoneId = zoneId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ZonedDateTime</span><br><span class="line">                .now(<span class="keyword">this</span>.zoneId)</span><br><span class="line">                .format(DateTimeFormatter.ISO_ZONED_DATE_TIME);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendRegistrationMail</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        System.err.printf(<span class="string">"Welcome, %s!\n"</span>, user.getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendLoginMail</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        System.err.printf(<span class="string">"Hi, %s! You're logged in at %s\n"</span>, user.getName(), getTime());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="装配-Bean"><a href="#装配-Bean" class="headerlink" title="装配 Bean"></a>装配 Bean</h3><h4 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h4><p>第零步，Maven 安装依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">spring.version</span>&gt;</span>5.2.3.RELEASE<span class="tag">&lt;/<span class="name">spring.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>第一步：对上面三个类都标记上 <code>@Component</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailService</span> </span>&#123;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二步，注意到 <code>UserService</code> 依赖 <code>MailService</code> 的一个实例，所以我们要在 <code>UserService</code> 定义 <code>mailService</code> 的地方标记上 <code>@Autowired</code>，把两个东西连起来。</p>
+<blockquote>
+<p>Idea 提示 <code>Field injection is not recommended</code><br>廖雪峰提示 <code>别去管 Idea 的警告。改成 method 注入，要多写好多行代码</code></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MailService mailService;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三步，在 main 函数中生成 <code>ApplicationContext</code>，这个就是 IoC 容器实例，我们可以使用 <code>getBean</code> 获得上面绑定的任何一个组件。</p>
+<p>此外，还需要加上 <code>@ComponentScan</code> 和 <code>@Configuration</code>，表示：这个类搜索当前类所在的包；这个类可以被作为 <code>AnnotationConfigApplicationContext</code> 函数的配置参数。</p>
+<blockquote>
+<p>注意这个类不能放在根目录（即 <code>/src/main/java/</code>）下，否则会扫描所有的包；放在根目录下的任何一层均可。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(Main<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        UserService userService = context.getBean(UserService<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        User user = userService.login(<span class="string">"bob@example.com"</span>, <span class="string">"password"</span>);</span><br><span class="line">        System.out.println(user.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-Bean-的作用域"><a href="#修改-Bean-的作用域" class="headerlink" title="修改 Bean 的作用域"></a>修改 Bean 的作用域</h4><p>对于Spring容器来说，当我们把一个Bean标记为@Component后，它就会自动为我们创建一个单例（Singleton），即容器初始化时创建Bean，容器关闭前销毁Bean。在容器运行期间，我们调用getBean(Class)获取到的Bean总是同一个实例。</p>
+<p>还有一种Bean，我们每次调用getBean(Class)，容器都返回一个新的实例，这种Bean称为Prototype（原型），它的生命周期显然和Singleton不同。声明一个Prototype的Bean时，需要添加一个额外的@Scope注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Scope</span>(ConfigurableBeanFactory.SCOPE_PROTOTYPE)</span><br><span class="line"><span class="comment">// or @Scope("prototype")</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailSession</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="注入-List"><a href="#注入-List" class="headerlink" title="注入 List"></a>注入 List</h4><p><code>@Autowired</code> 不仅可以注入单个实例，还可以注入多个实例组成的 List。</p>
+<p>定义验证接口和三个实现了这个接口的验证类，并对类标记 <code>Component</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(String email, String password, String name)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmailValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!email.matches(<span class="string">"^[a-z0-9]+\\@[a-z0-9]+\\.[a-z]&#123;2,10&#125;$"</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"invalid email: "</span> + email);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PasswordValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!password.matches(<span class="string">"^.&#123;6,20&#125;$"</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"invalid password"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NameValidator</span> <span class="keyword">implements</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.isBlank() || name.length() &gt; <span class="number">20</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"invalid name: "</span> + name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后定义 <code>Validators</code> 作为入口进行验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Validators</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 所有 Validator 均</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    List&lt;Validator&gt; validators;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">validate</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> validator : <span class="keyword">this</span>.validators) &#123;</span><br><span class="line">            validator.validate(email, password, name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="可选注入"><a href="#可选注入" class="headerlink" title="可选注入"></a>可选注入</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span>(required = <span class="keyword">false</span>)</span><br><span class="line">    ZoneId zoneId = ZoneId.systemDefault();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建第三方-Bean"><a href="#创建第三方-Bean" class="headerlink" title="创建第三方 Bean"></a>创建第三方 Bean</h4><p>如果一个 Bean 不在我们自己的 package 管理之内，例如 <code>ZoneId</code>，如何创建它？</p>
+<p>答案是我们自己在 <code>@Configuration</code> 类中编写一个 Java 方法创建并返回它，注意给方法标记一个 <code>@Bean</code> 注解：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ComponentScan</span></span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    <span class="comment">// 创建一个Bean:</span></span><br><span class="line">    <span class="variable">@Bean</span></span><br><span class="line">    ZoneId createZoneId() &#123;</span><br><span class="line">        <span class="selector-tag">return</span> <span class="selector-tag">ZoneId</span><span class="selector-class">.of</span>(<span class="string">"Z"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring 对标记为 <code>@Bean</code> 的方法只调用一次，因此返回的 Bean 仍然是单例。</p>
+<h3 id="注入资源文件"><a href="#注入资源文件" class="headerlink" title="注入资源文件"></a>注入资源文件</h3><p>在 Java 程序中，我们经常会读取配置文件、资源文件等。使用 Spring 容器时，我们也可以把“文件”注入进来，方便程序读取。</p>
+<p>例如，<code>AppService</code> 需要读取 <code>logo.txt</code> 这个文件，通常情况下，我们需要写很多繁琐的代码，主要是为了定位文件，打开 <code>InputStream</code>。</p>
+<p>Spring 提供了一个 <code>org.springframework.core.io.Resource</code>（注意不是 <code>javax.annotation.Resource</code>），它可以使用 <code>@Value</code> 注入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"classpath:/logo.txt"</span>)</span><br><span class="line">    <span class="keyword">private</span> Resource resource;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String logo;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> (<span class="keyword">var</span> reader = <span class="keyword">new</span> BufferedReader(</span><br><span class="line">                <span class="keyword">new</span> InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) &#123;</span><br><span class="line">            <span class="keyword">this</span>.logo = reader.lines().collect(Collectors.joining(<span class="string">"\n"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述工程结构如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">spring-ioc-resource</span></span><br><span class="line">├── <span class="selector-tag">pom</span><span class="selector-class">.xml</span></span><br><span class="line">└── <span class="selector-tag">src</span></span><br><span class="line">    └── <span class="selector-tag">main</span></span><br><span class="line">        ├── <span class="selector-tag">java</span></span><br><span class="line">        │   └── <span class="selector-tag">com</span></span><br><span class="line">        │       └── <span class="selector-tag">itranswarp</span></span><br><span class="line">        │           └── <span class="selector-tag">learnjava</span></span><br><span class="line">        │               ├── <span class="selector-tag">AppConfig</span><span class="selector-class">.java</span></span><br><span class="line">        │               └── <span class="selector-tag">AppService</span><span class="selector-class">.java</span></span><br><span class="line">        └── <span class="selector-tag">resources</span></span><br><span class="line">            └── <span class="selector-tag">logo</span><span class="selector-class">.txt</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以直接指定文件的路径，例如：<code>@Value(&quot;file:/path/to/logo.txt&quot;)</code>。但使用 <code>classpath</code> 是最简单的方式。</p>
+<p>使用 <code>Maven</code> 的标准目录结构，所有资源文件放入 <code>src/main/resources</code> 即可。</p>
+<h3 id="注入配置文件"><a href="#注入配置文件" class="headerlink" title="注入配置文件"></a>注入配置文件</h3><p><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1282383225552930" target="_blank" rel="noopener">注入配置 - 廖雪峰的官方网站</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@PropertySource</span>(<span class="string">"app.properties"</span>) <span class="comment">// 表示读取classpath的app.properties</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;app.zone:Z&#125;"</span>)</span><br><span class="line">    String zoneId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function">ZoneId <span class="title">createZoneId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ZoneId.of(zoneId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码读取 classpath 下的 <code>app.properties</code> 文件，然后找到 <code>zone=X</code>，令 <code>zoneId</code> 为 <code>X</code>。如果没有找到 <code>zone</code> 就设置为 <code>Z</code>。</p>
+<h3 id="条件注入"><a href="#条件注入" class="headerlink" title="条件注入"></a>条件注入</h3><p>Spring 容器可以条件注入。</p>
+<ul>
+<li><code>@Profile(&quot;test&quot;)</code> 表示在 <code>&quot;test&quot;</code> 时注入</li>
+<li><code>@Profile(&quot;!test&quot;)</code> 表示在不是 <code>&quot;test&quot;</code> 时注入</li>
+</ul>
+<p>Spring 运行时可以指定多个 <code>Profile</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">-Dspring.profiles.active</span>=test,master</span><br></pre></td></tr></table></figure>
+
+<p>也可以判断编写判断类，然后在需要条件注入的 Bean 上加 <code>@Conditional(OnSmtpEnvCondition.class)</code>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.107Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/java/spring/&title=《Spring 开发》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/java/spring/&title=《Spring 开发》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/java/spring/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 开发》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/java/spring/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/java/spring/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/java/java-and-database/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java 与数据库</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/others/something-about-tencent/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">腾讯成都游记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/java/spring/&title=《Spring 开发》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/java/spring/&title=《Spring 开发》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/java/spring/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring 开发》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/java/spring/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/java/spring/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABw0lEQVR42u3aQY6DMAwFUO5/aWY7G+i3TTJ09LxCLSIPFlZs5zjiOH9F/kv+tIcDFxd3zD1v436BM4j7O3MDLi7ufu5Vxkiur5ZPXjU34OLifi+39wK4uLj/iVte7G8TGS4ubpFbTUM5K/8ED9dquLi4A+58mfn1kv4uLi5ui3sWI9mCJIXN2QpcXNw93Dyh5KOUZAQ7Gsfi4uIu5ibjjaeiuoWKvisuLu4Cbi9hVReo3ll4YVxc3MXcZxNWcvyi14jBxcVdzc2HoJMSaDI4+VD84OLiLuD2thdJkkpaJPnEpDxWwcXFHXPng9Jk0JKPWAr9XVxc3AXcPKH0Bqh5WzbaKuHi4r6Am6eY6pA1H7sWEhkuLu5D3N4RirxwqrZXmp1dXFzcLdw86cxbJOXiChcXdyO3tzVZtw26TGe4uLgbufNpTHUMkxdaR74/wsXFHXPPYlSPeCas5GPh4uLu5OZxv+3oNTiqDRdcXNyd3LzlkaewXqulcDALFxd3C3eShpJtTZ5BPzwZFxf3ldzqsKQ3mCl3TXBxcV/G7ZU01dILFxd3P3dytKL3b7PtgouLu4VbTSW9B1UPYTzQ38XFxe1wfwBOqNhXpllQhwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

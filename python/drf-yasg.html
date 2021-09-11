@@ -1,0 +1,218 @@
+<hr>
+<p>title: drf-yasg —— Django REST Framework 文档生成<br>date: 2021-1-24 18:20:23<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>RESTful</li>
+<li>后端<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<p>前两篇：<a href="../django-study-notes">Django 学习笔记</a> | <a href="../django-rest-framework-study-notes">Dango REST Framework 学习笔记</a></p>
+<p>文档对于后端开发是相当重要，即使是一个人写前后端，如果不写文档，可能前天写的接口今天又不知道了。而且，测试部分是基于文档进行编写的，上过软件工程课程的同学应该都有了解。足以看出文档对后端开发的重要性。</p>
+<p>对于 Django REST Framework，也有文档生成的工具。<a href="https://www.cnblogs.com/wangyingblock/p/11103754.html" target="_blank" rel="noopener">django-rest-swagger</a> 就是一款，但是它已经不支持 Django 3.0 了。Django 3.12 可以改用 <strong>drf-yasg: Django REST Framwork Yet Another Swagger Generator</strong>。</p>
+<p><a href="https://github.com/axnsan12/drf-yasg" target="_blank" rel="noopener">GitHub</a> | <a href="https://drf-yasg.readthedocs.io/" target="_blank" rel="noopener">Read the Docs</a> | <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend" target="_blank" rel="noopener">我使用 drf-ysag 编写的开源项目</a></p>
+<h2 id="drf-yasg-安装及全局配置"><a href="#drf-yasg-安装及全局配置" class="headerlink" title="drf-yasg 安装及全局配置"></a>drf-yasg 安装及全局配置</h2><p>安装以及这个<a href="https://drf-yasg.readthedocs.io/en/stable/readme.html#usage" target="_blank" rel="noopener">官方文档</a>非常详细的描述了，我就不多说了。</p>
+<p>配置好并运行 Django 项目以后，就可以使用浏览器访问 <code>/swagger/</code> 和 <code>/redoc/</code> （链接取决于你的 <code>urls</code> 的配置）看到两种风格的文档了。我个人比较喜欢 Swagger 的，所以下面均用 Swagger 文档的界面作截图。</p>
+<p><img src="../../images/841d0d174343f08dbca1de4bd30c2e3178712fb0e1c0c9b306a4ac1dca857b83.png" alt="Swagger"></p>
+<p>另外，我个人更喜欢在 Parameters 和 Response 的地方默认展示 <code>Example Value</code> 而不是 <code>Model</code>，所以各位可以在 <code>&lt;project_name&gt;/settings.py</code> 中添加下面几行：</p>
+<pre><code class="py">SWAGGER_SETTINGS = {
+    &#39;DEFAULT_MODEL_RENDERING&#39;: &#39;example&#39;
+}
+</code></pre>
+<p><img src="../../images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="默认展示 Example Value"></p>
+<h2 id="drf-yasg-使用方法"><a href="#drf-yasg-使用方法" class="headerlink" title="drf-yasg 使用方法"></a>drf-yasg 使用方法</h2><p>但是 drf-yasg 的使用方法并不详细。。。。</p>
+<p>于是继续 Google 看到了另外一篇文章：<a href="https://zoejoyuliao.medium.com/%E8%87%AA%E5%AE%9A%E7%BE%A9-drf-yasg-%E7%9A%84-swagger-%E6%96%87%E6%AA%94-%E4%BB%A5-get-post-%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3%E7%82%BA%E4%BE%8B-eeecd922059b" target="_blank" rel="noopener">自定義 drf-yasg 的 Swagger 文檔— 以 GET、POST、檔案上傳為例</a>，简单了解了一下。</p>
+<p>之后再去怼<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener">文档</a>，了解了更多的方法。</p>
+<h3 id="为-View-的文档添加摘要和说明"><a href="#为-View-的文档添加摘要和说明" class="headerlink" title="为 View 的文档添加摘要和说明"></a>为 View 的文档添加摘要和说明</h3><p>Swagger 的方法是使用 <code>drf_yasg.utils.swagger_auto_schema</code> 作为装饰器修饰每个视图。</p>
+<ol>
+<li>可以装饰 Django 风格的 <code>View</code>：</li>
+</ol>
+<pre><code class="py">from drf_yasg.utils import swagger_auto_schema
+
+@swagger_auto_schema(
+    method=&#39;POST&#39;,
+    operation_summary=&#39;注册新用户&#39;,
+    operation_description=&#39;成功返回 201\n&#39;
+                          &#39;失败（参数错误或不符合要求）返回 400&#39;,
+)
+@api_view([&#39;POST&#39;])
+def signup(request: WSGIRequest) -&gt; Response:
+    register_serializer = UserRegisterSerializer(data=request.data)
+    if register_serializer.is_valid():
+        u = register_serializer.save()
+        user_serializer = UserSerializer(u)
+        return Response(user_serializer.data, status=status.HTTP_201_CREATED)
+    return Response(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+</code></pre>
+<p><img src="../../images/1653e072b67fc532a381aecb0f55662a83b9adbc6016cfaf5b69efd7a3248874.png" alt="对 View 进行装饰"></p>
+<ol start="2">
+<li>也可以对 <code>APIView</code> 的 <code>post</code> <code>get</code> 等函数进行装饰：</li>
+</ol>
+<pre><code class="py">class ActivityCheckInView(APIView):
+    @swagger_auto_schema(
+        operation_summary=&#39;用户签到&#39;,
+        operation_description=&#39;可能会有以下情况：\n&#39;
+                              &#39;1. 签到成功，用户经验+10，每位管理员经验+50，返回 200\n&#39;
+                              &#39;2. 活动不存在，返回 404\n&#39;
+                              &#39;3. POST 数据不包含签到码，返回 400\n&#39;
+                              &#39;4. 演讲者关闭了签到，返回 403\n&#39;
+                              &#39;5. 签到码错误，返回 403\n&#39;
+                              &#39;注：要求登录，否则返回 403&#39;,
+        request_body=Schema_object(Schema_check_in_code),
+        responses={201: None, 403: Schema_object(Schema_detail)}
+    )
+    def post(self, request: WSGIRequest, id: int) -&gt; Response:
+        if not Activity.objects.filter(id=id):
+            return Response({&quot;detail&quot;: &quot;活动不存在&quot;}, status=status.HTTP_404_NOT_FOUND)
+        activity = Activity.objects.get(id=id)
+        if &quot;check_in_code&quot; not in request.POST:
+            return Response({&quot;detail&quot;: &quot;POST 数据不包含签到码&quot;}, status=status.HTTP_400_BAD_REQUEST)
+        if activity.datetime.date() != datetime.now().date():
+            return Response({&quot;detail&quot;: &quot;非当日活动&quot;}, status=status.HTTP_403_FORBIDDEN)
+        if not activity.check_in_open:
+            return Response({&quot;detail&quot;: &quot;演讲者已关闭签到&quot;}, status=status.HTTP_403_FORBIDDEN)
+        if request.POST[&quot;check_in_code&quot;] != activity.check_in_code:
+            return Response({&quot;detail&quot;: &quot;签到码错误&quot;}, status=status.HTTP_403_FORBIDDEN)
+
+        activity.attender.add(request.user)
+
+        return Response(status=status.HTTP_200_OK)
+</code></pre>
+<p><img src="../../images/a2583ff879543392131c9273a31758aa61ad1a9c421dffe115ce4a988684d2c5.png" alt="对 APIView 的函数进行装饰"></p>
+<ol start="3">
+<li>还可以对 <code>GeneticAPIView</code> 进行装饰：</li>
+</ol>
+<pre><code class="py">from django.utils.decorators import method_decorator
+
+@method_decorator(name=&quot;get&quot;, decorator=swagger_auto_schema(
+        operation_summary=&#39;获取沙龙信息&#39;,
+        operation_description=&#39;获取沙龙信息\n&#39;
+                              &#39;注：需要登录&#39;,
+))
+@method_decorator(name=&quot;put&quot;, decorator=swagger_auto_schema(
+    operation_summary=&#39;更新沙龙信息&#39;,
+    operation_description=&#39;应答和 PATCH 方法相同，但 PUT 要求在请求中提交所有信息，不推荐使用&#39;,
+))
+@method_decorator(name=&quot;patch&quot;, decorator=swagger_auto_schema(
+    operation_summary=&#39;更新沙龙部分信息&#39;,
+    operation_description=&#39;更新沙龙信息，成功返回 200\n&#39;
+                          &#39;如沙龙不存在，返回 404\n&#39;
+                          &#39;如更新值不合法，返回 400\n&#39;
+                          &#39;注：更新参与者名单请使用 `/users/check_in/` 或 `/users/check_in_admin/` 接口\n&#39;
+                          &#39;注：需要是沙龙演讲者或管理员，否则返回 403\n&#39;
+                          &#39;注：PATCH 方法可以只提交更新的值，也可以提交所有值&#39;,
+))
+@method_decorator(name=&quot;delete&quot;, decorator=swagger_auto_schema(
+    operation_summary=&#39;删除沙龙&#39;,
+    operation_description=&#39;删除沙龙，成功返回 204\n&#39;
+                          &#39;注：需要是沙龙演讲者或管理员，否则返回 403&#39;,
+))
+class ActivityDetailView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, IsPresenterOrAdminOrReadOnly, )
+    queryset = Activity.objects.all()
+    serializer_class = ActivitySerializer
+</code></pre>
+<p><img src="../../images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="对 GeneticAPIView 进行装饰"></p>
+<p>ActivitySerializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/activities/serializer.py#L9" target="_blank" rel="noopener">GitHub</a>。</p>
+<p>可能有的读者应该已经注意到了，对于 GeneticAPIView，Swagger 能够自动捕获其 <code>Serializer</code> 以及 <code>ModelSerializer</code> 并作为参数！除此之外，它还可以正确识别各 <code>Serializer</code> 类中的<code>read_only_fields</code>，并在请求的 Parameters 中去掉！真是太香了！</p>
+<h3 id="使用-Serializer-为-View-的文档添加-parameter-和-response"><a href="#使用-Serializer-为-View-的文档添加-parameter-和-response" class="headerlink" title="使用 Serializer 为 View 的文档添加 parameter 和 response"></a>使用 Serializer 为 View 的文档添加 parameter 和 response</h3><p>当然，对于 APIView 和 Django View，也是可以在 <code>swagger_auto_schema</code> 手动设置参数、返回值的。而如果对 GeneticAPIView 设置后，就会覆盖原来的设置。</p>
+<p>在后文，我们就不讨论修饰哪一种 View，只讨论 <code>swagger_auto_schema</code> 这个装饰器了。</p>
+<p>而后面的大部分讨论，都会围绕这个这个函数的<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener">文档</a>。</p>
+<p>对于 POST、PATCH 的放在 <code>request_body</code> 里的数据格式，可以放在 <code>request_body</code> 的参数部分，这个参数可以接收 <code>rest_framework.Serializer</code> <del>双厨狂喜</del>，或是 <code>openapi.Schema</code>。</p>
+<p><img src="../../images/e7de4b61c6eb4a287cc9dc07931cf8f6b0a70d41ecf5bbe6fbc2afccf1603ea7.png" alt="swagger_auto_schema 的 request_body"></p>
+<p><code>response</code> 的参数也是类似，只是变成了一个 dict，因为每种 <code>response body</code> 应当对应一个 HTTP 状态码。</p>
+<p><img src="../../images/36cddac8d9ed12d9799b3de270d4ae11bbdbcf83029b30f13d9cec982a5fc40f.png" alt="swagger_auto_schema 的 respoonses"></p>
+<p>对于 <code>rest_framework.Serializer</code> 和 <code>openapi.Schema</code> 的用法，先从熟悉的 <code>rest_framework.Serializer</code> 说起。刚才在 GeneticAPIView 中，相信各位应该已经猜到了，它会默认将 GeneticAPIView 中的 <code>serializer_class</code> 作为 <code>request_body</code> 和 <code>response</code>。当然，我们也可以手动设置。</p>
+<pre><code class="py">@swagger_auto_schema(
+    method=&#39;POST&#39;,
+    operation_summary=&#39;注册新用户&#39;,
+    operation_description=&#39;成功返回 201\n&#39;
+                          &#39;失败（参数错误或不符合要求）返回 400&#39;,
+    request_body=UserRegisterSerializer,
+    responses={201: UserSerializer()}
+)
+@api_view([&#39;POST&#39;])
+def signup(request: WSGIRequest) -&gt; Response:
+    register_serializer = UserRegisterSerializer(data=request.data)
+    if register_serializer.is_valid():
+        u = register_serializer.save()
+        user_serializer = UserSerializer(u)
+        return Response(user_serializer.data, status=status.HTTP_201_CREATED)
+    return Response(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+</code></pre>
+<p><img src="../../images/4357603f404b9cc345d2ecfc81e0baab17575634c15cd5e9747e06f4925c548b.png" alt="手动设置 request_body 和 responses"></p>
+<p>两个 Serializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/users/serializer.py" target="_blank" rel="noopener">GitHub</a>。</p>
+<h3 id="绕开-IDE-对-200-None-的错误检测"><a href="#绕开-IDE-对-200-None-的错误检测" class="headerlink" title="绕开 IDE 对 {200: None} 的错误检测"></a>绕开 IDE 对 {200: None} 的错误检测</h3><p>文档中提到，如果 <code>responses</code> 参数中没有 <code>2xx</code> 类的，会自动添加一个 <code>200</code>（对于 <code>GET</code> <code>PUT</code> <code>PATCH</code>），或是 <code>201</code> （对于 <code>POST</code>）或 <code>204</code>（对于 <code>DELETE</code>）。要想屏蔽这个 <code>2xx</code>，只需要添加 <code>{200: None}</code>。</p>
+<p>这个 None 有用，但是并不能通过 Pycharm 的类型检测（强迫症震怒）：</p>
+<p><img src="../../images/bfd5c3dc67ed5ec61adcd26341b5a36db76331e0e2e7b7a7bb060adeff327a2d.png" alt="Pycharm 的类型检测"></p>
+<p>作为强迫症，可以定义一个 <code>Schema_none = None</code>，然后：</p>
+<p><img src="../../images/8046aa3a0ff76365598f4435bda18b56d58d14ba9ac5227a9b7bc44312abe9b2.png" alt="绕开 Pycharm 的类型检测"></p>
+<h3 id="使用-Schema-为-View-的文档添加-parameter-和-response"><a href="#使用-Schema-为-View-的文档添加-parameter-和-response" class="headerlink" title="使用 Schema 为 View 的文档添加 parameter 和 response"></a>使用 Schema 为 View 的文档添加 parameter 和 response</h3><p>如果没有使用 Serializers 而是手动处理的，也可以手动编写 Schema。</p>
+<pre><code class="py">@swagger_auto_schema(
+    method=&#39;POST&#39;,
+    operation_summary=&#39;登录&#39;,
+    operation_description=&#39;成功返回 200&#39;
+                          &#39;失败（账户或密码错误）返回 401\n&#39;
+                          &#39;注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。&#39;,
+    request_body=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+        &quot;email&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL, description=&#39;邮箱&#39;),
+        &quot;password&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;密码&#39;)
+    }),
+    responses={200: Schema_None}
+)
+</code></pre>
+<p><img src="../../images/0d72890ab7ababee02ae7bcd85083cfad2c46e1d6e70b89391d6a05c523d5a74.png" alt="手动编写的 Schema"></p>
+<p><code>openapi.Schema</code> 的 <code>type</code> 和 <code>format</code> 就不用多说了，IDE 输入 <code>openapi.TYPE_</code> 和 <code>openapi.FORMAT_</code> 就能提示，也可以去看看文档。</p>
+<hr>
+<p>emmm 文档变好看了，但是感觉代码变得又长又丑了</p>
+<p>因此，我创建了一个 <code>swagger.py</code> 专门存放这些 Schema，核心代码里面直接调用就行了。</p>
+<pre><code class="py"># swagger.py
+
+# 定义了 Array 和 Object 的简写
+def Schema_array(schema: openapi.Schema) -&gt; openapi.Schema: # 这是将一个 element 转为 Array[element] 的函数
+    return openapi.Schema(type=openapi.TYPE_ARRAY, items=schema)
+
+
+def Schema_object(*props: dict) -&gt; openapi.Schema:
+    result_properties = {}
+    for prop in props:
+        result_properties = {**prop, **result_properties} # 将两个 Dict 合为一个 Dict
+    return openapi.Schema(type=openapi.TYPE_OBJECT, properties=result_properties)
+
+
+Schema_None = None
+Schema_email = {&quot;email&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL, description=&#39;邮箱&#39;)}
+Schema_password = {&quot;password&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;密码&#39;)}
+</code></pre>
+<p>核心代码：</p>
+<pre><code class="py">@swagger_auto_schema(
+    method=&#39;POST&#39;,
+    operation_summary=&#39;登录&#39;,
+    operation_description=&#39;成功返回 200\n&#39;
+                          &#39;失败（账户或密码错误）返回 401\n&#39;
+                          &#39;注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。&#39;,
+    request_body=Schema_object(Schema_email, Schema_password),
+    responses={200: Schema_None}
+)
+</code></pre>
+<p>效果图和上面相同。简洁多了。</p>
+<p>另一个用到 Array 的例子：</p>
+<pre><code class="py">Schema_title = {&quot;title&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;沙龙标题&#39;)}
+Schema_datetime = {
+    &quot;datetime&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_DATETIME, description=&quot;日期时间&quot;)}
+Schema_location = {&quot;location&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;地点&#39;)}
+Schema_presenter_ids = {&quot;presenter&quot;: Schema_array(Schema_object(Schema_id))}
+</code></pre>
+<pre><code class="py">@method_decorator(name=&#39;post&#39;, decorator=swagger_auto_schema(
+    operation_summary=&#39;创建沙龙&#39;,
+    operation_description=&#39;成功返回 201，参数错误返回 400&#39;,
+    request_body=Schema_object(Schema_title,
+                               Schema_datetime,
+                               Schema_location,
+                               Schema_presenter_ids),
+    responses={201: ActivitySerializer()}
+))
+</code></pre>
+<p><img src="../../images/85e41ad99ec261297f8e7beed095230d2b8943e7822cd57cfdaa8570360a4989.png" alt="Parameters 中 使用 Array 的效果"></p>
+<p>有了 Array 和 Object，就可以构造所有 JSON 语法了。</p>

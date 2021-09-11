@@ -1,0 +1,32 @@
+<hr>
+<p>title: PyQt5 开发<br>date: 2020-06-01 16:00:45<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>Qt</li>
+<li>GUI<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<p>最近学 PyQt5，走了不少弯路，放几个教程和博客链接供需要的人参考。</p>
+<ul>
+<li><p>PyQt Examples（PyQt各种测试和例子） PyQt4 PyQt5，非常详尽：<a href="https://github.com/PyQt5/PyQt" target="_blank" rel="noopener">https://github.com/PyQt5/PyQt</a></p>
+</li>
+<li><p>PyQt5 入门：<a href="https://www.cnblogs.com/linyfeng/category/1546338.html" target="_blank" rel="noopener">https://www.cnblogs.com/linyfeng/category/1546338.html</a></p>
+</li>
+<li><p>PyQt Designer 设计居中可缩放的窗口：<a href="https://my.oschina.net/shadai/blog/699004" target="_blank" rel="noopener">https://my.oschina.net/shadai/blog/699004</a></p>
+</li>
+<li><p>Python 多线程访问数据库导致访问冲突的解决方法：<a href="https://www.eertime.com/archives/288.html" target="_blank" rel="noopener">https://www.eertime.com/archives/288.html</a></p>
+</li>
+<li><p>PyQt5 + matplotlib 实现画图：<a href="https://whuhan2013.github.io/blog/2017/03/28/pyqt-matplotlib-learn/" target="_blank" rel="noopener">https://whuhan2013.github.io/blog/2017/03/28/pyqt-matplotlib-learn/</a></p>
+<ul>
+<li>也可以用 Qchart 实现画统计图，或用 Qpainter 实现画图</li>
+<li>PyQt5 + Qchart 实现定时更新、自动改变画布大小的的柱状图：<a href="https://github.com/lyh543/Some-Codes/blob/master/2020/NetworkMonitor/archive/plot_dynamic_bars.py" target="_blank" rel="noopener">https://github.com/lyh543/Some-Codes/blob/master/2020/NetworkMonitor/archive/plot_dynamic_bars.py</a><ul>
+<li>参考项目 1：<a href="https://github.com/PyQt5/PyQt/blob/master/QtChart/HorizontalBarChart.py" target="_blank" rel="noopener">https://github.com/PyQt5/PyQt/blob/master/QtChart/HorizontalBarChart.py</a></li>
+<li>参考项目 2：<a href="https://github.com/PyQt5/PyQt/blob/master/QtChart/SplineChart.py" target="_blank" rel="noopener">https://github.com/PyQt5/PyQt/blob/master/QtChart/SplineChart.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><h3 id="QObject-startTimer-Timers-cannot-be-started-from-another-thread-错误"><a href="#QObject-startTimer-Timers-cannot-be-started-from-another-thread-错误" class="headerlink" title="QObject::startTimer: Timers cannot be started from another thread 错误"></a>QObject::startTimer: Timers cannot be started from another thread 错误</h3><p>在使用 QThread 建立多线程后，最好不要调用别的线程创建的实例的方法（该对象如果引入了 Timer 之类的，就会报此类错误）。</p>
+<p>正确的“调用”方法应该是使用触发器，具体方法可见 <a href="https://www.cnblogs.com/linyfeng/p/12239856.html%E3%80%82" target="_blank" rel="noopener">https://www.cnblogs.com/linyfeng/p/12239856.html。</a></p>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>编写自己的 LaTeX 模板 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="课程笔记,LaTeX">
+    <meta name="description" content="一般来说，网上的 LaTeX 模板已经足够用了，只需要会用就行了，基础语法请看LaTeX 基础。 如果想要自己编写模板，则涉及到了一些高级一点的语法。 texdoc 手册遇到不会的语法，常用自带的手册。可以使用 texdoc &lt;command&gt; 查询。 常用纸张布局 此部分源码及 PDF 见：https:&#x2F;&#x2F;github.com&#x2F;lyh543&#x2F;UESTC_LaTeX_Template&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写自己的 LaTeX 模板">
+<meta property="og:url" content="https://blog.lyh543.cn/latex/latex-making-own-template/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="一般来说，网上的 LaTeX 模板已经足够用了，只需要会用就行了，基础语法请看LaTeX 基础。 如果想要自己编写模板，则涉及到了一些高级一点的语法。 texdoc 手册遇到不会的语法，常用自带的手册。可以使用 texdoc &lt;command&gt; 查询。 常用纸张布局 此部分源码及 PDF 见：https:&#x2F;&#x2F;github.com&#x2F;lyh543&#x2F;UESTC_LaTeX_Template&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-13T08:11:55.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.111Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="课程笔记">
+<meta property="article:tag" content="LaTeX">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">编写自己的 LaTeX 模板</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">编写自己的 LaTeX 模板</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-06-13T08:11:55.000Z" itemprop="datePublished" class="page-time">
+  2020-06-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LaTeX/">LaTeX</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#texdoc-手册"><span class="post-toc-text">texdoc 手册</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用纸张布局"><span class="post-toc-text">常用纸张布局</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#页眉控制"><span class="post-toc-text">页眉控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#摘要（不分页无大标题）"><span class="post-toc-text">摘要（不分页无大标题）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改-Abstract、Reference-为中文摘要、参考文献"><span class="post-toc-text">修改 Abstract、Reference 为中文摘要、参考文献</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#中文数字、日期"><span class="post-toc-text">中文数字、日期</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#newcommand-和-newenvironment"><span class="post-toc-text">newcommand 和 newenvironment</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-latex/latex-making-own-template"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">编写自己的 LaTeX 模板</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-06-13 16:11:55" datetime="2020-06-13T08:11:55.000Z"  itemprop="datePublished">2020-06-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LaTeX/">LaTeX</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一般来说，网上的 LaTeX 模板已经足够用了，只需要会用就行了，基础语法请看<a href="../LaTeX-class-note">LaTeX 基础</a>。</p>
+<p>如果想要自己编写模板，则涉及到了一些高级一点的语法。</p>
+<h2 id="texdoc-手册"><a href="#texdoc-手册" class="headerlink" title="texdoc 手册"></a>texdoc 手册</h2><p>遇到不会的语法，常用自带的手册。可以使用 <code>texdoc &lt;command&gt;</code> 查询。</p>
+<h2 id="常用纸张布局"><a href="#常用纸张布局" class="headerlink" title="常用纸张布局"></a>常用纸张布局</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 参考 Word 默认格式</span></span><br><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">[a4paper, inner=3.18cm, outer=3.18cm, top=2.54cm, bottom=2.54cm, bindingoffset=0cm]</span><span class="string">&#123;geometry&#125;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="页眉控制"><a href="#页眉控制" class="headerlink" title="页眉控制"></a>页眉控制</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<p>注意中括号的内容的含义如下：<code>H, F</code> 页眉页脚、<code>L, C, R</code> 左中右部分、<code>O, E</code> 奇偶页。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;fancyhdr&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">fancyhead</span><span class="string">&#123;&#125;</span></span> <span class="comment">% 清空之前的格式</span></span><br><span class="line"><span class="tag">\<span class="name">fancyhead</span><span class="string">[HL]</span><span class="string">&#123;心理学漫谈结课论文&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">fancyhead</span><span class="string">[HR]</span><span class="string">&#123;\zhdate*&#123;2019/1/13&#125;</span></span>&#125;</span><br><span class="line"><span class="tag">\<span class="name">fancyfoot</span><span class="string">[FC]</span><span class="string">&#123;\thepage&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">setlength</span><span class="string">&#123;\headsep&#125;</span><span class="string">&#123;5pt&#125;</span></span> <span class="comment">% 设置页眉距</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">pagestyle</span><span class="string">&#123;fancy&#125;</span></span> <span class="comment">% 正文运用 fancy</span></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">maketitle</span></span></span><br><span class="line"><span class="tag">\<span class="name">thispagestyle</span><span class="string">&#123;fancy&#125;</span></span> <span class="comment">% 标题页默认没有页眉，这句强制添加页眉</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="摘要（不分页无大标题）"><a href="#摘要（不分页无大标题）" class="headerlink" title="摘要（不分页无大标题）"></a>摘要（不分页无大标题）</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<p>不需要 <code>\section</code> 或 <code>\chapter</code> 或 <code>\begin{abstract}</code>，直接写就行。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="tag">\<span class="name">bfseries</span></span> 摘要：&#125;随着社交网络渗透到人们生活的方方面面，刷朋友圈似乎已称为大学生生活不可缺少的一部分……</span><br><span class="line"></span><br><span class="line">&#123;<span class="tag">\<span class="name">bfseries</span></span> 关键字：&#125;朋友圈；嫉妒；心理分析</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Abstract、Reference-为中文摘要、参考文献"><a href="#修改-Abstract、Reference-为中文摘要、参考文献" class="headerlink" title="修改 Abstract、Reference 为中文摘要、参考文献"></a>修改 Abstract、Reference 为中文摘要、参考文献</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">renewcommand</span></span><span class="tag">\<span class="name">refname</span><span class="string">&#123;参考文献&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">renewcommand</span><span class="string">&#123;\abstractname&#125;</span><span class="string">&#123;\textbf&#123;\large &#123;摘\quad 要&#125;</span></span>&#125;&#125; <span class="comment">%更改摘要二字的样式</span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></span><br><span class="line"><span class="comment">% ...</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="中文数字、日期"><a href="#中文数字、日期" class="headerlink" title="中文数字、日期"></a>中文数字、日期</h2><p>参见 <code>texdoc zhnumber</code>。</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">zhdate</span><span class="string">&#123;2019/1/13&#125;</span></span> <span class="comment">% 生成 2019 年 1 月 13 日</span></span><br><span class="line"><span class="tag">\<span class="name">zhdate*</span><span class="string">&#123;2019/1/13&#125;</span></span> <span class="comment">% 生成 2019 年 1 月 13 日 星期日</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="newcommand-和-newenvironment"><a href="#newcommand-和-newenvironment" class="headerlink" title="newcommand 和 newenvironment"></a>newcommand 和 newenvironment</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">newcommand</span><span class="string">&#123;\customcmd&#125;</span><span class="string">&#123;\realthing&#125;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">newenvironment</span><span class="string">&#123;customenv&#125;</span></span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="tag">\<span class="name">customcmd</span></span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;customenv&#125;</span></span></span><br><span class="line">    <span class="comment">% ...</span></span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;customenv&#125;</span></span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.111Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/latex/latex-making-own-template/&title=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/latex/latex-making-own-template/&title=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/latex/latex-making-own-template/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/latex/latex-making-own-template/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/latex/latex-making-own-template/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/computer-science/misunderstanding-on-dsl/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">DSL 的误解（转载）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/python/pyqt/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">PyQt5 开发</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/latex/latex-making-own-template/&title=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/latex/latex-making-own-template/&title=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/latex/latex-making-own-template/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《编写自己的 LaTeX 模板》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/latex/latex-making-own-template/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/latex/latex-making-own-template/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3awW6DQAxF0fz/T1Opqy7CcJ9NouK5s4oogjlUsjy2Xy+8jt/19/fZlbO/nj1z/eSblwwZMh7LOJbrbCvre/jWOexsbzJkyNiHwYMsD5EHWOS963tkyJAhY31PGrLJJ5AhQ4aMTwdcfqWfYsqQIWM3Bg+X6xDZqY+Rz3fDWVyGDBkPZNQaA9/5/fH+hgwZMv494wjXOsjygy5PN9GuZMiQMZqRbmhNIgye/JEj7qv2XWXIkPEoRr+gvybxVmUnlMuQIWM3Bj8trl/Zb0+2WgIyZMgYykhHItI2J2lepi3PN2dxGTJkjGakpfnakERtIOMiZMuQIWMDRm0kolbcJ8fUmCRDhowNGOnoVTrO1Q/WN3RiZciQMYJBWo/pJvin4Qnlmz3IkCFjNCNtHKbH1M6RuNg8kCFDxlAGT+/SYNoJvvHghQwZMoYyakdQfpRNRyhqSaoMGTJ2YHRSwDi6l5oKFy0KGTJkjGaQBI6HY/L6WnmOlPxkyJCxG4MXvNIgSxoM6RUZMmTMZqRjFrzGxVsLvCFx8X+QIUPGaAYJbZ2jbJospqMeMmTImM3gRfl0PKKVq4appAwZMmYzjnDd27wk96OmhQwZMkYz0vC6Pvr2BzVqbQMZMmTswOBBttMG6A9hXDxNhgwZGzB4kE1HKPo1MfR8GTJkyGikhumoWTHcy5AhQ0ZptCItkNXGL2TIkLEPo1NE4yManZrfDTNuMmTIeCyjXyZLGXyLJJWUIUPGaMYP9Wci4E/PO2wAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

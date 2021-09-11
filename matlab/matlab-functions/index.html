@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MATLAB 函数 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MATLAB,最优化">
+    <meta name="description" content="收集一些好用的函数名，具体语法等用时再查文档。 常用的可以看 MATLAB 教程书籍的附录。这里放一个整理的 pdf。 统计函数向量的元素和&#x2F;矩阵的每列和&#x2F;最值&#x2F;均值123456789cumsum(A) % 累积和&#x2F;每列的累积和，即前缀和sum(A)min(A)max(A)mean(A)[x, l] &#x3D; min(A) % 顺便把最小值位置 index 给 lsum(A,2) % 矩阵的每行和（平均">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MATLAB 函数">
+<meta property="og:url" content="https://blog.lyh543.cn/matlab/matlab-functions/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="收集一些好用的函数名，具体语法等用时再查文档。 常用的可以看 MATLAB 教程书籍的附录。这里放一个整理的 pdf。 统计函数向量的元素和&#x2F;矩阵的每列和&#x2F;最值&#x2F;均值123456789cumsum(A) % 累积和&#x2F;每列的累积和，即前缀和sum(A)min(A)max(A)mean(A)[x, l] &#x3D; min(A) % 顺便把最小值位置 index 给 lsum(A,2) % 矩阵的每行和（平均">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-30T11:50:36.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.131Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="最优化">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MATLAB 函数</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MATLAB 函数</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-09-30T11:50:36.000Z" itemprop="datePublished" class="page-time">
+  2019-09-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#统计函数"><span class="post-toc-text">统计函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向量的元素和-矩阵的每列和-最值-均值"><span class="post-toc-text">向量的元素和&#x2F;矩阵的每列和&#x2F;最值&#x2F;均值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向量长度、矩阵大小"><span class="post-toc-text">向量长度、矩阵大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#列排序（返回数列、原数列元素在新数列的index）"><span class="post-toc-text">列排序（返回数列、原数列元素在新数列的index）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#find"><span class="post-toc-text">find</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#好用的函数收集"><span class="post-toc-text">好用的函数收集</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最优化、规划问题相关"><span class="post-toc-text">最优化、规划问题相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于问题的最优化"><span class="post-toc-text">基于问题的最优化</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#插值拟合相关"><span class="post-toc-text">插值拟合相关</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概率统计相关"><span class="post-toc-text">概率统计相关</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#工具箱函数"><span class="post-toc-text">工具箱函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图论"><span class="post-toc-text">图论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#绘图及图片处理"><span class="post-toc-text">绘图及图片处理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#符号编程"><span class="post-toc-text">符号编程</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-matlab/matlab-functions"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MATLAB 函数</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-09-30 19:50:36" datetime="2019-09-30T11:50:36.000Z"  itemprop="datePublished">2019-09-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>收集一些好用的函数名，具体语法等用时再查文档。</p>
+<p>常用的可以看 MATLAB 教程书籍的附录。这里放一个整理的 <a href="MATLAB%E5%87%BD%E6%95%B0%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C.pdf">pdf</a>。</p>
+<h2 id="统计函数"><a href="#统计函数" class="headerlink" title="统计函数"></a>统计函数</h2><h3 id="向量的元素和-矩阵的每列和-最值-均值"><a href="#向量的元素和-矩阵的每列和-最值-均值" class="headerlink" title="向量的元素和/矩阵的每列和/最值/均值"></a>向量的元素和/矩阵的每列和/最值/均值</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cumsum(A) <span class="comment">% 累积和/每列的累积和，即前缀和</span></span><br><span class="line">sum(A)</span><br><span class="line"><span class="built_in">min</span>(A)</span><br><span class="line"><span class="built_in">max</span>(A)</span><br><span class="line"><span class="built_in">mean</span>(A)</span><br><span class="line"></span><br><span class="line">[x, l] = <span class="built_in">min</span>(A) <span class="comment">% 顺便把最小值位置 index 给 l</span></span><br><span class="line"></span><br><span class="line">sum(A,<span class="number">2</span>) <span class="comment">% 矩阵的每行和（平均数），2 是第二维</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="向量长度、矩阵大小"><a href="#向量长度、矩阵大小" class="headerlink" title="向量长度、矩阵大小"></a>向量长度、矩阵大小</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">length</span>(V)</span><br><span class="line"><span class="built_in">size</span>(A) <span class="comment">%返回一个1x2数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="列排序（返回数列、原数列元素在新数列的index）"><a href="#列排序（返回数列、原数列元素在新数列的index）" class="headerlink" title="列排序（返回数列、原数列元素在新数列的index）"></a>列排序（返回数列、原数列元素在新数列的index）</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[B I] = <span class="built_in">sort</span>(V)</span><br><span class="line">[B I] = <span class="built_in">sort</span>(V,<span class="string">'descend'</span>) <span class="comment">%降序</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>很重要很重要！！</p>
+<p>第一行找到 v 中大于 0 的元素的下标。<br>第二行把下标矩阵作为原矩阵的下标，则可以直接筛选到对应下标的元素组成的矩阵。</p>
+<p>相当于实现了一个筛选矩阵元素的功能。可以用 <code>if</code> 改写，但是 MATLAB 中矩阵运算更快，因此能用矩阵运算就不要用 <code>if</code>。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v = [<span class="number">1</span> <span class="number">0</span> <span class="number">-3</span> <span class="number">7</span> <span class="number">-5</span>];</span><br><span class="line">idx = <span class="built_in">find</span>(v&gt;=<span class="number">0</span>);   <span class="comment">% idx == [1 2 4]</span></span><br><span class="line">v1 = v(idx);        <span class="comment">% v1 = [1 0 7]</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到，除了把下标矩阵 <code>idx</code> 传给 <code>v</code> 以外，还可以直接把 <code>v&gt;=0</code> 传给矩阵，省去了一个 <code>find</code> 的过程。</p>
+<figure class="highlight m"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v <span class="built_in">=</span> [<span class="number">1</span> <span class="number">0</span> -<span class="number">3</span> <span class="number">7</span> -<span class="number">5</span>];</span><br><span class="line">v2 <span class="built_in">=</span> v(v&gt;<span class="built_in">=</span><span class="number">0</span>); <span class="comment">% v2 = [1 0 7]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="好用的函数收集"><a href="#好用的函数收集" class="headerlink" title="好用的函数收集"></a>好用的函数收集</h2><p>（从 xls/xlsx csv txt）读写表格：<code>xlsread</code>，<code>readmatrix</code>（MATLAB R2019a 起）。</p>
+<p>注意 <code>readmatrix</code> 如不指定 <code>NumHeaderLines</code> 参数时，会自动识别并去掉行表头。写代码的时候小心。</p>
+<p>映射、map：<a href="https://ww2.mathworks.cn/help/matlab/matlab_prog/creating-a-map-object.html" target="_blank" rel="noopener"><code>containers.Map</code></a>。</p>
+<p>分段函数：<code>piecewise</code>。</p>
+<h2 id="最优化、规划问题相关"><a href="#最优化、规划问题相关" class="headerlink" title="最优化、规划问题相关"></a>最优化、规划问题相关</h2><p>求函数最小值，有一堆工具箱函数<del>不知道有什么区别，可能使用的算法不同</del>：</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数名</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单变量优化</td>
+<td><code>fminbnd()</code></td>
+<td>求一元函数最小值</td>
+</tr>
+<tr>
+<td>无约束优化</td>
+<td><code>fminsearch()</code></td>
+<td>使用无导数法计算最小值</td>
+</tr>
+<tr>
+<td></td>
+<td><code>fminunc()</code></td>
+<td>计算无约束的多变量函数的最小值</td>
+</tr>
+<tr>
+<td>有约束优化</td>
+<td><code>fmincon()</code></td>
+<td>在有线性约束下计算最小值</td>
+</tr>
+<tr>
+<td>线性规划</td>
+<td><code>linprog()</code></td>
+<td>解线性规划问题</td>
+</tr>
+<tr>
+<td>整数规划</td>
+<td><code>intlinprog()</code></td>
+<td>解整数线性规划问题</td>
+</tr>
+<tr>
+<td><a href="../genetic-algorithm#%E5%9C%A8-MATLAB-%E4%B8%AD%E8%B0%83%E7%94%A8%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95">遗传算法</a></td>
+<td><code>ga()</code></td>
+<td>包含以上所有功能，不过精度较低</td>
+</tr>
+</tbody></table>
+<h3 id="基于问题的最优化"><a href="#基于问题的最优化" class="headerlink" title="基于问题的最优化"></a>基于问题的最优化</h3><p>最优化相关的基于问题的方法 <code>Problem-Based Approach</code>：</p>
+<figure class="highlight m"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">x <span class="built_in">=</span> optimvar(<span class="string">'x'</span>,<span class="number">2</span>,<span class="string">'LowerBound'</span>,<span class="number">0</span>);</span><br><span class="line">xb <span class="built_in">=</span> optimvar(<span class="string">'xb'</span>,<span class="string">'LowerBound'</span>,<span class="number">0</span>,<span class="string">'UpperBound'</span>,<span class="number">1</span>,<span class="string">'Type'</span>,<span class="string">'integer'</span>);</span><br><span class="line">prob <span class="built_in">=</span> optimproblem(<span class="string">'Objective'</span>,-<span class="number">3</span>*x(<span class="number">1</span>)-<span class="number">2</span>*x(<span class="number">2</span>)-xb);</span><br><span class="line">cons1 <span class="built_in">=</span> sum(x) + xb <span class="built_in">&lt;=</span> <span class="number">7</span>;</span><br><span class="line">cons2 <span class="built_in">=</span> <span class="number">4</span>*x(<span class="number">1</span>) + <span class="number">2</span>*x(<span class="number">2</span>) + xb <span class="built_in">=</span><span class="built_in">=</span> <span class="number">12</span>;</span><br><span class="line">prob.Constraints.cons1 <span class="built_in">=</span> cons1;</span><br><span class="line">prob.Constraints.cons2 <span class="built_in">=</span> cons2;</span><br><span class="line"></span><br><span class="line"><span class="comment">% Convert the problem object to a problem structure.</span></span><br><span class="line">problem <span class="built_in">=</span> prob2struct(prob);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Set Options</span></span><br><span class="line">problem.options <span class="built_in">=</span> optimoptions(<span class="string">'intlinprog'</span>,<span class="string">'Display'</span>,<span class="string">"off"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">% Solve the resulting problem structure.</span></span><br><span class="line">[sol,fval,exitflag,output] <span class="built_in">=</span> intlinprog(problem)</span><br></pre></td></tr></table></figure>
+
+<p>说白了，就是 <code>prob2struct</code> 函数能够将 <code>4*x(1) + 2*x(2) + xb == 12</code> 这样的直白的优化式子和约束条件，换为 <code>intlinprog</code> 的 <code>Aeq</code> <code>beq</code>。<br>如果使用传统的方式，这一步转化需要人工完成。<br>对于复杂的问题，这样更不容易出错。</p>
+<p>跑出来的 <code>sol</code> 是一个 1*3 向量，那么 <code>x</code> 和 <code>xb</code> 对应哪些变量呢？</p>
+<p>可以使用 <code>varindex</code>：</p>
+<figure class="highlight m"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; varindex(prob)</span><br><span class="line"></span><br><span class="line">ans <span class="built_in">=</span> </span><br><span class="line"></span><br><span class="line">  包含以下字段的 struct:</span><br><span class="line"></span><br><span class="line">    x: [<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line">    xb: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>就可以看出对应关系了。</p>
+<p>更多相关资料可查看 <a href="https://www.mathworks.com/help/optim/problem-based-approach.html" target="_blank" rel="noopener">Problem-Based Optimization Setup - MATLAB &amp; Simulink</a></p>
+<h2 id="插值拟合相关"><a href="#插值拟合相关" class="headerlink" title="插值拟合相关"></a>插值拟合相关</h2><p>该部分详解可见<a href="/MCM/self-study/interpolation-and-curve-fit/">数模自学笔记——插值和拟合</a>。</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数名</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一维插值</td>
+<td><code>interp1</code></td>
+<td></td>
+</tr>
+<tr>
+<td>二维插值</td>
+<td><code>interp2</code></td>
+<td></td>
+</tr>
+<tr>
+<td>样条插值</td>
+<td><code>csape</code></td>
+<td></td>
+</tr>
+<tr>
+<td>多项式拟合</td>
+<td><code>polyfit</code></td>
+<td>多项式值计算可使用 <code>polyval</code></td>
+</tr>
+</tbody></table>
+<h2 id="概率统计相关"><a href="#概率统计相关" class="headerlink" title="概率统计相关"></a>概率统计相关</h2><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数名</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正态概率函数</td>
+<td><code>normpdf</code></td>
+<td>pdf: Probability Density Function</td>
+</tr>
+<tr>
+<td>正态分布函数</td>
+<td><code>normcdf</code></td>
+<td>cdf: Cumulative Density Function</td>
+</tr>
+<tr>
+<td>正态下侧分位数</td>
+<td><code>norminv(p)</code></td>
+<td>返回 $x$ 满足 $\varPhi(x)=p$</td>
+</tr>
+<tr>
+<td>按正态分布生成随机数</td>
+<td><code>normrnd</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>上述函数的卡方分布版本</td>
+<td>将四个函数的 <code>norm</code> 改为 <code>chi2</code></td>
+<td>很香</td>
+</tr>
+<tr>
+<td>上述函数的均匀分布版本</td>
+<td>将四个函数的 <code>norm</code> 改为 <code>unif</code></td>
+<td></td>
+</tr>
+<tr>
+<td>上述函数的指数分布版本</td>
+<td>将四个函数的 <code>norm</code> 改为 <code>exp</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>正态均值检验、参数估计</td>
+<td><code>ttest</code></td>
+<td></td>
+</tr>
+<tr>
+<td>正态方差检验、参数估计</td>
+<td><code>vartest</code></td>
+<td></td>
+</tr>
+<tr>
+<td>总体均值差检验、参数估计</td>
+<td><code>ttest2</code></td>
+<td></td>
+</tr>
+<tr>
+<td>$\chi^2$ 拟合优度（goodness-of-fit）检验</td>
+<td><code>chi2gof</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>正态分布拟合</td>
+<td><code>normfit</code></td>
+<td>使用 Wald 检验</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>曲线拟合工具箱</td>
+<td><code>cftool</code></td>
+<td></td>
+</tr>
+<tr>
+<td>分布拟合工具箱</td>
+<td><code>distributionFitter</code></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="工具箱函数"><a href="#工具箱函数" class="headerlink" title="工具箱函数"></a>工具箱函数</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>cftool</code></td>
+<td>曲线拟合工具箱</td>
+</tr>
+<tr>
+<td><code>distributionFitter</code></td>
+<td>分布拟合工具箱</td>
+</tr>
+</tbody></table>
+<h2 id="图论"><a href="#图论" class="headerlink" title="图论"></a>图论</h2><table>
+<thead>
+<tr>
+<th>命令名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>graphallshortestpaths</code></td>
+<td>求图中所有顶点对之间的最短距离</td>
+</tr>
+<tr>
+<td><code>graphconncomp</code></td>
+<td>找无向图的连通分支，或有向图的强弱连通分支</td>
+</tr>
+<tr>
+<td><code>graphisdag</code></td>
+<td>测试有向图是否含有圈，不含圈返回1，否则返回0</td>
+</tr>
+<tr>
+<td><code>graphisomorphism</code></td>
+<td>确定两个图是否同构，同构返回1，否则返回0</td>
+</tr>
+<tr>
+<td><code>graphisspantree</code></td>
+<td>确定一个图是否是生成树，是返回1，否则返回0</td>
+</tr>
+<tr>
+<td><code>graphmaxflow</code></td>
+<td>计算有向图的最大流</td>
+</tr>
+<tr>
+<td><code>graphminspantree</code></td>
+<td>在图中找最小生成树</td>
+</tr>
+<tr>
+<td><code>graphpred2path</code></td>
+<td>把前驱顶点序列变成路径的顶点序列</td>
+</tr>
+<tr>
+<td><code>graphshortestpath</code></td>
+<td>求图中指定的一对顶点间的最短距离和最短路径</td>
+</tr>
+<tr>
+<td><code>graphtopootder</code></td>
+<td>执行有向无圈图的拓扑排序</td>
+</tr>
+<tr>
+<td><code>graphtraverse</code></td>
+<td>求从一顶点出发，所能遍历图中的顶点</td>
+</tr>
+</tbody></table>
+<h2 id="绘图及图片处理"><a href="#绘图及图片处理" class="headerlink" title="绘图及图片处理"></a>绘图及图片处理</h2><p>见<a href="../MATLAB-plot">绘图</a>。</p>
+<h2 id="符号编程"><a href="#符号编程" class="headerlink" title="符号编程"></a>符号编程</h2><p>见<a href="../MATLAB-syms">符号编程</a>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.131Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96/" rel="tag">最优化</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/matlab/matlab-functions/&title=《MATLAB 函数》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/matlab/matlab-functions/&title=《MATLAB 函数》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/matlab/matlab-functions/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MATLAB 函数》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/matlab/matlab-functions/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/matlab/matlab-functions/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/acm/network-flow/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">网络流</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/matlab/matlab/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">MATLAB 编程基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/matlab/matlab-functions/&title=《MATLAB 函数》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/matlab/matlab-functions/&title=《MATLAB 函数》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/matlab/matlab-functions/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MATLAB 函数》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/matlab/matlab-functions/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/matlab/matlab-functions/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3awY7qMAwFUP7/p5nNWzxpoNzrwEgkJysEpc3pwnJs327xuv+3kmt+r+SeyVOWFgYGxtcyksffy3W90fZz9GowMDAOYDyLYNe3Tr5pMc9+fbFnDAwMjCBdm/Fmz8XAwMBIbpdsKEG212BgYJzMyJO5FrnyUj5yFsfAwPhCRl51//vPH+lvYGBgfBVjVu5v077kv7P9/PsvBgbG1oxZKW0Ga3+thz8wMDA2ZSSBsi3ur0+oXR+YH3yDgYGxNSMJrNeby7f73pGyF0/HwMDYlJGPcK2PSrQH2iK5xMDA2I7RpnFtIzMJ1m2K+eCJGBgYBzCSTbSby4cqknTwxT4xMDAOZqw0F98VdqNwj4GBcQAjObLOmpo5dQWPgYFxGiMJcC11ZVwjCs0YGBhbM1ZSwLbE//FGKQYGxtaM5NK8qZkXy/LAXQ9bYGBgbMdoC2GzJG+l2RnBMDAwjmG0gS9PK2ekpMyHgYFxGiMf2LqVa2W0ohi5wMDAOIyRF+Xz5mVyfG0HODAwMDBWhiTWhzbqlgAGBsYxjPZ4mR9fi+GJthiHgYGxKeNerrZh8N4Q//SlYGBgbM2YFcvyW68fTfP7Y2Bg7M1YSezad5McbmfNVAwMjBMYeeBrH1mX+PNRsFnlDwMD4xjG+vBEHnaj14qBgYERB99Z4G6TxQdXYmBgHMBomwHtmMUsicyHyTAwMPZmzI6O7S3ypHDWlsDAwNiU8QN5QGqYY+z4hwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

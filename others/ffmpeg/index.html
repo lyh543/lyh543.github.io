@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>FFmpeg （萌新向） | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="急速裁剪视频（不重新编码）开始接触 ffmpeg 就是在裁剪视频长度的时候。Premier、格式工厂、Windows 照片自带的裁剪等软件都需要对视频进行重新编码。而 ffmpeg 则可以通过设置参数 -c copy，在创建视频的时候不重新编码，这样的好处是裁剪的过程基本就是文件复制的过程，CPU 不再成为性能瓶颈，SSD 上速度是真滴快。 1ffmpeg -i input.mp4 -ss 00:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg （萌新向）">
+<meta property="og:url" content="https://blog.lyh543.cn/others/ffmpeg/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="急速裁剪视频（不重新编码）开始接触 ffmpeg 就是在裁剪视频长度的时候。Premier、格式工厂、Windows 照片自带的裁剪等软件都需要对视频进行重新编码。而 ffmpeg 则可以通过设置参数 -c copy，在创建视频的时候不重新编码，这样的好处是裁剪的过程基本就是文件复制的过程，CPU 不再成为性能瓶颈，SSD 上速度是真滴快。 1ffmpeg -i input.mp4 -ss 00:">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-26T09:56:33.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.147Z">
+<meta property="article:author" content="lyh543">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">FFmpeg （萌新向）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">FFmpeg （萌新向）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-09-26T09:56:33.000Z" itemprop="datePublished" class="page-time">
+  2020-09-26
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#急速裁剪视频（不重新编码）"><span class="post-toc-text">急速裁剪视频（不重新编码）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#改变码率和分辨率"><span class="post-toc-text">改变码率和分辨率</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用-CUDA-加速重新编码软件"><span class="post-toc-text">使用 CUDA 加速重新编码软件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#下载-m3u8"><span class="post-toc-text">下载 m3u8</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-others/ffmpeg"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">FFmpeg （萌新向）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-09-26 17:56:33" datetime="2020-09-26T09:56:33.000Z"  itemprop="datePublished">2020-09-26</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="急速裁剪视频（不重新编码）"><a href="#急速裁剪视频（不重新编码）" class="headerlink" title="急速裁剪视频（不重新编码）"></a>急速裁剪视频（不重新编码）</h2><p>开始接触 <code>ffmpeg</code> 就是在裁剪视频长度的时候。Premier、格式工厂、Windows 照片自带的裁剪等软件都需要对视频进行重新编码。而 <code>ffmpeg</code> 则可以通过设置参数 <code>-c copy</code>，在创建视频的时候不重新编码，这样的好处是<strong>裁剪的过程基本就是文件复制的过程</strong>，CPU 不再成为性能瓶颈，SSD 上速度是真滴快。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4 -ss 00:01:00 -t 01:00:00 -c copy output.mp4</span><br></pre></td></tr></table></figure>
+
+<p><code>-i</code> 参数指定输入文件，<code>-ss</code> 指定开始裁剪的时间，<code>-t</code> 指定裁剪总长度，<code>-c</code> 指定编码格式。</p>
+<h2 id="改变码率和分辨率"><a href="#改变码率和分辨率" class="headerlink" title="改变码率和分辨率"></a>改变码率和分辨率</h2><ul>
+<li>限制码率：使用参数 <code>-b 2M</code> 将视频平均码率限制在 2Mbps。</li>
+<li>修改视频分辨率：使用参数 <code>-vf scale=640:480</code>，或省略一个参数 <code>-vf scale=-1:480</code>，程序将自动按比例缩放。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4 -b 2M -vf scale=-1:720 output.mp4</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，过低的码率会导致画质变低，甚至出现花屏。</p>
+<h2 id="使用-CUDA-加速重新编码软件"><a href="#使用-CUDA-加速重新编码软件" class="headerlink" title="使用 CUDA 加速重新编码软件"></a>使用 CUDA 加速重新编码软件</h2><p>查看可使用的硬件加速：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; ffmpeg -hwaccels</span><br><span class="line">:: 略过一堆输出</span><br><span class="line">Hardware acceleration methods:</span><br><span class="line">cuda</span><br><span class="line">dxva2</span><br><span class="line">qsv</span><br><span class="line">d3d11va</span><br><span class="line">vulkan</span><br></pre></td></tr></table></figure>
+
+<p>这里由于使用的是 N 卡，于是确定使用 <code>cuda</code>。</p>
+<p>确定编码格式和对应的编码器，带了 <code>nv</code> 的基本就是 NVIDIA 的编码/解码器：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; ffmpeg -codecs | find <span class="string">"nv"</span></span><br><span class="line">:: 略过一堆输出</span><br><span class="line"> D.V.L. dsicinvideo          Delphine Software International CIN video</span><br><span class="line"> DEV.LS h264                 H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (decoders: h264 h264_qsv h264_cuvid ) (encoders: libx264 libx264rgb h264_amf h264_nvenc h264_qsv nvenc nvenc_h264 )</span><br><span class="line"> DEV.L. hevc                 H.265 / HEVC (High Efficiency Video Coding) (decoders: hevc hevc_qsv hevc_cuvid ) (encoders: libx265 nvenc_hevc hevc_amf hevc_nvenc hevc_qsv )</span><br><span class="line"> D.V.L. idcin                id Quake II CIN video (decoders: idcinvideo )</span><br><span class="line"> D.VIL. wnv1                 Winnov WNV1</span><br><span class="line"> D.AIL. twinvq               VQF TwinVQ</span><br></pre></td></tr></table></figure>
+
+<p>我们使用 <code>H.265</code>(<code>HEVC</code>) 格式编码，用 CUDA 加速编码过程。于是选择使用 <code>hevc_nvenc</code> 作为编码器。</p>
+<p>最后写命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -hwaccel cuda -i input.mp4 -c:v hevc_nvenc output.mp4</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>-c</code> 参数放在 <code>-i</code> 后，表示修改编码格式（在 <code>-i</code> 前则是解码格式）；<code>-c:v</code> 是修改视频编码格式。</p>
+<p>如果提示 Nvidia 驱动版本太低，需要更新驱动。</p>
+<h2 id="下载-m3u8"><a href="#下载-m3u8" class="headerlink" title="下载 m3u8"></a>下载 m3u8</h2><p>m3u8 是一种流媒体格式，常用于在线观看、直播等。如腾讯课堂的回看就是以这个格式提供的。</p>
+<p>网上有不少 m3u8 下载器，我一直使用的是 <a href="https://github.com/nilaoda/M3U8-Downloader" target="_blank" rel="noopener">nilaoda/M3U8-Downloader</a>。我也知道它用到了 <code>ffmpeg</code>，不过一直以为它只是做了视频合并。</p>
+<p>今天使用某 APP 时，刚开始没有找到现成的将加密 m3u8 转为 mp4 的轮子，于是自己想按照<a href="https://www.jianshu.com/p/1b0adcc7b426" target="_blank" rel="noopener">博客</a> 手写一个 shell 脚本实现。但看到最后，没想到 ffmpeg 还能一行（从网络或从本地）下载 m3u8 并转为单文件！nb！</p>
+<p>下面给出三个版本的用法（一般采用第一个就行，最快）：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不重新编码</span></span><br><span class="line">ffmpeg -allowed_extensions ALL -i <span class="string">"URL"</span> -c:v copy output.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用默认编码进行编码（应该是 h264 吧）</span></span><br><span class="line">ffmpeg -allowed_extensions ALL -i <span class="string">"URL"</span> output.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 CUDA 编码为 h265</span></span><br><span class="line">ffmpeg -allowed_extensions ALL -hwaccel cuda -i <span class="string">"URL"</span> -c:v hevc_nvenc output.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-allowed_extensions ALL</code>：m3u8 可能涉及到加密，需要读取 <code>.key</code> 秘钥文件；而 <code>ffmpeg</code> 默认不让读取媒体格式以外的格式，所以需要加这个参数允许读取所有格式；</li>
+<li><code>&quot;URL&quot;</code>：替换为本地路径或 HTTP URL 均可。也可以用 <code>wget</code> 或 <code>curl</code> 将 URL 中的 m3u8 源文件下载下来，再运行 <code>ffmpeg</code>；</li>
+<li><code>output.mp4</code>：输出文件，没什么好说的。</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.147Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/others/ffmpeg/&title=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/others/ffmpeg/&title=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/others/ffmpeg/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/others/ffmpeg/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/others/ffmpeg/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/mcm/cumcm-oral-defenses/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">数模国赛答辩相关</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/computer-science/remote-procedure-call/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">远程过程调用（Remote Procedure Call）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/others/ffmpeg/&title=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/others/ffmpeg/&title=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/others/ffmpeg/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《FFmpeg （萌新向）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/others/ffmpeg/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/others/ffmpeg/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByElEQVR42u3awWoDMQwE0Pz/T6fQU6Dgzsi12cLzKSTt7tuLkDT7esXn/X3W33x+/3nWf/M6cXBxcbe57+VZ437+uv7f9ee1ARcX9z43R+RlaEb/xYaLi/swbt7c5GULFxf3v3OLRiR4DFxc3Odzk+EnWXbki4/jsxouLu4Gt12Ynvh8cL+Li4tbct/lyUORdmkS3R0XF/cKdxagtuHK345DuLi4d7izS+RBy/4ghIuL+wRuAl2Xv7b1WZewYpeDi4u7zU0uNws8ksKUrGXrsQcXF3ebmy9J95uSWXBSoHFxcQ9z80YnL2qzYjeMWHBxcbd3C22pypcmbYGrN7u4uLgHuG3wmT/GbKBK7oiLi3ua24YfM/osTMXFxX0ad1bUZuuPgo6Li3uFmzQc7YsaO4vRKKzFxcU9zG1jjKSEJauW2XoFFxf3JjcPWfOWpU5vksfDxcW9yM1PHpO0S5bifRBcXNzD3LagzAahduDJxzBcXNxz3J1gtS15eSE7kgPj4uKW3J0Xs3Yanfa+uLi4T+O2DdDfNk+4uLhP5ibrjNlQFL22hYuLe5G7E5AUQWkZvm6tRXBxcTe4bSOSX3pWtqJyhouLe4r7BVcklYxmyZefAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

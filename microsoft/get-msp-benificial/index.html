@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益 | 小灰灰灰灰的博客</title><meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="杂谈,Microsoft,MSP">
+    <meta name="description" content="以下内容如有不准确，请以微软妹为准。  MLSA（原为 Microsoft Student Partner，MSP）的全称为 Microsoft Learn Student Ambassadors（Microsoft Learn 学生大使），旨在寻找对创造价值、建立充满活力的社区，以及与同学分享最新技术充满热情的学生领导者。 成为一名 MLSA 后，能够获得 Office 365 订阅和 Vis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益">
+<meta property="og:url" content="https://blog.lyh543.cn/microsoft/get-msp-benificial/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="以下内容如有不准确，请以微软妹为准。  MLSA（原为 Microsoft Student Partner，MSP）的全称为 Microsoft Learn Student Ambassadors（Microsoft Learn 学生大使），旨在寻找对创造价值、建立充满活力的社区，以及与同学分享最新技术充满热情的学生领导者。 成为一名 MLSA 后，能够获得 Office 365 订阅和 Vis">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lyh543.cn/images/ff759915a58120c767fe05df322a48c6a88231012636af7c9a6fe743899ebdc4.jpg">
+<meta property="og:image" content="https://blog.lyh543.cn/images/61e986fc8912aaacd1da8631cdd010cf9078c7fd38c4425fa851598c6db09201.png">
+<meta property="og:image" content="https://blog.lyh543.cn/images/3e190283727e64cfcdd92c8a76823f1799ad0a7416ee70be330384d2c1f82ac8.png">
+<meta property="og:image" content="https://blog.lyh543.cn/images/18a6dc34ba904559bd3a48911b32fa69c07084004d7780e1dcae4e7a6378c3bf.png">
+<meta property="og:image" content="https://blog.lyh543.cn/images/de1483a0df63a8089ccd96f8bec980be8d33ba94991018935d2c7e644f97a2df.png">
+<meta property="article:published_time" content="2020-06-01T12:18:38.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.143Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="Microsoft">
+<meta property="article:tag" content="MSP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lyh543.cn/images/ff759915a58120c767fe05df322a48c6a88231012636af7c9a6fe743899ebdc4.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-06-01T12:18:38.000Z" itemprop="datePublished" class="page-time">
+  2020-06-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Microsoft/">Microsoft</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取-Office-365"><span class="post-toc-text">获取 Office 365</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#升级为-alpha-2-和-beta"><span class="post-toc-text">升级为 alpha 2 和 beta</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取-Visual-Studio-订阅"><span class="post-toc-text">获取 Visual Studio 订阅</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取-Microsoft-365-开发人员订阅-E5"><span class="post-toc-text">获取 Microsoft 365 开发人员订阅 (E5)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#获取每月-150-美元的-Azure-额度"><span class="post-toc-text">获取每月 150 美元的 Azure 额度</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-microsoft/get-msp-benificial"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-06-01 20:18:38" datetime="2020-06-01T12:18:38.000Z"  itemprop="datePublished">2020-06-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Microsoft/">Microsoft</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>以下内容如有不准确，请以微软妹为准。</p>
+</blockquote>
+<p>MLSA（原为 Microsoft Student Partner，MSP）的全称为 <a href="https://studentambassadors.microsoft.com/zh-cn" target="_blank" rel="noopener">Microsoft Learn Student Ambassadors</a>（Microsoft Learn 学生大使），旨在寻找对创造价值、建立充满活力的社区，以及与同学分享最新技术充满热情的学生领导者。</p>
+<p>成为一名 MLSA 后，能够获得 Office 365 订阅和 Visual Studio 订阅，后者包括每月 150 美元（或等值的其他币种）的 Azure 额度、微软全系产品的数个激活码、24 个含有 Office 365 订阅的子账户。晋升为 beta 级别后，还能获得 T 恤和大量的小纪念品以供举办活动。</p>
+<h2 id="获取-Office-365"><a href="#获取-Office-365" class="headerlink" title="获取 Office 365"></a>获取 Office 365</h2><p>成为 MSP 后，会获得一个 <code>@studentpartner.com</code> 邮箱（还不清楚 MSP 改名为 MLSA 后，邮箱域名是否会变化），在 MLSA 退役后邮箱会被注销。</p>
+<p>用该邮箱登录 <a href="https://office.com/%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96" target="_blank" rel="noopener">https://office.com/，就可以获取</a> Office 365 了。</p>
+<p>用该邮箱登录 <a href="https://azure.microsoft.com/" target="_blank" rel="noopener">https://azure.microsoft.com/</a> ，就能获得每年 120 刀的 Azure 额度，这是学生账户（非中国区）的权益。注意选择的时候最好不要选择中国，以免后面麻烦。</p>
+<h2 id="升级为-alpha-2-和-beta"><a href="#升级为-alpha-2-和-beta" class="headerlink" title="升级为 alpha 2 和 beta"></a>升级为 alpha 2 和 beta</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/ff759915a58120c767fe05df322a48c6a88231012636af7c9a6fe743899ebdc4.jpg" alt="MLSA 评级" title="">
+                </div>
+                <div class="image-caption">MLSA 评级</div>
+            </figure>
+
+<p>MLSA 的评级影响着权益：</p>
+<ul>
+<li>alpha 能获得 Office 365 订阅和每年 120 刀的 Azure 额度，直接使用 <code>@studentambassadors.com</code> 邮箱登录 <a href="https://azure.com/" target="_blank" rel="noopener">https://azure.com/</a> 和 <a href="https://office.com/" target="_blank" rel="noopener">https://office.com/</a> 即可获取 </li>
+<li>alpha 2 能获得 Visual Studio 订阅，包括每月 150 美元的 Azure 额度等</li>
+<li>beta 能获得 T 恤和大量的小纪念品</li>
+<li>gold 的忘了，貌似有奖杯</li>
+</ul>
+<p>晋升的大致规则如下：</p>
+<ul>
+<li>alpha 在 Microsoft Learn 完成一个 <a href="https://docs.microsoft.com/zh-cn/learn/browse/?resource_type=learning%20path" target="_blank" rel="noopener">Learning Path / 学习路径</a> 即可晋升至 alpha 2<ul>
+<li>注意是一个学习路径，而不是一个模块</li>
+<li>完成学习路径会获得奖杯（在个人配置文件的成就处可见）</li>
+<li>需在 Teams 中给出的 Microsoft Form 填写记录，一般一个晚上审核通过</li>
+</ul>
+</li>
+<li>alpha 2 举办一次至少 15 人参加的 live-event 技术分享会即可晋升至 beta</li>
+<li>beta 晋升至 gold，需成为 MSP 核心成员</li>
+</ul>
+<p>一般来说，每位新 MLSA 需尽快升至 alpha 2（一般为一周以内）；在一年内升至 beta。</p>
+<h2 id="获取-Visual-Studio-订阅"><a href="#获取-Visual-Studio-订阅" class="headerlink" title="获取 Visual Studio 订阅"></a>获取 Visual Studio 订阅</h2><p>Visual Studio 订阅在升级到 beta 以后即可获得，在 <a href="https://my.visualstudio.com/" target="_blank" rel="noopener">https://my.visualstudio.com/</a> 查看。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/61e986fc8912aaacd1da8631cdd010cf9078c7fd38c4425fa851598c6db09201.png" alt="Visual Studio 订阅" title="">
+                </div>
+                <div class="image-caption">Visual Studio 订阅</div>
+            </figure>
+
+<p>如果登录的时候出现了下图登录失败，可能是账户进行了异常操作（如申请秘钥、修改备用账户等），24 小时内会自动解封。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/3e190283727e64cfcdd92c8a76823f1799ad0a7416ee70be330384d2c1f82ac8.png" alt="账户异常行为" title="">
+                </div>
+                <div class="image-caption">账户异常行为</div>
+            </figure>
+
+<h3 id="获取-Microsoft-365-开发人员订阅-E5"><a href="#获取-Microsoft-365-开发人员订阅-E5" class="headerlink" title="获取 Microsoft 365 开发人员订阅 (E5)"></a>获取 Microsoft 365 开发人员订阅 (E5)</h3><p>在 VS 订阅的页面中点击 Microsoft 365 对应的“激活”即可。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/18a6dc34ba904559bd3a48911b32fa69c07084004d7780e1dcae4e7a6378c3bf.png" alt="激活 Microsoft 365 失败" title="">
+                </div>
+                <div class="image-caption">激活 Microsoft 365 失败</div>
+            </figure>
+
+<p>如遇到上图的情况，请添加备用账号（Alternative Account），并且完善备用账号的微软账号信息。这之后再从 VS 订阅页点击“激活”即可。</p>
+<h3 id="获取每月-150-美元的-Azure-额度"><a href="#获取每月-150-美元的-Azure-额度" class="headerlink" title="获取每月 150 美元的 Azure 额度"></a>获取每月 150 美元的 Azure 额度</h3><p>如果你的 <code>@studentpartner.com</code> 邮箱还没有在 Azure 中设定为中国，则可直接在 VS 订阅的的页面中点击 Azure 150 美元月信用额度（不要点成另一个 Azure 的权益了）对应的“激活”即可。</p>
+<p>由于我不是使用的这个方法，因此这部分也不大清楚。只需记得能选其他国家的地方，一定不要选择中国。</p>
+<p>如果你的 <code>@studentpartner.com</code> 邮箱已经在 Azure 中设定为中国，会提示这项服务不在中国提供。</p>
+<p>此时需要绑定一个微软账户作为备用账户（Alternative Account），该微软账户要求没有注册过 Azure，或区域设定不是中国。</p>
+<p>绑定好后，复制“激活”按钮指向的链接，然后在 Azure 登录备用账户。登录完成后，粘贴刚才复制的链接并访问到一下界面。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/de1483a0df63a8089ccd96f8bec980be8d33ba94991018935d2c7e644f97a2df.png" alt="激活 Azure 账户" title="">
+                </div>
+                <div class="image-caption">激活 Azure 账户</div>
+            </figure>
+
+<p>第一部分的国家不要选中国，电话随便填一个对应国家的电话即可。第二部分会重新让你再输入一个电话并且验证，此时再输入自己的中国电话号码。最后同意协议即可。</p>
+<p>如果第三部分要求绑定信用卡，请检查复制的链接是否是 “Azure 开发测试即用即付订阅” 所指向的链接，因为这个订阅要求绑定信用卡。</p>
+<!-- flag of hidden posts -->
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.143Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Microsoft/" rel="tag">Microsoft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&title=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&title=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/microsoft/get-msp-benificial/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&title=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&title=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/microsoft/get-msp-benificial/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《获取 MLSA (原 MSP) 的 Office 365 和 Visual Studio 订阅权益》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/microsoft/get-msp-benificial/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/microsoft/get-msp-benificial/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNUlEQVR42u3a226EMAxF0fn/n6avlSrCPjZUg7N5qhAlWYxk+ZLPB1/Hn+v3/bMn+TvT/y1eMmTIeC3jWF78mXTTa0y8rgwZMjZgnC2cBlaCXN9fr3t6X4YMGTJwqlfL2dJ1ZciQIWP9ujWJh2lSxMqQIUNGWsTy5I8XseST3VyLy5Ah44UMvon///uR+YYMGTJexTjCq9N64x8o3pUMGTJGM9JW2l0pWm1scPEGGTJkDGWQ162DKW+i1dJQdEeGDBmjGSSx48lfDVxr+QW/iQwZMl7OSAMuHzeST8BHnjdkmjJkyHgtg/NIK40Xuv0WngwZMnZj8A11giBPENPRggwZMvZhkBZb7Zm0fOWh+XS+IUOGjHEM0oJPl+l8GpIIXgRiGTJkjGPwV/BjXiRQpo22i88hQ4aMoYzaELE27OTU4pkRGTJkjGbUGmGdo2NkUBq8TYYMGaMZ6XEHPh7gByzSRp4MGTJ2ZvBhYTBWDENq+glkyJCxD6N/FIM30TpDBRKyZciQMZURt7eWYbRW6PJDaah3KEOGjKGMTipGRpW8kZe2+WTIkLEPo9NEq5W+afGManEZMmSMYxzhlR6bqKWe6RhVhgwZsxnPNd34FjtD08d7hzJkyPgaRlpqpse2OiPS4LiGDBkyNmB0mmhPhOlWLS5DhgwZYckat/jBuOKTLiBDhozNGDyl6x8UI4FbhgwZ+zDI8rUDW7zFlrbeZMiQsQ+jlnel20qTv0eGmjJkyHgf4weHPAPxfl+7+AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<hr>
+<p>title: MATLAB 解常微分方程<br>date: 2019-11-11 19:44:18<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>MATLAB<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<h2 id="常微分方程"><a href="#常微分方程" class="headerlink" title="常微分方程"></a>常微分方程</h2><p>常微分方程就是解 $\frac{dN}{dt}=rN, N(0)=N_0$ 这一类的方程。</p>
+<p>上式中，若 $r$ 为常量，则常微分方程的解为 $N_0 e^{rt}$。</p>
+<p>建立常微分模型的过程略。</p>
+<h2 id="MATLAB-解常微分方程的函数解"><a href="#MATLAB-解常微分方程的函数解" class="headerlink" title="MATLAB 解常微分方程的函数解"></a>MATLAB 解常微分方程的函数解</h2><p>运用 <code>desolve</code> 命令。</p>
+<p>如果使用字符串，方法如下：</p>
+<pre><code class="m">desolve(&#39;&#39;)
+</code></pre>
+<p>如果运用符号编程，方法如下：</p>
+<pre><code class="m">syms N(t) K N0 r0;
+dsolve(diff(N,t,1)==r0*(1-N/K)*N, N(0)==N0)
+pretty(ans)
+</code></pre>
+<h2 id="求解一元一阶常微分方程数值解"><a href="#求解一元一阶常微分方程数值解" class="headerlink" title="求解一元一阶常微分方程数值解"></a>求解一元一阶常微分方程数值解</h2><p>有些常微分方程能够解得显式函数，但是也有不能的。于是我们退而求其次，只需要求其数值解。</p>
+<p>更一般的是：</p>
+<p>$$<br>\frac{dy}{dt} = f(t,y) \\<br>y(t_0) = y_0<br>$$</p>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><p>局部截断误差思想：假设 $y_n$ 准确，计算 $y_{n+1}$ 的误差。</p>
+<blockquote>
+<p>设 $y_n=y(x_n)$，称 $R_{n+1} = y(x_{n+1}) - y_{n+1}$ 为局部截断误差。<br>若局部误差为 $O(h^{n+1})$，则称该方法有 $n$ 阶精度。</p>
+</blockquote>
+<h3 id="欧拉法"><a href="#欧拉法" class="headerlink" title="欧拉法"></a>欧拉法</h3><p>解法：（欧拉法，又名左矩形法）积分。</p>
+<p>显式快，但是不稳定，h需要很小；<br>隐式慢，但是稳定，h可以很大。</p>
+<p>显式的如下：</p>
+<p>$$\begin{aligned}<br>\int_{t_0}^{t_1}y’(t)dt &amp;= \int_{t_0}^{t_1}f(t,y)dt \\<br>y(t_1) - y(t_0) &amp;\approx (t_1 - t_0)f(t_0,y_0) \\<br>y(t_1) &amp;\approx y(t_0) + (t_1 - t_0)f(t_0,y_0) \qquad\cdots(1)<br>\end{aligned}$$</p>
+<p>由 (1) 式可解出 $y(t_1)$ 的近似值，并继续用 $y(t_1)$ 解出 $y(t_2),…$</p>
+<p>隐式的方法：</p>
+<p>$$\begin{aligned}<br>\int_{t_0}^{t_1}y’(t)dt &amp;= \int_{t_0}^{t_1}f(t,y)dt \\<br>y(t_1) - y(t_0) &amp;\approx (t_1 - t_0)f(t_1,y_1) \\<br>y(t_1) &amp;\approx y(t_0) + (t_1 - t_0)f(t_1,y_1) \qquad\cdots(2)<br>\end{aligned}$$</p>
+<p>同样可由 (2) 式解出 $y(t_1)$ 的近似值，并继续用 $y(t_1)$ 解出 $y(t_2),…$但问题在于对于 (2) 式右边的部分是未知的，也就是说，还要解一下 (2) 这个非线性方程。</p>
+<p>以上方法还可以解多元的情况。</p>
+<p>例题：预测战争模型</p>
+<p>$\left\{ \begin{aligned}<br>\frac{dx}{dt} &amp;= -0.15y \\<br>\frac{dy}{dt} &amp;= -0.1x \\<br>x_0 &amp;= 10000 \\<br>y_0 &amp;= 5000<br>\end{aligned} \right.$</p>
+<p>计算 t 为何值时， x 或 y 变为 0。</p>
+<pre><code class="m">dt=1/3600;
+N=10;
+size = fix(N/dt);
+a = 0.15;
+b = 0.1;
+y = zeros(1,size);
+x = zeros(1,size);
+x(1) = 10000;
+y(1) = 5000;
+for i = 2:size+1
+    x(i) = x(i-1) - a * y(i-1) * dt;
+    y(i) = y(i-1) - b * x(i-1) * dt;
+    if (x(i) &lt; 0 || y(i) &lt; 0)
+        break;
+    end
+end
+fprintf( &#39;t=%d, x=%d, y=%d&#39;,double(i-1)*dt,x(i), y(i))
+t = 1:i;
+t = t * dt;
+h = plot(t, x(1:i),&#39;r-&#39;, t, y(1:i), &#39;k-&#39;) % r 红色， k 黑色
+set(h, &#39;linewidth&#39; ,2);
+legend(&#39;x&#39;, &#39;y&#39;);
+</code></pre>
+<h3 id="梯形法"><a href="#梯形法" class="headerlink" title="梯形法"></a>梯形法</h3><p>但是不想解非线性方程。</p>
+<p>于是搞了一个近似的方法——预估——校正法（修正的欧拉法）。是二阶误差的。</p>
+<p>$$<br>y(t_1) - y(t_0) = \frac{h}{2}[f(t_0,y_0)+f(t_1, y_1)] \\<br>\Rightarrow \begin{cases}<br>\tilde{y_1} = y_0 + hf(x_0, y_0) \qquad(由 1 式) \\<br>y_1 = y_0 + \frac{h}{2}[f(t_0,y_0)+f(t_1, \tilde{y_1})]<br>\end{cases}<br>$$</p>
+<h3 id="Range-Kutta-公式"><a href="#Range-Kutta-公式" class="headerlink" title="Range-Kutta 公式"></a>Range-Kutta 公式</h3><p>简单介绍一下就行。不需要记。</p>
+<blockquote>
+<p>MATLAB 命令解常微分方程数值解：二阶 <code>ode23</code>，四阶 <code>ode45</code>。</p>
+</blockquote>
+<h3 id="ode45"><a href="#ode45" class="headerlink" title="ode45"></a>ode45</h3><p>题目是<a href="#%E6%AC%A7%E6%8B%89%E6%B3%95">上面</a>的预测战争模型。</p>
+<pre><code class="m">function testmain
+[T,Y]=ode45(@rigid,[0 6],[10000 5000]);
+
+plot(T,Y(:,1),&#39;-&#39;,T,Y(:,2),&#39;*&#39;)
+% T的每一行表示时间，Y的每一行表示两边的兵力
+
+function dy=rigid(t,y)
+a=0.15;
+b=0.1;
+dy=zeros(2,1);
+dy(1)= -a*y(2);
+dy(2)= -b*y(1);
+</code></pre>
+<h2 id="求解多元常微分方程"><a href="#求解多元常微分方程" class="headerlink" title="求解多元常微分方程"></a>求解多元常微分方程</h2><p>将 $y1,y2$ 用向量 $\vec{y}$ 来写，$f$ 用向量 $F$ 来写，数值解法和一元一阶常微分方法相同。</p>
+<h2 id="解高阶微分方程"><a href="#解高阶微分方程" class="headerlink" title="解高阶微分方程"></a>解高阶微分方程</h2><p>就是降阶。</p>
+<pre><code class="m">function dy=odefun(t,y)
+n=length(y);  dy=zeros(n,1);
+dy(1)=y(2)
+dy(2)=y(3)
+% ...
+dy(n)=f(t,y(2),y(3),...,y(n-1));
+</code></pre>

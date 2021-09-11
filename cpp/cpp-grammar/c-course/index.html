@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>C 语言程序程序设计课程 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="傅爷 nb! 短路语句12if (a &#x3D;&#x3D; &#39;q&#39;)    return;  一直没有学过去的 malloc1234int * a;a &#x3D; (int*)malloc(sizeof(int));*a &#x3D; 3;free(a);  变量的生存期C++ (11) 有四种存储变量的方案，这四种方案生成的变量有不同的生存期。  自动生存期  用法：函数（或其他语句块 local scope、函数的形式参数、名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 语言程序程序设计课程">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/c-course/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="傅爷 nb! 短路语句12if (a &#x3D;&#x3D; &#39;q&#39;)    return;  一直没有学过去的 malloc1234int * a;a &#x3D; (int*)malloc(sizeof(int));*a &#x3D; 3;free(a);  变量的生存期C++ (11) 有四种存储变量的方案，这四种方案生成的变量有不同的生存期。  自动生存期  用法：函数（或其他语句块 local scope、函数的形式参数、名">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-03-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.099Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C 语言程序程序设计课程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C 语言程序程序设计课程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-05T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-03-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#短路语句"><span class="post-toc-text">短路语句</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一直没有学过去的-malloc"><span class="post-toc-text">一直没有学过去的 malloc</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量的生存期"><span class="post-toc-text">变量的生存期</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内存分配"><span class="post-toc-text">内存分配</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后缀表达式-堆栈-计算题"><span class="post-toc-text">后缀表达式+堆栈&#x3D;计算题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多文件编写"><span class="post-toc-text">多文件编写</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#工程开发实现一个大的功能（正则匹配器）"><span class="post-toc-text">工程开发实现一个大的功能（正则匹配器）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数与过程"><span class="post-toc-text">函数与过程</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/c-course"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C 语言程序程序设计课程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-06 00:00:00" datetime="2019-03-05T16:00:00.000Z"  itemprop="datePublished">2019-03-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>傅爷 nb!</p>
+<h2 id="短路语句"><a href="#短路语句" class="headerlink" title="短路语句"></a>短路语句</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="string">'q'</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一直没有学过去的-malloc"><a href="#一直没有学过去的-malloc" class="headerlink" title="一直没有学过去的 malloc"></a>一直没有学过去的 malloc</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * a;</span><br><span class="line">a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">*a = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">free</span>(a);</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量的生存期"><a href="#变量的生存期" class="headerlink" title="变量的生存期"></a>变量的生存期</h2><p>C++ (11) 有四种存储变量的方案，这四种方案生成的变量有不同的生存期。</p>
+<ul>
+<li>自动生存期</li>
+</ul>
+<p>用法：函数（或其他语句块 <code>local scope</code>、函数的形式参数、名称空间）中声明变量。<br>生存期：函数执行过程中。</p>
+<p>这种变量之间没有联系，互不相干（同时也可以用相同的名字）。</p>
+<p>函数不能声明在代码块中，不然它就不能在其他函数中被使用，这一点也不“函数”。</p>
+<ul>
+<li>静态生存期</li>
+</ul>
+<p>静态生存期分为三种。</p>
+<ol>
+<li>external linkage（文件间可见）</li>
+</ol>
+<p>在 C++ 中，变量有两种声明（declaration）方式：<br>a. 一种是定义（或定义声明，defining declaration，definition），这种会分配内存；<br>b. 另一种是引用声明（refering declaration，declaration），不分配内存，只是引用已经存在的变量。</p>
+<p>用法：在函数外 <code>int g = 1000;</code>。</p>
+<p>在其他文件使用 <code>g</code> 时，需要加 <code>external</code> 并且不能赋初值（否则 <code>external</code> 无效，是定义声明），这便是引用声明。</p>
+<p>显然，如果某变量有引用声明，该变量就只能有一个定义声明。</p>
+<ol start="2">
+<li>internal linkage（单文件中的函数可见）</li>
+</ol>
+<p>用法：在函数外 <code>static i = 1000;</code>。</p>
+<ol start="3">
+<li>no linkage（仅在一个函数/代码块可见）</li>
+</ol>
+<p>用法：在函数内 <code>static t = 1000;</code>。</p>
+<p>这三种变量都会在程序运行过程中一直存在。由于这部分变量占用内存是不变的，程序干脆在运行的一开始，就分配一块内存来存这些静态变量。</p>
+<p>编译器还会隐式自动将静态生存期的变量按位模式初始化为 0。对于有用常量表达式赋初值的静态变量，编译器会做一些计算（注意是编译器来做，<code>sizeof</code> 也算是这种计算，另外 C++ 11 后的 <code>constexpr</code> 也被包含在内）；对于复杂的（如，需调用函数），则需要动态初始化。</p>
+<ul>
+<li>动态生存期</li>
+</ul>
+<p>用法及生存期：从 <code>new</code> 开始，直到 <code>delete</code>。</p>
+<p>这之中包含了 <code>register</code> 变量。在 C++ 11 以前，<code>register</code> 变量会使用 CPU 缓存进行存储，对于频繁访问的变量使用 <code>register</code> 能够是程序更快。<br>不过在 C++ 11 以前，也有编译器会自动进行处理，不需要手动 <code>register</code>。C++ 11 直接弃用了 <code>register</code>，把这步完全交给了编译器，<code>register</code> 更像是提示程序员，该变量会被反复使用。</p>
+<ul>
+<li>线程生存期</li>
+</ul>
+<p>并行运算使用，C++ 11 后。</p>
+<h3 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h3><p>内存空间分为四个部分：静态数据区、代码区、栈区、堆区。</p>
+<ul>
+<li>静态数据区：全局变量、static存储类的局部变量、常量</li>
+<li>代码区：函数代码</li>
+<li>栈区：auto存储类的局部变量、函数的形参、函数调用时的有关信息（如返回值）</li>
+<li>堆区：动态变量</li>
+</ul>
+<p>静态数据区和代码区的大小是固定的，而栈区和堆区的大小随程序的运行不断变化（不过操作系统会对其空间最大值有一定的限制）。</p>
+<p>编译程序隐式自动将静态生存期的变量按位模式初始化为 0，其他变量不对其进行初始化（使用空间中的已有值，因此是不固定的）</p>
+<h2 id="后缀表达式-堆栈-计算题"><a href="#后缀表达式-堆栈-计算题" class="headerlink" title="后缀表达式+堆栈=计算题"></a>后缀表达式+堆栈=计算题</h2><p>有点香</p>
+<h2 id="多文件编写"><a href="#多文件编写" class="headerlink" title="多文件编写"></a>多文件编写</h2><p>头文件里有以下部分：</p>
+<ul>
+<li>函数原型</li>
+<li>常量（<code>#define</code> 或 <code>const</code>）</li>
+<li>类和结构的定义（它们不涉及到变量，仅告诉编译器如何创建结构变量）</li>
+<li>模板的定义（它只告诉编译器如何生成函数的定义）</li>
+<li>内联函数</li>
+</ul>
+<ol>
+<li>多个头文件可以相互引用，但是反复引用前记得加 <code>#pragma once</code>，或者使用 <code>#ifndef FILENAME_H_</code> 宏定义判断是否被引用过。</li>
+<li>结构/类的声明（与其成员函数）、内联函数的定义和非内联函数的声明必须放在 <code>.h</code>，非内联函数的函数定义必须放在 <code>.cpp</code> 里（不然会造成多次编译，参考：<a href="https://www.zhihu.com/question/58547318/answer/157433980" target="_blank" rel="noopener">为什么c++要“在头文件中声明，在源文件中定义”？ - vczh的回答 - 知乎</a>）</li>
+<li>最后要在 <code>cpp</code> 文件里 <code>#include &quot;mycpp.h&quot;</code></li>
+</ol>
+<h2 id="工程开发实现一个大的功能（正则匹配器）"><a href="#工程开发实现一个大的功能（正则匹配器）" class="headerlink" title="工程开发实现一个大的功能（正则匹配器）"></a>工程开发实现一个大的功能（正则匹配器）</h2><p>先从最简单的功能做起，然后慢慢加功能（不然会手忙脚乱的）</p>
+<h2 id="函数与过程"><a href="#函数与过程" class="headerlink" title="函数与过程"></a>函数与过程</h2><p>函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>过程：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">voud <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    game[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    game[<span class="number">100</span>] = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工程开发偏向<strong>纯函数</strong></p>
+<ol>
+<li>看清函数名、参数和注释，函数过程就不重要了</li>
+<li>参数一定、返回值一定，测试方便</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.099Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&title=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&title=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/microsoft/excel/search-in-excel/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Excel 中精确搜索——用学号匹配名字</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/maths/math-girl/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">《数学女孩》笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&title=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&title=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C 语言程序程序设计课程》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/c-course/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS27jMBAFQN//0s52gCTKe01pAJPFVSAoksqLRv9er/i8/zn5/e2d7Vvqg4GB8bGM9+VJXpBcv37m9+v5t2FgYJzDSD7it/vzO5P72ydgYGBgJPck4Tj5RAwMDIx7GUn6eP1fGBgYGC0jKWLbcjRv2CXF8221OAYGxgcyZu37//P3I/MNDAyMj2K8y9OOOdsrs4OBgbE3Iw9w+eOun5annvXyBwYGxqaMtmU2C4Vtqnc9Iv3hCgYGxvGMvMWf/G+bgEZLHhgYGMcwZusUbUN/PdT+EXAxMDA2ZSQvvuvKyqLGrz8cBgbGAYw8aCaLF/eODaK3YGBgbM1ISs02Tczbdnl6mqeSGBgY+zFmjbYkCK4E5by4xcDAOIeRFJDtYsR6QlmEewwMjMMYTzTdknA8C/oYGBjnMJKEL1+PyNtteeMvWrbAwMDYmtGuSuQDg/Vi9dX+QhgYGJsyko9oU8CcvT5+wMDA2Juxvn6xUuI+VyRjYGDsx8jDaxtSZ+3+vFT+YTyAgYFxDKMtLPOVr/YHKjr/GBgYBzDuLWKT8WQ7YPgjEGNgYGzKeJfn6XJ3OHjAwMDYmrE+7GwXLNrStE0iMTAwdmXMSs02HVxJAaMCGwMD4wDGLPCtl76zID7cNcPAwDiGcW/lOLuOgYGB0Q4mZ5+eFL03TGIxMDA2Ysxa+bOVshUABgbGmYxZ6fhI0IzbdkvzDQwMjE9ifAF9oUHPxBNL3gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

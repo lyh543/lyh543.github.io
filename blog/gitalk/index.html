@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Hexo 使用 Gitalk 评论 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Hexo,Blog">
+    <meta name="description" content="2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 官方网站。 2019.11.6 更新：由于 GitHub OAuth API 限制，只能有一个回调网页Authorization callback URL，但是没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 使用 Gitalk 评论">
+<meta property="og:url" content="https://blog.lyh543.cn/blog/gitalk/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 官方网站。 2019.11.6 更新：由于 GitHub OAuth API 限制，只能有一个回调网页Authorization callback URL，但是没有">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.007Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Blog">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Hexo 使用 Gitalk 评论</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Hexo 使用 Gitalk 评论</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-09-16T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-09-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Blog/">Blog</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装步骤"><span class="post-toc-text">安装步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lable-过长的-bug"><span class="post-toc-text">lable 过长的 bug</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#无法自动为博客初始化-issue-的-bug"><span class="post-toc-text">无法自动为博客初始化 issue 的 bug</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-blog/gitalk"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Hexo 使用 Gitalk 评论</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-09-17 00:00:00" datetime="2019-09-16T16:00:00.000Z"  itemprop="datePublished">2019-09-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Blog/">Blog</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 <code>github.io</code> 以外的域名下都不能进行评论），现已迁移至 Valine。<br>Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 <a href="https://valine.js.org/notify.html" target="_blank" rel="noopener">官方网站</a>。</p>
+<p>2019.11.6 更新：由于 GitHub OAuth API 限制，只能有一个回调网页<code>Authorization callback URL</code>，但是没有限制为 <code>github.io</code>。可在 <a href="https://github.com/settings/developers" target="_blank" rel="noopener">https://github.com/settings/developers</a> 对应的地方修改。Gitalk 真香。邮件是由 GitHub 发的，稳定性比自己邮箱发会稳定得多。</p>
+</blockquote>
+<p>阅读 <a href="https://github.com/viosey/hexo-theme-material/" target="_blank" rel="noopener">Material 主题</a> 的主题配置文件以后，可以发现，Material 主题的配置文件是自带了评论区的功能，但是给的几个网站都不是很好用。（disqus国内用不了，changyan需要备案，gitment作者<del>删库跑路了</del>停更并把服务器关了）。  </p>
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>在 Material 的 github 网站的 issue 下找到了关于新增 <a href="https://github.com/gitalk/gitalk/blob/master/readme-cn.md" target="_blank" rel="noopener">gitalk</a> 的 pull request。 </p>
+<p>所以按照 <a href="https://github.com/viosey/hexo-theme-material/pull/554/files" target="_blank" rel="noopener">pull request</a> 修改、添加对应的文件就可以了。  </p>
+<p>注意在本地不应该修改<code>_config.template.yml</code>，而应该直接修改主题配置文件<code>_config.yml</code>。其他 Hexo 主题的添加方式同理。</p>
+<p>其中<code>_config.yml</code>的内容需要到 <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">Github New OAuth Application</a>注册申请。<br>申请需要填的东西有：</p>
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Application name</td>
+<td>随便写，建议填你的网站名<code>&lt;username&gt;.github.io</code></td>
+</tr>
+<tr>
+<td>Homepage URL</td>
+<td>博客域名<code>https://&lt;username&gt;.github.io/</code></td>
+</tr>
+<tr>
+<td>Application description</td>
+<td>随意，可不填</td>
+</tr>
+<tr>
+<td>Authorization callback URL</td>
+<td>博客域名<code>https://&lt;username&gt;.github.io/</code></td>
+</tr>
+</tbody></table>
+<p>register 以后会得到一个<code>Client ID</code>和<code>Client Secret</code>。需要分别填进主题配置文件。</p>
+<p><code>主题配置文件</code>需要作如下修改：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">comment:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">gitalk</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">gitment_client_secret:</span></span><br><span class="line">    <span class="attr">valine_leancloud_appId:</span></span><br><span class="line">    <span class="attr">valine_leancloud_appKey:</span></span><br><span class="line">    <span class="attr">gitalk_owner:</span> <span class="comment"># 你的github用户名，如lyh543</span></span><br><span class="line">    <span class="attr">gitalk_repo:</span> <span class="comment"># 你的github仓库名，如lyh543.github.io</span></span><br><span class="line">    <span class="attr">gitalk_client_id:</span> <span class="comment"># 刚才获取的 Client ID</span></span><br><span class="line">    <span class="attr">gitalk_client_secret :</span> <span class="comment"># 刚才获取的 Client secret</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="lable-过长的-bug"><a href="#lable-过长的-bug" class="headerlink" title="lable 过长的 bug"></a>lable 过长的 bug</h2><p>配置好并 <code>hexo d -g</code> 以后，打开一篇文章，发现“未找到相关的 issues 进行评论”。<br>使用 Github 登录以后，就会显示 <code>Error: Validation Failed</code>。</p>
+<p>去 Gitalk 的 Issues 下还真找到了这个 <a href="https://github.com/gitalk/gitalk/issues/102" target="_blank" rel="noopener">Issue</a>, 还是被置顶了的。</p>
+<p>看样子 bug 是因为 Gitalk 是默认用文章标题作 issue 的 <code>lable</code>，并以此作为该评论区的唯一识别码。<br>Github 限制了 issue 的 <code>lable</code> 长度不超过 50，如果使用中文，在链接中一个中文等于三个字符，导致 <code>label</code> 过长，无法正常生成评论。</p>
+<p>该 Issues 下有一条评论给出了<a href="https://github.com/gitalk/gitalk/issues/102#issuecomment-364930067" target="_blank" rel="noopener">一个方案</a>，使用标题的 Hash 值的前 50 位作为 <code>label</code>。</p>
+<p>我尝试以后发现仍然不行，不懂 JavaScript 的我猜测是 JavaScript 的函数名引用错了。<br>经 Google 以后，找到了一个<a href="https://github.com/viosey/hexo-theme-material/issues/622#issuecomment-373307046" target="_blank" rel="noopener">可用的 JavaScript</a>。</p>
+<h2 id="无法自动为博客初始化-issue-的-bug"><a href="#无法自动为博客初始化-issue-的-bug" class="headerlink" title="无法自动为博客初始化 issue 的 bug"></a>无法自动为博客初始化 issue 的 bug</h2><p>还有一个问题，他不会为每一篇博客自动生成 issue，也就是初始化评论。</p>
+<p>解决方案有不少，但是感觉挺麻烦的，做的话有点力不从心。在这里抛几个链接吧：</p>
+<p><a href="https://github.com/gitalk/gitalk/wiki/%E8%AF%84%E8%AE%BA%E5%88%9D%E5%A7%8B%E5%8C%96" target="_blank" rel="noopener">（<code>ruby</code>脚本，Gitalk 官方）评论初始化</a><br><a href="http://edisonxu.com/2018/10/31/gitalk-auto-init.html" target="_blank" rel="noopener">（<code>Nodejs</code>）自动初始化Gitalk评论</a><br><a href="https://draveness.me/git-comments-initialize" target="_blank" rel="noopener">（<code>ruby</code>脚本）自动初始化 Gitalk 和 Gitment 评论</a></p>
+<p>大概就这样结帖了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.007Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/blog/gitalk/&title=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/blog/gitalk/&title=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/blog/gitalk/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/blog/gitalk/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/blog/gitalk/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/blog/hexo-building-blog/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Hexo 建站</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/cpp-oop-summerize/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">C++ 面向对象编程 概述</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/blog/gitalk/&title=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/blog/gitalk/&title=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/blog/gitalk/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hexo 使用 Gitalk 评论》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/blog/gitalk/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/blog/gitalk/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3aS47CMBAFQO5/aUaaFRIT57U7NhlUXqEQnAqLVn/8eMTr+bteP7+u9+vJbsmdkwsXF7fNfQ7XmDt+fLJPbsDFxd3PrQavowd3uGMDLi7uPblzuUceCnFxcf8jN0lucHFxv4mbhKFOOXRUGi2s1XBxcRvcuYbptZ+X93dxcXEvmkpUmyD5C08+HRcXdws3ST7yxsdcRKqWQ7i4uKu51YKnWrTkL5M0VnBxcfdw83SkM0ztj21O0Li4uAu41bKnGmg6Y5hyfxcXF7fNTZKY6tbVIev45Q+7OLi4uMu4Sb7TP0gxV0SV8y9cXNzF3PHPWt3ZRrsWFxd3DzcJHFVEnh7l4ewkI8PFxb2UW+02zIWzuZCHi4v7KW5n6/4INg+UuLi4O7mdQJYMS/J7Cn8KLi7uYm4/eFVHsK0n4uLibuTOHcnKD1VUw+LJTBgXF3cLt3qQojpA7SRG5RNkuLi4bW41oCRj0eqr5nvi4uLu5FbbmiuCIC4u7j25SaDpRMc8lTlJmHBxcW/GzY9bJYjk+h/f4uLi3pKbH7DIE6PCX4CLi7uRW92omtZUE6ALajVcXNwGd65hehUi2RkXF3cj9wd53AYc9E7pyQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

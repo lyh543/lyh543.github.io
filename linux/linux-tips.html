@@ -1,0 +1,125 @@
+<hr>
+<p>title: Linux 日常命令<br>date: 2019-10-14 22:04:00<br>tags:</p>
+<ul>
+<li>ssh</li>
+<li>服务器</li>
+<li>Linux</li>
+<li>tips<br>category:</li>
+<li>Linux      </li>
+</ul>
+<hr>
+<h2 id="帮助文档"><a href="#帮助文档" class="headerlink" title="帮助文档"></a>帮助文档</h2><p>长的帮助： <code>man &lt;command&gt;</code></p>
+<p>短的帮助： <code>tldr &lt;command&gt;</code></p>
+<p>有了 <code>tldr</code> 以后，很多教程都可以删掉了。</p>
+<h2 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h2><table>
+<thead>
+<tr>
+<th>包管理器</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>apt(ubuntu20)</td>
+<td><code>sudo wget -O /etc/apt/sources.list http://mirrors.cloud.tencent.com/repo/ubuntu20_sources.list</code></td>
+</tr>
+<tr>
+<td>pip</td>
+<td><code>pip config set global.index-url http://pypi.doubanio.com/simple</code></td>
+</tr>
+<tr>
+<td>npm</td>
+<td><code>npm config set registry https://registry.npm.taobao.org</code></td>
+</tr>
+<tr>
+<td>docker</td>
+<td><code>sudo wget -O /etc/docker/daemon.json https://blog.lyh543.cn/linux/linux-tips/docker.json</code></td>
+</tr>
+<tr>
+<td>maven</td>
+<td><code>wget -O ~/.m2/settings.xml https://blog.lyh543.cn/linux/linux-tips/maven.xml</code></td>
+</tr>
+<tr>
+<td>tlmgr</td>
+<td><code>tlmgr option repository http://mirrors.ustc.edu.cn/CTAN/systems/texlive/tlnet</code></td>
+</tr>
+</tbody></table>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h3 id="当前文件夹"><a href="#当前文件夹" class="headerlink" title="当前文件夹"></a>当前文件夹</h3><p><code>pushd</code> 和 <code>popd</code> 起了 <code>cd</code> 的作用，还能自动将当前目录压栈、出栈。</p>
+<pre><code class="sh">$ pwd
+~
+
+$ pushd /tmp
+/tmp ~
+
+$ pwd
+/tmp
+
+$ popd
+~
+
+$ pwd
+~
+</code></pre>
+<p><code>pwd</code> 查看当前文件夹，<code>dirname $0</code> 查看运行的脚本所在文件夹。配合 <code>$()</code> 语法可以直接切换到当前目录：</p>
+<pre><code class="sh">cd $(dirname $0)
+</code></pre>
+<h3 id="查看文件-文件夹-磁盘的大小"><a href="#查看文件-文件夹-磁盘的大小" class="headerlink" title="查看文件/文件夹/磁盘的大小"></a>查看文件/文件夹/磁盘的大小</h3><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查看磁盘大小</td>
+<td><strong>d</strong>isplay <strong>f</strong>ilesystem</td>
+<td><code>df -h</code></td>
+</tr>
+<tr>
+<td>查看目录下的文件大小</td>
+<td><strong>l</strong>i<strong>s</strong>t</td>
+<td><code>ls -hs</code></td>
+</tr>
+<tr>
+<td>查看目录下的文件夹的大小</td>
+<td><strong>d</strong>isk <strong>u</strong>sage</td>
+<td><code>du -h --max-depth=1</code></td>
+</tr>
+</tbody></table>
+<p>以上的 <code>-h</code> 都是 <code>--human-readable</code>，不使用这个开关，则会使用一个数字表示大小（单位为 <code>KB</code>）；使用开关后，则会使用 <code>200K</code>，<code>1.8G</code> 的形式。<br>注意 <code>du</code> 如不加 <code>--max-depth</code> 参数，会统计完所有的目录。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="任务管理器"><a href="#任务管理器" class="headerlink" title="任务管理器"></a>任务管理器</h3><p>可以使用 <code>top</code> 或 <code>htop</code>（后者对鼠标、颜色支持更好）。</p>
+<h3 id="进程后台运行"><a href="#进程后台运行" class="headerlink" title="进程后台运行"></a>进程后台运行</h3><h4 id="使用-nohup"><a href="#使用-nohup" class="headerlink" title="使用 nohup"></a>使用 nohup</h4><p>使用 <code>nohup</code> 的话，一行代码就 ok：</p>
+<pre><code class="bash"># nohup &lt;command&gt; &amp; &amp;&gt;/dev/null
+nohup ssserver &amp; &amp;&gt; /dev/null
+</code></pre>
+<p>可能会看到 <code>ignore input</code> 之类的警告，不用管，<code>Ctrl+C</code> 退出前台即可，此时 <code>ssserver</code> 正在后台运行。</p>
+<h4 id="使用-pm2"><a href="#使用-pm2" class="headerlink" title="使用 pm2"></a>使用 pm2</h4><p>这个要麻烦一点，要从 <code>npm</code> 下载，所以还得先下载 <code>npm</code>。</p>
+<pre><code class="bash">apt install npm
+npm install pm2 -g
+pm2 --name s1 -f start http-server # 配置 pm2
+
+pm2 save # 可选命令，作用是保存当前的 pm2 状态
+pm2 startup # 可选命令，下次开机的时候可以恢复到 save 的状态
+
+pm2 ls   # 可选命令，列出当前 pm2 的任务
+</code></pre>
+<h4 id="使用-systemd"><a href="#使用-systemd" class="headerlink" title="使用 systemd"></a>使用 systemd</h4><p>也可以配置 systemd。</p>
+<h3 id="进程开机自启"><a href="#进程开机自启" class="headerlink" title="进程开机自启"></a>进程开机自启</h3><p>在 <code>sudo /etc/rc.local</code> 最后追加命令，然后给权限 <code>sudo chmod a+x /etc/rc.local</code> 即可。</p>
+<p>不过貌似 <code>alias</code> 语句无效，可能 <code>alias</code> 是用户级的命令，需要用户登录时执行。</p>
+<p>也可以配置 systemd。</p>
+<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="添加用户并给予-sudo-权限"><a href="#添加用户并给予-sudo-权限" class="headerlink" title="添加用户并给予 sudo 权限"></a>添加用户并给予 sudo 权限</h3><pre><code class="sh">sudo useradd &lt;newuser&gt; --disabled-password  # 禁用密码，只允许 ssh 登录
+sudo usermod -aG sudo &lt;newuser&gt;             # 将用户加入 sudo 组
+sudo -u &lt;newuser&gt;                           # 上号
+echo &gt;&gt; ~/.ssh/authorized_keys &quot;ssh-rsa xx&quot; # 添加 ssh 公钥
+</code></pre>
+<p>然后上号 <code>sudo</code> 检查一下是不是可以了。如果不行，可以试试在 <code>/etc/sudoers</code> 里面修改 <code>%sudo</code> 一行：</p>
+<pre><code class="sh">%sudo   ALL=(ALL:ALL) NOPASSWD:ALL
+</code></pre>
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h2><p>在使用 Git 和搭建服务器的时候都会用到 ssh，于是笔记也比较零散。</p>
+<p>在这里丢几个链接：</p>
+<ul>
+<li><a href="../git/#%E5%9C%A8-Linux-%E4%B8%8B-git-%E4%BD%BF%E7%94%A8-ssh-%E5%AF%86%E9%92%A5">创建 ssh 密钥并给 Git/服务器使用</a></li>
+<li><a href="../build-shadowsocks/#ssh-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95">ssh 远程登录服务器</a></li>
+<li><a href="../change-ssh-port/">修改 ssh 的端口</a></li>
+<li><a href="/microsoft/windows/setup-ssh-windows/">Windows 上使用 ssh</a></li>
+</ul>

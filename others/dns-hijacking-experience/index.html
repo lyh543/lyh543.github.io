@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>记一次 DNS 劫持 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="杂谈">
+    <meta name="description" content="今天访问 https:&#x2F;&#x2F;twitter.com&#x2F; 时，显示 SSL Error 了。 第一反应是它 SSL 证书挂掉了（因为自己经常把服务器证书搞挂）。看了一眼证书，发现是 VMWare 的。 简单搜了一下，发现不少人也遇到了这个问题：  https:&#x2F;&#x2F;blog.csdn.net&#x2F;watercatmiao&#x2F;article&#x2F;details&#x2F;85957864 https:&#x2F;&#x2F;www.bilibil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次 DNS 劫持">
+<meta property="og:url" content="https://blog.lyh543.cn/others/dns-hijacking-experience/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="今天访问 https:&#x2F;&#x2F;twitter.com&#x2F; 时，显示 SSL Error 了。 第一反应是它 SSL 证书挂掉了（因为自己经常把服务器证书搞挂）。看了一眼证书，发现是 VMWare 的。 简单搜了一下，发现不少人也遇到了这个问题：  https:&#x2F;&#x2F;blog.csdn.net&#x2F;watercatmiao&#x2F;article&#x2F;details&#x2F;85957864 https:&#x2F;&#x2F;www.bilibil">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-02-11T05:34:24.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.147Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="杂谈">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">记一次 DNS 劫持</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">记一次 DNS 劫持</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-02-11T05:34:24.000Z" itemprop="datePublished" class="page-time">
+  2021-02-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-others/dns-hijacking-experience"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">记一次 DNS 劫持</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-02-11 13:34:24" datetime="2021-02-11T05:34:24.000Z"  itemprop="datePublished">2021-02-11</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>今天访问 <a href="https://twitter.com/" target="_blank" rel="noopener">https://twitter.com/</a> 时，显示 SSL Error 了。</p>
+<p>第一反应是它 SSL 证书挂掉了（因为自己经常把服务器证书搞挂）。看了一眼证书，发现是 VMWare 的。</p>
+<p>简单搜了一下，发现不少人也遇到了这个问题：</p>
+<ul>
+<li><a href="https://blog.csdn.net/watercatmiao/article/details/85957864" target="_blank" rel="noopener">https://blog.csdn.net/watercatmiao/article/details/85957864</a></li>
+<li><a href="https://www.bilibili.com/read/cv6490694/" target="_blank" rel="noopener">https://www.bilibili.com/read/cv6490694/</a></li>
+</ul>
+<p>但是我检查了 Hosts，把 DNS 改为了 <code>8.8.8.8</code>，问题依然存在，<code>ping twitter.com</code> 依然是 <code>127.0.0.1</code>。</p>
+<p>我尝试 <code>nslookup</code> 查 DNS：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="selector-tag">nslookup</span> <span class="selector-tag">twitter</span><span class="selector-class">.com</span></span><br><span class="line">服务器:  <span class="selector-tag">groupclient</span><span class="selector-class">.qq</span><span class="selector-class">.com</span></span><br><span class="line"><span class="selector-tag">Address</span>:  <span class="selector-tag">fe80</span><span class="selector-pseudo">::1</span></span><br><span class="line"></span><br><span class="line">非权威应答:</span><br><span class="line">名称:    <span class="selector-tag">twitter</span><span class="selector-class">.com</span></span><br><span class="line"><span class="selector-tag">Addresses</span>:  2001<span class="selector-pseudo">::a2dc</span><span class="selector-pseudo">:ce2</span></span><br><span class="line">          127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span></span><br></pre></td></tr></table></figure>
+
+<p>这个 DNS <code>groupclient.qq.com</code> 非常诡异，我自己解析不了它的 ip 地址，在网上也没有搜到这个域名。</p>
+<p>不过 Address 倒提醒我了，我改了 IPv4 的 DNS，但是它走的是 IPv6 进行解析，而 IPv6 的 DNS 我并没有配置。</p>
+<p>在 <a href="https://developers.google.com/speed/public-dns/docs/using" target="_blank" rel="noopener">Google Public DNS 网站</a> 找到了 Google Public DNS IPv6 地址：</p>
+<ul>
+<li>2001:4860:4860::8888</li>
+<li>2001:4860:4860::8844</li>
+</ul>
+<p>配置好以后就 ok 了。当然国内的话，也可以用别家的，比如阿里的 <code>2400:3200::1</code>。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.147Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/others/dns-hijacking-experience/&title=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/others/dns-hijacking-experience/&title=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/others/dns-hijacking-experience/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/others/dns-hijacking-experience/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/others/dns-hijacking-experience/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/back-end/handle-cors-and-csrf/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">和 CSRF 与 CORS 斗智斗勇</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/sql/mysql-daily-backup/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">MySQL 每日备份</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/others/dns-hijacking-experience/&title=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/others/dns-hijacking-experience/&title=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/others/dns-hijacking-experience/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《记一次 DNS 劫持》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/others/dns-hijacking-experience/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/others/dns-hijacking-experience/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aW07EQAwF0ex/08MCIKGunYBiV74QzHT6NJLVfhwHfj7t53rl7285nnhkyJDxWgZ5PdlcuulrDN+bDBky9jD40gRG/nodM/neZMiQIaNG4qEzPT4ZMmTISK9r/cT4nwOuDBkyXsXglznyMnJZ5CH75lxchgwZL2SkwfEvf36kvyFDhoxXMfptSB6gH2yOypAhYzSDB7gaj6yWfvd0BRkyZAxlkNQ0HbBolcwuU+LT38iQIWM0g28l/WRayOuX/GTIkLGBQV7Pw+VdoxVB6U2GDBlDGenXeEBMM+nOMcmQIWMDo1O4TwNomsSiw5IhQ8YCRhpM+VAXObK0nPfD/mXIkLGGwUcoeFrLw3StVSBDhowNDH6ZSxPUfgIch3UZMmQMZfAmZXqN44GVt06LnQ0ZMmS8nJEWuTqNAY7vjIvJkCFjA4MX2mqpLFmzcwGVIUPGPAZPI9PxUx64+6U3GTJkzGaQsEiCbO2psX/ZgwwZMoYy+PWOl/v5EaSfRBdEGTJkLGPUCmqdgbNiQJchQ8YaBinNk/SSj1OkJbbTNWXIkDGU8QmfNLw+Udo7/T/IkCFjKKNfGku33h8aC5oEMmTIGMSojXzV2pDk/PiImAwZMrYxaoGvFmrJMaXhWIYMGTJ4ElsrqHVamzJkyJBRa2SSgQzORhdTGTJkLGDwoa67RsF4m+HmXFyGDBkvZNRSR16Sq131am+UIUPGOMYX0cXbGQyvfRsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

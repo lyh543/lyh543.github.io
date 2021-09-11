@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>C++ stringstream | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="参考博客: http:&#x2F;&#x2F;www.usidcbbs.com&#x2F;read-htm-tid-1898.html  C++ 的 iostream 输入输出流很好用，而它也有两个兄弟：fstream 和 sstream （或 stringstream），三个的用法差不多，能够触类旁通，就很舒服。本文就介绍一下 stringstream 和 iostream 的相同和不同的地方。 iostream 和 st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ stringstream">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="参考博客: http:&#x2F;&#x2F;www.usidcbbs.com&#x2F;read-htm-tid-1898.html  C++ 的 iostream 输入输出流很好用，而它也有两个兄弟：fstream 和 sstream （或 stringstream），三个的用法差不多，能够触类旁通，就很舒服。本文就介绍一下 stringstream 和 iostream 的相同和不同的地方。 iostream 和 st">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.pconline.com.cn/pcedu/empolder/gj/c/0504/pic/08cppios01.gif">
+<meta property="article:published_time" content="2019-08-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.107Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.pconline.com.cn/pcedu/empolder/gj/c/0504/pic/08cppios01.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C++ stringstream</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C++ stringstream</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-15T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#iostream-和-stringstream-的继承关系"><span class="post-toc-text">iostream 和 stringstream 的继承关系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引入头文件和定义变量"><span class="post-toc-text">引入头文件和定义变量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#istringstream-使用方法"><span class="post-toc-text">istringstream 使用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ostringstream-使用方法"><span class="post-toc-text">ostringstream 使用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#stringstream-使用方法"><span class="post-toc-text">stringstream 使用方法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/stringstream"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C++ stringstream</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-16 00:00:00" datetime="2019-08-15T16:00:00.000Z"  itemprop="datePublished">2019-08-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>参考博客: <a href="http://www.usidcbbs.com/read-htm-tid-1898.html" target="_blank" rel="noopener">http://www.usidcbbs.com/read-htm-tid-1898.html</a></p>
+</blockquote>
+<p>C++ 的 <code>iostream</code> 输入输出流很好用，而它也有两个兄弟：<code>fstream</code> 和 <code>sstream</code> （或 <code>stringstream</code>），三个的用法差不多，能够触类旁通，就很舒服。本文就介绍一下 <code>stringstream</code> 和 <code>iostream</code> 的相同和不同的地方。</p>
+<h2 id="iostream-和-stringstream-的继承关系"><a href="#iostream-和-stringstream-的继承关系" class="headerlink" title="iostream 和 stringstream 的继承关系"></a>iostream 和 stringstream 的继承关系</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.pconline.com.cn/pcedu/empolder/gj/c/0504/pic/08cppios01.gif" alt="iostream 和 stringstream" title="">
+                </div>
+                <div class="image-caption">iostream 和 stringstream</div>
+            </figure>
+
+<h2 id="引入头文件和定义变量"><a href="#引入头文件和定义变量" class="headerlink" title="引入头文件和定义变量"></a>引入头文件和定义变量</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">istringstream</span> istr;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">ostringstream</span> ostr;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">stringstream</span> sstr;</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>istringstream</code> 用于流的输入，<code>ostringstream</code> 用于流的输出，<code>stringstream</code> 用于流的输入输出。具体的区别在下面提到。</p>
+<h2 id="istringstream-使用方法"><a href="#istringstream-使用方法" class="headerlink" title="istringstream 使用方法"></a>istringstream 使用方法</h2><p><code>cin</code> 是从控制台读取数字、字符串，而 <code>istringstream</code> 就是从指定的字符串中读取数字、字符串。</p>
+<p>首先指定 <code>istringstream</code> 读取的源字符串。下两种形式是等价的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">istringstream</span> istr1;</span><br><span class="line">istr1.str(<span class="string">"12 3.1415"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">istringstream</span> <span class="title">istr2</span><span class="params">(<span class="string">"12 3.1415"</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>然后用类似于 <code>cin</code> 的语法就可以从该字符串读取数字等了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">float</span> b;</span><br><span class="line">istr1 &gt;&gt; a &gt;&gt; b; <span class="comment">//a==12, b==3.1415</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ostringstream-使用方法"><a href="#ostringstream-使用方法" class="headerlink" title="ostringstream 使用方法"></a>ostringstream 使用方法</h2><p><code>cout</code> 是把内容往屏幕上输出，而 <code>ostringstream</code> 就是把内容往字符串输出。</p>
+<p><code>ostringstream</code> 是先读入数字等内容到该 <code>ostringstream</code>，然后获取该 <code>ostringstream</code> 中存的字符串。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ostr &lt;&lt; a &lt;&lt; b;<span class="comment">//a==12, b==3.1415</span></span><br></pre></td></tr></table></figure>
+
+<p>读取 <code>ostringstream</code> 中的字符串需要使用成员函数 <code>str()</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; ostr.str() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ostr.str().length() &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p>成员函数 <code>str()</code> 返回一个 <code>string</code>。搭配头文件 <code>string</code> 就可以使用 <code>string</code> 类的各种功能。<br>注意该函数也可以在 <code>istringstream</code> 和 <code>stringstream</code> 中使用，同样是获取流中存储的字符串。</p>
+<p>ostringstream 同样可以赋初值，但是在进行输入的时候，输入的东西会先修改初值的对应部分，输出超过原长的那一部分才会追加到串的后面。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">ostringstream</span> <span class="title">ostr</span><span class="params">(<span class="string">"abc"</span>)</span></span>;</span><br><span class="line">ostr.<span class="built_in">put</span>(<span class="string">'d'</span>);</span><br><span class="line">ostr.<span class="built_in">put</span>(<span class="string">'e'</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ostr.str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">ostr &lt;&lt; <span class="string">"fg"</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ostr.str() &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码输出：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dec</span></span><br><span class="line">defg</span><br></pre></td></tr></table></figure>
+
+<h2 id="stringstream-使用方法"><a href="#stringstream-使用方法" class="headerlink" title="stringstream 使用方法"></a>stringstream 使用方法</h2><p>stringstream 就可以同时进行输入和输出了。（但是好像用的不多，故略）</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.107Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&title=《C++ stringstream》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&title=《C++ stringstream》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ stringstream》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/blog/hexo-material/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Hexo Material 主题配置</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/linux/bash/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">bash 笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&title=《C++ stringstream》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&title=《C++ stringstream》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ stringstream》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/stringstream/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3awW4DIQyE4bz/S2+v7cHszJhGwvycomwKfInkGpvPRx7Pr1E9Xb+znllZZcOAAQPGsYxnOarPuLzqb5XX673BgAHjHoayCT1o6jOvw7oxAwwYMGC0PyMFzc4XAQMGDBhRmlgdbivGVwMuDBgwDmQoh1hlST3ty76yDWdxGDBgHMjIyvffef0v/Q0YMGAcxXjMoYRatyWph9dyVzBgwBjN0AOcnpD1ZwtngAEDxmhGp5Svh90sDdXfgQEDxlSGe81UZ3SSP72d+SfDhQEDxlCGG3D1lkBWytc32vq/AQMGjKMYejhzW4xKCM6CaVk1hAEDxlCGW47XU0C9AeBufUMjEwYMGEcxsqajXtx3g29YmIMBA8ZohruhvVcxsmD90omFAQPGOMb6MOm2ATpP3a2//A4wYMC4jKFM516wyFY0slQYMGCMZnSKZbsOvTqmTA1hwIAxiOEWyLJGphtwP50BAwaMcYxdoVNPMV2qdAUEBgwYoxnZkm7qpjcD9AtkZVIIAwaMCxhhsNvaU9VDcxlwYcCAMZShlPjdsJu1EMJQDgMGjMsYnRqXe/3CbU68HGJhwIAxjvGYIyvJuUHWDf0wYMCYzehsSz+yugdUfes2BgYMGMcysqOmmw5m7QSjeAcDBowLGPrm3C26aZ8S+o0HMGDAuJKRlfXXq2RtVBgwYMBwS127UsxWCxMGDBijGcrybnHfLegrlzlgwIBxJ8M9OnaQ+sWyvUdfGDBgHMv4Aeuw5POfRw4QAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

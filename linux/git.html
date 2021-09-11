@@ -1,0 +1,514 @@
+<hr>
+<p>title: Git笔记<br>date: 2020-01-31 22:02:19<br>tags: </p>
+<ul>
+<li>Git</li>
+<li>ssh</li>
+<li>服务器</li>
+<li>Linux<br>category: </li>
+<li>Linux<br>top: false</li>
+</ul>
+<hr>
+<h2 id="常用链接"><a href="#常用链接" class="headerlink" title="常用链接"></a>常用链接</h2><p>常用命令可查表：<a href="git-cheatsheet.pdf">Git-CheatSheet</a></p>
+<p><a href="https://git-scm.com/book/zh/v2/" target="_blank" rel="noopener">官方文档</a> 也是很好的学习的手段。</p>
+<p><a href="https://help.github.com/cn/github/getting-started-with-github/github-glossary" target="_blank" rel="noopener">GitHub 词汇表</a><br><a href="https://github.github.com/training-kit/downloads/zh_CN/github-git-cheat-sheet/" target="_blank" rel="noopener">GitHub 备忘清单</a></p>
+<blockquote>
+<p>本博客参考链接：<a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600</a></p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先说一个概念：Git 是目前最流行的<strong>版本管理系统</strong>，学会 Git 几乎成了开发者的必备技能。</p>
+<p>如果你看不懂这句话，你可以从字面意思理解“版本管理系统”：多个开发者在同一个软件的基础上，开发了不同的版本，他们可以通过 Git 方便、严谨的实现上传、下载、比对、合并代码间的冲突等操作。</p>
+<p>而我们最常用的把代码放到 GitHub（或其他 Git 服务器）上的操作，可以把远程服务器也看做一个开发者（虽然他什么也不会修改），我们每次开发完以后，就会将代码上传给他。</p>
+<h2 id="Git-入门"><a href="#Git-入门" class="headerlink" title="Git 入门"></a>Git 入门</h2><h3 id="在本地-Git-新建仓库"><a href="#在本地-Git-新建仓库" class="headerlink" title="在本地 Git 新建仓库"></a>在本地 Git 新建仓库</h3><p>入门，首先就是新建一个仓库了。对于这第一个概念，<code>仓库</code>，可以从字面理解为存代码的仓库，往往将一个项目的完整代码放在一个仓库。</p>
+<p>有两种方法：一是在本地新建一个 Git 仓库，另一种是在 GitHub 上新建库，然后下载到本地。</p>
+<p>如果你打算将代码放到 GitHub 上，这里推荐第二种方法。因为在 GitHub 新建了库以后，可能会有一些初始文件、初始设置，可能和本地不同。如果使用使问题更复杂，在初学阶段，可以先跳过这些麻烦的东西。</p>
+<p>首先假设你已经在 GitHub 网站上建立了库（或者你想把别人的库下载到本机），链接为 <code>https://github.com/lyh543/lyh543.github.io/</code>。现在想要在当前文件夹中，新建 <code>lyh543.github.io</code> 文件夹，并将仓库下载到本地：</p>
+<pre><code class="bash">git clone https://github.com/lyh543/lyh543.github.io/
+</code></pre>
+<p>本地就多了一个文件夹 <code>lyh543.github.io</code>，内容和网站上的一致。</p>
+<p>你也可以使用不同于 <code>HTTPS</code> 协议的 <code>SSH</code> 协议（如果你明白这是什么），将上面 clone 的 <code>HTTPS</code> 链接修改为 <code>SSH</code> 链接即可。</p>
+<p>顺便提一下，在本地新建仓库的方法如下：</p>
+<pre><code class="bash">mkdir lyh543.github.io
+cd lyh543.github.io
+git init
+</code></pre>
+<h3 id="Git-上传三连"><a href="#Git-上传三连" class="headerlink" title="Git 上传三连"></a>Git 上传三连</h3><p>在建立好库以后，每次写完代码，就可以按照下面的<a href="#git-%E4%B8%8A%E4%BC%A0%E4%B8%89%E8%BF%9E">上传三连</a>了。如果该项目只有你的一台设备进行开发（即不会出现不同步的情况），在 99% 的情况，你只会用到以下三条语句。</p>
+<pre><code class="bash"># 如果本地、服务器端不一致，需要先 git pull，将服务器的内容拉取下来
+
+git add --all # 单文件是 git add &lt;file&gt;
+
+# git status # 这句可以看到到底 add 了哪些东西
+
+git commit -m &quot;upload 2 files.&quot; # 用文字说明这一次更新了什么东西，推荐写
+
+git push
+</code></pre>
+<p>上传完以后，你就可以看到 GitHub 上的代码已经更新。</p>
+<h4 id="一键三连"><a href="#一键三连" class="headerlink" title="一键三连"></a>一键三连</h4><p>在很熟悉三连操作以后，就会感到有点麻烦了。于是用 <code>alias</code> 实现了一个命令缩写。</p>
+<pre><code class="bash">alias commit=&#39;git_commit() { git add --all &amp;&amp; git commit -m &quot;$1&quot; &amp;&amp; git push;}; git_commit&#39;`
+</code></pre>
+<p>但是因为 <code>alias</code> 不是开机自启的，要想开机自启，可以看 <a href="../linux-daily-command/#alias-%E7%AE%80%E5%8C%96%E5%91%BD%E4%BB%A4">另一篇博客</a>，此略。</p>
+<h2 id="Git-使用-SSH-协议"><a href="#Git-使用-SSH-协议" class="headerlink" title="Git 使用 SSH 协议"></a>Git 使用 SSH 协议</h2><p>Git for Linux 如果操作 HTTPS 协议链接的仓库，是不能保存密码的，每次 push 都需要输入账号密码，很烦。（Git for Windows 貌似可以走网页认证，好像可以保存）  </p>
+<p>一个选择是 ssh 协议，使用这个协议可以保存用户信息，很方便。<br>第二个方案是走 https，不过让 Git 明文保存密码（不推荐）</p>
+<p>多 ssh 秘钥部署可以看链接：<a href="https://www.awaimai.com/2200.html" target="_blank" rel="noopener">https://www.awaimai.com/2200.html</a></p>
+<h3 id="在-Linux-下-Git-使用-ssh-密钥"><a href="#在-Linux-下-Git-使用-ssh-密钥" class="headerlink" title="在 Linux 下 Git 使用 ssh 密钥"></a>在 Linux 下 Git 使用 ssh 密钥</h3><p>大概分为三步走：</p>
+<ol>
+<li>本地生成密钥对；</li>
+<li>设置 GitHub 上的公钥；</li>
+<li>修改 Git 的 remote url 为 <code>SSH</code> 协议。</li>
+</ol>
+<h4 id="Linux-下本地生成密钥对"><a href="#Linux-下本地生成密钥对" class="headerlink" title="Linux 下本地生成密钥对"></a>Linux 下本地生成密钥对</h4><p><code>$ ssh-keygen -t rsa -C &quot;lyh543@github.com&quot;</code></p>
+<p>passphrase 可留空<del>因为太懒，不然以后每次 push 都要输这个 passphrase</del></p>
+<p><code>The key fingerprint is: SHA256:QtXXXXXXXXXXXXXXXXXXXXXXXXXXXXlk lyh543@github.com</code></p>
+<h4 id="设置-github-上的公钥"><a href="#设置-github-上的公钥" class="headerlink" title="设置 github 上的公钥"></a>设置 github 上的公钥</h4><ol>
+<li>查看你的公钥</li>
+</ol>
+<pre><code>$ cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXmp lyh543@github.com
+</code></pre>
+<ol start="2">
+<li>登陆你的<code>github</code>帐户。然后 <code>Account Settings</code> -&gt; 左栏点击 <code>SSH Keys</code> -&gt; 点击 <code>Add SSH key</code></li>
+<li>然后你复制上面的公钥内容，粘贴进“Key”文本域内。 <code>title</code>域，你随便填一个都行。</li>
+<li>完了，点击 <code>Add key</code>。</li>
+<li>测试一下这个key。</li>
+</ol>
+<pre><code class="bash">$ ssh -T git@github.com
+The authenticity of host &#39;github.com (52.74.223.119)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:nTXXXXXXXXXXXXXXXXXXXXXXX8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;github.com,52.74.223.119&#39; (RSA) to the list of known hosts.
+Hi lyh543! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+<p>看到最后一句就是OK了。</p>
+<h4 id="修改-Git-的-remote-url-从-https-改为-ssh"><a href="#修改-Git-的-remote-url-从-https-改为-ssh" class="headerlink" title="修改 Git 的 remote url 从 https 改为 ssh"></a>修改 Git 的 remote url 从 <code>https</code> 改为 <code>ssh</code></h4><p>查看当前（git仓库下的）的remote url</p>
+<pre><code># 需要到仓库根目录下
+$ git remote -v
+origin  https://github.com/lyh543/lyh543.github.io.git (fetch)
+origin  https://github.com/lyh543/lyh543.github.io.git (push)
+</code></pre>
+<p>修改 remote url</p>
+<pre><code>git remote set-url origin git@github.com:lyh543/lyh543.github.io.git
+</code></pre>
+<h3 id="题外话：把-ssh-密钥给服务器"><a href="#题外话：把-ssh-密钥给服务器" class="headerlink" title="题外话：把 ssh 密钥给服务器"></a>题外话：把 ssh 密钥给服务器</h3><p>使用 ssh 远程登录服务器的时候，每次都要输入密钥。其实也可以使用 ssh 密钥进行登录。而且甚至没有 git 这么麻烦，还要去官网上加入公钥。</p>
+<p>直接一句：</p>
+<pre><code>ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa.pub  root@192.168.x.xxx -p22
+</code></pre>
+<p>即可。</p>
+<h3 id="Windows-下-git-使用-ssh-密钥"><a href="#Windows-下-git-使用-ssh-密钥" class="headerlink" title="Windows 下 git 使用 ssh 密钥"></a>Windows 下 git 使用 ssh 密钥</h3><p>Windows 下也可以生成 ssh 密钥对，但是需要使用第三方软件：PuTTYgen，在 Tortoise Git 中自带。由于方法不同，可以在 Windows 和 Linux 使用不同的 ssh Key。</p>
+<ol>
+<li>本地生成密钥对；</li>
+<li>设置github上的公钥；</li>
+<li>设置本地git使用的密钥。</li>
+</ol>
+<h4 id="Windows-下本地生成密钥对"><a href="#Windows-下本地生成密钥对" class="headerlink" title="Windows 下本地生成密钥对"></a>Windows 下本地生成密钥对</h4><p>进入软件，点<code>Generate</code>，然后就开始生成。由于生成时的随机数据是采集鼠标指针的移动，因此务必在生成过程中移动鼠标。</p>
+<p><img src="PuTTYgen_1.jpg" alt="PuTTYgen_1"></p>
+<p>大约1分钟以后，生成完成，如图2。</p>
+<p><img src="PuTTYgen_2.jpg" alt="PuTTYgen_2"></p>
+<p>然后 <code>Save Private Key</code> 把密钥文件存下来。<br>文本框中的内容是公钥，按照<a href="#%E8%AE%BE%E7%BD%AEgithub%E4%B8%8A%E7%9A%84%E5%85%AC%E9%92%A5">上面的方法</a>设置github上的密钥。</p>
+<h4 id="设置本地-git-使用的密钥"><a href="#设置本地-git-使用的密钥" class="headerlink" title="设置本地 git 使用的密钥"></a>设置本地 git 使用的密钥</h4><p>由于笔者使用 Tortoise Git，在一个 reporisitory 中 push 的时候选中<code>自动加载 PuTTY密钥</code>即可。</p>
+<p>命令行 Git 另有实现方法。</p>
+<h3 id="Linux-Git-保存密码"><a href="#Linux-Git-保存密码" class="headerlink" title="(Linux) Git 保存密码"></a>(Linux) Git 保存密码</h3><blockquote>
+<p>参考博客：<a href="https://blog.csdn.net/xx326664162/article/details/49686241" target="_blank" rel="noopener">https://blog.csdn.net/xx326664162/article/details/49686241</a><br><a href="https://www.crifan.com/git_remember_record_user_and_password_no_need_input_again/" target="_blank" rel="noopener">https://www.crifan.com/git_remember_record_user_and_password_no_need_input_again/</a></p>
+</blockquote>
+<p>Git的凭据存储有 cache、store、manager 三种方式。可以通过</p>
+<pre><code class="bash">git config --global credential.helper store
+</code></pre>
+<p>切换。</p>
+<p>其中，如果使用 <code>store</code>，密码将被会明文保存在 <code>~/.git-credentials</code>。感觉不大好。</p>
+<p>如果使用 <code>cache</code> 密码会在内存中保存一段时间。密码永远不会被存储在磁盘中，并且默认在15分钟后从内存中清除。不过时间是可以修改的。</p>
+<p>于是，就有人想到把这个时间设置为一个月 <code>2592000</code> 。</p>
+<p>注销以后密码也会被清除，毕竟是存在内存里的。不过每次开机输一次密码也能接受。</p>
+<pre><code class="bash">git config --global credential.helper cache
+git config credential.helper &#39;cache --timeout=1000000000&#39;
+</code></pre>
+<p>还有一种在 <code>remote.url</code> 中加入自己的用户名和密码，更危险，就不表了。</p>
+<h2 id="Git-代理"><a href="#Git-代理" class="headerlink" title="Git 代理"></a>Git 代理</h2><p>经常会有挂上代理，浏览器访问 Github 快到飞起的，但是 Git Clone 却慢死的经历。awsl。</p>
+<p>以下方法收集自知乎的同一问题：<a href="https://www.zhihu.com/question/27159393/answer/141047266" target="_blank" rel="noopener">git clone一个github上的仓库，太慢，经常连接失败，但是github官网流畅访问，为什么？</a></p>
+<h3 id="Shadowsocks-对-Github-进行-HTTPS-代理"><a href="#Shadowsocks-对-Github-进行-HTTPS-代理" class="headerlink" title="Shadowsocks 对 Github 进行 HTTPS 代理"></a>Shadowsocks 对 Github 进行 HTTPS 代理</h3><pre><code class="bash">git config --global http.https://github.com.proxy socks5://127.0.0.1:1080
+git config --global https.https://github.com.proxy socks5://127.0.0.1:1080
+</code></pre>
+<p>也要注意 <code>1080</code> 是 Shadowsocks 代理的端口，可能需要根据自己的代理配置进行修改。<br>另外使用该方法以后，需要用 HTTPS 协议（而不是 SSH）进行传输。</p>
+<h3 id="ssh-代理"><a href="#ssh-代理" class="headerlink" title="ssh 代理"></a>ssh 代理</h3><h4 id="Linux-WSL-1"><a href="#Linux-WSL-1" class="headerlink" title="Linux/WSL 1"></a>Linux/WSL 1</h4><p>Linux 的 ssh 代理可以通过<a href="https://gist.github.com/chuyik/02d0d37a49edc162546441092efae6a1" target="_blank" rel="noopener">macOS 给 Git(Github) 设置代理（HTTP/SSH）</a>的方法。</p>
+<h4 id="WSL-2"><a href="#WSL-2" class="headerlink" title="WSL 2"></a>WSL 2</h4><p>注意如果是 wsl 2，因为 wsl 2 实际上是一个 Hyper-V 虚拟机，因此 Windows 上的代理如果想要被 Linux 使用，上面填 ip 的地方应该填 Windows 在 wsl 网络下的 ip（命令行输入 <code>ipconfig</code>，看到 <code>以太网适配器 vEthernet (WSL)</code> 的就是）。另外还需要代理软件“允许局域网的连接”。</p>
+<p>而且目前 wsl 2 由于是由 Hyper-V 实现的，每次重启 windows，windows 和 wsl 的 ip 都会变，目前没有方法改为静态 ip，只能每次改 ip 了。（</p>
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><p>如果是 Windows 下的 Git，可以参考：<a href="https://www.zhihu.com/question/27159393/answer/809693236" target="_blank" rel="noopener">git clone一个github上的仓库，太慢，经常连接失败，但是github官网流畅访问，为什么？ - 戈登走過去的回答 - 知乎</a></p>
+<p>不过注意，如果你的 OpenSSH 是通过 <code>Windows 10 设置</code> - <code>应用与功能</code> - <code>可选功能</code> 安装的，此法可能会使 Windows 下 <code>ssh</code> 出现如下错误：</p>
+<pre><code class="sh">C:\Tools\Git\&gt;ssh -T git@github.com
+CreateProcessW failed error:87
+posix_spawn: Unknown error
+</code></pre>
+<p>这个 bug 不影响 Git 的使用，并且可以通过卸载后从此处安装解决：<a href="https://github.com/PowerShell/Win32-OpenSSH/wiki/Install-Win32-OpenSSH" target="_blank" rel="noopener">https://github.com/PowerShell/Win32-OpenSSH/wiki/Install-Win32-OpenSSH</a></p>
+<p>bug 相关可参见：<a href="https://github.com/microsoft/vscode-remote-release/issues/1887" target="_blank" rel="noopener">https://github.com/microsoft/vscode-remote-release/issues/1887</a></p>
+<h3 id="改-hosts"><a href="#改-hosts" class="headerlink" title="改 hosts"></a>改 hosts</h3><p>还有一个方法是修改 Hosts 文件。对于没有代理的开发者，会有一点帮助（都是开发者了为什么还没有代理）。</p>
+<pre><code>151.101.72.249 github.http://global.ssl.fastly.net
+192.30.253.112 github.com
+</code></pre>
+<h2 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h2><p>对于刚入门 Git 的萌新，<code>clone</code> <code>pull</code> <code>add</code> <code>commit</code> <code>push</code> 已经够用了。然而，如果要发挥 Git 全部的功能，还需要了解更多的东西。</p>
+<h3 id="回溯版本"><a href="#回溯版本" class="headerlink" title="回溯版本"></a>回溯版本</h3><h4 id="git-status-diff-checkout-查看当前状态"><a href="#git-status-diff-checkout-查看当前状态" class="headerlink" title="git status/diff/checkout 查看当前状态"></a>git status/diff/checkout 查看当前状态</h4><blockquote>
+<p>学习链接：<a href="https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008#0" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600/896954074659008#0</a></p>
+</blockquote>
+<p>下面只是对上述博客的一些简短的笔记。</p>
+<p>使用 <code>git status</code> 可查看目前 Git 的状态（什么文件被修改过之类的……）</p>
+<p>使用 <code>git diff readme.txt</code> 可查看 <code>readme.txt</code> 的还没有被 commit 的修改。</p>
+<p>对于只是修改了 <code>readme.txt</code> 文件，还没有进行任何 Git 操作的，可以 <code>git checkout -- readme.txt</code> 恢复为之前 <code>add</code> 过的文件。</p>
+<p>更多的情况可看<a href="https://www.cnblogs.com/liuq/p/9203087.html" target="_blank" rel="noopener">Git 之 恢复修改的文件</a></p>
+<h4 id="git-log-reflog-reset-版本回退"><a href="#git-log-reflog-reset-版本回退" class="headerlink" title="git log/reflog/reset 版本回退"></a>git log/reflog/reset 版本回退</h4><p>使用 <code>git log</code> 可查看当前分支的<strong>所有</strong> commit 日志。<br>可搭配 <code>--pretty=oneline</code> 简略显示。</p>
+<pre><code>$ git log --pretty=oneline
+a4a32854a37319561d16f1618cd9c20e0b3290bf (HEAD -&gt; master, origin/master) append GPL
+f4d84ec5d20e8be8f7ef70802b1ba6e654986197 add distributed
+d5fd90e99d8a1d91a34d7aef9e615d122d2a2904 new readme.txt
+65a146ab6bc8b27dbaaed4d0c200d7d0ee8b6b65 add Hello world
+</code></pre>
+<p>前面的一串是 SHA1 值。</p>
+<p>回退到上一个版本：<code>git reset --hard HEAD^</code><br>回退到上两个版本：<code>git reset --hard HEAD^^</code> 或 <code>HEAD~2</code><br>回退/前进到指定版本：<code>git reset --hard a4a3</code>（到 <code>append GPL</code> 版本）</p>
+<p>如果回退以后想再前进，却忘了 SHA1 值，可以使用 <code>git reflog</code>。</p>
+<p>注意至少要写四位，否则会报错：</p>
+<pre><code>$ git reset --hard 65a
+fatal: ambiguous argument &#39;65a&#39;: unknown revision or path not in the working tree.
+Use &#39;--&#39; to separate paths from revisions, like this:
+&#39;git &lt;command&gt; [&lt;revision&gt;...] -- [&lt;file&gt;...]&#39;
+</code></pre>
+<h4 id="相关概念浅析：工作区、暂存区"><a href="#相关概念浅析：工作区、暂存区" class="headerlink" title="相关概念浅析：工作区、暂存区"></a>相关概念浅析：工作区、暂存区</h4><ul>
+<li>工作区 <code>working tree</code>：（对于 test 项目）test 文件夹（<code>tree</code> 翻译成目录比较好）</li>
+<li>版本库 <code>Repository</code>：<code>test/.git</code> 文件夹</li>
+<li>暂存区 <code>stage/index</code>：在版本库中（Git 文档中凡是出现 <code>stage</code> 和 <code>index</code> 都是暂存区的意思）</li>
+<li><code>master</code>：第一个分支，也在版本库中</li>
+<li><code>HEAD</code>：指向 <code>master</code> 的指针</li>
+</ul>
+<p>其逻辑关系如下：</p>
+<pre><code>test 文件夹
+ │
+ ├─工作区 working tree
+ │
+ └─版本库 .git 文件夹
+     │
+     ├─ 暂存区
+     │
+     ├─ master 分支
+     │
+     └─ 其他分支
+</code></pre>
+<ul>
+<li><code>git add</code>：将文件修改添加进暂存区</li>
+<li><code>git commit</code>：将暂存区的东西 commit 到当前分支。（在这之后用 <code>git status</code> 会显示 <code>working tree clean</code>）</li>
+</ul>
+<h4 id="git-diff-checkout-reset-笔记"><a href="#git-diff-checkout-reset-笔记" class="headerlink" title="git diff/checkout/reset 笔记"></a>git diff/checkout/reset 笔记</h4><p>diff 只能比较两份文件，如果是操作中是新建文件/删除文件，<code>git diff</code> 会提示“没有差异”。</p>
+<p>各 diff 的区别：</p>
+<ul>
+<li><code>git diff</code>：显示工作区和暂存区的差异（即未 add 的内容）</li>
+<li><code>git diff --cached</code>：显示暂存区和 <code>HEAD</code> 的差异（即未 commit 的内容）</li>
+<li><code>git diff HEAD</code>：显示工作区和 <code>HEAD</code> 的差异（即未 add 或 commit 的内容）</li>
+</ul>
+<p>在命令后可加文件名，指定比对某文件。</p>
+<ul>
+<li><p><code>git checkout -- &lt;file&gt;</code> 可以认为是反向 add，是将暂存区的文档修改覆盖工作区的文档；</p>
+<ul>
+<li>使用不带参数的 <code>git checkout</code> 可以查看工作区和暂存区的文件差异。</li>
+<li><code>--</code> 表示这条命令要无视 <code>--</code> 后的所有参数（实战中貌似也是可以去掉的）</li>
+</ul>
+</li>
+<li><p><code>git reset HEAD &lt;file&gt;</code> 可以认为是反向 commit，是用当前分支的文档覆盖暂存区。（并不会覆盖工作区）</p>
+<ul>
+<li>加上 <code>--hard</code> 参数，<code>git reset --hard HEAD &lt;file&gt;</code> 就会覆盖工作区了</li>
+</ul>
+</li>
+</ul>
+<p><img src="git-checkout-reset-diff.jpg" alt="Git checkout/reset/diff 对比"></p>
+<h4 id="远程库操作"><a href="#远程库操作" class="headerlink" title="远程库操作"></a>远程库操作</h4><p>在本地 <code>git init</code> 了一个库以后，如果需要上传到远程库，就需要设置远程库的地址（地址可以在 GitHub 网页上获取）：</p>
+<pre><code>git remote add origin git@github.com:lyh543/test.git
+</code></pre>
+<p>Git 规定，要给每一台远程主机命名。这里的 <code>origin</code> 就是 Git 给远程库的默认名字。虽然可以用别的名字，但是推荐 <code>origin</code>。</p>
+<p>然后，进行 push：</p>
+<pre><code>git push -u origin master
+</code></pre>
+<p>push 命令将本地的当前分支上传到 origin 的 master 分支（简写 origin/master）。<br><code>-u</code>（或 <code>--set-upstream</code>）参数，还顺便将本地的 master 分支和 origin/master 分支进行关联（track），以后就不用指定。</p>
+<h3 id="branch-分支管理"><a href="#branch-分支管理" class="headerlink" title="branch 分支管理"></a>branch 分支管理</h3><p><a href="https://www.liaoxuefeng.com/wiki/896043488029600/896954848507552#0" target="_blank" rel="noopener">学习链接</a></p>
+<p><img src="branch-management.png" alt="分支管理"></p>
+<p>其他版本控制系统如 SVN 等都有分支管理，但是用过之后你会发现，这些版本控制系统创建和切换分支比蜗牛还慢，简直让人无法忍受，结果分支功能成了摆设，大家都不去用。</p>
+<p>但 Git 的分支 <code>branch</code> 是与众不同的，无论创建、切换和删除分支，Git 在 1 秒钟之内就能完成！无论你的版本库是 1 个文件还是 1 万个文件。</p>
+<h4 id="创建和合并分支"><a href="#创建和合并分支" class="headerlink" title="创建和合并分支"></a>创建和合并分支</h4><h5 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h5><p>复习一下，<code>master</code> 是 Git 默认创建的分支，<code>HEAD</code> 是指向 <code>master</code> 的一个指针。</p>
+<p>其实，分支，是一条 commit 线。</p>
+<p>也就是说，Git 中的每一个状态，其实指的是每一次 commit，而分支就是将 commit 串起来了（然后 <code>HEAD</code> 又指向了当前分支的头）。</p>
+<p><img src="branch.png" alt="分支"></p>
+<p>所以创建分支的本质就是添加一条线，更改一下 <code>HEAD</code>，很快的。而删除分支，就是删一条线（并不删除 commit），也很快。</p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><p>新建 <code>dev</code> 分支并切换到该分支：</p>
+<pre><code class="sh">git branch dev   # 从当前分支新建 dev 分支
+git checkout dev # 切换到 dev 分支
+</code></pre>
+<p>上述两个过程也可以用一行替代：</p>
+<pre><code class="sh">git checkout -b dev
+</code></pre>
+<p>实现的效果如图：</p>
+<p><img src="branch-1.png" alt="新建 dev 分支并切换到该分支"></p>
+<p>顺便一提， <code>git checkout</code> 的确是有两个功能，一是切换分支，二是将暂存区的某文件修改覆盖工作区的对应文件，不过二需要使用 <code>git branch --</code>。</p>
+<p>这之后，就可以在 <code>dev</code> 分支上修改，然后三连了。</p>
+<pre><code class="sh">echo &quot;We are working on a new branch&quot; &gt;&gt; readme.txt
+git add readme.txt
+git commit -m &quot;commit on dev branch&quot;
+</code></pre>
+<p>这之后，我们的仓库状态如下图：</p>
+<p><img src="branch-2.png" alt="在 dev 上三连后的仓库"></p>
+<p>接下来，将 <code>dev</code> 上的 commit merge 进 <code>master</code>。</p>
+<p>由上图可以看到，直接将 <code>master</code> 分支线延长至 <code>dev</code> 即可，所以 Git 能够轻松完成 merge 操作。</p>
+<p>这种 merge 又叫 <code>fast-forward merge</code>：</p>
+<blockquote>
+<p>A fast-forward merge can occur when there is a linear path from the current branch tip to the target branch.<br>Instead of “actually” merging the branches, all Git has to do to integrate the histories is move (i.e., “fast forward”) the current branch tip up to the target branch tip. – <a href="https://www.atlassian.com/git/tutorials/using-branches/git-merge" target="_blank" rel="noopener">Git Merge | Atlassian Git Tutorial</a>  </p>
+</blockquote>
+<blockquote>
+<p>When the merge resolves as a fast-forward, only update the branch pointer, without creating a merge commit. This is the default behavior. – <code>git merge --help</code></p>
+</blockquote>
+<pre><code class="sh">git checkout master # 从 dev 切回 master 分支
+git merge dev       # 将 dev 分支的内容合并到当前分支
+</code></pre>
+<p>提一句，merge 本质也是一次 commit，其也可以使用 <code>-m &lt;msg&gt;</code> 来设定 commit 信息，而不是在弹出的文本编辑器中。</p>
+<p>最后删除 dev 分支：</p>
+<pre><code class="sh">git branch -d dev # 删除已经完成合并的 dev 分支
+</code></pre>
+<h4 id="no-fast-forward-merge"><a href="#no-fast-forward-merge" class="headerlink" title="no-fast-forward merge"></a>no-fast-forward merge</h4><p>fast-forward merge 的好处是相当快，并且 commit 线简洁，但是简洁的坏处就是丢失了一些信息。</p>
+<p>在这种模式下，删除分支后，会丢掉分支信息。</p>
+<p><code>git merge</code> 默认使用 fast-forward 模式。如果要强制禁用 fast-forward 模式，Git就会在 merge 时生成一个新的 commit，这样，从分支历史上就可以看出分支信息。</p>
+<p>使用方法很简单，就是在 <code>git merge</code> 时增加一个参数：</p>
+<pre><code>git merge --no-ff dev
+</code></pre>
+<blockquote>
+<p>2020.8.26 更新：在团队合作时，将自己写的代码 <code>merge</code> 到合作的分支（如 <code>master</code> 或 <code>dev</code>）上时，推荐使用 <code>--no-ff</code>，这样 commit 线上会出现分叉，不同人的 commit 会更加明显。</p>
+</blockquote>
+<h4 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h4><p>有三种情况：在本地删除某分支；在远端删除某分支（即将本地删除分支的操作 push 到远端）；在本地删除远端分支（即远端的已经被其他小伙伴删除，需要删除之前拉取到本地的远端分支）。</p>
+<pre><code class="sh"># 在本地删除分支
+git branch -d lyh543
+
+# 在 origin 远端删除分支
+git push -d origin lyh543
+
+# 在本地删除远端的分支
+git branch -d -r origin/lyh543
+</code></pre>
+<h4 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h4><p>上面的分支图都是很简单的(linear)，如果复杂一点，比如两个分支都有自己的提交，<code>git merge</code> 就不能进行 <code>fast-forward merge</code> 了。</p>
+<p><img src="branch-3.png" alt="两个分支都有新的提交"></p>
+<p>对于简单的情况（两个分支只有文件增添，没有文件修改的冲突），Git 仍然可以实现自动合并，如：</p>
+<ul>
+<li>在 <code>feature1</code> 删除了 a.txt  </li>
+<li>在 <code>master</code> 新增了 b.txt  </li>
+</ul>
+<p>将 <code>feature1</code> 合并进 <code>master</code> 后，<code>master</code> 分支会呈现删除 a.txt，新增 b.txt 的状态。</p>
+<p>但是，也会有复杂的情况。如两个分支的某文件内容不同：</p>
+<p>在 <code>master</code> 分支的 <code>branch.txt</code> 如下：</p>
+<pre><code>branch:
+master
+</code></pre>
+<p>在 <code>dev</code> 分支的 <code>branch.txt</code> 如下：</p>
+<pre><code>branch:
+dev
+</code></pre>
+<p>在 <code>master</code> 分支下进行 <code>git merge dev</code> 会报失败：</p>
+<pre><code>$ git merge dev
+Auto-merging branch.txt
+CONFLICT (content): Merge conflict in branch.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+<p>这时查看 <code>branch.txt</code>，会是这样：</p>
+<pre><code>branch:
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+master
+=======
+dev
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev
+</code></pre>
+<p>上面标注了两个版本的区别。</p>
+<p>现在我们有两个方案：一是放弃合并操作；二是进行合并。</p>
+<p>如果想放弃合并操作，只需一句 <code>git merge --abort</code>，就可以回到 <code>git merge dev</code> 之前的状态（一切都没发生过.jpg）；</p>
+<p>如果想进行合并，只需要在当前状态下，修改 <code>branch.txt</code> 到想要的样子，然后 add 和 commit：</p>
+<pre><code class="sh">git add branch.txt
+git commit -m &quot;fix merge confict&quot;
+</code></pre>
+<p>就完成了 merge 和解决冲突。如何验证呢？可以用带图的 <code>git log</code></p>
+<pre><code>git log --graph --pretty=oneline
+</code></pre>
+<h4 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h4><p>在实际开发中，我们应该按照几个基本原则进行分支管理：</p>
+<p>首先，<code>master</code> 分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；</p>
+<p>那在哪干活呢？干活都在 <code>dev</code> 分支上，也就是说，<code>dev</code> 分支是不稳定的，到某个时候，比如 1.0 版本发布时，再把 <code>dev</code> 分支合并到 <code>master</code> 上，在 <code>master</code> 分支发布 1.0 版本；</p>
+<p>你和你的小伙伴们每个人都在 <code>dev</code> 分支上干活，每个人都有自己的分支，时不时地往 <code>dev</code>分支上合并就可以了（向 <code>dev</code> 合并自己的代码的时候推荐 <code>--no-ff</code>，从 <code>dev</code> 分支将小伙伴的代码合并到自己的代码时推荐默认的 <code>--ff</code>）。</p>
+<p>所以，团队合作的分支看起来就像这样：</p>
+<p><img src="branch-4.png" alt="团队合作的分支"></p>
+<p>而对于一个小 bug 或者一个 issue-101，也可以通过开一个 <code>issue-101</code> 临时分支，写完、merge 以后，再将临时分支删掉。</p>
+<h4 id="git-stash-工作区暂存"><a href="#git-stash-工作区暂存" class="headerlink" title="git stash 工作区暂存"></a>git stash 工作区暂存</h4><p>在当前分支的修改还有没 commit 的情况下，切换到其他分支后，这些修改会依然存在。</p>
+<blockquote>
+<p><code>git checkout [&lt;branch&gt;]</code><br>To prepare for working on &lt;branch&gt;, switch to it by updating the index and the files in the working tree, and by pointing HEAD at the branch. <strong>Local modifications to the files in the working tree are kept</strong>, so that they can be committed to the &lt;branch&gt;.<br>– <a href="https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt-emgitcheckoutemltbranchgt" target="_blank" rel="noopener">git checkout</a></p>
+</blockquote>
+<p>如果我们既不想 commit（当前工作还没做完），也不想将当前分支的修改带到别的分支里，应该怎么做呢？</p>
+<pre><code class="sh">git stash
+</code></pre>
+<p>使用这句命令，我们就可以把工作区的修改暂存起来，然后让工作区呈现修改前的状态。这之后，使用 <code>git status</code> 会显示 <code>working tree clean</code>。</p>
+<p>然后我们就可以用 <code>git checkout</code> 切换分支，在别的分支进行工作了。</p>
+<p>在别的分支工作完，并切回该分区以后，如何找回来呢？</p>
+<pre><code class="sh">git stash list  # 列出当前的 stash
+
+git stash apply # 将最近的 stash 找回
+git stash drop  # 将最近的 stash 删除
+
+git stash pop   # 将最近的 stash 找回并删除
+git stash pop stash@{0} # 还可以指定 stash
+</code></pre>
+<h3 id="remote-远端管理"><a href="#remote-远端管理" class="headerlink" title="remote 远端管理"></a>remote 远端管理</h3><p>这一节的内容其实和分支管理有一些交集，毕竟远端管理其本质也是在管理远端的分支。</p>
+<h4 id="git-remote-查看远程库的信息"><a href="#git-remote-查看远程库的信息" class="headerlink" title="git remote 查看远程库的信息"></a>git remote 查看远程库的信息</h4><p>查看远程库的信息：</p>
+<pre><code class="sh">$ git remote
+origin
+
+$ git remote -v # 详细信息
+origin  git@github.com:lyh543/test.git (fetch)
+origin  git@github.com:lyh543/test.git (push)
+</code></pre>
+<p>上面显示了可以抓取 fetch 和推送 push 的 origin 的地址。如果没有推送权限，就看不到 push 的地址。</p>
+<h4 id="git-push-推送分支"><a href="#git-push-推送分支" class="headerlink" title="git push 推送分支"></a>git push 推送分支</h4><p>推送分支，就是把该分支上的所有本地提交推送到远程库。</p>
+<p>推送时，要指定本地分支，这样，Git 就会把该分支推送到远程库对应的远程分支上：</p>
+<pre><code class="sh">git push origin master
+</code></pre>
+<p>如果要推送其他分支，比如 <code>dev</code>，就改成：</p>
+<pre><code class="sh">git push origin dev
+</code></pre>
+<p>但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？</p>
+<ul>
+<li><code>master</code> 分支是主分支，因此要时刻与远程同步；</li>
+<li><code>dev</code> 分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；</li>
+<li><code>bug</code> 分支只用于在本地修复 bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个 bug；</li>
+<li><code>feature</code> 分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</li>
+</ul>
+<p>总之，就是在 Git 中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定！</p>
+<h4 id="git-fetch-从远端拉取"><a href="#git-fetch-从远端拉取" class="headerlink" title="git fetch 从远端拉取"></a>git fetch 从远端拉取</h4><p><code>git clone</code> 只会获取远程的 <code>master</code> 分支，如果要获取 <code>dev</code> 分支，我们应该从 <code>origin/dev</code> 新建 <code>dev</code> 分支：</p>
+<pre><code class="sh">git checkout dev
+
+# 等价于 git checkout -b dev origin/dev，见下
+</code></pre>
+<blockquote>
+<p><code>git checkout [&lt;branch&gt;]</code><br>If <code>&lt;branch&gt;</code> is not found but there does exist a tracking branch in exactly one remote (call it <code>&lt;remote&gt;</code>) with a matching name and –no-guess is not specified, treat as equivalent to<br><code>$ git checkout -b &lt;branch&gt; --track &lt;remote&gt;/&lt;branch&gt;</code><br>– <a href="https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt-emgitcheckoutemltbranchgt" target="_blank" rel="noopener">git-checkout Documentation - Git</a></p>
+</blockquote>
+<p>这也太贴心了吧~ 那就不用记麻烦的了。</p>
+<p>然后就可以愉快的在 <code>dev</code> 分支上进行修改了。</p>
+<p>如果远端的内容更新了（比如你的小伙伴向远端 commit 了），但本地还没有更新，可以使用</p>
+<pre><code class="sh">git fetch
+git merge
+
+# 或
+
+git pull # 两句的等价形式
+</code></pre>
+<p>来进行拉取（fetch）。</p>
+<p>如果 merge 或 pull 中有冲突，需要按照 <a href="#%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81">解决冲突</a> 的套路来合并冲突。</p>
+<h4 id="git-rebase-变基"><a href="#git-rebase-变基" class="headerlink" title="git rebase 变基"></a>git rebase 变基</h4><p><code>git rebase</code> 通过修改 commit 的顺序使得某些情况下的分支图更简洁。</p>
+<p>比如以下场景：</p>
+<p>小伙伴 A 和 B 在合作开发同一个项目。</p>
+<ul>
+<li>小伙伴 A 添加了 <code>a.txt</code>，并进行了 commit  和 push；</li>
+<li>小伙伴 B 在没有 fetch 的情况下添加了 <code>b.txt</code>，并进行了 commit 和 push。当然，这里 push 会失败，提示需要 fetch。</li>
+<li>小伙伴 B fetch 并 merge，完成了 merge 的过程，可以进行 pull 了。但是……</li>
+</ul>
+<p>此时的 <code>git log --graph --pretty=oneline</code> 出现了分叉！</p>
+<pre><code>$ git log --graph --pretty=oneline
+*   d2232e76aad5009a86a66399b0d4a1e3feb9e6ef (HEAD -&gt; master) Merge branch &#39;master&#39; of github.com:lyh543/test
+|\
+| * 98946ab30bbaf2fbc60531450731a8e840bdf62a (origin/master, origin/HEAD) add a.txt
+* | 2eb60148822f268aa3510304fa409c1bdd2ec9b4 add b.txt
+|/
+*   591c9b045b7b84e75710fa96b1f77cb92ee82a85 remove dev.txt
+</code></pre>
+<p>这也没什么问题。<br>但是，从理论上，这个分叉完全可以避免：只要 B 能在 commit 前进行 fetch 就可以少一次 merge 了。</p>
+<p>于是，这时 B 拍出了 <code>git rebase</code>：</p>
+<pre><code>$ git rebase
+First, rewinding head to replay your work on top of it...
+Applying: add b.txt
+</code></pre>
+<p>（这里的 rebase 过程比较简单，如果 A B 对同一文件进行了修改，rebase 过程会稍微复杂，但同样能达到效果）</p>
+<p>之后，工作区和暂存区都没有什么变化，但是 <code>git log --graph --pretty=oneline</code> 发生变化了：</p>
+<pre><code>$ git log --graph --pretty=oneline
+* 3b3769ddfea3f6ddc0a36e3d5784bd676386030e (HEAD -&gt; master) add b.txt
+* 98946ab30bbaf2fbc60531450731a8e840bdf62a (origin/master, origin/HEAD) add a.txt
+* 591c9b045b7b84e75710fa96b1f77cb92ee82a85 remove dev.txt
+</code></pre>
+<p>分支线的分叉消失了！</p>
+<p>也就是说，<code>git rebase</code> 能通过修改 commit 顺序，使得分支线简单，但是会减少一个 merge 的 commit。</p>
+<p>接下来就可以 push 了。</p>
+<h3 id="tag-标签管理"><a href="#tag-标签管理" class="headerlink" title="tag 标签管理"></a>tag 标签管理</h3><p><a href="https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE" target="_blank" rel="noopener">学习链接</a></p>
+<blockquote>
+<p>Git 可以给历史中的某一个提交打上标签，以示重要。<br>比较有代表性的是人们会使用这个功能来标记发布结点（v1.0 等等）。</p>
+</blockquote>
+<p>标签也是一个指针，指向 commit 的。</p>
+<p>标签有 轻量标签 <code>lightweight</code> 和 附注标签 <code>annotated</code>。</p>
+<blockquote>
+<p>一个轻量标签很像一个不会改变的分支——它只是一个特定提交的引用。<br>然而，附注标签是存储在 Git 数据库中的一个完整对象。 它们是可以被校验的；其中包含打标签者的名字、电子邮件地址、日期时间；还有一个标签信息；并且可以使用 GNU Privacy Guard （GPG）签名与验证。 通常建议创建附注标签，这样你可以拥有以上所有信息；但是如果你只是想用一个临时的标签，或者因为某些原因不想要保存那些信息，轻量标签也是可用的。</p>
+</blockquote>
+<p>添加轻量标签：</p>
+<pre><code class="sh">git tag v1.0      # 为 HEAD 添加 v1.0 的标签
+git tag v1.0 366e # 为 commit 366e 添加 v1.0 的标签
+</code></pre>
+<p>添加附注标签，加一个 <code>-a</code> 开关就可以。</p>
+<pre><code>git tag -a v1.4 -m &quot;my version 1.4&quot;
+</code></pre>
+<p>列出已有标签：<code>git tag</code></p>
+<p>查看标签对应的 commit：<code>git show v1.0</code></p>
+<p>注意，标签默认不会被 push 至远程服务器（clone 和 fetch 时是会获得的）。</p>
+<p>需要显式地 push 标签：<code>git push origin v1.0</code><br>或 push 时带上 <code>--tags</code>：<code>git push origin --tags</code></p>
+<p>删除标签可以使用 <code>git tag -d v1.0</code>。</p>
+<p>但是，将删除标签推送至远端就有点复杂了： <code>git push origin :refs/tags/v1.0</code>。</p>
+<p>查看标签所指的文件版本： <code>git checkout v1.0</code></p>
+<p>注意这之后会进入 <code>detached HEAD</code> 的状态，不再有 <code>HEAD</code> 的概念。<br>在这个状态下会进行 commit 有一定副作用（具体见手册），推荐新开一个 branch 来进行操作。</p>
+<h3 id="看完了？"><a href="#看完了？" class="headerlink" title="看完了？"></a>看完了？</h3><p>如果看完了，推荐去看看 <a href="git-scm.com">git-scm.com</a> 的教程和手册，这里有官方对命令的解释，你对命令和概念的理解会更加精确。如 <a href="https://git-scm.com/docs/git-checkout" target="_blank" rel="noopener">git checkout</a></p>
+<h2 id="Git-小技巧"><a href="#Git-小技巧" class="headerlink" title="Git 小技巧"></a>Git 小技巧</h2><h3 id="git-rm"><a href="#git-rm" class="headerlink" title="git rm"></a>git rm</h3><p>以下三种命令等价，都是从工作区删除并提交到暂存区</p>
+<ol>
+<li><code>rm readme.txt</code> <code>git add readme.txt</code></li>
+<li><code>rm readme.txt</code> <code>git rm readme.txt</code></li>
+<li><code>git rm readme.txt</code></li>
+</ol>
+<p>而从工作区删除，但是想恢复，只能在使用 <code>rm readme.txt</code> 的前提下 <code>git checkout -- readme.txt</code>。</p>
+<h3 id="–amend-修改上次-commit"><a href="#–amend-修改上次-commit" class="headerlink" title="–amend 修改上次 commit"></a>–amend 修改上次 commit</h3><p>可以使用 <code>git commit --amend -m &quot;xxx&quot;</code> 以修改上次的 commit。</p>
+<p>如果已经 push 了，下次就需要 <code>git push -f</code> 强制推送。如果还没有 <code>push</code>，就相当于之前的 commit 没发生过，直接 <code>git push</code> 就行。</p>
+<h3 id="git-修改设置"><a href="#git-修改设置" class="headerlink" title="git 修改设置"></a>git 修改设置</h3><pre><code class="bash">git config [--local] --list # 查看设置；--local 用于本地库
+git config --local remote.origin.url git@github.com:lyh543/lyh543.github.io.git # 修改设置，项和名用空格间隔
+</code></pre>
+<h3 id="git-修改远端"><a href="#git-修改远端" class="headerlink" title="git 修改远端"></a>git 修改远端</h3><pre><code class="bash">git remote -v # 查看所有远端
+git remote set-url origin git@github.com:lyh543/lyh543.github.io.git # 修改远端
+</code></pre>
+<p>更多的命令，可以随便敲一个不存在的命令，如 <code>git remote hhh</code> 来查看所有命令。</p>
+<h3 id="当你在-branch-外-commit-后"><a href="#当你在-branch-外-commit-后" class="headerlink" title="当你在 branch 外 commit 后"></a>当你在 branch 外 commit 后</h3><p>如果你在 branch 外 commit，然后立即切回 branch，你的 commit 就会掉。</p>
+<p>有两个解决方案：</p>
+<ol>
+<li>将 commit 的内容变为一个新的 branch，然后在原来的 branch 中 merge 新的 branch；</li>
+<li>用下面的 cherry-pick 命令在 branch 中把对应的 commit 捡回来。</li>
+</ol>
+<h4 id="cherry-pick-捡-commit"><a href="#cherry-pick-捡-commit" class="headerlink" title="cherry-pick 捡 commit"></a>cherry-pick 捡 commit</h4><p><code>git cherry-pick</code> 是一个“捡” commit 的命令。可以把任意（非当前 branch 的） <code>commit</code> 拉到本 branch 来。</p>
+<p>非当前 branch 的 <code>commit</code> 可以通过 <code>git reflog</code> 查看。</p>
+<h2 id="Git-大文件版本管理：git-lfs"><a href="#Git-大文件版本管理：git-lfs" class="headerlink" title="Git 大文件版本管理：git-lfs"></a>Git 大文件版本管理：git-lfs</h2><p><a href="https://git-lfs.github.com/" target="_blank" rel="noopener">git-lfs 官网</a><br><a href="https://help.github.com/cn/github/managing-large-files/versioning-large-files" target="_blank" rel="noopener">GitHub 中文帮助页面</a></p>
+<p>Git LFS 是 Github 开发的一个 Git 的扩展，他能够处理 Git 仓库里的大文件（如图片、视频等等），其原理是将 Git 仓库中的大文件替换为一个指针，然后将大文件存在另一个服务器上。这样做的好处有：</p>
+<ul>
+<li>可让您存储最大 2 GB 的文件</li>
+<li>使得 Git 仓库的容量更大</li>
+<li>更快的 Cloning 和 Fetching（大概用的服务器更快）</li>
+<li>操作和工作流等和原来完全一样</li>
+</ul>
+<p>以上是官方的，个人感觉可能还会使得每次更新大文件时，他不会再保存在 <code>.git</code> 文件夹，占取大量硬盘空间了。</p>
+<h3 id="git-lfs-安装"><a href="#git-lfs-安装" class="headerlink" title="git-lfs 安装"></a>git-lfs 安装</h3><p>Windows 上官网就行。Ubuntu 下：</p>
+<pre><code class="bash">sudo apt install git-lfs
+</code></pre>
+<h3 id="git-lfs-配置"><a href="#git-lfs-配置" class="headerlink" title="git-lfs 配置"></a>git-lfs 配置</h3><p>对于每个仓库下，第一次需要配置一下（如需要用 git-lfs 管理 psd 和 mp4 文件）</p>
+<pre><code class="bash">git lfs install
+git lfs track &quot;*.psd&quot;
+git lfs track &quot;*.mp4&quot;
+git add .gitattributes
+</code></pre>
+<p>以后就和常规 <a href="#git-%E4%B8%8A%E4%BC%A0%E4%B8%89%E8%BF%9E">git 上传三连</a> 相同了。</p>
+<pre><code class="bash">git add file.psd
+git commit -m &quot;Add design file&quot;
+git push origin master
+</code></pre>
+<h2 id="GitHub-使用技巧"><a href="#GitHub-使用技巧" class="headerlink" title="GitHub 使用技巧"></a>GitHub 使用技巧</h2><h3 id="下载最新的-release"><a href="#下载最新的-release" class="headerlink" title="下载最新的 release"></a>下载最新的 release</h3><p>阅读他人的教程博客时，经常会看到给出 GitHub Release 的某版本的下载链接（下面第一行），但该版本可能已经过时。实际上，GitHub 提供了能重定向到最新版的链接（下面第二行）：</p>
+<pre><code>https://github.com/canton7/SyncTrayzor/releases/download/v1.1.24/SyncTrayzorSetup-x64.exe
+https://github.com/canton7/SyncTrayzor/releases/latest/download/SyncTrayzorSetup-x64.exe
+</code></pre>
+<p>在写下这篇博客时，第二行链接能正确地被重定向到第一行：</p>
+<pre><code class="sh">$ curl -I https://github.com/canton7/SyncTrayzor/releases/latest/download/SyncTrayzorSetup-x64.exe
+HTTP/1.1 302 Found
+date: Wed, 07 Oct 2020 10:22:26 GMT
+content-type: text/html; charset=utf-8
+server: GitHub.com
+status: 302 Found
+vary: X-PJAX, Accept-Encoding, Accept, X-Requested-With, Accept-Encoding
+location: https://github.com/canton7/SyncTrayzor/releases/download/v1.1.24/SyncTrayzorSetup-x64.exe
+</code></pre>

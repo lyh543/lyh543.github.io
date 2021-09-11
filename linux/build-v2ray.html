@@ -1,0 +1,94 @@
+<hr>
+<p>title: 服务器一键搭建 V2Ray + WebSocket<br>date: 2020-05-22 11:26:55<br>tags: </p>
+<ul>
+<li>服务器</li>
+<li>代理</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<h2 id="前置需求"><a href="#前置需求" class="headerlink" title="前置需求"></a>前置需求</h2><ul>
+<li>一个域名，且已以 A 记录指向服务器</li>
+</ul>
+<h2 id="Docker-一键安装法"><a href="#Docker-一键安装法" class="headerlink" title="Docker 一键安装法"></a>Docker 一键安装法</h2><h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>一键脚本安装。如果不行，可以尝试到 Docker 官网上找方法，或者参考<a href="../docker#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85">另一篇博文</a>。</p>
+<pre><code class="sh">bash &lt;(curl -s https://get.docker.com)
+</code></pre>
+<h3 id="安装-V2Ray-服务器端"><a href="#安装-V2Ray-服务器端" class="headerlink" title="安装 V2Ray 服务器端"></a>安装 V2Ray 服务器端</h3><p>一行命令，但是有需要修改的参数。</p>
+<blockquote>
+<p>参考：<a href="https://github.com/pengchujin/v2rayDocker" target="_blank" rel="noopener">https://github.com/pengchujin/v2rayDocker</a></p>
+</blockquote>
+<pre><code class="sh">docker run -d --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy pengchujin/v2ray_ws:0.10 YOURDOMAIN.COM V2RAY_WS &amp;&amp; sleep 3s &amp;&amp; sudo docker logs v2ray
+</code></pre>
+<ul>
+<li><code>YOURDOMAIN.COM</code>：指向你的服务器 IP 的域名</li>
+</ul>
+<p>修改好上述命令后，粘贴到命令行中执行。</p>
+<p>三条命令监控 V2Ray：</p>
+<pre><code class="sh">docker start v2ray      # 启动 v2ray 并重新申请 SSL 证书
+docker stop v2ray       # 停止 v2ray
+docker logs v2ray       # 输出日志，可在这里查看 vmess 链接
+</code></pre>
+<p>链接可在 <code>docker logs v2ray</code> 中查看。</p>
+<p>logs 中有一个安卓链接，一个 ios 链接，PC 用安卓的链接即可。</p>
+<h3 id="shell-脚本安装法"><a href="#shell-脚本安装法" class="headerlink" title="shell 脚本安装法"></a>shell 脚本安装法</h3><p><a href="https://github.com/233boy/v2ray/tree/master" target="_blank" rel="noopener">https://github.com/233boy/v2ray/tree/master</a></p>
+<h2 id="部分错误及解决方案"><a href="#部分错误及解决方案" class="headerlink" title="部分错误及解决方案"></a>部分错误及解决方案</h2><h3 id="更新-V2Ray-客户端"><a href="#更新-V2Ray-客户端" class="headerlink" title="更新 V2Ray 客户端"></a>更新 V2Ray 客户端</h3><p>如果服务器给了 V2Ray 链接，但本地无法使用这个成功连接，可能是镜像中的 V2Ray 版本太老。下面将下载最新的 V2Ray 客户端并替换。</p>
+<p>首先进入容器内的命令行：</p>
+<pre><code class="sh">docker exec -it v2ray /bin/sh
+</code></pre>
+<p>在容器中的命令行中依次执行：</p>
+<pre><code class="sh">cd /usr/bin
+wget https://github.com/v2ray/v2ray-core/releases/latest/download/v2ray-linux-64.zip
+unzip v2ray-linux-64.zip v2ray v2ctl
+rm v2ray-linux-64.zip
+exit
+</code></pre>
+<p>退出容器后，再重启 V2Ray 客户端：</p>
+<pre><code class="sh">docker restart v2ray
+</code></pre>
+<h2 id="配置-BBR"><a href="#配置-BBR" class="headerlink" title="配置 BBR"></a>配置 BBR</h2><p>搭上梯子以后，发现有时候丢包率有 40% 左右。</p>
+<p>Google 了一下，说是可以开启 BBR 以实现加速。BBR 是什么、为什么能提升代理的速度、如何开启，可以看下面两篇博客。</p>
+<p>注意，BBR 是针对 TCP 发包的，也就是说，设置好以后，对于所有代理软件和服务器上的所有网页等都会生效。</p>
+<p><a href="https://tech.jandou.com/CentOS7-Google-BBR.html" target="_blank" rel="noopener">BBR是什么？</a></p>
+<blockquote>
+<p>转载：<a href="https://www.moerats.com/archives/612/" target="_blank" rel="noopener">Ubuntu 18.04/18.10快速开启Google BBR的方法</a></p>
+</blockquote>
+<p>提示：Ubuntu 18.10 依然可以用该方法开启 BBR，而对于 19.04 和 20.04、貌似官方直接给你开启了 BBR，不需要重复开启了。</p>
+<ol>
+<li>修改系统变量并保存生效</li>
+</ol>
+<pre><code class="sh">sudo su
+echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf
+sysctl -p
+</code></pre>
+<ol start="2">
+<li>查看内核是否已开启 BBR</li>
+</ol>
+<pre><code class="sh">$ sysctl net.ipv4.tcp_available_congestion_control
+# 显示以下即已开启：
+net.ipv4.tcp_available_congestion_control = bbr cubic reno
+</code></pre>
+<ol start="3">
+<li>查看 BBR 是否启动</li>
+</ol>
+<pre><code class="sh">$ lsmod | grep bbr
+# 显示以下即启动成功：
+tcp_bbr                20480  14
+</code></pre>
+<h2 id="借助国内的服务器进行中转"><a href="#借助国内的服务器进行中转" class="headerlink" title="借助国内的服务器进行中转"></a>借助国内的服务器进行中转</h2><p>有些时候会发现，即使开启了 BBR，速度依旧很慢。但是如果经由国内的服务器中转（即本地客户端 &lt;-&gt; 国内服务器 &lt;-&gt; 国外服务器 &lt;-&gt; Google），速度会快一些。</p>
+<p>下面将基于国外服务器已经按<a href="#%E5%AE%89%E8%A3%85-v2ray-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF">上文</a>搭建好 V2Ray 客户端的情形下，在本地客户端进行反向代理。</p>
+<p>假设国外服务器的域名为 <code>proxy-server.mydomain.com</code>，国内服务器域名为 <code>transit-server.mydomain.com</code>。</p>
+<h3 id="国外服务器"><a href="#国外服务器" class="headerlink" title="国外服务器"></a>国外服务器</h3><p>国外服务器已经按照上文搭建好服务器，并得到了其 VMESS 链接。</p>
+<h3 id="国内服务器"><a href="#国内服务器" class="headerlink" title="国内服务器"></a>国内服务器</h3><p>国内服务器需要使用反向代理。可以用 Nginx/Apache 实现，也可以用 Caddy 实现。这里使用 Caddy。</p>
+<p><a href="https://caddyserver.com/docs/install" target="_blank" rel="noopener">安装 Caddy</a> 后，在 <code>/etc/caddy/Caddyfile</code> 中写入：</p>
+<pre><code class="caddyfile">transit-server.mydomain.com {
+    reverse_proxy proxy-server.mydomain.com:443 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
+}
+</code></pre>
+<p>然后重启（或重载） Caddy：</p>
+<pre><code class="sh">sudo systemctl stop caddy
+sudo systemctl start caddy
+</code></pre>
+<h3 id="本地客户端"><a href="#本地客户端" class="headerlink" title="本地客户端"></a>本地客户端</h3><p>将国外服务器的 VMESS 链接导入 V2Ray 客户端后显示，配置的服务器域名为 <code>proxy-server.mydomain.com</code>。将域名改为 <code>transit-server.mydomain.com</code>，其他配置不变即可。</p>

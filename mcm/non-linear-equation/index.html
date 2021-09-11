@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>非线性方程求根 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="课程笔记,数学建模">
+    <meta name="description" content="多元函数误差分析基本概念：绝对误差 $\varepsilon(x)$ 和相对误差 $\varepsilon_r(x) &#x3D; \frac{\varepsilon(x)}{x*}$ 对于 $z&#x3D;f(x_0,x_1,…x_n)$，有  $$\varepsilon(z) \approx \sum_{k&#x3D;1}^{n}|\frac{\partial f}{\partial x_{k}}| \varepsilon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="非线性方程求根">
+<meta property="og:url" content="https://blog.lyh543.cn/mcm/non-linear-equation/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="多元函数误差分析基本概念：绝对误差 $\varepsilon(x)$ 和相对误差 $\varepsilon_r(x) &#x3D; \frac{\varepsilon(x)}{x*}$ 对于 $z&#x3D;f(x_0,x_1,…x_n)$，有  $$\varepsilon(z) \approx \sum_{k&#x3D;1}^{n}|\frac{\partial f}{\partial x_{k}}| \varepsilon">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.135Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="课程笔记">
+<meta property="article:tag" content="数学建模">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">非线性方程求根</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">非线性方程求根</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-11-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多元函数误差分析"><span class="post-toc-text">多元函数误差分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#例题：稳定的算法"><span class="post-toc-text">例题：稳定的算法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数值方法"><span class="post-toc-text">数值方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二分法"><span class="post-toc-text">二分法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不动点迭代"><span class="post-toc-text">不动点迭代</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#牛顿迭代法（正确性根据引理，从略）"><span class="post-toc-text">牛顿迭代法（正确性根据引理，从略）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#牛顿迭代法改进：弦截法"><span class="post-toc-text">牛顿迭代法改进：弦截法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#范数简介"><span class="post-toc-text">范数简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向量范数"><span class="post-toc-text">向量范数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#矩阵范数"><span class="post-toc-text">矩阵范数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#矩阵算子范数"><span class="post-toc-text">矩阵算子范数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#矩阵范数的相容性"><span class="post-toc-text">矩阵范数的相容性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#矩阵的条件数"><span class="post-toc-text">矩阵的条件数</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#frac-left-delta-x-right-left-x-right"><span class="post-toc-text">$$\frac{\left\| \delta x \right\|}{\left\| x \right\|} </span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MATLAB-对范数的支持"><span class="post-toc-text">MATLAB 对范数的支持</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#非线性方程组"><span class="post-toc-text">非线性方程组</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-mcm/non-linear-equation"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">非线性方程求根</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-02 00:00:00" datetime="2019-11-01T16:00:00.000Z"  itemprop="datePublished">2019-11-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="多元函数误差分析"><a href="#多元函数误差分析" class="headerlink" title="多元函数误差分析"></a>多元函数误差分析</h2><p>基本概念：绝对误差 $\varepsilon(x)$ 和相对误差 $\varepsilon_r(x) = \frac{\varepsilon(x)}{x*}$</p>
+<p>对于 $z=f(x_0,x_1,…x_n)$，有 </p>
+<p>$$\varepsilon(z) \approx \sum_{k=1}^{n}|\frac{\partial f}{\partial x_{k}}| \varepsilon(x_{k})$$</p>
+<p>对于特例：</p>
+<p>$$\begin{aligned}<br>\varepsilon(x_1+x_2) &amp;=\varepsilon(x_1)+\varepsilon(x_2) \\<br>\varepsilon(x_1 \cdot x_2) &amp; \approx|x_1| \varepsilon(x_2)+|x_2| \varepsilon(x_1) \\<br> \varepsilon(x_1 / x_2) &amp; \approx \frac{|x_1| \varepsilon(x_2)+|x_2| \varepsilon(x_1)}{x_2^2}<br>\end{aligned}$$</p>
+<p>比如 $z=xy$ 误差为 $|x|y’+x’|y|$。</p>
+<p>应用：对于除法的情况，避免绝对值小的量当分母。</p>
+<p>安利秦九韶算法来计算多项式。<br>在不同数据下误差小的算法就叫 <code>稳定的算法</code>。</p>
+<h3 id="例题：稳定的算法"><a href="#例题：稳定的算法" class="headerlink" title="例题：稳定的算法"></a>例题：稳定的算法</h3><p>看一个例子：利用递推式计算 $I_n$ 的估计值 $S_n$。 </p>
+<p>$$I_n = e^{-1} \int_0^1 x^n*e^x dx \quad (n = 0, 1, …,20)$$</p>
+<p>对积分值可以放缩：由于 $1 \leq e^x \leq e \quad(0&lt;x&lt;1)$，有</p>
+<p>$$\frac{e^{-1}}{n+1} \leq e^{-1} \int_0^1 x^n*e^x dx \leq \frac{1}{n+1}$$</p>
+<ul>
+<li>方法一：利用分部积分求得递推式</li>
+</ul>
+<p>$$\begin{cases}<br>I_0 &amp;= 1-e^{-1} \\<br>I_n &amp;= 1-n I_{n-1},(n=1,2, \cdots)<br>\end{cases}$$</p>
+<p>如果推出递推式用迭代法从小往大，$n&gt;=20$ 的时候误差值就会变得非常大，甚至超出了预估值的范围（$S_{20} = -30.19$）.。<br>理由是初值有误差，每次迭代都会放大误差。那么能不能把放大误差变成缩小误差呢？  </p>
+<p><strong>——把递推式中的 <code>*n</code> 换为 <code>/n</code>，从后往前推</strong>。</p>
+<ul>
+<li>方法二：先算 $S_{30}$ 再往前推，最后误差极小，这时候这就是一个稳定的算法。</li>
+</ul>
+<p>由 $I_n$ 的估计式，令 $S_n = \frac{1}{31}$。<br>反解上面的递推式，得 $I_{n-1} = \frac{1}{n}(1-S_n)$。</p>
+<p>然后反过来跑递推，得到的 $S_1$ 能保证 $10^{-14}$ 的精确度。</p>
+<h2 id="数值方法"><a href="#数值方法" class="headerlink" title="数值方法"></a>数值方法</h2><p>前人：$n \geq 5$ 时无显式求根公式  </p>
+<p>基本思想：迭代法逼近  </p>
+<ul>
+<li>第一步：对 $f(x)=0$ 的根进行隔离  </li>
+<li>第二步：利用迭代法计算一定精度的根近似值  </li>
+<li>从给定的一个出发值 $x_0$，产生一个序列 $x_0, x_1,…$</li>
+</ul>
+<p>详见<a href="../iterative-method-in-solving-system-of-linear-equations/">迭代法解线性方程组</a></p>
+<h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p>二分夹逼，简单无脑，要求单调。</p>
+<p>定理 误差满足 $|x_n-x^*|&lt;\frac{|b-a|}{2^{n+1}}$</p>
+<h3 id="不动点迭代"><a href="#不动点迭代" class="headerlink" title="不动点迭代"></a>不动点迭代</h3><p>偏理论的方法，略。</p>
+<p>另外提到了收敛阶数 $r$：</p>
+<p>$$\lim\limits_{n\to\infty}\frac{|x_{n+1}-x^*|}{|x_n-x^*|^r} = a$$</p>
+<p>按 $r$ 大小分为线性收敛、超收敛、平方收敛等等。</p>
+<p>迭代误差：</p>
+<ul>
+<li>线性收敛：每次迭代误差放大 k 倍</li>
+<li>超收敛 ($r&gt;1$) 每次迭代误差是上一次误差的 $r$ 次方的 $k$ 倍数，在这个含义下，如果第一次误差 $1\%$，$r=2$，那么迭代一次后误差为 $0.01\% \times k$</li>
+</ul>
+<h2 id="牛顿迭代法（正确性根据引理，从略）"><a href="#牛顿迭代法（正确性根据引理，从略）" class="headerlink" title="牛顿迭代法（正确性根据引理，从略）"></a>牛顿迭代法（正确性根据引理，从略）</h2><p>基本思想：泰勒公式将非线性函数线性化<br>设函数 $f(x)$ 在有根空间 $[a,b]$ 二次连续可微，泰勒后只取线性部分。  </p>
+<p><strong>用切线方程的根近似原 $f(x)$ 的根，然后多次牛顿迭代近似</strong></p>
+<p>$$x_{n+1} = x_n - \frac{f(x_n)}{f’(x_n)}$$</p>
+<p>牛顿迭代法的几何意义：</p>
+<p>上一次得到根 $x_1$，再在 $x_1$ 的地方做泰勒近似（做切线），在 $x$ 轴截到 $x_2$… 用上一个根迭代下一个根，nb<br>所以单变量牛顿迭代法也被称为切线法</p>
+<p>一个例题，<del>实际使用估计还得工具箱</del></p>
+<p>有缺陷的牛顿迭代法</p>
+<figure class="highlight m"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f<span class="built_in">=</span><span class="meta">inline</span>(<span class="string">'x*exp(x)-1'</span>);</span><br><span class="line">f1<span class="built_in">=</span><span class="meta">inline</span>(<span class="string">'(x+1)*exp(x)'</span>);</span><br><span class="line">x0<span class="built_in">=</span><span class="number">0.5</span>;er<span class="built_in">=</span><span class="number">1</span>;k<span class="built_in">=</span><span class="number">0</span>;</span><br><span class="line">while er&gt;<span class="number">0.00001</span></span><br><span class="line">    x<span class="built_in">=</span>x0-f(x0)/f1(x0);</span><br><span class="line">    er<span class="built_in">=</span>abs(x-x0)</span><br><span class="line">    x0<span class="built_in">=</span>x; k<span class="built_in">=</span>k+<span class="number">1</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>缺陷：</p>
+<ol>
+<li>被 0 除错误，根使得原函数和导函数都为 0 的情况，称为二重根<br>可以考虑加一个 <code>eps</code>？</li>
+<li>死循环：对于特殊函数(如 $\arctan x$）无法使用<br>多次迭代无进展的话跳出，换个算法</li>
+</ol>
+<h3 id="牛顿迭代法改进：弦截法"><a href="#牛顿迭代法改进：弦截法" class="headerlink" title="牛顿迭代法改进：弦截法"></a>牛顿迭代法改进：弦截法</h3><p>$$x_{n+1} = x_n - \frac{(x_n - x_{n-1})f(x_n)}{f(x_n) - f(x_{n-1})}$$</p>
+<p>不使用切线，而是使用上两次迭代的点的线（也就是割线、弦），依旧是看其与 $x$ 轴的交点。</p>
+<p>看看两个解之间的距离是不是逐渐变小且函数值是不是逐渐变小来判断是否收敛、是否适用于牛顿迭代法</p>
+<h2 id="范数简介"><a href="#范数简介" class="headerlink" title="范数简介"></a>范数简介</h2><h3 id="向量范数"><a href="#向量范数" class="headerlink" title="向量范数"></a>向量范数</h3><p>向量范数公理化的定义：如果一种映射 $f: R^n \to R$ 的结果，映射出来的 $\| x \|$ 满足<strong>正定性、齐次性、三角不等式</strong>，则被称为范数。</p>
+<p>范数是对长度的推广，三角不等式需要根据柯西不等式证明得到。</p>
+<ul>
+<li>1-范数：${\|x\|}_1 = \sum\limits_{i=1}^n|x_i|$</li>
+<li>2-范数：$\|x\|_2 = \left(\sum\limits_{i=1}^n|x_i|^2\right)^{1/2}$</li>
+<li>无穷范数：$\|x\|_\infty = \max\limits_{1 \leq i \leq n}|x_i|$</li>
+</ul>
+<p>一般向量而言，无穷范数 &lt; 1-范数 &lt; $n*$无穷范数。</p>
+<p><strong>性质：向量空间的任何范数均等价</strong></p>
+<p>1-范数、无穷范数随便选，算起来都简单</p>
+<h3 id="矩阵范数"><a href="#矩阵范数" class="headerlink" title="矩阵范数"></a>矩阵范数</h3><p>公理化定义依旧是：正定性、齐次性、三角不等式。</p>
+<p>对于向量的 1-、2-、无穷范数，是对向量的每一个元素进行处理、加和，矩阵中引申到矩阵的每一个元素进行处理、加和，最后将和进行开 n 次根。</p>
+<p>$$\begin{aligned}<br>\| A \|_{m_1} &amp;= \sum_{j=1}^n\sum_{i=1}^m|a_{ij}| \\<br>\| A \|_{m_2} &amp;= \left( \sum_{j=1}^n\sum_{i=1}^m|a_{ij}|^2 \right) ^ \frac{1}{2} \\<br>\| A \|_{m_\infty} &amp;= \max_{i,j}{|a_{ij}|} \quad 1 \leq i \leq m,1 \leq j \leq n \\<br>\| A \|_F &amp;= \left( \sum_{j=1}^n\sum_{i=1}^n a_{ij}^2 \right) ^ \frac{1}{2}<br>\end{aligned}$$</p>
+<p>注意 F-范数 只适用于实矩阵。</p>
+<p>这种定义不好用，所以有了另一种矩阵范数：矩阵算子范数。</p>
+<h4 id="矩阵算子范数"><a href="#矩阵算子范数" class="headerlink" title="矩阵算子范数"></a>矩阵算子范数</h4><p><del>逐渐晕掉</del></p>
+<p>对于矩阵 $A \in R^{n \times n}$，其算子范数的定义为</p>
+<p>$$\| A \| = \max_{x \neq 0} \frac{\| Ax \|}{\|x\|} $$</p>
+<p>其定义是基于向量范数的。对于二阶有：</p>
+<p>$$\| A \|_2 = \max_{x \neq 0} \frac{\| Ax \|_2}{\|x\|_2} $$</p>
+<p>或</p>
+<p>$$\| A \|_2 = \max_{\|x\|=1} \| Ax \| _2$$</p>
+<p>算子的英文是 <code>Operator</code>。</p>
+<h4 id="矩阵范数的相容性"><a href="#矩阵范数的相容性" class="headerlink" title="矩阵范数的相容性"></a>矩阵范数的相容性</h4><p>如果三种矩阵范数满足：<br>$$\|AB\|_c \leq \|A\|_a \cdot \|B\|_b$$<br>则称这三种矩阵范数相容。</p>
+<p>如果<br>$$\|AB\| \leq \|A\| \cdot \|B\|$$<br>则称这种矩阵范数是自相容范数。</p>
+<p>$\| A \|_{m_\infty}$ 是不相容范数。</p>
+<p>定理：</p>
+<p>$$\| A \|_2 = \max_{x \neq 0} \frac{\| Ax \|_2}{\|x\|_2} =\sqrt{\lambda_{max}(A^TA)}$$</p>
+<p>不仅如此，若 $A$ 为对称矩阵，$\sqrt{\lambda_{max}(A^TA)} = \lambda(A)$。之所以这么定义，是为了把任意矩阵 $A$ 变成对称矩阵 $A^TA$，而对称矩阵一定有实特征值，从而保证了范数的非负性。</p>
+<p>这个公式告诉我们，2-算子范数不仅好用（相容），而且好算23333<br>目前其他的算子范数不好算。</p>
+<p>定理：矩阵所有特征值小于等于矩阵的任意范数。而二范数又等于最大的特征值，则有：</p>
+<p>$$\| A \|_2 \leq \| A \|_c$$</p>
+<h4 id="矩阵的条件数"><a href="#矩阵的条件数" class="headerlink" title="矩阵的条件数"></a>矩阵的条件数</h4><p>$Ax=b$，右端有一点扰动量 $\delta b$，引起了方程解的扰动 $\delta x$：</p>
+<p>$$A(x+\delta x) = b + \delta b$$</p>
+<p>$A\delta x = \delta b, \delta x = A^{-1}\delta b$，由矩阵的相容性（假设我们只使用相容的矩阵范数）有</p>
+<p>$$\left\| \delta x \right\| = \left\| A^{-1} \right\| \left\| \delta b \right\|$$</p>
+<p>又由 $Ax=b$，有 $\left\| b \right\| = \left\| A \right\| \left\| x \right\|$</p>
+<p>以上两式整理得：</p>
+<h1 id="frac-left-delta-x-right-left-x-right"><a href="#frac-left-delta-x-right-left-x-right" class="headerlink" title="$$\frac{\left\| \delta x \right\|}{\left\| x \right\|} "></a>$$\frac{\left\| \delta x \right\|}{\left\| x \right\|} </h1><p>\left( \left\| A \right\| \cdot \left\| A^{-1} \right\| \right)<br>\frac{\left\| \delta b \right\|}{\left\| b \right\|} $$</p>
+<p>$\|A\| \cdot \|A^{-1}\|$ 越大，即使 $\delta b$ 小，$\delta x$ 也会很大</p>
+<p>因此，定义条件数：</p>
+<p>$$Cond(A) = \|A\| \cdot \|A^{-1}|$$</p>
+<p>条件数很大时，$Ax=b$ 是病态问题；条件数很小时（几百、几千、几万），$Ax=b$ 是良态问题。</p>
+<p>15 阶希尔伯特矩阵的条件数为 $10^{10^{16}}$，因此，与希尔伯特矩阵的数值计算是十分困难的。</p>
+<h2 id="MATLAB-对范数的支持"><a href="#MATLAB-对范数的支持" class="headerlink" title="MATLAB 对范数的支持"></a>MATLAB 对范数的支持</h2><p><code>norm</code> 求范数，<code>cond</code> 求条件数。</p>
+<h2 id="非线性方程组"><a href="#非线性方程组" class="headerlink" title="非线性方程组"></a>非线性方程组</h2><p>牛顿法，就是最优化嘛。由于我学过最优化，这部分就略了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.135Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/non-linear-equation/&title=《非线性方程求根》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/non-linear-equation/&title=《非线性方程求根》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/non-linear-equation/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《非线性方程求根》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/non-linear-equation/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/non-linear-equation/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/microsoft/windows/setup-ssh-windows/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Windows 使用 ssh</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/maths/mathematical-induction/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">数学归纳法的七种变式及其应用（转载）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/non-linear-equation/&title=《非线性方程求根》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/non-linear-equation/&title=《非线性方程求根》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/non-linear-equation/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《非线性方程求根》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/non-linear-equation/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/non-linear-equation/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aUY7DIAxF0e5/05kNNMx9dtoKc/mq0gg4HcljG14vPK6bwb9dz3n35OEhQ4aMbRnXcqwXqL2Tfl7vTYYMGecw7iLY3TtrAP+WhOD13mTIkCGDBMFa4K79fDJkyJCRBlxedpJ082f/N2TIkLEJg7fM1mkiTxbJj/KRWlyGDBkbMnjX/fufP3K+IUOGjK0YVzg6xW0tZUS7kiFDxmgGD3D8aJM31IIClcwgQ4aMoQxSTJICsna1izP+eSJDhoxjGHwrvO1FEr7OIcGbgCtDhoxxjPTKFy9recusM48MGTLOYTwVZNMN8XST71OGDBnzGGSizjvPvh9cCJMhQ8YgBm+ZpUGWB/Q00KO/jAwZMgYxeAusdmyZHi0UE0QZMmQcwKgdMdbK2jQpRImsDBkyRjP4RYe0vExL2TTsypAh4xxGunAK4Kvw9DG+MyJDhowRDJ7ecdJXm3cyZMgYzUgvVaSXvVJSSo2XlyFDxiBG2jLjy/cDcasWlyFDxrYMEl77B5Zp+UoC65ummwwZMg5gtNpeuNDlBwytrFaGDBlDGek1i7R8LV6eSFtsMmTIGMS4wsE31AmyPKGUIUPGCQw+aoedhMoPMjsHFTJkyNid8VS7nyR5pLitzSZDhowTGLXAl14La12hWL8pQ4YMGe1ylD/hM8uQIUMGD7hpKZu2/glShgwZJzBIEYumKx0Y8BVlyJBxJiMtHfmlsVpS2An3MmTIGMf4A+pa0T+eO8u9AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

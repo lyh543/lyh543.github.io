@@ -1,0 +1,15 @@
+<hr>
+<p>title: apt 笔记<br>date: 2019-8-20<br>tags:</p>
+<ul>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<p>APT，高级打包工具（英语：Advanced Packaging Tools，缩写为APT）是Debian及其派生的Linux软件包管理器。  ——<a href="https://zh.wikipedia.org/wiki/APT" target="_blank" rel="noopener">Wikipedia</a></p>
+<h2 id="第一件事：更新源"><a href="#第一件事：更新源" class="headerlink" title="第一件事：更新源"></a>第一件事：更新源</h2><p><code>apt-get</code>的下载链接可以理解为是存在本地的。<br>如果第一次用<code>apt-get</code>，或者太久没有用，可能某些链接就失效了。<br>所以，这种情况下就得先：</p>
+<pre><code class="bash">sudo apt-get update
+</code></pre>
+<h3 id="第零件事：更换中科大源"><a href="#第零件事：更换中科大源" class="headerlink" title="第零件事：更换中科大源"></a>第零件事：更换中科大源</h3><p>由于众所周知的原因，Ubuntu 的源在国内访问很慢，建议换国内的镜像源。<br>由于 USTC 的 wiki 对操作方法写的很清楚了，所以直接贴一个链接好了。</p>
+<p><a href="https://lug.ustc.edu.cn/wiki/mirrors/help/ubuntu" target="_blank" rel="noopener">https://lug.ustc.edu.cn/wiki/mirrors/help/ubuntu</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code class="bash">sudo apt install &lt;package name&gt;
+</code></pre>

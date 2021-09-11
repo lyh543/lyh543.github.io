@@ -1,0 +1,35 @@
+<hr>
+<p>title: Linux 连接 Docker MySQL 报错：error:”Can’t connect to local MySQL server through socket ‘/var/run/mysqld/mysqld.sock’ (2)”<br>date: 2021-01-04 10:36:54<br>tags:</p>
+<ul>
+<li>Linux</li>
+<li>SQL<br>category:</li>
+<li>SQL</li>
+</ul>
+<hr>
+<p>我在 Windows 的 Docker 上安装了 MySQL 8，随后在 WSL 中用命令行连接数据库失败：</p>
+<pre><code>$ mysql -u root -h localhost -p
+Enter password:
+ERROR 2002 (HY000): Can&#39;t connect to local MySQL server through socket &#39;/var/run/mysqld/mysqld.sock&#39; (2)
+</code></pre>
+<p>Windows 下的 PyCharm 是能正常连接 MySQL 的，所以肯定不是服务端的问题；我 Google 了也没有找到原因，所以猜测是 WSL 的锅。</p>
+<p>但是最近在 GitHub Actions 上复现了这个问题。我在调用 GitHub Actions 为一个 Django Web 应用编写集成测试时在，这个问题再次发生了。</p>
+<p>在搜索其他 Django + GitHub Actions + MySQL 相关网页并尝试后，我发现了问题所在：将 <code>MYSQL_HOST</code> 从 <code>localhost</code> 改为 <code>127.0.0.1</code> 即可！</p>
+<pre><code>$ mysql -u root -h 127.0.0.1 -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+mysql&gt;
+</code></pre>
+<p>我猜测原因是：<strong>使用 <code>localhost</code> 时，<code>mysql</code> 客户端并不是访问 <code>localhost:3306</code>，而是直接访问 <code>/var/run/mysqld/mysqld.sock</code>。如果是在本地部署 MySQL，这样当然没有问题；但是如果使用 Docker 部署 MySQL，<code>/var/run/mysqld/mysqld.sock</code> 根本不存在，必须通过 <code>127.0.0.1:3306</code> 进行访问。</strong></p>
+<p>而 PyCharm 使用 <code>jdbc</code> 就不会受到影响。</p>
+<p>后来我在 Stack Overflow 的十几个回答中找到<a href="https://stackoverflow.com/a/28390193/12208030" target="_blank" rel="noopener">一个相关的回答</a>，但也没有提到 Docker，只有回答的回复中才提到了 Docker。</p>

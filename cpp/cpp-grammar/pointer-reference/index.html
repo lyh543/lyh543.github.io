@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>指针 pointer &amp; 引用 reference | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="指针和变量的存储方式每个指针指向的是第一个字节，但是数是倒着存的（第一个字节是最低位）。如存一个int i&#x3D;1024，再从第二个字节开始读，结果是4（当然先要清掉周围的内存）。 测试代码及输出： 123456789101112131415#include&lt;bits&#x2F;stdc++.h&gt;using namespace std;int main()&amp;#123;       int i[10]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="指针 pointer &amp; 引用 reference">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="指针和变量的存储方式每个指针指向的是第一个字节，但是数是倒着存的（第一个字节是最低位）。如存一个int i&#x3D;1024，再从第二个字节开始读，结果是4（当然先要清掉周围的内存）。 测试代码及输出： 123456789101112131415#include&lt;bits&#x2F;stdc++.h&gt;using namespace std;int main()&amp;#123;       int i[10]">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/pointer_and_const.png">
+<meta property="article:published_time" content="2019-09-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.103Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/pointer_and_const.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">指针 pointer &amp; 引用 reference</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">指针 pointer &amp; 引用 reference</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-09-01T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-09-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指针和变量的存储方式"><span class="post-toc-text">指针和变量的存储方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#指针和-const"><span class="post-toc-text">指针和 const</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数指针"><span class="post-toc-text">函数指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#void-指针"><span class="post-toc-text">void * 指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#begin-和-end-C-11"><span class="post-toc-text">begin 和 end (C++11)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#动态内存"><span class="post-toc-text">动态内存</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#malloc-amp-free-from-C"><span class="post-toc-text">malloc &amp; free from C</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#new-amp-delete-C"><span class="post-toc-text">new &amp; delete (C++)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#new-delete-与-malloc-free的区别"><span class="post-toc-text">new&#x2F;delete 与 malloc&#x2F;free的区别</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#智能指针"><span class="post-toc-text">智能指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#引用"><span class="post-toc-text">引用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#函数和引用"><span class="post-toc-text">函数和引用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#右值引用"><span class="post-toc-text">右值引用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#const-和引用"><span class="post-toc-text">const 和引用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#题外话：指针和引用谁好？"><span class="post-toc-text">题外话：指针和引用谁好？</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/pointer-reference"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">指针 pointer & 引用 reference</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-09-02 00:00:00" datetime="2019-09-01T16:00:00.000Z"  itemprop="datePublished">2019-09-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="指针和变量的存储方式"><a href="#指针和变量的存储方式" class="headerlink" title="指针和变量的存储方式"></a>指针和变量的存储方式</h2><p>每个指针指向的是第一个字节，但是数是倒着存的（第一个字节是最低位）。如存一个<code>int i=1024</code>，再从第二个字节开始读，结果是4（当然先要清掉周围的内存）。</p>
+<p>测试代码及输出：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">       <span class="keyword">int</span> i[<span class="number">10</span>] = &#123; <span class="number">0</span>,<span class="number">1024</span>&#125;, *pi = &amp;i[<span class="number">1</span>];</span><br><span class="line">       <span class="built_in">cout</span> &lt;&lt; pi &lt;&lt; <span class="string">" "</span> &lt;&lt; *pi &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">       pi = (<span class="keyword">int</span>*)(<span class="keyword">int</span>(pi) + <span class="number">1</span>);</span><br><span class="line">       <span class="built_in">cout</span> &lt;&lt; pi &lt;&lt; <span class="string">" "</span> &lt;&lt; *pi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出：</span></span><br><span class="line"><span class="comment">00C3FD04 1024</span></span><br><span class="line"><span class="comment">00C3FD05 4</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="指针和-const"><a href="#指针和-const" class="headerlink" title="指针和 const"></a>指针和 const</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="pointer_and_const.png" alt="pointer and const" title="">
+                </div>
+                <div class="image-caption">pointer and const</div>
+            </figure>
+
+<p>const 先向前看，没有就再向后看？</p>
+<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正确用法：</span></span><br><span class="line"><span class="keyword">int</span> (*f)(<span class="keyword">int</span>,<span class="keyword">char</span>);  <span class="comment">// f是指向“具有两个参数，返回 int 的函数”的指针</span></span><br><span class="line"><span class="keyword">int</span> (*f)(<span class="keyword">void</span>);</span><br><span class="line"><span class="keyword">int</span> (*f) (ostream&amp;, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp;); <span class="comment">//例三</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//错误用法：</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> *<span class="title">f</span><span class="params">(<span class="keyword">int</span>)</span>         <span class="comment">// f是一个函数，返回一个“指向 int 的指针”</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> *<span class="title">f</span><span class="params">(<span class="keyword">void</span>)</span>        <span class="comment">// 参数是 void 也得写</span></span></span><br></pre></td></tr></table></figure>
+
+<p>使用时直接 <code>f(x)</code> 即可。<code>f</code> 又被称为回调函数(callback function)。</p>
+<p>例三的 <code>f</code> 的变量类型为 <code>int (*) (ostream&amp;, const vector&lt;string&gt;&amp;)</code>。</p>
+<p>C++ 11 中 <code>NULL</code>，<code>0</code>，<code>nullptr</code> 等价。</p>
+<hr>
+<p>函数指针和 typedef 组合在一起就很怪：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">char</span> <span class="params">(*PTRFUN)</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line">PTRFUN pFun;</span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">glFun</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123; <span class="keyword">return</span>;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pFun = glFun;</span><br><span class="line">    (*pFun)(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>别名 <code>PTRFUN</code> 居然是写到括号里面了。</p>
+<h2 id="void-指针"><a href="#void-指针" class="headerlink" title="void * 指针"></a>void * 指针</h2><p>void * 指针只表示与它相关的值是个内存地址，但该内存的数据类型是未知的。它是能够接受任何数据类型的特殊指针。<br><strong>void * 最重要的用途是作为函数的参数，向函数传递一个类型可变的对象。另一种用途就是从函数返回一个无类型的对象。</strong><br>在<strong>使用void * 指针之前，必须显式地将它转换成某种数据类型的指针后使用</strong>，其他操作都不允许。（可以使用，不能赋值）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">int</span> i=<span class="number">4</span>,*pi=&amp;i;</span><br><span class="line">  <span class="keyword">void</span>* pv;</span><br><span class="line">  <span class="keyword">double</span> d=<span class="number">9</span>,*pd=&amp;d;</span><br><span class="line">  pv=&amp;i;        <span class="comment">//L1：正确</span></span><br><span class="line">  pv=pi;        <span class="comment">//L2：正确</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;*pv&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//L3：错误</span></span><br><span class="line">  pv=pd;        <span class="comment">//L4：正确</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;*(<span class="keyword">double</span>*)pv;  <span class="comment">//L5：正确，输出9</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="begin-和-end-C-11"><a href="#begin-和-end-C-11" class="headerlink" title="begin 和 end (C++11)"></a>begin 和 end (C++11)</h2><p><iterator>头文件的两个函数，用于确定指向数组首元素和尾元素后一位置的指针，方便遍历数组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span> &#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> *p = <span class="built_in">begin</span>(a); p != <span class="built_in">end</span>(a); p++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于容器的用法有：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : s)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//i</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> iter = s.<span class="built_in">begin</span>(); iter != <span class="built_in">end</span>; iter++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//*iter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="动态内存"><a href="#动态内存" class="headerlink" title="动态内存"></a>动态内存</h2><h3 id="malloc-amp-free-from-C"><a href="#malloc-amp-free-from-C" class="headerlink" title="malloc &amp; free from C"></a>malloc &amp; free from C</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> * a;</span><br><span class="line">a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">*a = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">free</span>(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="new-amp-delete-C"><a href="#new-amp-delete-C" class="headerlink" title="new &amp; delete (C++)"></a>new &amp; delete (C++)</h3><p><code>new</code> 用于从内存中分配指定大小的内存<br>用法 1：<code>p=new type;</code><br>用法 2：<code>p=new type(x);</code><br>用法 3：<code>p=new type[n];</code><br><code>delete</code> 用于释放 <code>new</code> 分配的堆内存<br>用法 1：<code>delete p;</code><br>用法 2：<code>delete [ ]p;</code></p>
+<p>注意对 <code>int</code> 数组，<code>delete p</code> 和 <code>delete [] p</code> 效果一样。但若把 <code>int</code> 换成自定义的类型，则 <code>delete p</code> 只释放第一个元素的内存，<code>delete [] p</code> 才释放全部内存，因为 **<code>delete</code> 后就会走析构函数，基本类型的对象没有析构函数，所以回收基本类型组成的数组空间用  <code>delete</code> 和 <code>delete[]</code> 都是可以的；但是对于类对象数组，只能用 <code>delete[]</code>**。总之保证 <code>new delete</code> 的 <code>[]</code> 的配套使用。</p>
+<h3 id="new-delete-与-malloc-free的区别"><a href="#new-delete-与-malloc-free的区别" class="headerlink" title="new/delete 与 malloc/free的区别"></a>new/delete 与 malloc/free的区别</h3><ul>
+<li>new 能够自动计算要分配的内存类型的大小，不必用 sizeof 计算所要分配的内存字节数</li>
+<li>new 不需要进行类型转换，它能够自动返回正确的指针类型。</li>
+<li>new 可以对分配的内存进行初始化。</li>
+<li>new 和delete 可以被重载，程序员可以借此扩展new和delete的功能，建立自定义的存储分配系统。</li>
+</ul>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>自动回收所指对象，无需调用delete回收。</p>
+<p>需要包含头文件 <code>memory</code></p>
+<ul>
+<li>auto_ptr ：动态分配对象以及当对象不再需要时自动执行清理，构造时获取对某个对象的所有权，在析构时释放该对象，两个指针不能同时拥有同一个对象；</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>*p = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ap</span><span class="params">(p)</span></span>;</span><br><span class="line"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt;ap2(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>));</span><br><span class="line"></span><br><span class="line">*p = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p &lt;&lt; <span class="string">"  "</span> &lt;&lt; *ap &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"There is only one point to me."</span>))</span></span>;</span><br><span class="line"><span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; p2;</span><br><span class="line">p2 = p1;                     <span class="comment">//L1，p1不再指向任何对象，其所指对象由p2指向</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *p1;                <span class="comment">//L2，发生运行错误，因为p1没有指向任何对象。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>shared_ptr：作用有如同指针，但会记录有多少个shared_ptrs共同指向一个对象。最后一个这样的指针被销毁，也就是一旦某个对象的引用计数变为0，这个对象会被自动删除。</li>
+<li>unique_ptr：它持有对对象的独有权——两个unique_ptr不能指向一个对象，不能进行复制操作只能进行移动操作</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>分为：</p>
+<ol>
+<li>左值引用：<code>int &amp; a = b;</code></li>
+<li>右值引用：<code>int &amp;&amp; a = 3+1;</code></li>
+</ol>
+<ul>
+<li>引用不是值，不占用存储空间，引用的地址就是其所引用的变量的地址</li>
+<li>引用必须被初始化，且不可重新赋值</li>
+<li>可以建立数组或数组元素的引用，但<strong>不能建立引用数组</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, a[<span class="number">10</span>] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span> &#125;, *b[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> (&amp;ra)[<span class="number">10</span>] = a;        <span class="comment">//L1：正确，ra是具有10元素的整型数组的引用</span></span><br><span class="line"><span class="keyword">int</span> *(&amp;rpa)[] = b;          <span class="comment">//L2: 错误！！！！</span></span><br><span class="line"><span class="keyword">int</span> *(&amp;rpa)[<span class="number">10</span>] = b;      <span class="comment">//L3：正确，rpa是具有10个整型指针的数组的引用</span></span><br><span class="line"><span class="keyword">int</span> &amp;ia[<span class="number">10</span>]=a;               <span class="comment">//L4：错误，ia是引用数组，每个数组元素都是引用</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意数组引用要注明长度！！！！！</strong></p>
+<p><strong>由 <code>int *(&amp;rpa)</code> 可以看出，指针的<code>*</code> 是连着 <code>int</code> 的，引用的 <code>&amp;</code> 是连着 <code>变量名</code> 的。</strong></p>
+<h3 id="函数和引用"><a href="#函数和引用" class="headerlink" title="函数和引用"></a>函数和引用</h3><p>参见这篇<a href="../C++%E5%87%BD%E6%95%B0/%E5%87%BD%E6%95%B0%E5%92%8C%E5%BC%95%E7%94%A8">引用</a>的博客。</p>
+<h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><p>右值引用是C++11为了支持移动操作而引入的新型引用类型，其重要特点就是只能绑定到即将（<del>瞬间</del>）销毁的对象上，比如常量或表达式。通过右值引用可以方便地将它引用的资源“移动”到另一个对象上。</p>
+<p>右值引用存的是表达式的值（表达式中变量变化不改变其值）</p>
+<p><code>double &amp;&amp; rr = r;</code> 是错的。</p>
+<h3 id="const-和引用"><a href="#const-和引用" class="headerlink" title="const 和引用"></a>const 和引用</h3><p><code>const</code> 引用其实和右值引用差不多，变量修改不会改变引用值了。</p>
+<h3 id="题外话：指针和引用谁好？"><a href="#题外话：指针和引用谁好？" class="headerlink" title="题外话：指针和引用谁好？"></a>题外话：指针和引用谁好？</h3><p>C 只有指针，没有引用；Java 只有引用，没有指针；C++ 二者皆有（C++ 和 Java 的引用不同，但在此不表）。</p>
+<p>那么，指针和引用谁好呢？</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.103Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&title=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&title=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/cpp-grammar/cpp-oop-course/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C++ 面向对象编程 课程相关</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/cpp-const-volatile-and-constexpr/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">const、volatile 和 constexpr</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&title=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&title=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《指针 pointer & 引用 reference》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/pointer-reference/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aQW7DMAwEwPz/0y7QU4A2zq5kF400Ohlp7HB8YEVSj0e8ju/1fP28Xn3n53X+5McdCwMD42MZx+nKQ0kCevX85Dnn92JgYOzAaFNhm0bPw0rufRMzBgYGRrw1nAFgYGBg3JFw53ljBTAGBsaejKSITRph+Xfa372sFsfAwPhAxthg4G+ub59vYGBg/HvGUa7zjV3egGuHB2+iwsDAWJqRlJR5I2zs+EW7JX35sjAwMLZhtAXkTLnbpuaia4iBgbEcIxkD5BvBPO3Wrf+kxMXAwFiaMd+Iz4vSNtC6GYeBgbEQoz0AkYfYttta5C9dQwwMjKUZ56Hkn7RNtPk0jYGBsQ+jLUTb8w9t2Zy38zAwMPZhtLdd9deZFhsGBsaejHb0mG/42tI0h2FgYOzAaA9b5Ec05scMecGMgYGxAyNv9M+HmLf7LzgchoGBsQRjJtz2MFnSbsvTNwYGxm6M4oZLxwYzpW90ZgQDA2MJRntsq03HU+3++BMMDIy1GUewWurYgHPshWJgYOzDGGuozaTLvACOSBgYGEsz2hZ/EtBle9VyaIGBgbEq4yhX21y7apwZ/d/AwMBYlDHWyp8Zc7a8trWHgYGxKuO+JHtVCy96uRgYGBsw8oBmAHWmj5M+BgYGRhvi+fdv2VxiYGBgBIly/jlj20cMDIx9GHcc8EoGpe1GcGoSi4GB8bGMq4aRM0268wMZY0U1BgbGEowvAWJBz/IoeEQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

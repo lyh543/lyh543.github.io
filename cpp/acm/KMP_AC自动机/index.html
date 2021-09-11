@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>KMP 和 AC 自动机 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="坑,C++,ACM,数据结构,字符串">
+    <meta name="description" content="xyynb! KMP这里，字符串从1开始计数！由于串是从1开始计数，可以把第一个格子设为$，避免越界。 123char s[maxn], p[maxn];s[0] &#x3D; p[0] &#x3D; &#39;$&#39;;cin &gt;&gt; s+1 &gt;&gt; p+1;  KMP众所周知，KMP 是一种单串匹配算法，把朴素算法的O(|S|*|T|)优化到了O(|S|+|T|)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP 和 AC 自动机">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="xyynb! KMP这里，字符串从1开始计数！由于串是从1开始计数，可以把第一个格子设为$，避免越界。 123char s[maxn], p[maxn];s[0] &#x3D; p[0] &#x3D; &#39;$&#39;;cin &gt;&gt; s+1 &gt;&gt; p+1;  KMP众所周知，KMP 是一种单串匹配算法，把朴素算法的O(|S|*|T|)优化到了O(|S|+|T|)。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/KMP.png">
+<meta property="og:image" content="https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/getFail.png">
+<meta property="og:image" content="https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/abacabadabacaba.png">
+<meta property="article:published_time" content="2019-08-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.087Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="坑">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="ACM">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/KMP.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">KMP 和 AC 自动机</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">KMP 和 AC 自动机</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-30T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-31
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#KMP"><span class="post-toc-text">KMP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#border-：最长相等前后缀"><span class="post-toc-text">border ：最长相等前后缀</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#求-fail-数组"><span class="post-toc-text">求 fail[] 数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#匹配的过程"><span class="post-toc-text">匹配的过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#KMP完整代码："><span class="post-toc-text">KMP完整代码：</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#AC-自动机"><span class="post-toc-text">AC 自动机</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/acm/KMP_AC自动机"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">KMP 和 AC 自动机</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-31 00:00:00" datetime="2019-08-30T16:00:00.000Z"  itemprop="datePublished">2019-08-31</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>xyynb!</p>
+<p><strong>KMP这里，字符串从1开始计数</strong>！<br>由于串是从1开始计数，可以把第一个格子设为<code>$</code>，避免越界。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[maxn], p[maxn];</span><br><span class="line">s[<span class="number">0</span>] = p[<span class="number">0</span>] = <span class="string">'$'</span>;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; s+<span class="number">1</span> &gt;&gt; p+<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><p><del>众所周知</del>，KMP 是一种单串匹配算法，把朴素算法的<code>O(|S|*|T|)</code>优化到了<code>O(|S|+|T|)</code>。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="KMP.png" alt="KMP" title="">
+                </div>
+                <div class="image-caption">KMP</div>
+            </figure>
+
+<p>如上图，在进行朴素算法时，如果我们已经进行了一些匹配成功，实际上我们就知道了原串的一些信息，<strong>理论上</strong>就可以使用这个信息来加速匹配，跳过一些绝对不可能匹配成功的情况。<br>所以，该怎么做呢？这就是 KMP 很迷的地方之一，也是我一直看不懂 KMP 的一个点。</p>
+<h3 id="border-：最长相等前后缀"><a href="#border-：最长相等前后缀" class="headerlink" title="border ：最长相等前后缀"></a><code>border</code> ：最长相等前后缀</h3><p>为此，<code>xyy</code>提到了 <code>border</code> 的概念。<br><code>border</code> 即是某个字符串的最长相等前后缀（不包含自己）。<br>有了这个定义，再结合上面的图，就可以看到，如果在某个字符失配了，说明这个字符前的模式串 T 和字符串 S 是相等的，由于 <code>border</code> 的存在，可以直接跳过一些字符串，直接跳到失配字符前的模式串 T 的  <code>border</code>，比较 <code>border</code> 之后的字符。<br>一定没有错过什么能够正确匹配的情况吗？是的，反证可以证明，要是存在，那<code>border</code>就不是最长了。<br>也就是说，KMP 分为两个步骤，求 T 中每个字符前的子串对应的<code>border</code>长度，然后匹配。一般把前者（每个字符前的子串对应的 <code>border</code> 的长度）定义为 <code>fail[]</code> 数组，或者 <code>xyy</code> 的 <code>π() 函数</code>。</p>
+<h3 id="求-fail-数组"><a href="#求-fail-数组" class="headerlink" title="求 fail[] 数组"></a>求 <code>fail[]</code> 数组</h3><p>在T也很长的时候，暴力求解 <code>fail[]</code> 数组也是不可取的。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="getFail.png" alt="fail()" title="">
+                </div>
+                <div class="image-caption">fail()</div>
+            </figure>
+<p>这种情况下，可以看出：</p>
+<blockquote>
+<p>由于 <code>π(3)=1</code> ，可得 <code>T[1...1]==T[3...3]</code>；<br>又由于 <code>T[2]==T[4]</code> ， <code>T[1...2]==T[3...4]</code><br>所以 <code>π(4)=2=π(3)+1</code>。</p>
+</blockquote>
+<p>综上，**若<code>T[i+1]==T[π(i)+1]</code>，则<code>π(i+1)=π(i)+1</code>**。</p>
+<p>那如果<code>T[i+1]≠T[π(i)+1]</code>呢？</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="abacabadabacaba.png" alt="border的border仍然是原串的border" title="">
+                </div>
+                <div class="image-caption">border的border仍然是原串的border</div>
+            </figure>
+<p>有一个神奇的性质，<code>border</code>的<code>border</code>仍然是原串的<code>border</code>。</p>
+<blockquote>
+<p>由于 <code>abacaba</code> 是原串的 <code>border</code>，则 <code>黄串+c+绿串==蓝串+c+红串</code>。<br>由于 <code>aba</code> 是 <code>abacaba</code> 的 <code>border</code>，则 <code>黄串==绿串，蓝串==红串</code>。<br>所以，<code>黄串==绿串==蓝串==红串</code>。</p>
+</blockquote>
+<p>因此，我们可以用递归的方法，如果<code>T[i+1]≠T[π(i)+1]</code>，则检查<code>T[i+1]==T[π(π(i))+1]</code>，以此类推，直至出现相等。如果真的很惨，一个<code>border</code>都没有，那么应该递归到某个<code>π(i)=0</code>，这时，<code>T[i+1]==0</code>。  </p>
+<p>综上，求<code>fail[]</code>数组的代码为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getFail</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= pl; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> j = i<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; p[fail[j]+<span class="number">1</span>] != p[i]) j = fail[j];</span><br><span class="line">        fail[i] = j ? fail[j] + <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配的过程"><a href="#匹配的过程" class="headerlink" title="匹配的过程"></a>匹配的过程</h3><p>匹配的过程可以按照上面说的，“如果在某个字符失配了，说明这个字符前的模式串T和字符串S是相等的，由于<code>border</code>的存在，可以直接跳过一些字符串，直接跳到失配字符前的模式串T的<code>border</code>，比较<code>border</code>之后的字符。”</p>
+<p>但是还有一个更为漂亮的方法：把原串“拼到”匹配串“的后面”。求原串中哪些位置出现了匹配串的问题，就转化成了：</p>
+<p>求新串中有哪些串的<code>border</code>正好是匹配串。（忽略掉所有长于匹配串的<code>border</code>）</p>
+<p>匹配过程的代码就和求<code>fail[]</code>数组差不多了。<br>实际上我们也没有拼起来，只是模拟了一下。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;<span class="comment">//fail[i-1]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sl; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; p[j + <span class="number">1</span>] != s[i]) j = fail[j];</span><br><span class="line">        j = (p[j + <span class="number">1</span>] == s[i]) ? j + <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//这里不使用(j&gt;0)作为测试条件，是因为 j==0 和 p[j + 1] == s[i] 可能同时成立。</span></span><br><span class="line">        <span class="comment">//求fail[]过程中不存在这个问题，因为fail[0] = -1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (j == pl)</span><br><span class="line">        &#123;</span><br><span class="line">            ans[anslen++] = i - pl + <span class="number">1</span>;</span><br><span class="line">            j = fail[j];<span class="comment">//border:不包含自己</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="KMP完整代码："><a href="#KMP完整代码：" class="headerlink" title="KMP完整代码："></a>KMP完整代码：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Lutece 2210 qh与复读机 III</span></span><br><span class="line"><span class="comment">//https://acm.uestc.edu.cn/problem/qhyu-fu-du-ji-iii/description</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e6</span>+<span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> p[maxn], s[maxn];</span><br><span class="line"><span class="keyword">int</span> ans[maxn] = &#123; <span class="number">0</span> &#125;, fail[maxn] = &#123;<span class="number">-1</span> &#125;, anslen = <span class="number">0</span>, pl, sl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">fail[i]：前i位的最长border（不包含自己）</span></span><br><span class="line"><span class="comment">字符串从1计数!!!!</span></span><br><span class="line"><span class="comment">aabcaabaabcaa</span></span><br><span class="line"><span class="comment">0100123123456</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//KmpGetFail</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= pl; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; p[fail[j] + <span class="number">1</span>] != p[i]) j = fail[j];</span><br><span class="line">        fail[i] = j&gt;<span class="number">0</span> ? fail[j] + <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;<span class="comment">//fail[i-1]</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sl; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; p[j + <span class="number">1</span>] != s[i]) j = fail[j];</span><br><span class="line">        j = (p[j + <span class="number">1</span>] == s[i]) ? j + <span class="number">1</span> : <span class="number">0</span>;<span class="comment">//不能使用(j&gt;0)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (j == pl)</span><br><span class="line">        &#123;</span><br><span class="line">            ans[anslen++] = i - pl + <span class="number">1</span>;</span><br><span class="line">            j = fail[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//原版匹配</span></span><br><span class="line">    <span class="comment">/*for (int  i = 1, j = 1; i &lt; sl;)</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		if (j == 0)</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">			i++;</span></span><br><span class="line"><span class="comment">			j++;</span></span><br><span class="line"><span class="comment">			continue;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">		if (s[i] == p[j])</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">			j++;</span></span><br><span class="line"><span class="comment">			if (j == pl)</span></span><br><span class="line"><span class="comment">			&#123;</span></span><br><span class="line"><span class="comment">				ans[anslen++] = i - j + 2 ;</span></span><br><span class="line"><span class="comment">				j = fail[j-1] + 1;</span></span><br><span class="line"><span class="comment">			&#125;</span></span><br><span class="line"><span class="comment">			i++;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">		else</span></span><br><span class="line"><span class="comment">		&#123;</span></span><br><span class="line"><span class="comment">			j = fail[j - 1] + 1;</span></span><br><span class="line"><span class="comment">		&#125;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	return;*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    s[<span class="number">0</span>] = p[<span class="number">0</span>] = <span class="string">'$'</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; s+<span class="number">1</span> &gt;&gt; p+<span class="number">1</span>;</span><br><span class="line">    pl = <span class="built_in">strlen</span>(p+<span class="number">1</span>), sl = <span class="built_in">strlen</span>(s+<span class="number">1</span>);</span><br><span class="line">    kmp();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; anslen; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ans[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AC-自动机"><a href="#AC-自动机" class="headerlink" title="AC 自动机"></a>AC 自动机</h2><p>留坑了。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.087Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/" rel="tag">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&title=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&title=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/blog/markdownlint/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Markdownlint 使用</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/python/python-functions/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">Python 常用函数</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&title=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&title=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《KMP 和 AC 自动机》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/acm/KMP_AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACqUlEQVR42u3aSZLCMBAEQP7/aSZirjOG6kWGQ/pEsFhOHdSiWo9HfD1/r6vXV59W75aM9Thx4eHh4bUe/erKH+Lvr/Kpef3bq+dJ7oCHh4d3jrdVDJJPX4+V4PP74OHh4X2W9/qdZE+7W1Tw8PDwvp/X2+ZOPsXDw8P7Zl51+OT9fOuclJ/jWQseHh5ezJs3wO5/fWt/Dw8PDy8uCXmDqresJyVkcuHh4eGd4FUD2d6hq+TTXmwRFQw8PDy8VV514a42rnoHDpIiFAUceHh4eAd41T/81dZ+NSDOC1U+0Xh4eHi7vOSmSVgwAeeNrvIfADw8PLwDvAm1GqdWJ6I6lVEwgYeHh7fESzav+aP3mlvVgCOfAjw8PLxdXnVpnryTT+L8bnh4eHineUl8UG1T5VFsvk1PYmU8PDy807z5gYDq1nyC7JUTPDw8vBO8SUOrmhbnG/E8sIjaY3h4eHhLvEnDvhrp5lv23rGDf0bEw8PDO8CrLs29owN5xDApS4X+Hh4eHt4qLwlGk4g2n6xq5JGPgoeHh3c/r9rOr3ag5o2x6P54eHh4q7y81VQ9tpVv1quLfmG3jIeHh3eAlzeo8gA3Dxpydj4db76Jh4eHt8rLB0iOBfSOWPUOKETFBg8PD+8ALwf3HvFgNett1vHw8PCWePlCvDB/rSV+oRjg4eHhjXm9hbu6gb4n1MDDw8O7k9dbuHfDhd6zvfkmHh4e3irvWbySQHarqVYtJP/cGQ8PD+8Ab7IvrQa11YmoFpgyCQ8PD2/Ayxfl6k51q6E1CS/w8PDwzvEmzbB84LVwNm+J4eHh4X0NL1m+e0WlF2e8CXPx8PDwPsSbLO5bR7gObqnx8PDwDoQROSn5Zu/wQfkIAh4eHt4BXrUB1husOmW9CWpS8fDw8FLeD7xBac66iPKZAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

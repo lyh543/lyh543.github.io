@@ -1,0 +1,140 @@
+<hr>
+<p>title: Nginx（萌新向）<br>date: 2020-03-01 20:46:22<br>tags:</p>
+<ul>
+<li>服务器</li>
+<li>Nginx</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<p>下面记录 Nginx 在使用过程中遇到的“基本”操作。</p>
+<h2 id="修改配置文件、测试重启"><a href="#修改配置文件、测试重启" class="headerlink" title="修改配置文件、测试重启"></a>修改配置文件、测试重启</h2><p>Nginx 首先检查的配置文件在 <code>/etc/nginx/nginx.conf</code>。在这个文件中如果有如下内容：</p>
+<pre><code class="nginx">include /etc/nginx/conf.d/*.conf;
+</code></pre>
+<p>那么也会检查 <code>/etc/nginx/conf.d/</code> 下的所有 <code>conf</code> 文件。本着干净的原则，我们推荐在 <code>nginx.conf</code> 加入 <code>include</code> 语句，然后在 <code>conf.d</code> 下按域名创建自己的 <code>conf</code> 配置文件。</p>
+<p>修改配置文件以后，Nginx 并不是即时读取配置的，需要使用 reload 命令才能加载配置。</p>
+<pre><code class="sh">nginx -s reload
+</code></pre>
+<p>也可以直接重启 Nginx 服务。</p>
+<pre><code class="sh">systemctl restart nginx
+</code></pre>
+<p>如果配置有错误，Nginx 就会启动失败，宕机。为了保证 Nginx 服务器能平稳运行，不宕机，我们推荐使用以下命令而不是尝试重启的形式检查错误：</p>
+<pre><code class="sh">nginx -t
+</code></pre>
+<h2 id="给全站添加-SSL-证书"><a href="#给全站添加-SSL-证书" class="headerlink" title="给全站添加 SSL 证书"></a>给全站添加 SSL 证书</h2><p>请看<a href="../build-https-sites-with-nginx/">另一篇博客</a>。</p>
+<h2 id="网页转发"><a href="#网页转发" class="headerlink" title="网页转发"></a>网页转发</h2><h3 id="隐性转发-反向代理"><a href="#隐性转发-反向代理" class="headerlink" title="隐性转发/反向代理"></a>隐性转发/反向代理</h3><p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器将其跳转到 <code>127.0.0.1:8080</code>，地址栏仍然显示 <code>https://cloud.example.com</code>。</p>
+<p>首先要将域名 <code>cloud.example.com</code> 以 <code>A</code> 的形式指向你的服务器 ip（也就是 <code>example.com</code> 的服务器）。</p>
+<p>然后在服务器上新建文件 <code>\etc\nginx\conf.d\cloud.example.com</code>（习惯用网站命名配置文件），然后加入以下内容：</p>
+<pre><code class="nginx">server {
+        listen 443 ssl http2;
+        server_name cloud.example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+</code></pre>
+<ol>
+<li>这里默认你已经配置好了 <code>https</code> 以及 <code>http</code> 转发到 <code>https</code> 的操作。如果不想使用 https，将第二行修改为 <code>listen 80;</code> 即可。配置 https 请看<a href="../build-https-sites-with-nginx/">另一篇博客</a>。</li>
+<li>第三行的 <code>server_name</code> 不限形式，可以使用通配符、正则表达式，还可以使用 <code>.example.com</code> 的形式匹配 <code>example.com</code> 及其所有子域名。更多细节可以看 [server_name 的官方文档]</li>
+<li>[server_name 的官方文档]:(<a href="http://nginx.org/en/docs/http/server_names.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/server_names.html</a>)</li>
+<li>也可以转发到别的网址，但是貌似不能转发到 <code>https</code>，并且有些网站可能限制转发。</li>
+</ol>
+<h3 id="显性转发"><a href="#显性转发" class="headerlink" title="显性转发"></a>显性转发</h3><p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器服务器将其跳转到 <code>https://baidu.com/</code>，地址栏显示 <code>https://baidu.com/</code>。</p>
+<pre><code class="nginx">server {
+    listen 443 ssl http2;
+    server_name cloud.example.com;
+
+    return 301 https://baidu.com/;
+}
+</code></pre>
+<p>这种方法也可以转发到别的网址，无限制。（顺便一说，这也可以在对应网页放一个 html 转发实现，可以不借助 nginx）</p>
+<h4 id="识别路径和参数并转发"><a href="#识别路径和参数并转发" class="headerlink" title="识别路径和参数并转发"></a>识别路径和参数并转发</h4><p>这里我们讨论更复杂的显性转发情况。方便起见，用表格进行说明：</p>
+<table>
+<thead>
+<tr>
+<th>用户输入的网址</th>
+<th>转发后的网址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>https://www.lyh543.cn/</code></td>
+<td><code>https://blog.lyh543.cn/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/git</code></td>
+<td><code>https://blog.lyh543.cn/Linux/Git/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/linux</code></td>
+<td><code>https://blog.lyh543.cn/Linux/linux-daily-command/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/&lt;其他参数&gt;</code></td>
+<td><code>https://blog.lyh543.cn/&lt;其他参数&gt;</code></td>
+</tr>
+</tbody></table>
+<p>我使用的配置文件如下：</p>
+<pre><code class="nginx">server{
+    listen 443 ssl http2;
+    server_name www.lyh543.cn;
+
+    location = / {
+        return 301 https://blog.lyh543.cn/;
+    }
+
+    location = /git {
+        return 301 https://blog.lyh543.cn/Linux/Git/;
+    }
+
+    location = /linux {
+        return 301 https://blog.lyh543.cn/Linux/linux-daily-command/;
+    }
+
+    location / {
+        return 301 https://blog.lyh543.cn$request_uri;
+    }
+}
+</code></pre>
+<p>注意到最后的 <code>$request_uri</code> 是个很好用的东西。除此之外，我们可以把任意一个 <code>url</code> 拆分为 <code>$scheme://$host$request_uri</code>。</p>
+<p>具体地，对于访问链接 <code>https://blog.lyh543.cn/nginx/</code>，我们有：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>实际意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$scheme</code></td>
+<td><code>https</code></td>
+</tr>
+<tr>
+<td><code>$host</code></td>
+<td><code>blog.lyh543.cn</code></td>
+</tr>
+<tr>
+<td><code>$request_uri</code></td>
+<td><code>/nginx/</code></td>
+</tr>
+</tbody></table>
+<p>按这种方法，很容易写出 <code>http</code> 强制跳 <code>https</code> 的配置文件：</p>
+<pre><code class="nginx">server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  _;
+
+    return 301 https://$host$request_uri;
+}
+</code></pre>
+<h2 id="显示某路径下-index-html"><a href="#显示某路径下-index-html" class="headerlink" title="显示某路径下 index.html"></a>显示某路径下 index.html</h2><p>这里的情形是：用户访问 <code>https://example.com/</code> 时，服务器显示 <code>/path/to/index.html</code> 的内容。</p>
+<pre><code class="nginx">server {
+    listen 443 ssl http2;
+    server_name example.com;
+
+    location /{
+        root /path/to;
+        index index.html;
+    }
+}
+</code></pre>

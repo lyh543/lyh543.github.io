@@ -1,0 +1,25 @@
+<hr>
+<p>title: 常用 Python 代码片段<br>date: 2021-06-27 21:15:25<br>tags:</p>
+<ul>
+<li>Python<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><pre><code class="py">def tranverse(dir: str):
+    &quot;&quot;&quot;
+    遍历给定文件夹，并返回所有文件（不含文件夹）路径组成的数组
+    &quot;&quot;&quot;
+    ret = []
+    for root, dirs, files in os.walk(dir):
+        for file in files:
+            ret.append(os.path.join(root, file))
+    return ret
+
+
+def md5_file(file: str) -&gt; str:
+    &quot;&quot;&quot;
+    计算给定文件的 md5
+    &quot;&quot;&quot;
+    with open(file, &#39;rb&#39;) as file:
+        return hashlib.md5(file.read()).hexdigest()
+</code></pre>

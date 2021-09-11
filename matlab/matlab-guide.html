@@ -1,0 +1,242 @@
+<hr>
+<p>title: MATLAB GUIDE（萌新向）<br>date: 2020-05-15 20:47:50<br>tags:</p>
+<ul>
+<li>MATLAB</li>
+<li>GUI<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<p>第一次从命令行到 GUI，总是不那么顺利的，尤其是 GUIDE 快被 MATLAB 弃用了，导致一向以文档详细著称的 MATLAB，也没有花多少笔墨在 GUIDE 上。</p>
+<p>我因为数模需要速成 GUI，无奈没有很好的教程，走了很多弯路。因此我在数模交完论文之后，简单理一下速成 GUI 的思路。</p>
+<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>MATLAB 为 GUIDE 编写的 Hello World 级别教程：<a href="https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html" target="_blank" rel="noopener">https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html</a></p>
+<h2 id="简单概念"><a href="#简单概念" class="headerlink" title="简单概念"></a>简单概念</h2><h3 id="fig-和-m-的关系"><a href="#fig-和-m-的关系" class="headerlink" title="fig 和 m 的关系"></a>fig 和 m 的关系</h3><p>按上面的教程，打开 guide 并绘制了图形，就会自动生成一个 m 文件。简单的来说，fig 文件保存了 GUI 的窗口的样子，而 m 将会保存程序的逻辑。</p>
+<h3 id="各类函数的意义"><a href="#各类函数的意义" class="headerlink" title="各类函数的意义"></a>各类函数的意义</h3><p>接着上文说，你会看到创建了一堆函数，那么具体是什么呢？</p>
+<p>现在假设我们想创建一个加法器（不是），具有两个按钮 <code>+</code> 和 <code>-</code> 和一个文本框，前者会使文本框内内容 +1，后者会 -1。</p>
+<p>通过在 <code>guide</code> 命令新建的 fig 文件上，我们能很快糊出下面的图，并且把两个按钮改名为 <code>+</code> 和 <code>-</code>：</p>
+<p><img src="/images/8ecbacbfa2c19457b2e24d9783601dc23468d54ba6adcd63bcaa99d23b1e5f4f.png" alt="fig 文件"></p>
+<p>然后保存，得到 m 文件，虽然代码有很多注释，但为读者方便对比差异（如果有），我还是完整贴一下代码如下：</p>
+<pre><code class="m">function varargout = test_gui(varargin)
+% TEST_GUI MATLAB code for test_gui.fig
+%      TEST_GUI, by itself, creates a new TEST_GUI or raises the existing
+%      singleton*.
+%
+%      H = TEST_GUI returns the handle to a new TEST_GUI or the handle to
+%      the existing singleton*.
+%
+%      TEST_GUI(&#39;CALLBACK&#39;,hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in TEST_GUI.M with the given input arguments.
+%
+%      TEST_GUI(&#39;Property&#39;,&#39;Value&#39;,...) creates a new TEST_GUI or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before test_gui_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to test_gui_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE&#39;s Tools menu.  Choose &quot;GUI allows only one
+%      instance to run (singleton)&quot;.
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help test_gui
+
+% Last Modified by GUIDE v2.5 17-May-2020 22:18:27
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct(&#39;gui_Name&#39;,       mfilename, ...
+                   &#39;gui_Singleton&#39;,  gui_Singleton, ...
+                   &#39;gui_OpeningFcn&#39;, @test_gui_OpeningFcn, ...
+                   &#39;gui_OutputFcn&#39;,  @test_gui_OutputFcn, ...
+                   &#39;gui_LayoutFcn&#39;,  [] , ...
+                   &#39;gui_Callback&#39;,   []);
+if nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before test_gui is made visible.
+function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to test_gui (see VARARGIN)
+
+% Choose default command line output for test_gui
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes test_gui wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes on button press in pushbutton1.
+function pushbutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+</code></pre>
+<p><del>这博客真好水，放一段全是注释的代码，87 行就有了</del></p>
+<p>注意 27 行到 44 行被 <code>Begin initialization code - DO NOT EDIT</code> 和 <code>End initialization code - DO NOT EDIT</code> 字样的注释包围了，这便是我们的函数的主函数。只是做了一些看不懂的初始化。确实，虽然他对于 GUI 的实现非常重要，但是我们的重点不在这里。</p>
+<h4 id="OpeningFcn"><a href="#OpeningFcn" class="headerlink" title="OpeningFcn"></a>OpeningFcn</h4><pre><code class="m">% --- Executes just before test_gui is made visible.
+function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+
+handles.output = hObject;
+guidata(hObject, handles);
+</code></pre>
+<p>这个函数。。。<code>Fcn</code> 是 function 的意思，看起来是 test_gui 这个文件的什么重要开场函数。确实，就相当于一个 init 函数，在程序运行时就会执行。</p>
+<p>这个。。。<code>guidata</code>，<code>hObject</code> 和 <code>handles</code> 是个啥。不知道不知道，后面再说。</p>
+<h4 id="OutputFcn"><a href="#OutputFcn" class="headerlink" title="OutputFcn"></a>OutputFcn</h4><pre><code class="m">% --- Outputs from this function are returned to the command line.
+function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
+</code></pre>
+<p>这个函数看说明，应该就是程序的返回值用的，比如正常返回 0，错误返回非 0 之类的。</p>
+<h4 id="pushbutton1-Callback"><a href="#pushbutton1-Callback" class="headerlink" title="pushbutton1_Callback"></a>pushbutton1_Callback</h4><p>好了！这个是重点！</p>
+<p><code>pushbutton</code>，按钮？是我们刚才弄的两个之一吗？</p>
+<p><img src="/images/f02fc3a7bc07c3a8279c6efdc9d831d440e9fe4eca3d3c67753b337a0bbfb526.png" alt="picture 2"></p>
+<p>确实，在 <code>fig</code> 上双击先创建的按钮，会弹出上面的窗口。除了字体、字号、String 等设置以外，我们看到了他！<code>Tag: pushbutton1</code>。</p>
+<p>啊所以这个函数名是靠 Tag 名绑定窗口按钮的？是的！这是 MATLAB 设定。所以，你可以同时把 tag 和函数名的 <code>pushbutton1</code> 改为 <code>plus_button</code>。</p>
+<p>那这个 <code>Callback</code>？啊其实就是当按钮被按下时，会调用的 <code>回调</code>（<code>Callback</code>）函数。</p>
+<p>那那那那那个静态窗口是不是就没有 <code>Callback</code> 函数呢，而还有一个 <code>pushbutton2_Callback</code> 函数呢？</p>
+<p>确实！</p>
+<p><strong>总结一下，<code>handlebutton1</code> 关联了 <code>Tag</code> 叫这个名字的控件，而 <code>Callback</code> 是指这个函数是会在控件被触发时调用的 <code>回调函数</code>。</strong></p>
+<h3 id="handles"><a href="#handles" class="headerlink" title="handles"></a>handles</h3><p>既然我们知道 1. <code>OpeningFcn</code> 在开场时会执行；2. 当 <code>+</code> 按钮被按下，<code>pushbutton1_Callback</code> 会被触发，那我会写了！</p>
+<pre><code class="m">function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+counter = 0;
+
+function pushbutton1_Callback(hObject, eventdata, handles)
+counter = counter + 1;
+disp(counter);
+</code></pre>
+<p>咦？有点问题？</p>
+<p>根据 MATLAB 知识，两个函数的 <code>counter</code> 是不互通的。他们之间貌似也没有相互调用啊。那那那那咋办呢？</p>
+<p>声明为全局变量？不会吧，要是 GUI 程序不用全局变量就没法写，那也太蠢了吧？</p>
+<p>确实有别的办法，因为有一个东西，能沟通程序的控件的所有内容，她就是，<code>handles</code>。</p>
+<p>handle （此处非 <code>handles</code>）是句柄，也就是一个类似于指针的东西。如果你也不知道指针，那……那就不管了。</p>
+<p>简单的理解，MATLAB 的 <code>handles</code> 就是一个结构体，装了各种各样的数据，包括 GUI 的，包括你的程序需要使用的。</p>
+<p>为什么要搞这个东西呢？因为从上面来看，MATLAB GUI 的实现方式是将所有东西都包装成函数，主函数没有什么存在意义。而没有主函数，如果不使用全局变量，数据就很难交互（比如，这个 <code>pushbutton1</code> 按下时，想读取那个输入框的内容时，就需要跨函数交互了）。</p>
+<p>因此，如果将所有数据存在一个<strong>结构体</strong>下面，同时将这个结构体作为所有 <code>Callback</code> 函数的参数，问题就解决了！还真是，这个<strong>结构体</strong>就叫 <code>handles</code>！</p>
+<p>所以如果想保存数据/更新数据以供其他函数读取，就可以保存到 <code>handles</code> 下面。</p>
+<p>但是但是！并不是说 <code>handles.value = 1;</code> 就是上面说的把数据保存在 <code>handles</code> 下面了。因为根据 MATLAB 知识，你修改的是你的函数下的 <code>handles</code>，并不是系统给你的 <code>handles</code> 了。</p>
+<p>因此，引入一个新的语句：</p>
+<pre><code class="m">guidata(hObject, handles);
+</code></pre>
+<p>该句将你函数内的这个 <code>handles</code> 传给“系统”。至于为什么要 <code>hObject</code>，别问，问就是不知道，你能要求一天速成的人完全明白这一切的一切吗？会用就行了。（这是竞赛交卷以后马上写的，防杠标签）</p>
+<p><code>传给了系统</code>，这句话的意思，是指当别的 <code>Callback</code> 函数被调用时，它的 <code>handles</code> 应该是你在这个函数 <code>guidata</code> 传给“系统”，“系统”调用 <code>Callback</code> 函数时，就会把你的这个 <code>handles</code> 复制一份给它。至于这个“系统”是什么，请参照上一段。</p>
+<p><a href="https://ww2.mathworks.cn/matlabcentral/answers/47189-purpose-of-guidata-hobject-handles" target="_blank" rel="noopener">https://ww2.mathworks.cn/matlabcentral/answers/47189-purpose-of-guidata-hobject-handles</a></p>
+<h4 id="读取、写入-handles-值"><a href="#读取、写入-handles-值" class="headerlink" title="读取、写入 handles 值"></a>读取、写入 handles 值</h4><p>因此，写入 handles 的语句应该如下：</p>
+<pre><code class="m">handles.counter = 0;
+guidata(hObject, handles);
+</code></pre>
+<p>读取则是由 <code>Callback</code> 函数得来。其实也可以手动获取：</p>
+<pre><code class="m">handles = guidata(hObject);
+</code></pre>
+<p>你会发现，读写原来是一个函数！</p>
+<p><del>有毒吧，用 <code>ReadGUIData</code> 和 <code>WriteGUIData</code> 不好吗？</del></p>
+<h3 id="修改静态文本框"><a href="#修改静态文本框" class="headerlink" title="修改静态文本框"></a>修改静态文本框</h3><p>于是，你觉得你又会了！<del>（总觉得有问题）</del></p>
+<pre><code class="m">function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+counter = 0;
+guidata(hObject, handles);
+
+function pushbutton1_Callback(hObject, eventdata, handles)
+counter = counter + 1;
+disp(counter);
+</code></pre>
+<p>当你准备运行这段代码时，</p>
+<p><code>disp</code>？那不是命令行的东西吗？</p>
+<p>哦哦，突然想起我要输出在静态文本框里。</p>
+<p>静态文本框？输出？静态的东西不能修改，怎么能用来输出？</p>
+<p>是的，我被骗了。我还以为有一种动态文本框的存在。然而 Google 很久都没有——直到我发现了下面的代码：</p>
+<pre><code class="m">set(handles.text1,&#39;String&#39;,&#39;Hello World&#39;);
+% 别忘了 guidata(hObject, handles);
+</code></pre>
+<p>嗯？</p>
+<p>突然意识到什么。</p>
+<p>赶紧看看我的静态文本框的属性。</p>
+<p>（植物）！这个静态文本框的 <code>Tag</code> 为 <code>text1</code>，而且属性 <code>String</code> 的值正是正在屏幕上显示的 <code>静态文本</code>！</p>
+<p>原来这都是可以直接 set 的啊。。。。</p>
+<p>顺便一提，还有 <code>get</code>。</p>
+<p>get:</p>
+<pre><code class="m">str = get(handles.text, &#39;String&#39;);
+</code></pre>
+<p>由于某些原因（一天速成就不要求这些了叭），不推荐通过直接查询/修改 <code>handles.text</code> 的成员，而是推荐 <code>get</code> 和 <code>set</code> 其属性。</p>
+<h2 id="加法器（不是）"><a href="#加法器（不是）" class="headerlink" title="加法器（不是）"></a>加法器（不是）</h2><p>那我是不是用 <code>handles</code> 存 <code>counter</code> 数据，用 <code>set(handles.text1,&#39;String&#39;,counter);</code> 输出就可以了？</p>
+<p>于是你又觉得你好了！</p>
+<hr>
+<p>确实。这次是真的好了（？）。运用上面提到的内容，以及 MATLAB 基础知识，你就能实现一个加法器（不是）了。</p>
+<p>一段非常简单的代码。复制保存为 <code>test_gui.m</code>，并且下载 <a href="test_gui.fig"><code>test_gui.fig</code></a>，在 MATLAB 中运行 <code>test_gui.m</code> 即可看到一个加减按钮和即时显示结果的简单小程序。</p>
+<pre><code class="m">function varargout = test_gui(varargin)
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct(&#39;gui_Name&#39;,       mfilename, ...
+                   &#39;gui_Singleton&#39;,  gui_Singleton, ...
+                   &#39;gui_OpeningFcn&#39;, @test_gui_OpeningFcn, ...
+                   &#39;gui_OutputFcn&#39;,  @test_gui_OutputFcn, ...
+                   &#39;gui_LayoutFcn&#39;,  [] , ...
+                   &#39;gui_Callback&#39;,   []);
+if nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+% --- Executes just before test_gui is made visible.
+function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+handles.counter = 0;
+set(handles.text2, &#39;String&#39;, handles.counter);
+handles.output = hObject;
+guidata(hObject, handles);
+
+function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
+guidata(hObject, handles);
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes on button press in pushbutton1.
+function pushbutton1_Callback(hObject, eventdata, handles)
+handles.counter = handles.counter + 1;
+set(handles.text2,&#39;String&#39;,handles.counter);
+guidata(hObject, handles);
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+handles.counter = handles.counter - 1;
+set(handles.text2,&#39;String&#39;,handles.counter);
+guidata(hObject, handles);
+</code></pre>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果你能独立写出加法器（不是），那么你应该能算是入门了。至于 <code>popupmenu</code> 等控件的使用方法和其他一些细枝末节，相信聪明的你一定也可以的！</p>
+<p><del>有毒的结尾</del></p>
+<p>顺便，最后说一句，将控制台 MATLAB 代码改成带有 GUI 的，推荐前者尽量使用函数，主函数几乎只用于调用函数。</p>

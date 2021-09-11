@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>C++ string | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="string.length() 的复杂度在 C++ 11 以前是未定义，在 C++ 11 及以后为常数，使用时须注意。 字符串字面量R &quot;分隔符( 原始字符 )分隔符&quot; 示例：R&quot;66(\njjnb&#x2F;)66&quot; &#x3D;&#x3D; &quot;\\njjnb&#x2F;&quot;  其他语言的类似情况可参考 逐字字符串在各语言中的表达式。  分隔符也可以为空。示例 2：&#39;R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ string">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/string/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="string.length() 的复杂度在 C++ 11 以前是未定义，在 C++ 11 及以后为常数，使用时须注意。 字符串字面量R &quot;分隔符( 原始字符 )分隔符&quot; 示例：R&quot;66(\njjnb&#x2F;)66&quot; &#x3D;&#x3D; &quot;\\njjnb&#x2F;&quot;  其他语言的类似情况可参考 逐字字符串在各语言中的表达式。  分隔符也可以为空。示例 2：&#39;R">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.107Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C++ string</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C++ string</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-13T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#string-length-的复杂度"><span class="post-toc-text">string.length() 的复杂度</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#字符串字面量"><span class="post-toc-text">字符串字面量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#cin-gt-gt-string-的细节"><span class="post-toc-text">cin &gt;&gt; string 的细节</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#string-和-iostream-的关系"><span class="post-toc-text">string 和 iostream 的关系</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/string"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C++ string</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-14 00:00:00" datetime="2019-08-13T16:00:00.000Z"  itemprop="datePublished">2019-08-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="string-length-的复杂度"><a href="#string-length-的复杂度" class="headerlink" title="string.length() 的复杂度"></a><code>string.length()</code> 的复杂度</h2><p>在 <code>C++ 11</code> 以前是未定义，在 <code>C++ 11</code> 及以后为常数，使用时须注意。</p>
+<h2 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h2><p><code>R &quot;分隔符( 原始字符 )分隔符&quot;</code></p>
+<p>示例：<code>R&quot;66(\njjnb/)66&quot; == &quot;\\njjnb/&quot;</code></p>
+<blockquote>
+<p>其他语言的类似情况可参考 <a href="/Computer-Science/verbatim-strings-literal-grammar/">逐字字符串在各语言中的表达式</a>。</p>
+</blockquote>
+<p>分隔符也可以为空。示例 2：<code>&#39;R(njjnb)&#39; == &#39;\\njjnb/&#39;</code> </p>
+<p>另有 <code>L</code>, <code>u8</code>, <code>u</code>, <code>U</code> 作为前缀，类似于66L,表示<code>长char</code>、<code>UTF-8</code>、<code>UTF-16</code>、<code>UTF-32</code>字符。</p>
+<p><a href="https://zh.cppreference.com/w/cpp/language/string_literal" target="_blank" rel="noopener">string_literal</a></p>
+<h2 id="cin-gt-gt-string-的细节"><a href="#cin-gt-gt-string-的细节" class="headerlink" title="cin &gt;&gt; string 的细节"></a>cin &gt;&gt; string 的细节</h2><p>只以空格为分隔符。输入 <code>123:123</code>，str 即为 <code>123:123</code>。</p>
+<h2 id="string-和-iostream-的关系"><a href="#string-和-iostream-的关系" class="headerlink" title="string 和 iostream 的关系"></a>string 和 iostream 的关系</h2><blockquote>
+<p>转载自：<a href="https://www.cnblogs.com/Solstice/archive/2011/07/17/2108715.html" target="_blank" rel="noopener">https://www.cnblogs.com/Solstice/archive/2011/07/17/2108715.html</a></p>
+</blockquote>
+<p><code>iostream</code> 可以与 <code>string</code> 配合得很好。但是有个问题：谁依赖谁？</p>
+<p><code>std::string</code> 的 <code>operator &lt;&lt;</code> 和 <code>operator &gt;&gt;</code> 是如何声明的？<code>string</code> 头文件在声明这两个 operators 的时候要不要 include <code>iostream</code> ？</p>
+<p><code>iostream</code> 和 <code>string</code> 都可以单独 <code>include</code> 来使用，显然 <code>iostream</code> 头文件里不会定义 <code>string</code> 的 <code>&lt;&lt;</code> 和 <code>&gt;&gt;</code> 操作。但是，如果 <code>string</code> 要include <code>iostream</code>，岂不是让 <code>string</code> 的用户被迫也用了 <code>iostream</code>？编译 <code>iostream</code> 头文件可是相当的慢啊（因为 <code>iostream</code> 是 template，其实现代码都放到了头文件中）。</p>
+<p>标准库的解决办法是定义 <code>iosfwd</code> 头文件，其中包含 <code>istream</code> 和 <code>ostream</code> 等的前向声明 (forward declarations)，这样 <code>string</code> 头文件在定义输入输出操作符时就可以不必包含 <code>iostream</code>，只需要包含简短得多的 <code>iosfwd</code>。我们自己写程序也可借此学习如何支持可选的功能。</p>
+<p>值得注意的是，<code>istream::getline()</code> 成员函数的参数类型是 <code>char*</code>，因为 <code>istream</code> 没有包含 <code>string</code>，而我们常用的 <code>std::getline()</code> 函数是个 non-member function，定义在 <code>string</code> 里边。</p>
+<p>我注：这也解释了，<code>cin</code> 的所有成员函数都不支持 <code>string</code>，只能只用非成员函数 <code>getline</code>（在 <code>string</code> 中） 或 <code>operator &gt;&gt;</code>（在 <code>xstring</code> 中）。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.107Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&title=《C++ string》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&title=《C++ string》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/string/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ string》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/linux/bash/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">bash 笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/map/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">(unoredered_)(multi)map &amp; 离散化</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&title=《C++ string》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&title=《C++ string》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/string/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ string》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/string/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/string/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aUW7DMAwE0dz/0u4BnKizpNNC1OgrCBpZzwUIkuLrhdd1W/fv73/Pd17v9tiSIUPGtoxruchxPz14vQP/vD6bDBkyzmGQQxDA+lfk++IOMmTIkAGOSw6XppUyZMiQ0WHwg5I09N8CrgwZMrZikAfwgpOkfeSVfaUWlyFDxoaMWvv+bz5/5X5DhgwZWzGucPWvE0goj08lQ4aM0Qwe4GqJIy9300ENGTJkyFgHwX7TLf0ejZ3JkCHjAEba1ucNNfJSateZbwKuDBkyxjHW25EilhSrvJWPAuv6/yBDhoyhDBI606ZYLQRzwJuuoQwZMoYyyNFrBS1/NbzcRU+UIUPGUEY/LPIytdPOi/NcGTJkDGL0U7RaK41fWwaNPxkyZIxj9JOzdCCsA/tlIEyGDBkHMNKGWvCYcCyDB30ZMmScwKg1y9Lxr85lQ+2CU4YMGecweHh9NuC+nl0yZMjYnFE7SmdojB+U7yxDhozZjFrsSotPngKmO7RCsAwZMrZi8HKRhMv+nSoJ6B9nRmTIkDGakV4DEF6tSVdstMmQIeMwBh+84AGx055DQV+GDBlDGVe4+EE7QZb8qpgUypAhY0PGU9eZteYdJ31xZkSGDBmbMJ4a+eokkbVXJkOGjNMYJO2rXRLwUpYH8fhdypAh4zBGP+zWrjbjYQsZMmQczKgNTKTgGClDhowDGKSI7VwYpGlfPOQhQ4aM0YxW6Ygf30n+ak1AGTJkjGD8APxgA/GxZ9liAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

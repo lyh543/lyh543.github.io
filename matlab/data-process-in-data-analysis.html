@@ -1,0 +1,149 @@
+<hr>
+<p>title: 数值分析中的数据处理方法<br>date: 2019-11-25 19:47:54<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>数学建模</li>
+<li>MATLAB<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<p>这是在数模课上做的随堂笔记，插值和拟合更详细的自学笔记请看<a href="/MCM/self-study/interpolation-and-curve-fit/">数模自学笔记——插值和拟合</a>。</p>
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><p>变量之中存在的函数关系，有时不能确定，而是通过获得的数据来找出两个变量间可能存在的连续。</p>
+<p>这东西和拟合有点像。</p>
+<p>未知 $f(x)$，但已知 $f(x)$ 的很多观测点 $(x_i, y_i)$，要找一个（可以分段的）函数 $\varphi(x) \approx f(x)$，并且强制要求 $\varphi(x)$ 经过所有观测点。</p>
+<p>这里使用的是多段分段函数进行近似。</p>
+<p>常用的方法有：线性插值 <code>linear</code>、三次样条插值 <code>spline</code>、三次插值 <code>cubic</code>。推荐使用三次样条插值。</p>
+<p>MATLAB 函数：<code>y_new = interp1(x,y,x_new,option)</code></p>
+<pre><code class="m">x = linspace(0,2*pi,10);
+y = sin(x);
+
+x_new = linspace(0,2*pi,1000);
+y_new = interp1(x,y,x_new,&#39;spline&#39;);
+
+plot(x,y,&#39;o&#39;,x_new,y_new,&#39;r-&#39;);
+</code></pre>
+<p>二维插值。这里不能使用 <code>interp2</code> 而需要使用 <code>griddata</code>，Google 了一下：</p>
+<blockquote>
+<p>二者均是常用的二维差值方法，两者的区别是，<code>interp2</code> 的插值数据必须是矩形域，即已知数据点 <code>(x,y)</code> 组成规则的矩阵，或称之为栅格，可使用 <code>meshgrid</code> 生成。而 <code>griddata</code> 函数的已知数据点 <code>(x,y)</code> 不要求规则排列，特别是对试验中随机没有规律采取的数据进行插值具有很好的效果。<br><code>griddata(X,Y,XI,YI,&#39;v4&#39;)</code> <code>v4</code>是一种插值算法，没有具体的名字，原文称为“MATLAB 4 griddatamethod”，是一种很圆滑的插值算法，效果不错。X 和 Y 提供的已知数据点，XI 和 YI是需要插值的数据点，一般使用 <code>meshgrid</code> 生成，当然也可以其他数据，但是那样绘图的时候就比较麻烦，不能使用 <code>mesh</code> 等，只能使用 <code>trimesh</code>。</p>
+</blockquote>
+<pre><code class="m">X=[129.0  140.5  103.5  88.0  185.5  195.0  105.5 ...
+   157.5  107.5   77.0  81.0  162.0  162.0  117.5];
+Y=[  7.5  141.5   23.0  147.0  22.5  137.5   85.5 ...
+    -6.5  -81.0    3.0   56.5 -66.5   84.0  -33.5];
+Z=[  4      8      6      8     6      8      8 ...
+     9      9      8      8     9      4      9 ];
+
+% 船的吃水深度为5英尺。
+%在矩形区域（75，200）×（-50，150）
+% 内的哪些地方船要避免进入。
+xp = linspace(75,200,50);
+yp = linspace(-50,150,50);
+[xq,yq]=meshgrid(xp,yp);
+vq = griddata(X,Y,Z,xq,yq,&#39;cubic&#39;)
+mesh(xq,yq,vq)
+hold on
+plot3(X,Y,Z,&#39;O&#39;,&#39;markersize&#39;,14)
+</code></pre>
+<h2 id="拟合"><a href="#拟合" class="headerlink" title="拟合"></a>拟合</h2><h2 id="数值微分"><a href="#数值微分" class="headerlink" title="数值微分"></a>数值微分</h2><p>微分其实用的不多。常用于<a href="../differential-equation">解微分方程</a>。</p>
+<p>前面两个差商比较垃圾，但是处理端点好用：</p>
+<p>一阶前向差商（左端点） $f’(a)=\frac{f(a+h)-f(a)}{h}+O(h)$</p>
+<p>一阶后向差商（右端点） $f’(a)=\frac{f(a)-f(a-h)}{h}+O(h)$</p>
+<p>一阶中心差商（中间部分） $f’(a)=\frac{f(a+h)-f(a-h)}{2h}+O(h^2)$</p>
+<p>二阶中心差商 $f’’(a) =\frac{f(a+h)+f(a-h)-2f(a)}{h^2}+O(h^2)$</p>
+<p>证明都是通过泰勒展式，略。</p>
+<p>实际使用时，令 $h$ 为一个较小的数（如 $h=10^{-5}$）即可求 $f$ 在 $a$ 点的微分。</p>
+<h3 id="数值方法求梯度"><a href="#数值方法求梯度" class="headerlink" title="数值方法求梯度"></a>数值方法求梯度</h3><blockquote>
+<p>参考链接：<a href="https://www.bilibili.com/video/av59319786" target="_blank" rel="noopener">https://www.bilibili.com/video/av59319786</a></p>
+</blockquote>
+<p>梯度的定义：</p>
+<blockquote>
+<p>$$\nabla f(\boldsymbol{x}) = \left[\begin{matrix}<br>\frac{\partial f}{\partial x_1} \\<br>\frac{\partial f}{\partial x_2} \\<br>\vdots \\<br>\frac{\partial f}{\partial x_n}<br>\end{matrix}\right]$$</p>
+</blockquote>
+<p>数值方法求梯度，其实就是上面的微分方法用来求 n 遍偏导。<br>每次求偏导的方法如下：</p>
+<p>$$\frac{\partial f}{\partial x_i} = \frac{ f(\boldsymbol{x};x_i+\Delta x_i) - f(\boldsymbol{x};x_i-\Delta x_i)}{2x_i} + O \left((\Delta x_i)^2 \right)$$</p>
+<h3 id="数值方法求黑塞矩阵"><a href="#数值方法求黑塞矩阵" class="headerlink" title="数值方法求黑塞矩阵"></a>数值方法求黑塞矩阵</h3><p>黑塞矩阵：</p>
+<p>$$\nabla^2f(\boldsymbol{x})=\left[\begin{array}{cccc}<br>{\frac{\partial^2 f}{\partial x_1^2}} &amp; {\frac{\partial^2 f}{\partial x_1 \partial x_2}} &amp; {\cdots} &amp; {\frac{\partial^2 f}{\partial x_1 \partial x_n}} \\<br>{\frac{\partial^2 f}{\partial x_2 \partial x_1}} &amp; {\frac{\partial^2 f}{\partial x_2^2}} &amp; {\cdots} &amp; {\frac{\partial^2 f}{\partial x_2 \partial x_n}} \\<br>{\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\<br>{\frac{\partial^2 f}{\partial x_n \partial x_1}} &amp; {\frac{\partial^2 f}{\partial x_n \partial x_2}} &amp; {\cdots} &amp; {\frac{\partial^2 f}{\partial x_n^2}}<br>\end{array}\right]$$</p>
+<p>其实和上面本质是一样的，只是二阶导要求两次。推导过程就略了（可以看上面参考链接的视频），最后的每一项的结果如下：</p>
+<p>$$\begin{aligned}<br>\frac{\partial^2 f}{\partial x_i \partial x_j} = &amp;\frac{1}{4\Delta x_i\Delta x_j} \bigg[ \\<br>&amp;f(\boldsymbol{x};x_i+\Delta x_i,x_j+\Delta x_j) + f(\boldsymbol{x};x_i-\Delta x_i,x_j-\Delta x_j)\\<br>&amp;-f(\boldsymbol{x};x_i-\Delta x_i,x_j+\Delta x_j) - f(\boldsymbol{x};x_i+\Delta x_i,x_j-\Delta x_j)\bigg] \\<br>&amp;+ O((\Delta x_i)^2)<br>\end{aligned}$$</p>
+<p>看起来麻烦，其实就是如下图，需要找得到 A 点的二阶偏导时，将 A 的 $x_i, x_j$ 各增加/减少 $\Delta x_i, \Delta x_j$ 的量，得到 B、C、D、E，用 (B+D)-(C+E) （的函数值加减以后的结果）除以 $4\Delta x_i\Delta x_j$ 即可。</p>
+<p><img src="getting-partial-derivative.png" alt="数值方法求二阶偏导"></p>
+<p>注意这个方法不能用在对角线上。求对角线上的二阶导仍需要用上面数值微分提到的求二阶导方法。</p>
+<p>$$\frac{\partial^2 f}{\partial x_i^2} =\frac{ f(\boldsymbol{x};x_i+\Delta x_i) + f(\boldsymbol{x};x_i-\Delta x_i) - 2f(\boldsymbol{x}) } {(\Delta x_i)^2}+O((\Delta x_i)^2)$$</p>
+<h2 id="数值积分"><a href="#数值积分" class="headerlink" title="数值积分"></a>数值积分</h2><p>按积分定义有：</p>
+<p>$$\int_a^bf(x)dx=\lim_{h\to0}\sum_{i=1}^nf(x_j)h$$</p>
+<p>当 $h$ 足够小时，数值积分结果即可近似实际结果。</p>
+<p>数值积分分为左矩形法（积分的高度按左端点的函数值计算）、右矩形法。</p>
+<p>效率不高（即使是一重积分中，$h$ 的精度就必须要相当高）</p>
+<p>构造思路：想构造 $A_k$ 使得</p>
+<p>$$\int_a^b f(x)dx=\sum_{k=0}^nA_kf(x_k)+R[f]$$</p>
+<p>$R[f] = \int_a^b f(x)dx - \sum_{k=0}^nA_kf(x_k)$ 表示残差。不同算法的残差不同。</p>
+<h3 id="求积公式的代数精度"><a href="#求积公式的代数精度" class="headerlink" title="求积公式的代数精度"></a>求积公式的代数精度</h3><p>对于每个求积公式，我们用对多项式进行求积，来定义 $m$ 阶代数精度公式：</p>
+<blockquote>
+<p>对于不高于 $m$ 次的任意多项式 $P(x)$，求积公式若恒等于 0，即<br>$$R[f] = \int_a^b P(x)dx - \sum_{k=0}^nA_kP(x_k) \equiv 0$$<br>且对于 $m+1$ 次多项式，不具有这么的性质，则称：<br>$$\int_a^b f(x)dx \approx \sum_{k=0}^nA_kf(x_k)$$<br>具有 $m$ 阶的代数精度。</p>
+</blockquote>
+<h3 id="插值型求和公式"><a href="#插值型求和公式" class="headerlink" title="插值型求和公式"></a>插值型求和公式</h3><h4 id="Lagrange-插值求积公式"><a href="#Lagrange-插值求积公式" class="headerlink" title="Lagrange 插值求积公式"></a>Lagrange 插值求积公式</h4><p>这是基于 Lagrange 插值法的一个方法。</p>
+<p>从思想上来说，Lagrange 插值法是通过函数 $f(x)$ 的已知的 $n+1$ 个点 $(x_j, y_j)$，构造出一个多项式 $p(x)$ 来近似 $f(x)$。（这个多项式最高为 $n$ 次，经过全部 $n+1$ 个点）<br>而 Lagrange 插值求积分，其思想就是用 $f(x)$ 算出 $n+1$ 个点，构造出 $p(x)$，再用 $p(x)$ 的积分（多项式积分很容易）来近似 $f(x)$ 的积分。</p>
+<p>在 Lagrange 插值中，已知 $n+1$ 个点 $(x_j, y_j)$，则应用 Lagrange 插值公式得到的 <strong>Lagrange 插值多项式</strong> 为：</p>
+<p>$$p(x) \approx \sum_{j=0}^k y_j l_j(x)$$</p>
+<p>其中</p>
+<p>$$l_j(x) = \prod_{i=0, i \neq j}^n\frac{x-x_i}{x_j-x_i}=\frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j-1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_{k})}{(x_j-x_{k})}$$</p>
+<p>公式的正确性略，请读者自行查阅资料。注意，这个 $l_j(x)$ 将会被用到积分过程中。</p>
+<p>下面我们利用 Lagrange 插值公式进行求积的推导：</p>
+<p>$$\begin{split}<br>f(x) &amp;\approx p(x) \\<br>\int_a^b f(x) &amp;\approx \int_a^b \sum_{j=0}^k l_j(x) \cdot y_j \\<br>&amp;\approx  \sum_{j=0}^k \left[ \int_a^b l_j(x) \right] f(x_j)<br>\end{split}$$</p>
+<p>令 $A_j = \int_a^b l_j(x)$，则推出了 <a href="#%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86">前面</a> 所提到的公式：</p>
+<p>$$\int_a^b f(x) = \sum_{j=0}^k A_j f(x_j) + R[f]$$</p>
+<p>可以证明此法的</p>
+<p>$$R[f] = \sum_a^b \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega(x)dx$$</p>
+<p>其中 $\omega(x)=\prod_{i=0}^n (x-x_i)$。</p>
+<p>进一步推进，对于 $n+1$ 点（即 $n$ 次） Lagrange 插值求积公式，其代数精度至少为 $n$ 阶。</p>
+<h5 id="应用-1-梯形公式"><a href="#应用-1-梯形公式" class="headerlink" title="应用 1 梯形公式"></a>应用 1 梯形公式</h5><p>我们可以把整段区间的积分，分割为数个小区间的积分再求和。在求小区间的积分的时候，我们对小区间的两个端点进行拉格朗日插值积分。</p>
+<p>对于两点 $(a,f(a)), (b,f(b))$ 的线性插值，有</p>
+<p>$$<br>l_0(x)=\frac{x_1-x}{x_1-x_0}\quad l_1(x)=\frac{x-x_0}{x_1-x_0} \\<br>A_0=\int_a^b \frac{b-x}{b-a}dx=\frac{1}{2}(b-a)  \quad A_1=\int_a^b \frac{x-a}{b-a}dx=\frac{1}{2}(b-a) \\<br>\int_a^b f(x)dx \approx \frac{b-a}{2}[f(a) + f(b)]<br>$$</p>
+<p>误差</p>
+<p>$$\begin{split}<br>R &amp;=\int_a^b \frac{f’’(\xi)}{2}(x-a)(x-b)dx = \frac{f’’(\eta)}{2}\int_a^b (x-a)(x-b)dx \\<br>&amp;=-\frac{(b-a)^3}{12}f’’(\eta)<br>\end{split}$$</p>
+<p>要使误差小：一是区间取小，二是二阶导数小（曲线更趋近于直线，几何上看也比较明显）</p>
+<p>梯形公式具有 1 阶代数精度。</p>
+<blockquote>
+<p>MATLAB 梯形法数值积分 <code>trapz</code></p>
+</blockquote>
+<p>另外梯形公式还能够推出另外一个公式：</p>
+<blockquote>
+<p>来自数学建模实验的笔记：</p>
+<p>这是积分中值定理：$$\exists \xi, \quad \int_a^bf(x) = (b-a)f(\xi)$$</p>
+<p>在数值积分时，可以在 $[a, b]$ 中等间距地取 10000 个点，$f(x)$ 的平均值就可以近似 $f(\xi)$。</p>
+<p>貌似是数值积分的套路操作，但是微积分 I 没有讲。<br>2020.2.22 更新：确实，这是<a href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BD%A2%E5%85%AC%E5%BC%8F" target="_blank" rel="noopener">梯形公式</a>，可见维基百科</p>
+</blockquote>
+<h5 id="应用-2-Simpson-公式（三点积分公式）"><a href="#应用-2-Simpson-公式（三点积分公式）" class="headerlink" title="应用 2 Simpson 公式（三点积分公式）"></a>应用 2 Simpson 公式（三点积分公式）</h5><p>依旧是把整段区间的积分，分割为的积分再求和。不过，在求小区间的积分的时候，我们改用二次函数近似，在一个区间上取三个点（两个端点+中点）。</p>
+<p>计算过程仍然是类似于梯形公式，算 $l_j(x)$，对每一个进行积分得到 $A_j$，然后和每段的 $y_j$ 相乘再相加，最后得到</p>
+<p>$$\int_a^b f(x)dx \approx \frac{b-a}{6} \left[ f(a)+4f(\frac{a+b}{2})+f(b) \right]$$</p>
+<p>近似效果会好些。</p>
+<p>Simpson 公式竟然具有 3 阶代数精度。</p>
+<p>当然，还可以用高次函数来跑 Lagrange 插值积分，但是高次函数有震荡性，一般就使用线性或二次即可。</p>
+<h5 id="Newton-Cotes-公式"><a href="#Newton-Cotes-公式" class="headerlink" title="Newton-Cotes 公式"></a>Newton-Cotes 公式</h5><p>使用 Lagrange 插值求积时，如果取的点为等距的（即 $x_j = a + jh$ 时），求积公式称为 Newton-Cotes 公式。</p>
+<p>Newton-Cotes 公式代数精度至少为 $n$。且有定理：当 $n$ 为偶数时， $n$ 阶 Newton-Cotes 公式至少有 $(n+1)$ 阶代数精度。</p>
+<h4 id="复合梯形求积公式"><a href="#复合梯形求积公式" class="headerlink" title="复合梯形求积公式"></a>复合梯形求积公式</h4><p>将积分区间先拆为 $n$ 等分。按照前面的某一种方法来计算。</p>
+<p>然后分的更细，使区间变为上一次的 $\frac{1}{2}$。<strong>是迭代法！</strong></p>
+<p>迭代的时候要重复使用之前的结果，只需要补上新增的点的 $f(x_{j_1})$ 值。</p>
+<p>这样迭代的好处是，我不知道这个算法算到哪种程度才能算特别精确，所以就一直算。但是这样算的本质和直接算其实都是一样的。</p>
+<p>由于我一直在利用之前迭代的结果，所以直接算的算法时间复杂度其实和迭代的时间复杂度是一样的。</p>
+<p>复合梯形法可以套用前面的所有插值法。</p>
+<h3 id="蒙特卡罗方法求积分"><a href="#蒙特卡罗方法求积分" class="headerlink" title="蒙特卡罗方法求积分"></a>蒙特卡罗方法求积分</h3><p>很显然的方法就是在每一维上取一些点，计算 $10^n$ 个点，但是复杂度与维数是成指数级的。</p>
+<p>于是使用随机投点法，用矩形框起来，然后随机投点，计算概率，即可估算积分大小。</p>
+<p>优点：算法复杂度和函数无关，和维数无关<br>缺点：不能保证精确度</p>
+<h3 id="高斯型数值积分公式"><a href="#高斯型数值积分公式" class="headerlink" title="高斯型数值积分公式"></a>高斯型数值积分公式</h3><p>震惊！选取好的求积结点，就可以用两个点能得到线性插值的代数精度为 3？</p>
+<p>以下是插值型求积公式（我们讨论在 $[-1,1]$ 积分的特例）</p>
+<p>$$\int_{-1}^1f(x)dx \approx A_0f(x_0) + A_1f(x_1)$$</p>
+<p>为保证代数精度为 3，令 $f(x) = 1, x, x^2, x^3$，代入上式，得到参数需要满足以下条件：</p>
+<p>$$\left\{ \begin{matrix}<br>A_0+A_1 &amp;=2 &amp; (1) \\<br>A_0x_0+A_1x_1 &amp;=0 &amp; (2) \\<br>A_0x_0^2+A_1x_1^2 &amp;=2/3 &amp; (3) \\<br>A_0x_0^3+A_1x_1^3 &amp;=0 &amp; (4)<br>\end{matrix}\right.$$</p>
+<p>虽然是非线性不好解，但是可以解得：</p>
+<p>$$A_0=A_1=1,\quad x_0=-\frac{1}{\sqrt{3}},\quad x_1=\frac{1}{\sqrt{3}}$$</p>
+<p>也就是说，如果我们按照 $x_0, x_1$ 的比例取点来计算，所得的线性插值求积的代数精度就可以达到 3。</p>
+<blockquote>
+<p>定义 如果求积结点 $x_0, x_1, …, x_n$，使得<br>$$\int_{-1}^1f(x)dx \approx \sum_{k=0}^nA_kf(x_k)$$<br>的代数精度为 $2n+1$,则称该求积公式为 Gauss 型求积公式。这些求积结点称为 Gauss点。</p>
+</blockquote>
+<blockquote>
+<p>定理 如果多项式 $w_{n+1}(x)=(x-x_0)(x-x_1)\cdots(x-x_n)$ 与任意不超过 $n$ 次的多项式 $P(x)$ 正交，即<br>$$\int_{-1}^1 w_{n+1}(x)P(x)dx = 0$$<br>则 $w_{n+1}(x)$ 的所有零点 $x_i$ 是 Gauss 点。</p>
+</blockquote>
+<p>对于别的区间，可以进行伸缩变换：</p>
+<p><code>quad</code> </p>
+<h3 id="Legendre多项式递推式"><a href="#Legendre多项式递推式" class="headerlink" title="Legendre多项式递推式"></a>Legendre多项式递推式</h3><p>真心看不懂辣</p>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>RESTful API 标准 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="后端,RESTful">
+    <meta name="description" content="文章部分内容转自：https:&#x2F;&#x2F;www.colabug.com&#x2F;2017&#x2F;0627&#x2F;228298&#x2F;  REST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。 REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于HTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RESTful API 标准">
+<meta property="og:url" content="https://blog.lyh543.cn/back-end/restful-api-standard/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="文章部分内容转自：https:&#x2F;&#x2F;www.colabug.com&#x2F;2017&#x2F;0627&#x2F;228298&#x2F;  REST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。 REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于HTT">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-15T13:33:43.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.007Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="RESTful">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">RESTful API 标准</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">RESTful API 标准</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-09-15T13:33:43.000Z" itemprop="datePublished" class="page-time">
+  2020-09-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#URL-语法"><span class="post-toc-text">URL 语法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RESTful-API-设计"><span class="post-toc-text">RESTful API 设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#资源路径"><span class="post-toc-text">资源路径</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#URL-中不能有动词"><span class="post-toc-text">URL 中不能有动词</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#URL-结尾不应该包含斜杠"><span class="post-toc-text">URL 结尾不应该包含斜杠 &#x2F;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正斜杠分隔符-必须用来指示层级关系"><span class="post-toc-text">正斜杠分隔符 &#x2F; 必须用来指示层级关系</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#应该使用连字符-来提高-URL-的可读性，而不是使用下划线"><span class="post-toc-text">应该使用连字符 - 来提高 URL 的可读性，而不是使用下划线 _</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#URL路径中首选小写字母"><span class="post-toc-text">URL路径中首选小写字母</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#URL路径名词均为复数"><span class="post-toc-text">URL路径名词均为复数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RESTful-API对资源的操作"><span class="post-toc-text">RESTful API对资源的操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#CURD-操作"><span class="post-toc-text">CURD 操作</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#资源过滤"><span class="post-toc-text">资源过滤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#返回状态码推荐标准HTTP状态码"><span class="post-toc-text">返回状态码推荐标准HTTP状态码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#具体情形具体分析"><span class="post-toc-text">具体情形具体分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#登录和登出"><span class="post-toc-text">登录和登出</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重置密码"><span class="post-toc-text">重置密码</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-back-end/restful-api-standard"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">RESTful API 标准</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-09-15 21:33:43" datetime="2020-09-15T13:33:43.000Z"  itemprop="datePublished">2020-09-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>文章部分内容转自：<a href="https://www.colabug.com/2017/0627/228298/" target="_blank" rel="noopener">https://www.colabug.com/2017/0627/228298/</a></p>
+</blockquote>
+<p>REST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。</p>
+<p>REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于HTTP协议。</p>
+<h2 id="URL-语法"><a href="#URL-语法" class="headerlink" title="URL 语法"></a>URL 语法</h2><p>RFC 3986<br>定义了通用的URI语法：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URI = scheme “://” authority “/” path [<span class="string"> “?” query </span>][<span class="symbol"> “#” fragment </span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>scheme</code>: 指底层用的协议，如 http、https、ftp</li>
+<li><code>host</code>: 服务器的 IP 地址或者域名</li>
+<li><code>port</code>: 端口，http 中默认 80</li>
+<li><code>path</code>: 访问资源的路径，就是咱们各种 web 框架中定义的 route 路由</li>
+<li><code>query</code>: 为发送给服务器的参数</li>
+<li><code>fragment</code>: 锚点，定位到页面的资源，锚点为资源id</li>
+</ul>
+<h2 id="RESTful-API-设计"><a href="#RESTful-API-设计" class="headerlink" title="RESTful API 设计"></a>RESTful API 设计</h2><h3 id="资源路径"><a href="#资源路径" class="headerlink" title="资源路径"></a>资源路径</h3><p>对于资源的定义，即 URL 的定义，是最重要的；想要设计出优雅的、易读的 REST 接口，其实还是很不容易的。</p>
+<h3 id="URL-中不能有动词"><a href="#URL-中不能有动词" class="headerlink" title="URL 中不能有动词"></a>URL 中不能有动词</h3><p>在 RESTful 架构中，每个网址代表的是一种资源，所以网址中不能有动词，只能有名词，动词由 HTTP 的 <code>get</code>、<code>post</code>、<code>put</code>、<code>delete</code> 四种方法来表示。</p>
+<h3 id="URL-结尾不应该包含斜杠"><a href="#URL-结尾不应该包含斜杠" class="headerlink" title="URL 结尾不应该包含斜杠 /"></a>URL 结尾不应该包含斜杠 <code>/</code></h3><p>这是作为 URL 路径中处理中最重要的规则之一，正斜杠 <code>/</code> 不会增加语义值，且可能导致混淆。REST API 不允许一个尾部的斜杠，不应该将它们包含在提供给客户端的链接的结尾处。</p>
+<p>许多Web组件和框架将平等对待以下两个URI：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//api.canvas.com/shapes/</span></span><br><span class="line"><span class="symbol">http:</span><span class="comment">//api.canvas.com/shapes</span></span><br></pre></td></tr></table></figure>
+
+<p>但是，实际上URI中的每个字符都会计入资源的唯一身份的识别中。</p>
+<p>两个不同的 URI 映射到两个不同的资源。如果 URI 不同，那么资源也是如此，反之亦然。因此，REST API 必须生成和传递精确的 URI，不能容忍任何的客户端尝试不精确的资源定位。</p>
+<p>有些 API 碰到这种情况，可能设计为让客户端重定向到相应没有尾斜杠的 URI（也有可能会返回301 – 用来资源重定向）。</p>
+<h3 id="正斜杠分隔符-必须用来指示层级关系"><a href="#正斜杠分隔符-必须用来指示层级关系" class="headerlink" title="正斜杠分隔符 / 必须用来指示层级关系"></a>正斜杠分隔符 <code>/</code> 必须用来指示层级关系</h3><p>url 的路径中的正斜杠 <code>/</code> 字符用于指示资源之间的层次关系。</p>
+<p>例如：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/api.user.com/schools</span><span class="regexp">/grades/classes</span><span class="regexp">/boys</span></span><br><span class="line"><span class="regexp">– 学校中所有的男生</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">http:/</span><span class="regexp">/api.college.com/students</span><span class="regexp">/3248234/courses</span></span><br><span class="line">– 检索id为<span class="number">3248234</span>的学生学习的所有课程的清单。</span><br></pre></td></tr></table></figure>
+
+<h3 id="应该使用连字符-来提高-URL-的可读性，而不是使用下划线"><a href="#应该使用连字符-来提高-URL-的可读性，而不是使用下划线" class="headerlink" title="应该使用连字符 - 来提高 URL 的可读性，而不是使用下划线 _"></a>应该使用连字符 <code>-</code> 来提高 URL 的可读性，而不是使用下划线 <code>_</code></h3><p>为了使 URL 容易让人们理解，请使用连字符 <code>_</code> 字符来提高长路径中名称的可读性。</p>
+<p>一些文本查看器为了区分强调 URI，常常会在 URI 下加上下划线。这样下划线 <code>_</code> 字符可能被文本查看器中默认的下划线部分地遮蔽或完全隐藏。</p>
+<p>为避免这种混淆，请使用连字符 <code>-</code> 而不是下划线</p>
+<h3 id="URL路径中首选小写字母"><a href="#URL路径中首选小写字母" class="headerlink" title="URL路径中首选小写字母"></a>URL路径中首选小写字母</h3><p>RFC 3986 将 URI 定义为区分大小写，但 scheme 和 host components 除外。</p>
+<h3 id="URL路径名词均为复数"><a href="#URL路径名词均为复数" class="headerlink" title="URL路径名词均为复数"></a>URL路径名词均为复数</h3><p>为了保证 url 格式的一致性，建议使用复数形式。</p>
+<h3 id="RESTful-API对资源的操作"><a href="#RESTful-API对资源的操作" class="headerlink" title="RESTful API对资源的操作"></a>RESTful API对资源的操作</h3><p>对于 REST api 资源的操作，由 HTTP 动词表示</p>
+<h4 id="CURD-操作"><a href="#CURD-操作" class="headerlink" title="CURD 操作"></a>CURD 操作</h4><ul>
+<li><code>GET</code>：获取资源</li>
+<li><code>POST</code>：新建资源</li>
+<li><code>PUT</code>：在服务器更新资源（向客户端提供改变后的所有资源）</li>
+<li><code>PATCH</code>：在服务器更新资源（向客户端提供改变的属性，一般不用，用 <code>PUT</code>）</li>
+<li><code>DELETE</code>：删除资源</li>
+</ul>
+<h3 id="资源过滤"><a href="#资源过滤" class="headerlink" title="资源过滤"></a>资源过滤</h3><p>在获取资源的时候，有可能需要获取某些“过滤”后的资源，例如指定前10行数据</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>api.user.com<span class="regexp">/schools/g</span>rades<span class="regexp">/classes/</span>boys?page=<span class="number">1</span>&amp;page-size=<span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="返回状态码推荐标准HTTP状态码"><a href="#返回状态码推荐标准HTTP状态码" class="headerlink" title="返回状态码推荐标准HTTP状态码"></a>返回状态码推荐标准HTTP状态码</h3><p>有很多服务器将返回状态码一直设为 200，然后在返回 body 里面自定义一些状态码来表示服务器返回结果的状态码。由于 REST api 是直接使用的 HTTP 协议，所以它的状态码也要尽量使用 HTTP 协议的状态码。</p>
+<ul>
+<li>200 OK 服务器返回用户请求的数据，该操作是幂等的</li>
+<li>201 CREATED 新建或者修改数据成功</li>
+<li>204 NOT CONTENT 删除数据成功</li>
+<li>400 BAD REQUEST 用户发出的请求有问题，该操作是幂等的</li>
+<li>401 Unauthoried 表示用户没有认证，无法进行操作</li>
+<li>403 Forbidden 用户访问是被禁止的</li>
+<li>422 Unprocesable Entity 当创建一个对象时，发生一个验证错误</li>
+<li>500 INTERNAL SERVER ERROR 服务器内部错误，用户将无法判断发出的请求是否成功</li>
+<li>503 Service Unavailable 服务不可用状态，多半是因为服务器问题，例如CPU占用率大，等等</li>
+</ul>
+<p>更多的可以参考维基百科，或者<a href="/back-end/http-status-code">这篇博客</a>。</p>
+<h2 id="具体情形具体分析"><a href="#具体情形具体分析" class="headerlink" title="具体情形具体分析"></a>具体情形具体分析</h2><p>REST API 是一个非常宏大的问题，只能说具体情形具体分析。</p>
+<p>一个方法是参考现有的代码或后端框架等等，如 Django REST Framework 提供的教程就是一个带有简单权限管理的 Snippet。</p>
+<p>还有一个方法就是在 Stack Overflow 上搜索你的行为 + <code>REST API</code> 或 <code>http status code</code>，会出现大量的结果供参考，如 <code>logout http status code</code> 会搜到关于注销应当返回什么，返回的状态码是否有意义这类问题。</p>
+<h3 id="登录和登出"><a href="#登录和登出" class="headerlink" title="登录和登出"></a>登录和登出</h3><ol>
+<li>登录和登出应该使用不同的路径，如 <code>/login</code> 和 <code>/logout</code>。<a href="https://stackoverflow.com/questions/36220029/http-status-to-return-after-trying-to-logout-without-being-logged-in" target="_blank" rel="noopener">Stack Overflow</a></li>
+<li>登录和登出都应该使用 <code>POST</code> 方法，这是为了防浏览器预加载，以及防止搜索引擎的爬虫。<a href="https://stackoverflow.com/questions/3521290/logout-get-or-post" target="_blank" rel="noopener">Stack Overflow</a></li>
+<li>登出操作完成后应当返回一个 <code>HTTP 204 No Content</code> 报文，虽然这对大部分前端都没什么用，但是说不定真的有人需要用接收报文作时间戳什么的。Stack Overflow</li>
+</ol>
+<h3 id="重置密码"><a href="#重置密码" class="headerlink" title="重置密码"></a>重置密码</h3><p><a href="https://stackoverflow.com/questions/3077229/restful-password-reset" target="_blank" rel="noopener">Stack Overflow</a> 中给出了相当多的方案：</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.007Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RESTful/" rel="tag">RESTful</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/back-end/restful-api-standard/&title=《RESTful API 标准》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/back-end/restful-api-standard/&title=《RESTful API 标准》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/back-end/restful-api-standard/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RESTful API 标准》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/back-end/restful-api-standard/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/back-end/restful-api-standard/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/computer-science/remote-procedure-call/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">远程过程调用（Remote Procedure Call）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/computer-science/assembly-language-and-interface-technology-of-microcomputer-classnote/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">汇编语言与微机接口技术 课程笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/back-end/restful-api-standard/&title=《RESTful API 标准》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/back-end/restful-api-standard/&title=《RESTful API 标准》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/back-end/restful-api-standard/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RESTful API 标准》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/back-end/restful-api-standard/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/back-end/restful-api-standard/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aSW6EQAwF0L7/pck2UkTxbdORKF6tIprpEcnyUJ9PvI5fKzlnfebfq/KnjBYGBsZjGcdynT3g7Nezl1jfM7/z6VMwMDBewEhCYS/Irl90ciYGBgbGOgiuA2I1yGJgYGB8L+DeWxJjYGBgrBlJ6IxuNw61X6/FMTAwHsjote//5++vzDcwMDAexTiKq3pt8orHeGFgYOzNyANcnizmZWo13by4PwYGxqaMfKPDpHydpKHREQwMjK0Z6zJ10rivbstYHy9gMDAwtmPM07teYpd8vsJTMDAwtmb0xoS9bWTJkfwzndbiGBgYmzJ6LzTfTJang1/ZWoGBgfEQRh4E56lhvvGr/CwMDIytGXlrrBp2k1efjBkKgRgDA+PhjGphmYfISSutDMPAwNia0cNUt231qOVhAwYGxtaMu3p1kw0TvRDc3DOCgYHxKEZSoCarVwZPhgoX3w8DA2M7Rh6VeyVuclUvfGNgYLyBcVcEu2tGkQ8hmtU5BgbGYxmTUDsZG+SY6E0wMDBexkiCXd7cz0NqtfGHgYGBcVfDrnpmM23FwMDYlHHXAKA3jKxuO7v4P2BgYGzK6AXWvH1WvUNv/ICBgfEGRhJk8wDaa7clxfPFJ8PAwHgBozfIrCaCo8nqZDCAgYHxYkZe1uYFbTOHxcDAwCimiT3YZAMZBgbGGxhJ6lZN8vIWW68lh4GB8R5Gr3RMwmjvqt5QEwMDY1PGD839VYMnNtpZAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

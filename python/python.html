@@ -1,0 +1,877 @@
+<hr>
+<p>title: Python 基础<br>date: 2020-2-18 21:18:37<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>编程语言入门<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<blockquote>
+<p>学习链接：<a href="https://www.liaoxuefeng.com/wiki/1016959663602400" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/1016959663602400</a><br>参考链接：<a href="https://docs.python.org/zh-cn/3.7/tutorial/index.html" target="_blank" rel="noopener">https://docs.python.org/zh-cn/3.7/tutorial/index.html</a><br>Google 开源项目风格指南：<a href="https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/" target="_blank" rel="noopener">https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/contents/</a></p>
+</blockquote>
+<p>比较基础的部分，新的东西就记一笔过一下就行了，方便以后查阅。</p>
+<p>由于讲的偏系统，而不是深入浅出，比如一上来就把所有的东西讲完，也不说清哪些常用哪些不常用，其实不是很适合新手学习。</p>
+<p>学起来才会感觉到，C++ 从会用到入门以后，学其他语言也不会只关心它的语法，还会去查它的实现，如 Python <code>list</code> 的实现，int 的上限（不存在的）。</p>
+<h2 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h2><p>语句没有分号。</p>
+<p>逗号不是用于分隔表达式，而是用于对多元组赋值：</p>
+<pre><code class="py">a, b = b, a+b
+</code></pre>
+<p>代码块不用大括号，<strong>完全靠缩进</strong>（约定俗成为 <strong>4 个空格</strong>）</p>
+<p>注释用 <code>#</code> 号开头（和 shell 是一样的）</p>
+<h2 id="执行-python-脚本"><a href="#执行-python-脚本" class="headerlink" title="执行 python 脚本"></a>执行 python 脚本</h2><h3 id="用-python-运行"><a href="#用-python-运行" class="headerlink" title="用 python 运行"></a>用 python 运行</h3><pre><code>python test.py
+</code></pre>
+<h3 id="直接运行"><a href="#直接运行" class="headerlink" title="直接运行"></a>直接运行</h3><p>Windows 下不行，只能 Linux 或 MacOS X。</p>
+<ol>
+<li>在脚本开头加：</li>
+</ol>
+<pre><code class="py">#!/usr/bin/env python3
+</code></pre>
+<ol start="2">
+<li>通过命令给脚本权限</li>
+</ol>
+<pre><code class="bash">chmod a+x hello.py
+./hello.py
+</code></pre>
+<h2 id="基本-IO"><a href="#基本-IO" class="headerlink" title="基本 IO"></a>基本 IO</h2><h3 id="输出：print"><a href="#输出：print" class="headerlink" title="输出：print()"></a>输出：print()</h3><pre><code class="py">print(&quot;Hello world&quot;) # 自带换行
+print(&quot;Hello&quot;, &quot;world&quot;) # 二句等效，print多个字符串，会在中间加空格
+print(&#39;100 + 200 =&#39;, 100 + 200) # 也可以输出计算结果
+</code></pre>
+<p>Python 也支持类似与 C 的格式化方式，但这部分内容属于<a href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2">字符串</a>。</p>
+<h3 id="输入：input"><a href="#输入：input" class="headerlink" title="输入：input()"></a>输入：input()</h3><pre><code class="py">name = input() # 输入的是 str 而非 int
+name = input(&quot;Please input your name&quot;) # 这里的输出不带换行
+age = int(input(&#39;Please input your age&#39;)) # 需要输入 int 时需转换
+</code></pre>
+<h3 id="读文本文件"><a href="#读文本文件" class="headerlink" title="读文本文件"></a>读文本文件</h3><pre><code class="py">with open(&#39;input.txt&#39;, &#39;r&#39;) as f:
+    for line in f:
+        print(line) # 每一行的内容
+</code></pre>
+<p>如需读写 <code>utf-8</code> 文档，可在 <code>open()</code> 函数添加参数 <code>encoding=&#39;utf-8&#39;</code>。</p>
+<p>如需跳过第一行，可以使用以下语法：</p>
+<pre><code class="py">with open(&#39;input.txt&#39;, &#39;r&#39;) as f:
+    next(f)
+    for line in f:
+        print(line) # 每一行的内容
+</code></pre>
+<h3 id="写文本文件"><a href="#写文本文件" class="headerlink" title="写文本文件"></a>写文本文件</h3><pre><code class="py">with open(&#39;output.txt&#39;, &#39;w&#39;) as f:
+    f.write(&#39;hello, world!\n&#39;)
+    f.write(&quot;I&#39;m %s&quot; % &quot;lyh543\n&quot;)
+</code></pre>
+<p>关于写入、追加等方式的区别可见图（<a href="https://www.cnblogs.com/python-coder/p/10078253.html" target="_blank" rel="noopener">来源</a>）：</p>
+<p><img src="/images/1889267199568c58822c51721bdb5fb2a3300286ea1c20a9310a42146c67b020.png" alt="读写文本的方法"></p>
+<h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><p>有整数 <code>int</code>，浮点数、字符串 <code>str</code>、字节串 <code>bytes</code> 布尔值 <code>bool</code>、空值 <code>None</code>。</p>
+<h3 id="整数的上限"><a href="#整数的上限" class="headerlink" title="整数的上限"></a>整数的上限</h3><p>知道怎么移位以后，我就尝试用 <code>(-1)&gt;&gt;1</code> 得知 Python 的上限。然而失败了。结果是 <code>-1</code> 是个什么意思？！</p>
+<p>查了一下资料，发现 Python 整型是没有上限的？！因为它的实现是类似于高精度的变长数组（牺牲效率获取方便，没毛病）</p>
+<p>那这个大概负数移位以后，自动把空出来的符号位又用 1 补上了。最后的结果就是，无论正负数，右移的结果是向下取整。</p>
+<h3 id="实数间的除法"><a href="#实数间的除法" class="headerlink" title="实数间的除法"></a>实数间的除法</h3><p>Python 的 <code>/</code> 的结果是浮点数。</p>
+<p>Python 的 <code>//</code> 和 <code>%</code> 是广义的整除和取模，可以在浮点数间使用。</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串可以理解为字符的 list，可以直接使用 list 的成员函数。</p>
+<h4 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h4><ol>
+<li>单双引号等价：<code>&quot;a&quot;</code> == <code>&#39;a&#39;</code>（Python 没有 <code>char</code> 的说法，只有 <code>one-character string</code>）  </li>
+<li>支持转义字符 <code>\</code>：<code>&quot;&#39;&quot;</code> == <code>&quot;\&#39;&quot;</code> == <code>&#39;\&#39;&#39;</code>，<code>&#39;\n&#39;</code>  </li>
+<li>类似于 C++ 的<a href="/Computer-Science/verbatim-strings-literal-grammar/">逐字字符串</a>：<code>r&#39;\n&#39;</code> == <code>r&#39;&#39;&#39;\n&#39;&#39;&#39;</code>  </li>
+<li>还可以用 <code>&#39;&#39;&#39;</code> 括起表示换行的字符串（该语法支持与第三条搭配）：</li>
+</ol>
+<pre><code class="python">print(&#39;&#39;&#39;hello
+world&#39;&#39;&#39;)
+</code></pre>
+<p>在命令行中使用该语法会出现用 <code>...</code> 代替 <code>&gt;&gt;&gt;</code> 的提示符，如下：</p>
+<pre><code class="python">&gt;&gt;&gt; print(&#39;&#39;&#39;hello
+... world&#39;&#39;&#39;)
+hello
+world
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="字节串-bytes"><a href="#字节串-bytes" class="headerlink" title="字节串 bytes"></a>字节串 bytes</h4><p>字符编码原理可以看<a href="/Computer-Science/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/">这篇博客</a>。</p>
+<p>在 Python 3 中，字符串用 Unicode 编码。在内存中使用 Unicode，但是如果需要保存在磁盘上，就需要把 <code>str</code> 变为 <code>bytes</code>。</p>
+<p><code>bytes</code> 常量须在单/双引号前加前缀 <code>b</code>，如 <code>b&#39;ABC&#39;</code>。</p>
+<h4 id="Unicode（str）和-bytes-的转换"><a href="#Unicode（str）和-bytes-的转换" class="headerlink" title="Unicode（str）和 bytes 的转换"></a>Unicode（<code>str</code>）和 <code>bytes</code> 的转换</h4><p>Python 的 <code>str</code> 使用 Unicode 的，而若要用 ASCII 或 UTF-8 （如在网络或磁盘上存、取），就得使用 <code>bytes</code>。</p>
+<p><code>str</code> 可以通过成员函数 <code>encode()</code> 编码为指定编码（如<code>&#39;ascii&#39;</code>，<code>&#39;utf-8&#39;</code>）的 <code>bytes</code>。</p>
+<pre><code>&gt;&gt;&gt; &#39;ABC&#39;.encode(&#39;ascii&#39;);
+b&#39;ABC&#39;
+&gt;&gt;&gt; &#39;中文&#39;.encode(&#39;utf-8&#39;)
+b&#39;\xe4\xb8\xad\xe6\x96\x87&#39;
+&gt;&gt;&gt; &#39;中文&#39;.encode(&#39;ascii&#39;)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+UnicodeEncodeError: &#39;ascii&#39; codec can&#39;t encode characters in position 0-1: ordinal not in range(128)
+</code></pre>
+<p>中文编码为 <code>ascii</code> 会报错。而 <code>utf-8</code> 中无法显示为 <code>ASCII</code> 字符的字节，会用 <code>\x##</code> 显示。</p>
+<p>为避免乱码，应当坚持使用 <code>UTF-8</code> 对 <code>str</code> 和 <code>bytes</code> 进行转换。</p>
+<p>而反过来，把指定编码的字节串编码为 Unicode 的函数叫 <code>decode()</code>。</p>
+<pre><code>&gt;&gt;&gt; b&#39;ABC&#39;.decode(&#39;ascii&#39;)
+&#39;ABC&#39;
+&gt;&gt;&gt; b&#39;\xe4\xb8\xad\xe6\x96\x87&#39;.decode(&#39;utf-8&#39;)
+&#39;中文&#39;
+&gt;&gt;&gt; b&#39;\xe4\xb8\xad\xff&#39;.decode(&#39;utf-8&#39;)
+Traceback (most recent call last):
+  ...
+UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xff in position 3: invalid start byte
+&gt;&gt;&gt; b&#39;\xe4\xb8\xad\xff&#39;.decode(&#39;utf-8&#39;, errors=&#39;ignore&#39;)
+&#39;中&#39;
+</code></pre>
+<p>解码过程中可以传入 <code>errors=&#39;ignore&#39;</code> 忽略错误的字节。</p>
+<h4 id="字符串、字节串的长度"><a href="#字符串、字节串的长度" class="headerlink" title="字符串、字节串的长度"></a>字符串、字节串的长度</h4><p>对于字符串，<code>len()</code> 能返回字符数；对于字节串，<code>len</code> 返回的是字节数。</p>
+<pre><code class="py">len(&#39;中文&#39;) # == 2
+len(&#39;中文&#39;.encode(&#39;utf-8&#39;)) # == 6
+</code></pre>
+<h4 id="Python-源文件的编码"><a href="#Python-源文件的编码" class="headerlink" title="Python 源文件的编码"></a>Python 源文件的编码</h4><ol>
+<li>文本编辑器应使用 UTF-8 without BOM</li>
+<li>在源代码前加：</li>
+</ol>
+<pre><code class="py">#!/usr/bin/env python3
+#-*- coding:utf-8 -*-
+</code></pre>
+<p>或者使用 ANSI 编码，然后加上 <code>#-*- coding:ansi -*-</code>。默认为 UTF-8。</p>
+<h4 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><p>和 C 的 <code>printf()</code> 一样，Python 也支持格式化字符串，也是使用 <code>%</code>，用法也差不多。但是格式略有不同。</p>
+<pre><code>&gt;&gt;&gt; &#39;Hello, %s&#39; % &#39;world&#39;
+&#39;Hello, world&#39;
+&gt;&gt;&gt; &#39;Hi, %s, you have $%d.&#39; % (&#39;Michael&#39;, 1000000)
+&#39;Hi, Michael, you have $1000000.&#39;
+&gt;&gt;&gt; &#39;Age: %s. Gender: %s&#39; % (25, True)
+&#39;Age: 25. Gender: True&#39;
+</code></pre>
+<p>格式化字符串和参数中间由 <code>%</code> 隔开。和记一下就行。有意思的是，如果你不太确定应该用什么，<code>%s</code> 永远起作用，它会把任何数据类型转换为字符串。</p>
+<p>另一种形式是用字符串的成员函数 <code>format()</code>，把一个字符串的 <code>{0}</code>、<code>{1}</code>等，用参数来一一替换得到一个新的字符串。</p>
+<pre><code>&gt;&gt;&gt; &#39;Hello, {0}, 成绩提升了 {1:.1f}%&#39;.format(&#39;小明&#39;, 17.125)
+&#39;Hello, 小明, 成绩提升了 17.1%&#39;
+</code></pre>
+<p>除此之外，还支持以下类似 shell 的形式：</p>
+<pre><code class="py">name = &#39;World&#39;
+message = f&#39;Hello, {name}.&#39;
+print(message) # Hello, World
+</code></pre>
+<p>还能支持居中、左对齐、右对齐：</p>
+<pre><code class="py">value = &#39;hi&#39;
+
+print(f&#39;.{value:&lt;25}.&#39;)
+print(f&#39;.{value:&gt;25}.&#39;)
+print(f&#39;.{value:^25}.&#39;)
+print(f&#39;.{value:-^25}.&#39;)
+</code></pre>
+<p>输出如下：</p>
+<pre><code>.hi                       .
+.                       hi.
+.           hi            .
+.-----------hi------------.
+</code></pre>
+<h4 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h4><p>函数名|作用<br>-|-|-<br><code>str.lower()</code>|全大写<br><code>str.upper()</code>|全小写<br><code>str.capitalize()</code>|首字母大写<br><code>str.title()</code>|每个单词的首字母大写<br><code>str.swapcase()</code>|交换大小写<br><code>len(str)</code>|长度<br><code>str.startswith(str)</code>|返回 <code>True</code> 或 <code>False</code><br><code>str.endswith(str)</code>|返回 <code>True</code> 或 <code>False</code><br><code>str.find(str)</code>|返回出现的第一个位置，如不存在返回 <code>0</code><br><code>str.count(str)</code>|计数出现次数<br><code>str.strip()</code>|去掉空白字符<br><code>str.lstrip()</code>|去掉左边的空白字符<br><code>str.rstrip()</code>|去掉右边的空白字符<br><code>str.replace(str, str)</code>|替换字符串<br><code>str.rjust(int, str)</code>|添加 <code>str</code> 以使右对齐至 <code>int</code> 个空格<br><code>str.rjust(int, str)</code>|添加 <code>str</code> 以使左对齐至 <code>int</code> 个空格</p>
+<h3 id="前面各类型的转换"><a href="#前面各类型的转换" class="headerlink" title="前面各类型的转换"></a>前面各类型的转换</h3><h4 id="字符、数字（ASCII-码）间的转换"><a href="#字符、数字（ASCII-码）间的转换" class="headerlink" title="字符、数字（ASCII 码）间的转换"></a>字符、数字（ASCII 码）间的转换</h4><p>单个字符和对应的 ASCII 码的转换可以使用 <code>ord()</code> 和 <code>chr()</code> 函数。</p>
+<pre><code class="py">ord(&#39;A&#39;) # == 65
+ord(&#39;中&#39;) # == 20013
+chr(66) # == &#39;B&#39;
+</code></pre>
+<p>还可以直接用八进制、十六进制写 <code>str</code>：</p>
+<pre><code class="py">&#39;\u4e2d\u6587&#39; # ==&#39;中文&#39;
+&#39;\65&#39; # == &#39;5&#39;
+</code></pre>
+<h4 id="字符串、实数间的转换"><a href="#字符串、实数间的转换" class="headerlink" title="字符串、实数间的转换"></a>字符串、实数间的转换</h4><p>这种类型转换和 C++ 类似，把类型看作一个函数，如 <code>int()</code>，<code>str()</code>。</p>
+<p>使用 <code>str()</code> 即可把 <code>int</code> 或 <code>float</code> 转为 <code>str</code>；<br>使用 <code>int()</code> 可以把 <code>float</code>（和 C 一样，向 0 取整）和 <code>str</code>（要求是能转化为整数的字符串）转为 <code>int</code>。<br>使用 <code>float()</code> 可以把 <code>int</code> 和 <code>str</code>（要求是能转化为实数的字符串）转化为 <code>float</code>。</p>
+<pre><code class="py">str(123.0) # = &#39;123.0&#39;
+int(&#39;123&#39;) # = 123
+int(&#39;123.0&#39;) # 报错 ValueError
+float(&#39;123&#39;) # = 123.0
+</code></pre>
+<h3 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h3><p><code>True</code>, <code>False</code> 大小写敏感</p>
+<p><code>print(True)</code> 输出 <code>True</code>（而非 C 的 1）。</p>
+<p>布尔运算：<code>and</code>，<code>or</code>，<code>not</code></p>
+<h4 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h4><p>位运算： <code>&amp;</code>，<code>|</code>，<code>^</code>，<code>~</code>，<code>&gt;&gt;</code>，<code>&lt;&lt;</code></p>
+<p>注意无论正负，进行右移 <code>&gt;&gt;</code> 操作都等价于除以 $2^n$ 后向下取整。参见<a href="#%E6%95%B4%E6%95%B0%E7%9A%84%E4%B8%8A%E9%99%90">整数的上限</a>。</p>
+<p><code>&amp;&amp;</code>，<code>||</code>，<code>!</code>：不存在的</p>
+<h3 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h3><p>空值是 Python 里一个特殊的值，用 <code>None</code> 表示。<code>None</code> 不能理解为 0，因为 0 是有意义的，而 <code>None</code> 是一个特殊的空值。如输出没有返回值的函数的返回值，会输出 <code>None</code>：</p>
+<pre><code class="py">def foo()
+    return
+
+print(foo())
+</code></pre>
+<h2 id="其他数据类型"><a href="#其他数据类型" class="headerlink" title="其他数据类型"></a>其他数据类型</h2><p>此外，Python 还提供了<code>列表</code>、<code>字典</code>等多种数据类型，还允许创建自定义数据类型.</p>
+<h3 id="列表-list"><a href="#列表-list" class="headerlink" title="列表 list"></a>列表 list</h3><p>和 C++ STL 的 <code>list</code> 不同，Python 的 <code>list</code> 实际上不是链表，是可变长度的数组（元素是指针，类似于 C++ STL 的 <code>vector&lt;void *&gt;</code>，所以可以不同类型的变量混合存储）。因此，<code>list.insert(index, elem)</code> 和 <code>list.pop(index)</code> 是 <code>O(n)</code> 时间复杂度的。</p>
+<h4 id="list-定义"><a href="#list-定义" class="headerlink" title="list 定义"></a>list 定义</h4><p><code>list</code> 内可存不同类型，可以嵌套 list。</p>
+<pre><code class="py">&gt;&gt;&gt; classmates = [&#39;Michael&#39;, 233 , &quot;Tracy&quot;]
+&gt;&gt;&gt; print(classmates)
+[&#39;Michael&#39;, 233, &#39;Tracy&#39;]
+&gt;&gt;&gt; nestedList = [[1, 2], [3, 4]] # 类似与二维数组
+&gt;&gt;&gt; emptyset = []
+</code></pre>
+<p>如何初始化一个大小为 100，元素全为 0 的 <code>list</code> 呢？ </p>
+<pre><code class="py">&gt;&gt;&gt; newlist = [0] * 100
+</code></pre>
+<p>没错——<br>Python 的列表居然支持乘法！！！！这也太香了！</p>
+<p>但是这种语法有陷阱——如果想要建立二维 list，以下语法是不行的：</p>
+<pre><code class="py">&gt;&gt;&gt; list2d = [[0] * 10] * 100
+</code></pre>
+<p>当你想要编辑第二行第二列个元素时，执行 <code>list2d[1][1] = 1</code> 后，会发现第二列的所有元素都变成了 <code>1</code>！</p>
+<p>究其本质，是上面所说的，元素是指针，<code>[[0] * 10] * 100</code> 的外层 list 的 100 个元素实际上是指向了同一个 <code>list</code>。</p>
+<p>解决方案有三个：</p>
+<p>一是在外层老老实实的迭代：</p>
+<pre><code class="py">list2d = []
+for i in range(100):
+    list2d.append([0] * 10)
+</code></pre>
+<p>二是使用后面才会学到的列表生成式：</p>
+<pre><code class="py">list2d = [ [0 for i in range(10)] for j in range(100) ]
+</code></pre>
+<p>三是使用 <code>numpy.zeros</code></p>
+<pre><code class="py">import numpy as np
+test = np.zeros((m, n), dtype=np.int)
+</code></pre>
+<h4 id="list-成员函数"><a href="#list-成员函数" class="headerlink" title="list 成员函数"></a>list 成员函数</h4><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>函数用法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>len(classmates)</code></td>
+<td>列表中元素个数</td>
+</tr>
+<tr>
+<td><code>classmates[0]</code></td>
+<td>第一个元素 ‘Michael’</td>
+</tr>
+<tr>
+<td><code>classmates[3]</code></td>
+<td>返回 <code>IndexError</code></td>
+</tr>
+<tr>
+<td><code>classamte[-1]</code></td>
+<td>返回最后一个元素（等价于<code>classmate[2]</code>）</td>
+</tr>
+<tr>
+<td><code>classmate[0:2]</code></td>
+<td>返回子列表，其元素在 <code>classmate</code> 的下标范围为 <code>[0,2)</code>，详见<a href="#%E5%88%87%E7%89%87-slice">切片</a></td>
+</tr>
+<tr>
+<td><code>classmate[-3:0]</code></td>
+<td>返回最后三个元素组成的子列表，详见<a href="#%E5%88%87%E7%89%87-slice">切片</a></td>
+</tr>
+<tr>
+<td><code>classmates.append(&#39;Adam&#39;)</code></td>
+<td>向末尾追加元素（类似于 C++ <code>std::vector::push_back()</code>）</td>
+</tr>
+<tr>
+<td><code>classmates.insert(index, &#39;Jack&#39;)</code></td>
+<td>在索引号为 index 的位置前插入元素（<code>O(n)</code> 时间复杂度）</td>
+</tr>
+<tr>
+<td><code>classmates.pop()</code></td>
+<td>删除末尾的元素</td>
+</tr>
+<tr>
+<td><code>classmates.pop(index)</code></td>
+<td>删除索引号为 index 的元素（<code>O(n)</code> 时间复杂度）</td>
+</tr>
+</tbody></table>
+<h4 id="list-和-str"><a href="#list-和-str" class="headerlink" title="list 和 str"></a>list 和 str</h4><p>C 中，字符串是字符数组 <code>char[]</code>。<br>Python 中虽然二者是不同的类型，但是可以互通。</p>
+<p>str 到 list 直接类型转换就好了。而 list 到 str 则需要使用 join 函数。</p>
+<pre><code>&gt;&gt;&gt; list(&#39;abc&#39;)
+[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+&gt;&gt;&gt; &#39;&#39;.join([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+&#39;abc&#39;
+
+&#39;-&#39;.join([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+&#39;a-b-c&#39;
+</code></pre>
+<h3 id="元组-tuple"><a href="#元组-tuple" class="headerlink" title="元组 tuple"></a>元组 tuple</h3><p><del>元组这翻译怪怪的，可是谁叫 n-tuple 翻译过来是  n 元组呢</del></p>
+<p>相当于是 list 的常量版本，一旦初始化就不能修改。但是可以使用 <code>[]</code>。</p>
+<pre><code>&gt;&gt;&gt; classmates = (&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;)
+&gt;&gt;&gt; one_tuple = (1,)
+&gt;&gt;&gt; empty_tuple = ()
+</code></pre>
+<p>一元组要在 <code>)</code> 后加 <code>,</code> 以示和括号表达式的区分。</p>
+<h3 id="字典-dict"><a href="#字典-dict" class="headerlink" title="字典 dict"></a>字典 dict</h3><blockquote>
+<p>Python 内置了字典：dict 的支持，dict 全称dictionary，在其他语言中也称为 map，使用键-值（key-value）存储，具有极快的查找速度。<br>查找和插入的速度极快，不会随着key的增加而变慢；<br>需要占用大量的内存，内存浪费多。</p>
+</blockquote>
+<p>看到这里，其实已经猜到 dict 的实现是 hashmap 了。查了一下，果然是的。</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><pre><code class="py">d = {&#39;Michael&#39;: 95, &#39;Bob&#39;: 75, &#39;Tracy&#39;: 85}
+d[&#39;Adam&#39;] = 67
+</code></pre>
+<p>对同一个键进行存入，会直接覆盖原先的值。</p>
+<h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>访问：<code>d[&#39;Adam&#39;]</code>，（返回 67）。如果不存在键，则返回 <code>KeyError</code>。</p>
+<p>如果要查询是否存在，可以使用 <code>if &#39;Adam&#39; in d</code>。</p>
+<h4 id="dict-的-key"><a href="#dict-的-key" class="headerlink" title="dict 的 key"></a>dict 的 key</h4><p>dict 的 key 要求是不可变的量，如整数、字符串、<code>tuple</code>。而 <code>list</code> 则不可以。若强行作为 key， 会返回 <code>TypeError: unhashable type: &#39;list&#39;</code>。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>和 C 一样，变量名必须是大小写英文、数字和 <code>_</code> 的组合，且不能用数字开头。</p>
+<p>赋值过程和 C 一样。</p>
+<pre><code class="py">a = 1
+t_007 = &#39;T007&#39;
+a = True
+</code></pre>
+<p>Python （基本数据类型？）变量不需要初始化，且同一个变量可以反复赋值，而且可以是不同类型的变量。这种被称为 <strong>动态语言</strong>，反之为<strong>静态语言</strong>，如 C，Java。</p>
+<h3 id="查询、判断变量类型"><a href="#查询、判断变量类型" class="headerlink" title="查询、判断变量类型"></a>查询、判断变量类型</h3><p>查询类型使用 <code>type()</code>：</p>
+<pre><code class="py">&gt;&gt;&gt; type(123)
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; type(&#39;c&#39;)
+&lt;class &#39;str&#39;&gt;
+</code></pre>
+<p>判断类型使用 <code>isinstance()</code>：</p>
+<pre><code class="py">&gt;&gt;&gt; isinstance(123,int)
+True
+&gt;&gt;&gt; isinstance(123,str)
+False
+&gt;&gt;&gt; isinstance(123,lyh543)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name &#39;lyh543&#39; is not defined
+</code></pre>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>对基本数据类型，Python 没有常量。</p>
+<p>习惯上，使用全大写命名来指代常量。</p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="条件判断（if）"><a href="#条件判断（if）" class="headerlink" title="条件判断（if）"></a>条件判断（if）</h3><p><code>if</code> 中没有括号，判断条件后要加<code>:</code>。</p>
+<p>貌似需要加缩进之前，前一个语句都需要加 <code>:</code>。这是个规律吧。</p>
+<pre><code class="py">age = 20
+if age &gt;= 18:
+    print(&#39;your age is&#39;, age)
+    print(&#39;adult&#39;)
+</code></pre>
+<p><code>if</code> 后还可以加 <code>else</code>，<code>elif</code>。</p>
+<pre><code class="py">elif age &lt; 0:
+    print(&#39;input error&#39;)
+else:
+    print(&#39;teenage&#39;)
+</code></pre>
+<h4 id="“三目运算符”"><a href="#“三目运算符”" class="headerlink" title="“三目运算符”"></a>“三目运算符”</h4><p>C / Java 中有很好用的三目运算符：</p>
+<pre><code class="c">printf(&quot;%s&quot;, value == true ? &quot;Yes&quot; : &quot;No&quot;);
+</code></pre>
+<p>Python 没有三目运算符，但是 <code>if</code> 也可以用一行做到类似的功能：</p>
+<pre><code class="py">print(&quot;Yes&quot; if value == True else &quot;No&quot;)
+</code></pre>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>不精准的测试了一下，在我的 <code>i7-6600U</code> 下，以下代码大概要 10s：</p>
+<pre><code class="py">n = 0
+sum = 0
+while n &lt; 1e7:
+    sum += n
+    n += 1
+print(sum)
+</code></pre>
+<p>可以粗略得出，python 的整数加法计算次数约为 1e6 左右，为 C++ 的 1/1000。（C++ 相关测试可见我的另一篇博客：<a href="/cpp/cpp-grammar/calculating_efficiency/">C++ 基本计算的速度</a>）。<del>这只是一个没有感情的测试，不存在说 Python 慢就是垃圾的意思</del></p>
+<h4 id="for-…-in-…"><a href="#for-…-in-…" class="headerlink" title="for … in …"></a>for … in …</h4><h5 id="在-list-用-for"><a href="#在-list-用-for" class="headerlink" title="在 list 用 for"></a>在 list 用 for</h5><p>类似于 C++ 的 <code>for(int : vector&lt;int&gt;)</code>，Python 可以使用 <code>for &lt;variable&gt; in &lt;list/tuple&gt;</code>：</p>
+<pre><code class="py">names = [&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;]
+for name in names:
+    print(name)
+</code></pre>
+<h5 id="用-range-生成序列"><a href="#用-range-生成序列" class="headerlink" title="用 range 生成序列"></a>用 range 生成序列</h5><p>而如果是整数等差序列，可以使用 <code>range(start, stop[, step])</code> 函数，然后转为 list。<code>[start, stop)</code> 左闭右开。左闭右开可以按 C++ 常用的 <code>for (i = start; i &lt; stop; i += step)</code> 来记。</p>
+<p>如果是倒序的话，只要令 <code>step</code> 为负数即可。依旧是 <code>start</code> 闭，<code>end</code> 开（即 <code>for (i = start; i &gt; stop; i += step)</code>）</p>
+<p>以下四种语法等价。</p>
+<pre><code class="py">list(range(5))
+list(range(0,5))
+list(range(0,5,1))
+[0, 1, 2, 3, 4]
+</code></pre>
+<p>就可以愉快的 <code>for i in list(range(5)):</code> 了。</p>
+<p>顺便一提，<code>range</code> 可以类型转换为 <code>list</code>。</p>
+<h5 id="在其他数据结构用-for"><a href="#在其他数据结构用-for" class="headerlink" title="在其他数据结构用 for"></a>在其他数据结构用 for</h5><p><code>str</code>，<code>dict</code>也是可迭代的。默认情况下，<code>dict</code> 迭代的是 key，但也可以迭代 key 和 value。</p>
+<pre><code class="py">d = {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}
+for k in d:
+for v in d.values():
+for k, v in d.items():
+</code></pre>
+<p>判断某对象是否可迭代，可使用 <code>Iterable</code> 类型。</p>
+<pre><code class="py">from collections import Iterable
+isinstance(&#39;abc&#39;, Iterable) # return true
+</code></pre>
+<p>如果想要实现下标循环，可以用 <code>emumerate()</code> 把 list 变为 <code>索引-元素对</code>。</p>
+<pre><code class="py">for i, v in enumerate([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;]):
+</code></pre>
+<p>同时引用两个变量是很常见的。</p>
+<pre><code class="py">for x, y in [(1, 1), (2, 4), (3, 9)]:
+</code></pre>
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><p>和 <code>if</code> 一样。</p>
+<pre><code>sum = 0
+i = 0
+while i &lt;= 100:
+    sum += i
+    i += 1
+print(sum)
+</code></pre>
+<h3 id="break-和-continue"><a href="#break-和-continue" class="headerlink" title="break 和 continue"></a>break 和 continue</h3><p>和 C 语言一样。</p>
+<pre><code class="py">n = 0
+while n &lt; 10:
+    n = n + 1
+    if n == 8:
+        break
+    if n % 2 == 0: # 如果n是偶数，执行continue语句
+        continue # continue语句会直接继续下一轮循环，后续的print()语句不会执行
+    print(n)
+</code></pre>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>简单，不多说。</p>
+<pre><code class="py">abs(100) # = 100
+abs(100,1) # TypeError: abs() takes exactly one argument (2 given)
+abs(&#39;abc&#39;) # TypeError: bad operand type for abs(): &#39;str&#39;
+</code></pre>
+<h3 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h3><p>函数前写 <code>def</code>，后面全部缩进。</p>
+<pre><code class="py">def my_abs(x):
+    if x &gt;= 0:
+        return x
+    else:
+        return -x
+</code></pre>
+<p>如果函数保存在 <code>abstest.py</code> 中，需要使用 <code>from ... import ...</code> 来引入函数。</p>
+<pre><code class="py">from abstest import my_abs
+</code></pre>
+<p><code>import</code> 的更复杂用法会在<a href="#%E6%A8%A1%E5%9D%97">模块</a>一节中详细介绍。</p>
+<h4 id="空函数-pass"><a href="#空函数-pass" class="headerlink" title="空函数 pass"></a>空函数 pass</h4><p>如果函数定义留空会报错，此时可以使用 <code>pass</code> 来占位。（<code>pass</code> 和 <code>return</code> 是不一样滴！！！）</p>
+<pre><code class="py">def nop():
+    pass
+</code></pre>
+<p>在条件分支中也可以使用 <code>pass</code>：</p>
+<pre><code class="py">if age &gt;= 18:
+    pass
+</code></pre>
+<h4 id="函数类型检查"><a href="#函数类型检查" class="headerlink" title="函数类型检查"></a>函数类型检查</h4><p>Python 解释器只进行参数个数的检查，不进行参数类型的检查。需要自己使用 <code>isinstance(variable, tuple of type)</code> 手动检查。</p>
+<p>注意 <code>isinstance()</code> 中 <code>int</code> 和 <code>float</code> 是不一样的（本来也是，<code>str</code> <code>float</code> <code>int</code> 之间随便转，他们也不是一个东西）。</p>
+<pre><code class="py">def my_abs(x):
+    if not isinstance(x, (int, float)):
+        raise TypeError(&#39;bad operand type&#39;)
+    pass
+</code></pre>
+<p>还用到了 <code>raise</code> 返回错误。要多练习一下。</p>
+<h5 id="函数练习"><a href="#函数练习" class="headerlink" title="函数练习"></a>函数练习</h5><p>给定 $a,b,c$，解一元二次方程$ ax^2 + bx + c = 0$：</p>
+<pre><code class="py">import math
+
+def isnum(x):
+    return isinstance(x,(int,float))
+
+def quadratic(a, b, c):
+    if not (isnum(a) or isnum(b) or isnum(c)):
+        raise TypeError
+    delta = b * b - 4 * a * c
+    if (delta &lt; 0):
+        print(&#39;delta &lt; 0, no real root&#39;)
+        pass
+    sqrt_delta = math.sqrt(delta)
+    return (-b+sqrt_delta)/2, (-b-sqrt_delta)/2
+
+print(quadratic(1,1,1));
+</code></pre>
+<h3 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a>函数参数</h3><p>其中 3.-5. 有点硬核，先不管。用到再学。</p>
+<h4 id="1-必选参数"><a href="#1-必选参数" class="headerlink" title="1. 必选参数"></a>1. 必选参数</h4><p>即最普通的用法。</p>
+<pre><code class="py">def pow(x, n):
+    pass
+
+pow(3, 2)
+</code></pre>
+<h4 id="2-默认参数"><a href="#2-默认参数" class="headerlink" title="2. 默认参数"></a>2. 默认参数</h4><p>和 C++ 一样，Python 也有默认参数。</p>
+<pre><code class="py">def pow(x, n = 2):
+    pass
+
+pow(3)
+</code></pre>
+<p><strong>声明参数时必选参数在前，默认参数在后</strong>，否则会导致编译错误。</p>
+<p>调用函数时，默认参数可以不写，也可以按顺序给出。如无法按顺序给出（第一个默认参数为默认，但第二个不默认），可以指明变量名。</p>
+<pre><code class="py">enroll(&#39;Adam&#39;, &#39;M&#39;, city=&#39;Tianjin&#39;)
+</code></pre>
+<h5 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h5><p><strong>默认参数要指向不变对象！！</strong></p>
+<p>如：</p>
+<pre><code class="py">def add_end(L = []):
+    L.append(&#39;END&#39;)
+    return L
+
+add_end() # return [&#39;END&#39;]
+add_end() # return [&#39;END&#39;, &#39;END&#39;]
+</code></pre>
+<p>究其本质，还是 [] 只是一个指针。</p>
+<p>用 <code>add_end(L = None)</code> 即可解决。</p>
+<pre><code class="py">def add_end(L = None):
+    if L is None
+        L = []
+    L.append(&#39;END&#39;)
+    return L
+
+add_end() # return [&#39;END&#39;]
+add_end() # return [&#39;END&#39;]
+</code></pre>
+<h4 id="3-可变参数"><a href="#3-可变参数" class="headerlink" title="3. 可变参数"></a>3. 可变参数</h4><p>如果不使用可变参数，传入 list 或 tuple 时就需要先组装。</p>
+<pre><code class="py">def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum += n * n
+    return sum
+
+calc([1,2,3]) # = 14
+calc((4,5,6)) # = 77
+</code></pre>
+<p>如果使用可变参数，就不用组装了，也可以调用 0 个参数。在变量名前面加 <code>*</code> 即是可变参数。而调用 list 或 tuple 时也可以加一个 <code>*</code>。</p>
+<pre><code class="py">def calc(*numbers):
+    # ...
+
+calc(1,2,3) # = 14
+nums = (4,5,6)
+calc(*nums) # = 77
+</code></pre>
+<p><code>print()</code> 也是使用这种形式。</p>
+<h4 id="4-关键字参数"><a href="#4-关键字参数" class="headerlink" title="4. 关键字参数"></a>4. 关键字参数</h4><p>上面是把所有参数变为 tuple，而这里是把额外的 0 个或 n 个参数变为 dict。</p>
+<pre><code class="py">def person(name, age, **kw):
+    print(&#39;name:&#39;, name, &#39;age:&#39;, age, &#39;other:&#39;, kw)
+
+&gt;&gt;&gt; person(&#39;Michael&#39;, 30)
+name: Michael age: 30 other: {}
+&gt;&gt;&gt; person(&#39;Adam&#39;, 45, gender=&#39;M&#39;, job=&#39;Engineer&#39;)
+name: Adam age: 45 other: {&#39;gender&#39;: &#39;M&#39;, &#39;job&#39;: &#39;Engineer&#39;}
+</code></pre>
+<p>这有什么用呢？比如，在 <code>person</code> 函数里，我们保证能接收到 <code>name</code> 和 <code>age</code> 这两个参数，但是，如果调用者愿意提供更多的参数，我们也能收到。<br>试想你正在做一个用户注册的功能，除了用户名和年龄是必填项外，其他都是可选项，利用关键字参数来定义这个函数就能满足注册的需求。</p>
+<pre><code class="py">&gt;&gt;&gt; extra = {&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;}
+&gt;&gt;&gt; person(&#39;Jack&#39;, 24, **extra)
+name: Jack age: 24 other: {&#39;city&#39;: &#39;Beijing&#39;, &#39;job&#39;: &#39;Engineer&#39;}
+</code></pre>
+<p>而传 dict 进去也是，加 <code>**</code> 就可以了。</p>
+<p>但是请注意，这种用法中，不管是传很多组，还是直接传 dict，Keywords 必须为 string 名。诸如 <code>1=one</code>，<code>&#39;one&#39;=1</code> 都不能作为关键词参数传进函数。而传进去的 Keywords，会加引号。</p>
+<h4 id="5-命名关键字参数"><a href="#5-命名关键字参数" class="headerlink" title="5. 命名关键字参数"></a>5. 命名关键字参数</h4><p>关键字参数中，对参数名没有直接限制；如果需要限制名字，可以使用命名关键字参数。</p>
+<pre><code class="py">def person(name, age, *, city, job):
+    print(name, age, city, job)
+</code></pre>
+<p>这样，我们只接受 city 和 job，其他参数会被忽略。</p>
+<h4 id="参数组合"><a href="#参数组合" class="headerlink" title="参数组合"></a>参数组合</h4><p>Python 定义函数，可以按顺序组合使用 <code>必选参数</code>、<code>默认参数</code>（y=1）、<code>可变参数</code>（*kw，组成 tuple）、<code>命名关键字参数</code>（*,x,y）、<code>关键字参数</code>（**kw，组成 dict）。</p>
+<p>但是不要使用太多的组合<del>否则代码就太难理解了</del>。</p>
+<h2 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h2><p>这部分和 C 差异有点大，因此先水过去，等用到的时候再看。</p>
+<h3 id="切片-slice"><a href="#切片-slice" class="headerlink" title="切片 slice"></a>切片 slice</h3><p>现在有一个 <code>list L = list(range(20))</code>。使用切片可以快速得到其子序列。</p>
+<p>使用 <code>L[begin:end]</code> 可以得到 L 下标在 [begin, end) 范围内的数据。注意：</p>
+<ol>
+<li>begin 和 end 可以按<a href="#list-%E5%87%BD%E6%95%B0">规定</a>使用负数。</li>
+<li>begin 和 end 可以省略，缺省值为 begin = 0， end = 末尾下标+1。</li>
+<li>若 end &gt; begin，则返回空 list <code>[]</code>。</li>
+</ol>
+<p>slice 也可以使用于 tuple，str 等支持切片的功能。</p>
+<p>另外还可以用 <code>L[start:end:step]</code> 指定 <code>step</code> 大小。每隔五个取一个就是 <code>arr[::5]</code>。</p>
+<pre><code class="py">&gt;&gt;&gt; a=list(range(100))
+&gt;&gt;&gt; a[::5]
+[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]
+</code></pre>
+<h3 id="del-语句"><a href="#del-语句" class="headerlink" title="del 语句"></a>del 语句</h3><p>list 自带了 <code>append</code> 和 <code>insert</code>，分别是在 list 最后追加元素、在中间插入元素。也可以使用 <code>del</code> 删除元素。</p>
+<pre><code class="py">&gt;&gt;&gt; a = [-1, 1, 66.25, 333, 333, 1234.5]
+&gt;&gt;&gt; del a[0]
+&gt;&gt;&gt; a
+[1, 66.25, 333, 333, 1234.5]
+&gt;&gt;&gt; del a[2:4]
+&gt;&gt;&gt; a
+[1, 66.25, 1234.5]
+&gt;&gt;&gt; del a[:]
+&gt;&gt;&gt; a
+[]
+</code></pre>
+<h3 id="迭代-iteration"><a href="#迭代-iteration" class="headerlink" title="迭代 iteration"></a>迭代 iteration</h3><p>其实就是前面讲了的 <a href="#for-%E2%80%A6-in-%E2%80%A6">for … in …</a> 语法。</p>
+<h3 id="列表生成式"><a href="#列表生成式" class="headerlink" title="列表生成式"></a>列表生成式</h3><p>这个东西可以把 list（或可迭代的数据类型）中的元素通过自定义的映射函数生成新的 list 或 tuple。还可以配合 if、两层 for。</p>
+<pre><code class="py">&gt;&gt;&gt; [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+&gt;&gt;&gt; [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+</code></pre>
+<p>另外还可以使用两个变量。</p>
+<pre><code class="py">&gt;&gt;&gt; d = {&#39;x&#39;: &#39;A&#39;, &#39;y&#39;: &#39;B&#39;, &#39;z&#39;: &#39;C&#39; }
+&gt;&gt;&gt; [k + &#39;=&#39; + v for k, v in d.items()]
+[&#39;y=B&#39;, &#39;x=A&#39;, &#39;z=C&#39;]
+</code></pre>
+<h3 id="生成器-generator"><a href="#生成器-generator" class="headerlink" title="生成器 generator"></a>生成器 generator</h3><p>列表生成式是新建一个链表，而生成器是保存映射关系，需要时再进行计算。</p>
+<h4 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h4><p>用法仅仅把列表生成式的 <code>[]</code> 改为 <code>()</code>。</p>
+<pre><code class="py">&gt;&gt;&gt; g = (x * x for x in range(10))
+&gt;&gt;&gt; g
+&lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;
+</code></pre>
+<p>我们可以反复使用 <code>next()</code> 获得 generator 的下一个返回值。</p>
+<pre><code class="py">&gt;&gt;&gt; next(g)
+0
+&gt;&gt;&gt; next(g)
+1
+&gt;&gt;&gt; next(g)
+4
+&gt;&gt;&gt; next(g)
+9
+&gt;&gt;&gt; next(g)
+16
+&gt;&gt;&gt; next(g)
+25
+&gt;&gt;&gt; next(g)
+36
+&gt;&gt;&gt; next(g)
+49
+&gt;&gt;&gt; next(g)
+64
+&gt;&gt;&gt; next(g)
+81
+&gt;&gt;&gt; next(g)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+</code></pre>
+<p>当然可以使用 for 循环。</p>
+<h4 id="第二种方法：yield"><a href="#第二种方法：yield" class="headerlink" title="第二种方法：yield"></a>第二种方法：yield</h4><p>输出 Fibonacci 数的前 max 位，可以使用一个函数：</p>
+<pre><code class="py">def fib(max):
+    n, a, b = 0, 0, 1
+    while n &lt; max:
+        print(b)
+        a, b = b, a + b
+        n = n + 1
+    return &#39;done&#39;
+</code></pre>
+<p>上述程序会一次性计算完前 max 位。</p>
+<p>把上面的程序改为 generator。</p>
+<p>学不会学不会，感觉也不常用。留个坑吧。</p>
+<p><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017318207388128" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/1016959663602400/1017318207388128</a></p>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>函数式编程就不仅仅是单纯的函数体、调用函数了了，还有更多的东西，比如类似于 C/C++ 函数指针的功能等等。</p>
+<h3 id="将函数赋给变量"><a href="#将函数赋给变量" class="headerlink" title="将函数赋给变量"></a>将函数赋给变量</h3><p>其实就是将函数指针赋给了变量。</p>
+<pre><code class="py">&gt;&gt;&gt; abs(-10)
+10
+
+&gt;&gt;&gt; f=abs
+&gt;&gt;&gt; f(10)
+10
+&gt;&gt;&gt; f
+&lt;built-in function abs&gt;
+</code></pre>
+<p>理所应当地，也可以把函数作为函数的参数。</p>
+<pre><code class="py">def add(x, y, f):
+    return f(x) + f(y)
+print(add(5, -6, abs)) # 输出 11
+</code></pre>
+<p>下面是一些应用：<code>map</code>、<code>reduce</code>、<code>filter</code>、<code>sorted</code>。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>python 的 <code>map</code> 其实类似于对一个 list/tuple 的每个元素使用函数 <code>f</code>，得到一个新的 list（实际上是把 <code>map</code> 类型转换为了 <code>list</code>），具体操作如下：</p>
+<pre><code class="py">&gt;&gt;&gt; r = map(f,list(range(10)))
+&gt;&gt;&gt; list(r)
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+<p>显然该操作也可以使用循环，但是 python 追求的就是极致的简洁。</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><blockquote>
+<p>reduce() 函数会对参数序列中元素进行累积。<br>函数将一个数据集合（链表，元组等）中的所有数据进行下列操作：用传给 reduce 中的函数 function（有两个参数）先对集合中的第 1、2 个元素进行操作，得到的结果再与第三个数据用 function 函数运算，最后得到一个结果。<br> –<a href="https://www.runoob.com/python/python-func-reduce.html" target="_blank" rel="noopener">Python reduce() 函数| 菜鸟教程</a></p>
+</blockquote>
+<p><code>reduce</code> 和 <code>map</code> 一样，也接受两个参数，第一个是 <code>f(x,y)</code>，第二个是一个 list/tuple，作用类似于叠加：</p>
+<pre><code class="py">&gt;&gt;&gt; def f(x,y):
+...     return x + y
+...
+&gt;&gt;&gt; from functools import reduce
+&gt;&gt;&gt; r = reduce(f,[1,2,3,4,5]);
+&gt;&gt;&gt; r
+15
+</code></pre>
+<p>也可以尝试手写一个将存有 digit 的 list 转为 int：</p>
+<pre><code class="py">from functools import reduce
+
+def fn(x, y):
+    return x * 10 + y
+
+print(reduce(fn, [1, 2, 3, 5, 8, 3])) # 输出123583
+</code></pre>
+<h4 id="函数式编程练习"><a href="#函数式编程练习" class="headerlink" title="函数式编程练习"></a>函数式编程练习</h4><p>使用 <code>reduce</code> 和 <code>map</code> 手写一个 <code>str2int</code> 函数，将字符串转为整数。</p>
+<p>这也说明，字符串可以当做字符的 list 来用。</p>
+<pre><code class="py">def str2int(_str):
+    from functools import reduce
+
+    def char2digit(x):
+        return ord(x)-ord(&#39;0&#39;)
+
+    def fn(x, y):
+        return x * 10 + y
+    return reduce(fn, map(char2digit, _str))
+
+
+print(str2int(&quot;123&quot;) + 321)
+</code></pre>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>这个函数有两个参数，第一个是返回 <code>True</code> 或 <code>False</code> 的函数 <code>f</code>，第二个是一个 list。 filter 函数返回 list 中 <code>f(x)</code> 为真的所有 <code>x</code>。</p>
+<pre><code class="py">def is_odd(n):
+    return n % 2 == 1
+
+list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15]))
+# 结果: [1, 5, 9, 15]
+</code></pre>
+<h3 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h3><p><code>sorted</code> 函数返回原 list/tuple 被排序以后的 list/tuple（而不是直接在 list/tuple 上修改）。</p>
+<pre><code class="py">&gt;&gt;&gt; arr=[3,1,8,4,5]
+&gt;&gt;&gt; sorted(arr)
+[1, 3, 4, 5, 8]
+</code></pre>
+<p>可以用一个函数作为 <code>key</code> 参数指定排序的依据。可以用 <code>Reverse=True</code> 参数使降序排列。</p>
+<p>注意这个函数不是类似于 C++ sort 所需的返回两个元素的大小的 bool 值，而是<strong>返回一个元素的大小</strong>，如可使用 <code>abs</code> 函数：</p>
+<pre><code class="py">&gt;&gt;&gt; &#39;-&#39;.join([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+&#39;a-b-c&#39;
+&gt;&gt;&gt; arr2=[-4, -2, 1, 3, 5]
+&gt;&gt;&gt; sorted(arr2, key=abs)
+[1, -2, 3, -4, 5]
+</code></pre>
+<p>对字符串 list 可以直接以字典序排序：</p>
+<pre><code class="py">&gt;&gt;&gt; arr3=[&#39;banana&#39;, &#39;anana&#39;, &#39;nana&#39;, &#39;ana&#39;, &#39;na&#39;, &#39;a&#39;]
+&gt;&gt;&gt; sorted(arr3)
+[&#39;a&#39;, &#39;ana&#39;, &#39;anana&#39;, &#39;banana&#39;, &#39;na&#39;, &#39;nana&#39;]
+</code></pre>
+<p>注意在 Python 中，<code>Z&lt;a</code>，如果想要忽略大小写，可以把 <code>key</code> 设定为 <code>str.tolower</code> 函数。</p>
+<pre><code class="py">&gt;&gt;&gt; sorted([&#39;bob&#39;, &#39;about&#39;, &#39;Zoo&#39;, &#39;Credit&#39;], key=str.lower, reverse=True)
+[&#39;Zoo&#39;, &#39;Credit&#39;, &#39;bob&#39;, &#39;about&#39;]
+</code></pre>
+<h3 id="函数作为返回值"><a href="#函数作为返回值" class="headerlink" title="函数作为返回值"></a>函数作为返回值</h3><p>我们可以在函数内部创建一个函数（又名嵌套函数），然后返回。刚看到这里，说实话不知道这个有什么意义。</p>
+<pre><code class="py">def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+</code></pre>
+<pre><code class="py">&gt;&gt;&gt; f = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f
+&lt;function lazy_sum.&lt;locals&gt;.sum at 0x101c6ed90&gt;
+&gt;&gt;&gt; f()
+25
+</code></pre>
+<p>多次调用 lazy_sum 时，会在不同位置创建多个函数，虽然他们本质是一样的。</p>
+<pre><code class="py">&gt;&gt;&gt; f1 = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f2 = lazy_sum(1, 3, 5, 7, 9)
+&gt;&gt;&gt; f1==f2
+False
+</code></pre>
+<p>对于输入或输出是函数的函数，我们称为这种函数叫高阶函数。</p>
+<h3 id="闭包-closure"><a href="#闭包-closure" class="headerlink" title="闭包 closure"></a>闭包 closure</h3><p>廖雪峰的博客这一部分讲的有点糙，没看懂。后来又去看了 <a href="https://www.zhihu.com/question/34210214" target="_blank" rel="noopener">知乎</a>，大概懂了。</p>
+<p>首先说一句，CS 的闭包和数学的闭包<strong>完全没有关系</strong>！参考：<a href="https://www.zhihu.com/question/20504785%EF%BC%8C%E6%9C%89%E4%BA%BA%E6%8F%90%E5%88%B0" target="_blank" rel="noopener">https://www.zhihu.com/question/20504785，有人提到</a> SICP里第二章注释6</p>
+<blockquote>
+<p>The use of the word “closure” here comes from abstract algebra, where a set of elements is said to be closed under an operation if applying the operation to elements in the set produces an element that is again an element of the set. The Lisp community also (unfortunately) uses the word “closure” to describe <strong>a totally unrelated concept</strong>: A closure is an implementation technique for representing procedures with free variables.</p>
+</blockquote>
+<p>上面这个 <code>unfortunately</code> 笑死我了。</p>
+<blockquote>
+<p>在计算机科学中，闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。所以，有另一种说法认为闭包是由函数和与其相关的引用环境组合而成的实体。</p>
+</blockquote>
+<p>这段说的很对<del>但是对于萌新来说可能讲的不像是人话</del></p>
+<p><img src="../../images/0a92b32d26f2ef5f989a8dd01ed4d89d8aba8b02ec759a90b92828e703afeb48.png" alt="轮子哥"></p>
+<pre><code class="py">def adder(x):
+    def wrapper(y):
+        return x + y
+    return wrapper
+
+temp = 5
+adder5 = adder(temp)
+del temp
+
+adder5(10) # 输出 15
+adder5(6)  # 输出 11
+</code></pre>
+<p>第二次还是没大看懂，以后再来看吧。</p>
+<h3 id="lambda-函数"><a href="#lambda-函数" class="headerlink" title="lambda 函数"></a>lambda 函数</h3><p>lambda 函数就是匿名函数。一般用于函数比较简短的情况。</p>
+<pre><code class="py">def is_odd(x):
+    return x % 2 == 1
+
+L=range(10)
+print(list(filter(is_odd, L))) # 输出 [1, 3, 5, 7, 9]
+</code></pre>
+<p>对于这个简短的的 <code>is_odd</code> 函数，写了不仅让代码多了两行（不考虑那种按代码行数计算工资的程序员），还多占用了一个 <code>is_odd</code> 名字。其实我们完全可以用匿名函数来解决：</p>
+<pre><code class="py">L=range(10)
+print(list(filter(lambda x : x % 2 == 1, L))) # 输出 [1, 3, 5, 7, 9]
+</code></pre>
+<p>也就是说，<code>lambda x : x % 2 == 1</code> 这是一个函数，完全等价于我们在第一段函数定义的 <code>is_odd(x)</code>。</p>
+<p>当然，当 lambda 函数变复杂时，还是推荐使用 <code>is_odd(x)</code> 这样的常规函数。</p>
+<h3 id="装饰器-decorator"><a href="#装饰器-decorator" class="headerlink" title="装饰器 decorator"></a>装饰器 decorator</h3><p>装饰器是什么？在调试程序的时候，可能需要在函数的前后输出相关信息。此时，我们就可以对函数进行“装饰”，使得运行该函数时，会输出相关信息。</p>
+<p>那么，如何实现呢？我们定义一个 <code>wrapper</code> 函数，他做的事情是在某函数开始时输出、在函数结束时再输出。</p>
+<p>如果我们还想要写一个通用 <code>wrapper</code> 函数对于所有函数都生效，那么 <code>wrapper</code> 执行的函数应该作为一个参数。作为谁的参数呢？</p>
+<p>在 Python 的装饰器里，我们定义一个 <code>wrapper</code> 函数，其输入、输出和 <code>func</code> 完全一致，这个函数做的事，就是调用 <code>func</code> 函数，并在调用 <code>func</code> 前后做一些事情（输出、计时等等）。</p>
+<p>而指定 <code>func</code> 的办法，是我们再定义一个 <code>log</code> 函数，这个函数输入 <code>func</code>，这个函数的操作是定义并返回调用了 <code>func</code> 的 <code>wrapper</code>。说了这么多大概晕了，那么直接上代码吧。</p>
+<pre><code class="py">def log(func):
+
+    def wrapper(*args, **kw):
+        print(&#39;starting executing function %s&#39; % func.__name__)
+        start_time = time.time()
+        value = func(*args, **kw)
+        end_time = time.time()
+        print(&#39;function %s end in %d seconds&#39; % (func.__name__, start_time - end_time))
+        return value
+    
+    return wrapper
+</code></pre>
+<p>有了上面的代码，我们可以在需要装饰的函数前（示例为 <code>test</code>）加上 <code>@log</code>。</p>
+<pre><code class="py">@log
+def test(x, y):
+    time.sleep(2)
+    return x + y
+</code></pre>
+<p>先不说 <code>@log</code> 的原理，我们先来调用一下 <code>test</code> 函数。把上面的两段代码整合在一起，然后调用 <code>test</code>。</p>
+<pre><code class="py">def log(func):
+
+    def wrapper(*args, **kw):
+        print(&#39;starting executing function %s&#39; % func.__name__)
+        start_time = time.time()
+        value = func(*args, **kw)
+        end_time = time.time()
+        print(&#39;function %s end in %d seconds&#39; % (func.__name__, end_time - start_time))
+        return value
+    
+    return wrapper
+
+@log
+def test(x, y):
+    time.sleep(2)
+    return x + y
+
+print(test(12,138))
+</code></pre>
+<p>输出如下</p>
+<pre><code>starting executing function test
+function test end in 2 seconds
+150
+</code></pre>
+<p>如果把 <code>@log</code> 去掉，那么程序只会输出 <code>150</code>。也就是说，我们成功地在 <code>test</code> 执行前后进行了计时、输出。</p>
+<p>再回来说 <code>@log</code> 的原理：在定义 <code>test</code> 函数前加 <code>@log</code>，程序会在 <code>test</code> 定义完以后，执行 <code>test=log(test)</code>。配合 <code>log</code> 函数的定义就能做到前面所述的效果。具体过程如下：</p>
+<ol>
+<li>定义原 <code>test</code></li>
+<li>把 <code>test</code> 作为参数给 <code>log</code>。<ul>
+<li><code>log</code> 创造了 <code>wrapper(*args, **kw)</code> 函数，该 <code>wrapper</code> 函数执行 <code>test(*args, **kw)</code> 并返回 <code>test</code> 的返回值</li>
+</ul>
+</li>
+<li><code>test=log(test)</code>。将创造的 <code>wrapper</code> 函数改名为 <code>test</code>。</li>
+<li>以后调用 <code>test</code>，执行的实际上是在 <code>log(test)</code> 中定义的 <code>wrapper</code>。</li>
+</ol>
+<p>大致原理如上。</p>
+<p>但是还有一点问题，在以后我们调用 <code>test.__name__</code> 时，由于此时的 <code>test</code> 实际上是 <code>wrapper</code>，所以返回就有点问题。</p>
+<p>解决方法可以在 <code>wrapper</code> 定义中加一句 <code>wrapper.__name__ = func.__name__</code>。但是推荐直接调用 Python 自带的装饰器。</p>
+<pre><code class="py">import functools
+
+def log(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print(&#39;starting executing function %s&#39; % func.__name__)
+        start_time = time.time()
+        value = func(*args, **kw)
+        end_time = time.time()
+        print(&#39;function %s end in %d seconds&#39; % (func.__name__, start_time - end_time))
+        return value
+    
+    return wrapper
+</code></pre>
+<p>完整代码如下：</p>
+<pre><code class="py">import time
+import functools
+
+def log(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print(&#39;starting executing function %s&#39; % func.__name__)
+        start_time = time.time()
+        value = func(*args, **kw)
+        end_time = time.time()
+        print(&#39;function %s end in %d seconds&#39; % (func.__name__, end_time - start_time))
+        return value
+    return wrapper
+
+@log
+def test(x, y):
+    time.sleep(2)
+    return x + y
+
+f = test(11, 22)
+
+print(f)
+print(test.__name__)
+</code></pre>
+<blockquote>
+<p>在面向对象（OOP）的设计模式中，decorator 被称为装饰模式。OOP 的装饰模式需要通过继承和组合来实现，而 Python 除了能支持 OOP 的 decorator 外，直接从语法层次支持 decorator。Python 的 decorator 可以用函数实现，也可以用类实现。<br>decorator 可以增强函数的功能，定义起来虽然有点复杂，但使用起来非常灵活和方便。—— 廖雪峰的 Python 教程</p>
+</blockquote>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>在 Python 中，一个 <code>.py</code> 文件就称之为一个模块（Module）。</p>
+<pre><code class="py">import sys
+import numpy as np
+</code></pre>
+<p>按第一行导入 <code>sys</code> 模块后，我们就有了变量 <code>sys</code> 指向该模块，利用访问 <code>sys</code> 这个变量的成员（如 <code>sys.argv</code>），就可以访问 <code>sys</code> 模块的所有功能。也可以使用别的变量名，比如后面一句，就用 <code>np</code> 指向了 <code>numpy</code>。</p>
+<p>顺便，在 Python 环境中（即 <code>&gt;&gt;&gt;</code> 中）貌似没法直接运行脚本，如果需要调用脚本中的函数，应该当做模块一样，<code>import filename</code> 然后 <code>filename.function_name()</code> 来调用。</p>
+<h2 id="虚拟环境和包"><a href="#虚拟环境和包" class="headerlink" title="虚拟环境和包"></a>虚拟环境和包</h2><p><a href="https://docs.python.org/zh-cn/3/tutorial/venv.html" target="_blank" rel="noopener">参考</a></p>
+<p>应用程序有时需要特定版本的库，因此某些时候不能安装最新的包，甚至不同应用程序需要不同的 Python 安装程序。</p>
+<p>因此，可以建立多个 Python 虚拟环境，每个虚拟环境用一套软件。</p>
+<p>建立虚拟环境并激活的方法如下：</p>
+<pre><code class="sh">python3 -m venv tutorial-env       # 建立虚拟环境
+tutorial-env\Scripts\activate.bat  # 激活虚拟环境 Windows
+# source tutorial-env/bin/activate # Linux, Mac
+</code></pre>
+<p>将该环境下安装的包导出为 <code>requirements.txt</code>、从导出文件建立环境；</p>
+<pre><code class="sh">freeze &gt; requirements.txt       # 导出为 requirements.txt
+pip install -r requirements.txt # 从 requirements.txt 导入
+</code></pre>
+<h2 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h2><p>见 <a href="../python-oop">Python 面向对象编程</a>。</p>

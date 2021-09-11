@@ -1,0 +1,58 @@
+<hr>
+<p>title: 配置 LaTeX 开发环境 (TeX Live / CTeX + TeXstudio)<br>date: 2019-11-12 20:58:41<br>tags: </p>
+<ul>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<p>相比于 C++、Python 等开发环境的配置，LaTeX 的开发环境就要麻烦的多了。因此也准备水一篇博客，来讲讲我的配置环境的过程。</p>
+<p>TeX Live 和 CTeX 都是编译器。其中 CTeX 据说是根据国人优化过的（但是很久没更新了，还会出 bug，有点麻烦，不推荐）。而 TeXstudio 是编辑器。</p>
+<p>看网上说，CTeX 和 Tex Live 是二选一的关系。我本来是全装了的，但是发现经常遇到 bug，而在只装了 TeX Live 的笔记本上却没有这样的 bug，后来就卸载了 CTeX。</p>
+<h2 id="安装-TeX-Live"><a href="#安装-TeX-Live" class="headerlink" title="安装 TeX Live"></a>安装 TeX Live</h2><p>TeX Live 是跨平台（Win/Linux/Mac OS）的。不过由于 NTFS 分区格式和其他系统有区别，Windows 的编译过程会较慢，一篇 20 页的论文使用 <code>xelatex</code> 编译，同配置的电脑 Linux 下编译不到 3 秒，Win 下需要 12 秒。当然，Win 也不是不能用。</p>
+<p><a href="https://www.tug.org/texlive/" target="_blank" rel="noopener">TeX Live 的官网</a>可谓是相当简洁。。。。</p>
+<p><img src="texlive-org.jpg" alt="TeX Live 官网"></p>
+<p>不过根据一般的大软件都会以光盘（iso）的形式提供离线安装包（如 Windows、Office），看到官网上的 DVD 就直接点进去。</p>
+<p>点进去好像也没有什么下载的地方，不过下面有一行小字 <code>downloading the TeX Live ISO image and burning your own DVD</code>，点进去，再经几番周折就能找到<a href="http://mirror.ctan.org/systems/texlive/Images/" target="_blank" rel="noopener">链接</a>。</p>
+<p>很不错的是，网站会根据你的 ip 跳转到最快的服务器，点击链接前把代理关掉，在国内就能跳转到<a href="https://mirrors.ustc.edu.cn/CTAN/systems/texlive/Images/" target="_blank" rel="noopener">中科大的源</a>，下载最新的 <code>.iso</code> 文件（带年月日和只有年份的均可），轻松跑满速。</p>
+<p>安装的过程不难，不多说了，不会的话可以自行百度。</p>
+<h3 id="更改-TeX-Live-远程仓库及更新"><a href="#更改-TeX-Live-远程仓库及更新" class="headerlink" title="更改 TeX Live 远程仓库及更新"></a>更改 TeX Live 远程仓库及更新</h3><p>稍对 LaTeX 工作原理有所了解的人都知道，LaTeX 体系由无数的小的宏包组成，而这些宏包可能并没有默认安装在电脑，而是需要的时候会自动下载。</p>
+<p>说到下载，一个不得不提的就是下载的源，某些外国的源到中国的下载速度非常慢，甚至下载不了。因此，切换到镜像站就非常重要。</p>
+<p>下面是通过 GUI 等方法（较麻烦），最后还有直接命令行的方法。</p>
+<p>安装好 TeX Live 以后，在开始菜单打开 <code>TeX Live Manager</code>。</p>
+<p>找到 <code>选项</code> - <code>Repositoties...</code>，选择下面的 <code>specific mirror</code> 中的中国的任意一个镜像站（个人喜好中科大 <code>ustc</code>），保存。</p>
+<p><img src="texlive-choose-repositories.jpg" alt="更换 TeX Live 仓库源"></p>
+<p>还可以更新 <code>tlmgr</code> 之类的，都是非常容易的，自己琢磨一下能弄懂了。</p>
+<p>顺便一提，上面的所有操作都可以用命令行（管理员权限）完成：</p>
+<pre><code class="cmd">tlmgr option repository http://mirrors.ustc.edu.cn/CTAN/systems/texlive/tlnet
+tlmgr update --self
+tlmgr update --all
+</code></pre>
+<p>TeX Live 默认会安装所有包。如果只安装了 <code>tlmgr</code>，并没有安装其他的包，可以使用以下命令行安装所有包：</p>
+<pre><code class="cmd">tlmgr install scheme-full
+</code></pre>
+<h2 id="更新-TeX-Live"><a href="#更新-TeX-Live" class="headerlink" title="更新 TeX Live"></a>更新 TeX Live</h2><p>TeX Live 每年会更新一次大版本，之前的版本会无法再使用 <code>tlmgr install</code> 和 <code>tlmgr update</code>，需要进行更新。</p>
+<p>然而，在官方的<a href="https://tug.org/texlive/upgrade.html" target="_blank" rel="noopener">Upgrade页面</a>上，官方推荐的更新方式是重新安装。这也可以从文件夹名字包含年份看出。</p>
+<p><img src="/images/6acc62cfd74eea00638b4540ed823035c63233429b7598b5085827b84d32e67d.png" alt="Upgrade页面"></p>
+<p>官方给出了 Unix 下的更新方法，不过我发现，似乎也可以仅运行 <a href="http://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh" target="_blank" rel="noopener">http://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh</a> 以完成更新（尚未清楚有什么副作用）。</p>
+<p>对于 Windows，官方说没有类似的升级方法，但是，将上述链接的 <code>sh</code> 后缀改为 <code>exe</code> （即 <a href="http://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.exe" target="_blank" rel="noopener">http://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.exe</a> ）后能下载到一个 exe，运行后，可发现 TeX Live 升级完成。</p>
+<p>完成上述升级后，即可 <code>tlmgr update --self --all</code> 对包进行升级。</p>
+<h2 id="安装-CTeX"><a href="#安装-CTeX" class="headerlink" title="安装 CTeX"></a>安装 CTeX</h2><blockquote>
+<p>2019.11.16 更新：我在安装了 CTeX 和 TeX Live 的电脑上编译 beamer 幻灯片文件，死活编译不过，也手动下载了安装包，还是无解。<br>后来偶然发现只安装了 TeX Live 的电脑竟然能编译通过。于是删掉了电脑上的 CTeX，再次编译，通过。<br>因此，我不推荐安装 CTeX。</p>
+</blockquote>
+<p>CTeX 的安装也不难，甚至比上面简单。、</p>
+<p>问题就在于 CTeX 太老了，最后一次更新是在 2016 年。导致他自带的 MiKTeX 不能链接服务器进行更新，手动更新就会报错 <code>Data: Get host by name failed in tcp_connect().</code>。</p>
+<p>解决方法可以见 <a href="https://blog.csdn.net/pijk55556/article/details/87908328" target="_blank" rel="noopener">替换CTeX套装中的MiKTeX、WinEdt和Sumatra PDF组件
+</a>，这里不再多说。</p>
+<p>顺便提一下，文中还提到了替换 CTeX 的另外两个组件。有需求的可以按照上面博客做。</p>
+<h2 id="安装-TeXstudio"><a href="#安装-TeXstudio" class="headerlink" title="安装 TeXstudio"></a>安装 TeXstudio</h2><p>这货的<a href="https://www.texstudio.org/" target="_blank" rel="noopener">官网</a>貌似被墙了。。。</p>
+<p>不过他有 GitHub 仓库，去 <a href="https://github.com/texstudio-org/texstudio/releases" target="_blank" rel="noopener">releases</a> 页就能看到下载链接了。（顺便说一句，官网的下载链接也是重定向到 GitHub 的。。。）</p>
+<p>我使用的是 <code>2.12.16</code> 版本。</p>
+<p>安装也是非常简单，不过安装以后需要配置一下。</p>
+<p>首先，TeXstudio  是支持中文的，但他就是不默认使用。在 <code>Option</code> 选项卡 - <code>Configure TeXstudio</code> - <code>General</code> 侧边栏 - <code>Apprearance</code> - <code>Language</code> 调成 <code>zh_CN</code>。</p>
+<p>调完以后，标题的宋体就非常引人注目了。（逃</p>
+<p>还好这也是可以调的。在刚才的 <code>语言</code> 上面有<code>字体</code>、<code>字号</code>。我使用的是 <code>微软雅黑</code>，字号为 <code>9</code>。</p>
+<p>如果你使用的是 2K 以上的屏幕，工具栏的图标还是很小。这玩意不适配高分屏吗？？</p>
+<p>后来发现还是可以改。。。在刚才的设置的最下面有一个高级设置的复选框，勾上以后，就出现了 GUI 缩放的功能。</p>
+<p><img src="texstudio-configure-gui.jpg" alt="调整 GUI"></p>
+<p>选项还是靠拖动的，拖到一个比较好看的地方就可以了。</p>
+<p>之后 TeXstudio 也不需要怎么配置了，直接就能调用 CTeX / TeX Live 编译了/</p>

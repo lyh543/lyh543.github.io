@@ -1,0 +1,57 @@
+<hr>
+<p>title: Hexo 插入 LaTeX 公式<br>date: 2019-10-15<br>tags:</p>
+<ul>
+<li>Hexo</li>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<h2 id="使用-MathJax-渲染-Hexo-中的数学公式"><a href="#使用-MathJax-渲染-Hexo-中的数学公式" class="headerlink" title="使用 MathJax 渲染 Hexo 中的数学公式"></a>使用 MathJax 渲染 Hexo 中的数学公式</h2><p>本文摘自 <a href="https://www.sail.name/2018/05/31/use-mathjax-in-hexo/" target="_blank" rel="noopener">https://www.sail.name/2018/05/31/use-mathjax-in-hexo/</a>.</p>
+<blockquote>
+<p>MathJax is an open-source JavaScript display engine for LaTeX, MathML, and AsciiMath notation that works in all modern browsers。</p>
+</blockquote>
+<p>理论上方法是多种多样的，都是基于 MathJax 的。但我试了很多都不行<del>不排除我太菜了，不会搞的可能</del></p>
+<p>目前的方法摘自 <a href="https://github.com/viosey/hexo-theme-material/issues/604" target="_blank" rel="noopener">https://github.com/viosey/hexo-theme-material/issues/604</a>.</p>
+<ol>
+<li>在主题配置文件里加入：</li>
+</ol>
+<pre><code class="yml">vendors:
+
+    # MathJax 2.7.0-2.7.1
+    mathjax: https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js
+</code></pre>
+<ol start="2">
+<li>在用到 mathjax 的 Markdown 文档的 front-matter 里填入<code>mathjax: true</code>即可。</li>
+</ol>
+<pre><code>---
+title: Hexo 插入 LaTeX 公式
+tags:
+- Hexo
+- LaTeX
+category:
+- LaTeX
+---
+</code></pre>
+<p>预览：</p>
+<p><code>Simple inline $a = b + c$.</code></p>
+<p>Simple inline $a = b + c$.</p>
+<p><code>$$\frac{|ax + by + c|}{\sqrt{a^{2}+b^{2}}}$$</code></p>
+<p>$$\frac{|ax + by + c|}{\sqrt{a^{2}+b^{2}}}$$</p>
+<h2 id="使用-MathJaX-注意"><a href="#使用-MathJaX-注意" class="headerlink" title="使用 MathJaX 注意"></a>使用 MathJaX 注意</h2><ol>
+<li><p>具体 LaTeX 语法见<a href="../LaTeX-math-equation">博客：LaTeX数学公式学习笔记</a></p>
+</li>
+<li><p>值得注意的是，LaTeX 中本来就存在的 <code>\</code> 在 MathJax 都需要替换为 <code>\\</code>，如换行为 <code>\\\\</code>，范数的 <code>\|</code> 在 MathJax 中应为 <code>\\|</code>。这个问题是 Markdown 和 MathJax 双重渲染造成的。</p>
+</li>
+<li><p>而对于某些 Markdown 中的符号（指的就是一对 <code>*</code> 和 <code>_</code>），这个时候需要一个 <code>\</code> 来进行转义。</p>
+</li>
+</ol>
+<p>这里转义的目的是使得 Markdown 不把他识别为关键字，而上面的 <code>\\</code> 可以理解为先在 Markdown 中渲染在 <code>\</code>，然后进行 MathJax 编译的时候再理解为 LaTeX 转义符。</p>
+<pre><code class="latex">\begin{equation}
+\begin{split}
+x&amp;=a+b+c\\\\
+&amp;=d+e\\\\
+&amp;=f+g
+\end{split}
+\end{equation}
+</code></pre>
+<p>\begin{equation}<br>\begin{split}<br>x&amp;=a+b+c\\<br>&amp;=d+e\\<br>&amp;=f+g<br>\end{split}<br>\end{equation}</p>

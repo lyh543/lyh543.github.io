@@ -1,0 +1,303 @@
+<hr>
+<p>title: Django REST Framework 学习笔记<br>date: 2021-1-24 18:20:22<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>RESTful</li>
+<li>后端<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<h2 id="Django-REST-Framework-是什么"><a href="#Django-REST-Framework-是什么" class="headerlink" title="Django REST Framework 是什么"></a>Django REST Framework 是什么</h2><p>如果你打算使用 Django 搭建一个 RESTful API 后端，你完全有必要学习 Django REST Framework。</p>
+<p>Django REST Framework 提供了 Serializers、APIView、GeneticAPIView、ViewSets、权限管理、搜索、分页等功能。这些功能、特性可以全部加入我们的 RESTful 后端，也可以选一部分加入。</p>
+<p>如果你和我一样，第一次接触后端，尚不了解 RESTful 后端的组成、功能，可能也会对上面的这些概念懵圈。</p>
+<p>用通俗的话来说，RESTful 后端开发过程中，包含了相当多的重复元素，比如：</p>
+<ol>
+<li>将数据模型（Django 中特指我们编写的 models.Model 类）变为 json 字符串发送给前端，这个变的过程称为<code>序列化</code>；</li>
+<li>RESTful API 应该对 <code>GET /activities/</code> 这类请求提供<strong>获取活动列表</strong>的功能，对 <code>POST /activities/</code> 提供<strong>创建活动</strong>的功能；</li>
+<li>对于获取活动列表的功能，还应当具有搜索和分页的功能；</li>
+<li>RESTful API 应该对 <code>GET /activities/1/</code> 这类请求提供<strong>获取 id 为 1 的活动信息</strong>的功能，对 <code>PUT /activities/1/</code> 和 <code>PATCH /activities/1/</code> 提供<strong>修改 id 为 1 的活动信息</strong>的功能，对 <code>DELETE /activities/1/</code> 提供<strong>删除 id 为 1 的活动</strong>的功能</li>
+<li>当然，还需要判定用户是否有权限获取、修改</li>
+</ol>
+<p>上述步骤，使用纯 Django 也可以完成。而 Django REST Framework 所完成的，就是将具体的、重复的、步骤抽象化、简短化：将 json 到数据模型抽象化为序列器 <code>Serializer</code> 类，借助 <code>Serializer</code> 类编写 <code>序列化</code> 的过程可以最短缩减到<strong>三行</strong>；将提供了通用 RESTful 功能（如提供列表、创建对象、修改、删除）的一些 Django 视图 <code>View</code> 抽象化为 <code>GeneticAPIView</code>，读者在后面可以看到，对不同的 HTTP 方法提供不同功能的代码借助 <code>GeneticAPIView</code> 可以最短缩减到<strong>三行</strong>，搜索分页加起来也可以<strong>不超过十行</strong>；甚至的甚至，相同操作的不同 Views（如，需要对 <code>/activities/</code> 和 <code>/users/</code> 提供相同的列表、创建、获取、修改、删除方法）甚至可以用一个 <code>ViewSet</code> 进行描述。</p>
+<p>当然，这种方法适合描述 RESTful API 中大部分通用功能，如果涉及到更细化的操作，如 <code>signup</code> 和 <code>login</code>，就没法用到 ViewSets 这类操作了。而在过于抽象的代码上，如果需求发生了少许更改，也可能导致较大的代码改动，如对于 <code>/activities/</code> 和 <code>/users/</code>，原本二者提供的功能相同，使用一个 <code>ViewSet</code> 就可以描述，突然要求对 <code>/users/</code> 中的注册过程添加一个验证码，都会导致这部分的代码重写。</p>
+<p>综上所属，抽象化有其优点也有其缺点，在实际编码过程中，并不一定使用到 <code>ViewSets</code>，我的项目中最抽象也只用到了 <code>GeneticAPIView</code>。</p>
+<h2 id="Django-入门"><a href="#Django-入门" class="headerlink" title="Django 入门"></a>Django 入门</h2><p><a href="../django-study-notes">Django 入门</a></p>
+<p>Django REST Framework 教程中也包含了必要的 Django 知识，不过我仍然建议简单看一下 Django 入门教程；以及，很多时候也会去查 Django 的文档。</p>
+<h2 id="Django-REST-Framework-官方教程"><a href="#Django-REST-Framework-官方教程" class="headerlink" title="Django REST Framework 官方教程"></a>Django REST Framework 官方教程</h2><p><a href="https://q1mi.github.io/Django-REST-framework-documentation/tutorial/1-serialization_zh/" target="_blank" rel="noopener">汉化版教程链接</a></p>
+<h2 id="例：在序列器中定义可修改的外键-id"><a href="#例：在序列器中定义可修改的外键-id" class="headerlink" title="例：在序列器中定义可修改的外键 id"></a>例：在序列器中定义可修改的外键 id</h2><pre><code class="py">class Activity(models.Model):
+    # 为了防止循环引用，这里使用字符串表示 ActivityPhoto 类
+    banner = models.ForeignKey(&#39;activities_photos.ActivityPhoto&#39;, null=True, default=None, on_delete=models.SET_NULL,
+                               verbose_name=&quot;首页图&quot;, related_name=&quot;banner_of&quot;)
+</code></pre>
+<p>Django REST Framework 处理外键 id 有点复杂。因为它的 <code>update</code> 默认是修改 id 值：如果你想修改 Acitivity 的 <code>banner.id</code> 为 4，DRF 的默认操作是把这个 Acitivity 外键现在指向的 banner 的 id 改为 4，而不是把 Acitivity 的外键重新指向 id 为 4 的 banner。</p>
+<p>但是，请注意到，万能的 Django 为这个 Activity 提供了一个 <code>banner_id</code> 属性。在读取的时候，这个东西和 <code>banner.id</code> 的值是一样的，但在写入的时候：</p>
+<ul>
+<li>修改 <code>banner.id</code> 的操作是将外键现在指向的 banner 的 id 改为 4，且修改为 <code>None</code> 时会报错：<code>不存在 ActivityPhoto</code></li>
+<li>修改 <code>banner_id</code> 的操作是将外键重新指向 id 为 4 的 banner，且修改为 <code>None</code> 表示设置这个外键为 null</li>
+</ul>
+<p>于是，Serializer 里直接写 <code>banner_id</code> 就行了。</p>
+<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+        fields = (&quot;id&quot;, &quot;banner_id&quot;)
+        read_only_fields = (&quot;id&quot;)
+    # 默认的 banner_id 是 allow_null=False, read_only=True，所以需要显式定义
+    banner_id = serializers.CharField(allow_null=True, read_only=False)
+
+    # 默认的也不带 validator，如果不写 validator 导致数据库插入失败，就等着服务器抛 500 吧
+    def validate_banner_id(self, banner_id: str):
+        if banner_id is None or ActivityPhoto.objects.filter(id=banner_id):
+            return banner_id
+        raise serializers.ValidationError(&quot;id 对应的图片不存在&quot;)
+</code></pre>
+<p>Django 永远滴神！</p>
+<h2 id="例：自定义-APIException"><a href="#例：自定义-APIException" class="headerlink" title="例：自定义 APIException"></a>例：自定义 APIException</h2><p>Django 中的 <code>raise Http404</code> 用着很爽，可以在任何函数打断当前 view 的执行，直接返回一个 404 的 HttpResponse。但是不能自己定义别的返回值，诸如 104、500、503 等等。</p>
+<p>一种思路是手写一个装饰器，在原本的 view 外包装一个 <code>try ... catch</code> 代码块，再自己定义各种 Exception 就可以实现了。</p>
+<p>不过，Django REST Framework 在自己的 View 中提供了这个功能，我们只需要继承 <code>rest_framework.exceptions.APIException</code> 就可以了。</p>
+<pre><code class="py">class OnedriveUnavailableException(APIException):
+    status_code = 503
+    default_detail = &#39;Onedrive 服务未登录。&#39;
+
+
+# raise OnedriveUnavailableException 即可返回 503，{&quot;detail&quot;: &quot;Onedrive 服务未登录。&quot;}
+</code></pre>
+<p>太香了！</p>
+<h2 id="例：自定义对象级权限"><a href="#例：自定义对象级权限" class="headerlink" title="例：自定义对象级权限"></a>例：自定义对象级权限</h2><p><a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/permissions_zh/#_3" target="_blank" rel="noopener">文档</a></p>
+<p>需求是这样的，我们需要仿照 <code>IsAdminOrReadOnly</code>，编写一个 <code>IsPresenterOrAdminOrReadOnly</code>。</p>
+<pre><code class="py">class IsPresenterOrAdminOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, activity: Activity):
+        return bool(
+            request.method in SAFE_METHODS or
+            request.user and
+            (activity.presenter.filter(id=request.user.id) or request.user.is_staff or request.user.is_superuser)
+        )
+</code></pre>
+<pre><code class="py">class ActivityAttenderUpdateView(GenericAPIView):
+    permission_classes = (IsPresenterOrAdminOrReadOnly,)
+
+    def patch(self, request: WSGIRequest, id: int) -&gt; Response:
+        activity = get_object_or_404(Activity, id=id)
+        self.check_object_permissions(request, activity)
+</code></pre>
+<blockquote>
+<p>如果你正在编写自己的视图并希望强制执行对象级权限检测，或者你想在通用视图中重写 <code>get_object</code> 方法，那么你需要在检索对象的时候显式调用视图上的 <code>.check_object_permissions(request, obj)</code> 方法。</p>
+</blockquote>
+<h2 id="例：完成序列化后再修改字段"><a href="#例：完成序列化后再修改字段" class="headerlink" title="例：完成序列化后再修改字段"></a>例：完成序列化后再修改字段</h2><p>DRF 的 GeneticAPIView 写起来真的很爽，把 Models 和 Serializer 写好以后，GeneticAPIView 只需要几行就能写完，完成搜索、分页、序列化、返回 Response。但是，不可避免的是，某些时候想要传回更多的字段，或者由于权限问题隐藏某些字段。这个时候，我们就需要自己改写一部分 GeneticAPIView。</p>
+<h3 id="在-view-中的-serializer-data-中添加字段"><a href="#在-view-中的-serializer-data-中添加字段" class="headerlink" title="在 view 中的 serializer_data 中添加字段"></a>在 view 中的 serializer_data 中添加字段</h3><p>需求是这样的：原本的 login 函数完成了接收 <code>username</code> 和 <code>password</code> 并验证，正确后将该用户的信息用 <code>UserSerializer</code> 序列化后返回：</p>
+<pre><code class="py">def login(request: WSGIRequest) -&gt; Response:
+    err_response = Response(status=status.HTTP_401_UNAUTHORIZED)
+    if &#39;username&#39; not in request.data or &#39;password&#39; not in request.data:
+        return err_response
+    username = request.data[&#39;username&#39;]
+    password = request.data[&#39;password&#39;]
+    user = authenticate(request, username=username, password=password)
+    if user is None:
+        return err_response
+    django_login(request, user)
+    serializer = UserSerializer(user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+</code></pre>
+<p>由于某些原因，我需要把 <code>csrftoken</code> 加入到返回的 JSON 中。<code>csrftoken</code> 的获取方法是 <code>csrf.get_token(request)</code>。如何将 <code>csrftoken</code> 加入序列化字段呢？</p>
+<p>最容易想到，但最麻烦且最不美观的方法是修改 <code>UserSerializer</code>。有没有其他方法呢？</p>
+<p>在最后一行打断点然后调试，执行到这里时看一眼 <code>serializer.data</code> 的类型，是 <code>OrderedDict</code>。<code>OrderedDict</code> 就很好办了，在 Response 之前修改一下，添加一个字段就可以了。</p>
+<pre><code class="py">def login(request: WSGIRequest) -&gt; Response:
+    err_response = Response(status=status.HTTP_401_UNAUTHORIZED)
+    if &#39;username&#39; not in request.data or &#39;password&#39; not in request.data:
+        return err_response
+    username = request.data[&#39;username&#39;]
+    password = request.data[&#39;password&#39;]
+    user = authenticate(request, username=username, password=password)
+    if user is None:
+        return err_response
+    serializer = UserSerializer(user)
+    serializer_data = serializer.data
+    serializer_data[&#39;csrftoken&#39;] = csrf.get_token(request)
+    return Response(serializer_data, status=status.HTTP_200_OK)
+</code></pre>
+<h3 id="在-GeneticAPIView-的-serializer-data-中修改字段"><a href="#在-GeneticAPIView-的-serializer-data-中修改字段" class="headerlink" title="在 GeneticAPIView 的 serializer_data 中修改字段"></a>在 GeneticAPIView 的 serializer_data 中修改字段</h3><p>这个看起来就要麻烦一点了，毕竟本身 GeneticAPIView 部分是一个函数都没有写。</p>
+<pre><code class="py">class UserListView(ListAPIView):
+    queryset = User.objects.all().order_by(&quot;-userprofile__experience&quot;)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = (&#39;username&#39;, &#39;first_name&#39;, &#39;last_name&#39;, &#39;userprofile__student_id&#39;)
+    pagination_class = Pagination
+    serializer_class = UserSerializer
+</code></pre>
+<p>这里的需求是：为了保护用户隐私，对于非管理员用户，不让其获取用户的 <code>username</code> 和 <code>student_id</code>，将返回的 <code>username</code> 改为 <code>***</code>、<code>student_id</code> 改为前四位（代表入学年份）。</p>
+<p>这里就有两种思路了：修改每一个 View 的处理过程（不仅仅是这个 View 需要保护隐私，其他 View 也应当保护隐私）；或者直接修改 <code>Serializer</code> 的序列化过程。</p>
+<h4 id="思路-1：修改-View-的过程"><a href="#思路-1：修改-View-的过程" class="headerlink" title="思路 1：修改 View 的过程"></a>思路 1：修改 View 的过程</h4><p>我们可以考虑类似于上面添加 <code>csrftoken</code> 字段的思路。读 <code>ListAPIView</code> 的源码后，可以知道，<code>get</code> 方法调用了 <code>list</code> 方法，而 <code>list</code> 中做了查询、分页、序列化、包装成分页形式再返回的操作。</p>
+<pre><code class="py">class ListAPIView(mixins.ListModelMixin,
+                  GenericAPIView):
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class ListModelMixin:
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+</code></pre>
+<p>我们只需要把官方的 list 方法复制下来，然后改写一下，在序列化以后判断是否是管理员，对于非管理员，替换每个 <code>username</code> 和 <code>student_id</code> 就可以了。</p>
+<p>注意到官方给的 <code>list</code> 用 if 判断了是否用到分页功能，针对不同情况作了处理。我们已经用到了分页，所以可以把 if 删掉。</p>
+<pre><code class="py">class UserListView(ListAPIView):
+    queryset = User.objects.all().order_by(&quot;-userprofile__experience&quot;)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = (&#39;username&#39;, &#39;first_name&#39;, &#39;last_name&#39;, &#39;userprofile__student_id&#39;)
+    pagination_class = Pagination
+    serializer_class = UserSerializer
+
+    # 复制官方的 list，然后根据自己的需求进行改写
+    def list(self, request: WSGIRequest, *args, **kwargs) -&gt; Response:
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        serializer = self.get_serializer(page, many=True)
+        serializer_data = serializer.data
+        # 对于非管理员，需要替换学号为学号前四位
+        if not (request.user.is_staff or request.user.is_staff):
+            for item in serializer_data:
+                item[&#39;username&#39;] = &#39;***&#39;
+                item[&#39;student_id&#39;] = item[&#39;student_id&#39;][0:4]
+        return self.get_paginated_response(serializer_data)
+</code></pre>
+<p>这种方法的缺点就是需要对每一个 View 进行修改，而且在 List 的结果中，非管理员也不能获得自己的详细信息了。</p>
+<h4 id="思路-2：修改-Serializer"><a href="#思路-2：修改-Serializer" class="headerlink" title="思路 2：修改 Serializer"></a>思路 2：修改 Serializer</h4><p>上面的方法需要对每个 View 进行修改，并且新增的 View 如果忘记修改了，还会导致数据泄露。有没有从 Model 或 Serializer 下手的方法呢？</p>
+<p>这种方案要解决两个问题，一是序列化的过程中并没有 <code>request</code>，没有 <code>request</code> 我们就没法判断当前用户是否是管理员，所以需要通过什么方法传进去；二是需要自定义序列化的过程。</p>
+<hr>
+<p>对于第一个问题，<a href="https://www.django-rest-framework.org/api-guide/serializers/#including-extra-context" target="_blank" rel="noopener">DRF 文档</a> 中提到，可以在序列化时提供 <code>context</code>。</p>
+<pre><code class="py">serializer = AccountSerializer(account, context={&#39;request&#39;: request})
+serializer.data
+# {&#39;id&#39;: 6, &#39;owner&#39;: &#39;denvercoder9&#39;, &#39;created&#39;: datetime.datetime(2013, 2, 12, 09, 44, 56, 678870), &#39;details&#39;: &#39;http://example.com/accounts/6/details&#39;}
+</code></pre>
+<p>在 <code>context</code> 中提供 user 信息，我们就可以判断用户的身份了。更好的是，GeneticAPIView 在序列化时，提供了默认的 <code>context</code>：</p>
+<pre><code class="py">class GenericAPIView(views.APIView):
+    &quot;&quot;&quot;
+    Base class for all other generic views.
+    &quot;&quot;&quot;
+
+    def get_serializer(self, *args, **kwargs):
+        &quot;&quot;&quot;
+        Return the serializer instance that should be used for validating and
+        deserializing input, and for serializing output.
+        &quot;&quot;&quot;
+        serializer_class = self.get_serializer_class()
+        kwargs[&#39;context&#39;] = self.get_serializer_context()
+        return serializer_class(*args, **kwargs)    
+
+    def get_serializer_context(self):
+        &quot;&quot;&quot;
+        Extra context provided to the serializer class.
+        &quot;&quot;&quot;
+        return {
+            &#39;request&#39;: self.request,
+            &#39;format&#39;: self.format_kwarg,
+            &#39;view&#39;: self
+        }
+</code></pre>
+<p>这下我们直接在 Serializer 里用就行了，GeneticAPIView 一行都不用修改。</p>
+<hr>
+<p>对于第二个问题，查询资料发现，DRF 序列化的函数为 <code>to_representation</code>，其定义如下：</p>
+<pre><code class="py">class Serializer(BaseSerializer, metaclass=SerializerMetaclass):
+    def to_representation(self, instance):
+        &quot;&quot;&quot;
+        Object instance -&gt; Dict of primitive datatypes.
+        &quot;&quot;&quot;
+        ret = OrderedDict()
+        fields = self._readable_fields
+
+        for field in fields:
+            try:
+                attribute = field.get_attribute(instance)
+            except SkipField:
+                continue
+
+            # We skip `to_representation` for `None` values so that fields do
+            # not have to explicitly deal with that case.
+            #
+            # For related fields with `use_pk_only_optimization` we need to
+            # resolve the pk value.
+            check_for_none = attribute.pk if isinstance(attribute, PKOnlyObject) else attribute
+            if check_for_none is None:
+                ret[field.field_name] = None
+            else:
+                ret[field.field_name] = field.to_representation(attribute)
+
+        return ret
+</code></pre>
+<p>我们只需要重写它即可，把上面的代码复制下来，然后在 return 之前判断用户身份，替换 <code>ret</code> 的 <code>student_id</code> 和 <code>username</code> 字段。</p>
+<p>不对，连复制都不需要，我们只需要调用父类的 <code>to_representation()</code>，然后加两行就可以了！</p>
+<pre><code class="py">    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+
+        # 隐藏 username 和 student_id
+        request = self.context.get(&#39;request&#39;)
+        if request is None:     # django shell 时会出现 request is None
+            return ret
+        if not (request.user.is_staff or request.user.is_superuser or request.user.id == ret[&#39;id&#39;]):
+            ret[&#39;username&#39;] = &#39;***&#39;
+            ret[&#39;student_id&#39;] = ret[&#39;student_id&#39;][0:4]
+        return ret
+</code></pre>
+<h2 id="serializers-ListField-和-models-ManyToManyField-的梦幻联动"><a href="#serializers-ListField-和-models-ManyToManyField-的梦幻联动" class="headerlink" title="serializers.ListField 和 models.ManyToManyField 的梦幻联动"></a>serializers.ListField 和 models.ManyToManyField 的梦幻联动</h2><p>对于外键这类东西，Serializer 虽然不能自动处理，但是也提供了接口，只要加一点代码就可以完成灵活的写入。</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>场景是这样的：<code>主讲人</code> 是关于 <code>Activity</code> 和 <code>User</code> 的一个多对多的关系。在 Model 中是这样定义的：</p>
+<pre><code class="py">class Activity(models.Model):
+
+    presenter = models.ManyToManyField(User, verbose_name=&quot;主讲人&quot;, related_name=&quot;present_activity&quot;)
+</code></pre>
+<p>对于获取 Actiivty 信息的 REST API，常见的一种写法是返回该 Activity 的所有主讲人的 id 组成的数组。</p>
+<p>在 DRF 中可以使用 <a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/fields_zh/#listfield" target="_blank" rel="noopener">ListField</a> 来实现。</p>
+<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+
+    presenter = serializers.ListField(child=serializers.IntegerField(), read_only=False)
+</code></pre>
+<p>但是 ListField 并不能直接将 ManyToManyField 的内容转化为 ListField。转化部分需要我们自己写。</p>
+<p>怎么写呢？改 <code>to_representation</code> 吗？我尝试了一下这个，最终放弃了，因为一调用 <code>super().to_representation</code> 就会尝试把 <code>presenter</code> 序列化。</p>
+<p>Python 可以定义一个类的方法为属性，如果定义了 <code>setter</code>，还可以把外界对这个属性的修改，反作用到原来的属性：</p>
+<pre><code class="py">class Activity(models.Model):
+
+    presenter = models.ManyToManyField(User, verbose_name=&quot;主讲人&quot;, related_name=&quot;present_activity&quot;)
+
+    @property
+    def presenter_id(self) -&gt; List[int]:
+        queryset = self.presenter.all().values(&#39;id&#39;)
+        return list(map(lambda u: u[&#39;id&#39;], queryset))
+
+    @presenter_id.setter
+    def presenter_id(self, value: List[int]):
+        self.presenter.clear()
+        self.presenter.add(*value)
+</code></pre>
+<p>然后我们指定一下 ListField 的 <code>source</code> 就可以了：</p>
+<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+
+    presenter = serializers.ListField(child=serializers.IntegerField(), source=&quot;presenter_id&quot;, read_only=False)
+</code></pre>
+<p>就这么简单。</p>
+<hr>
+<p>对了，后面发现，<code>create</code> 的时候还是会报错，因为 DRF 会在创建 Activity 时尝试设定 <code>presenter</code> 值，而此时 Activity 还没有写入数据库、没有主键，于是也没法创建多对多的记录。</p>
+<p>解决方法是重载 <code>create</code> 方法，在 Activity 创建之后再写 presenter：</p>
+<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Activity
+
+    presenter = serializers.ListField(child=serializers.IntegerField(), source=&quot;presenter_id&quot;, read_only=False)
+
+    def create(self, validated_data):
+        presenter = validated_data.pop(&#39;presenter&#39;, [])
+        activity = super().create(validated_data)
+        activity.presenter_id = presenter
+        return activity
+</code></pre>
+<h2 id="REST-API-标准"><a href="#REST-API-标准" class="headerlink" title="REST API 标准"></a>REST API 标准</h2><p>开发 REST 的工具有了，那标准呢？这是一个非常重要的问题。就像学了 C 语言后能写出很多的程序，但是常用的代码风格、代码库依旧要参考其他的标准。</p>
+<p>我为此新开了一篇博文：<a href="../restful-api-standard">RESTful API 标准</a>。</p>
+<h2 id="DRF-项目部署"><a href="#DRF-项目部署" class="headerlink" title="DRF 项目部署"></a>DRF 项目部署</h2><p>可以参考 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/lyh543/docs/deploy/deploy.md" target="_blank" rel="noopener">https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/lyh543/docs/deploy/deploy.md</a></p>
+<h2 id="Swagger-文档生成"><a href="#Swagger-文档生成" class="headerlink" title="Swagger 文档生成"></a>Swagger 文档生成</h2><p>可以看 <a href="../drf_yasg">drf-yasg</a>。</p>

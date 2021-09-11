@@ -1,0 +1,181 @@
+<hr>
+<p>title: Python 爬虫 —— Scrapy<br>date: 2020-7-1 15:41:43<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>爬虫<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><img src="/images/28cf998153f11ab7a5b1579d5eccc122deb0ea3f8b1bf12c6fd177594f264039.png" alt="爬虫原理"></p>
+<p>流程如下：</p>
+<ul>
+<li><strong>爬虫</strong>告诉<strong>引擎</strong>，需要爬取哪些链接 <code>urls</code></li>
+<li>引擎把链接发给<strong>调度器</strong></li>
+<li>调度器收到链接后，进入<strong>队列</strong></li>
+<li>调度器从队列里取出链接，告诉<strong>下载器</strong>开始下载</li>
+<li>下载完毕后，把结果交给爬虫</li>
+<li>爬虫把结果中取回数据，交给<strong>管道</strong></li>
+<li>管道将数据存储到 MySQL/文本文件等</li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>安装 Python 3 后，</p>
+<pre><code>pip3 install scrapy
+</code></pre>
+<p>（可选）在本地安装 Redis 数据库，端口 <code>5376</code>，用户名 <code>root</code>，密码 <code>123456</code>；然后安装 Python 调用 Redis 的库：</p>
+<pre><code>pip3 install redis
+</code></pre>
+<h2 id="简单爬虫"><a href="#简单爬虫" class="headerlink" title="简单爬虫"></a>简单爬虫</h2><p>这里针对一个列表的网页爬取其列表内容，示例为 <a href="https://mobile.ithome.com/" target="_blank" rel="noopener">https://mobile.ithome.com/</a> 的新闻标题、链接等信息。</p>
+<h3 id="建立目录"><a href="#建立目录" class="headerlink" title="建立目录"></a>建立目录</h3><p>第一步，建立项目。</p>
+<pre><code class="sh">scrapy startproject my_spider D:\  # 建立项目
+</code></pre>
+<p>会建立如下目录：</p>
+<pre><code>my_spider/
+    scrapy.cfg
+    my_spider/
+        __init__.py
+        items.py
+        pipelines.py
+        settings.py
+        spiders/
+            __init__.py
+            ...
+</code></pre>
+<p>然后可以在 PyCharm 中打开 <code>D:\my_spider</code>。</p>
+<p>其中，<code>settings.py</code> 中 <code>ROBOTSTXT_OBEY = True</code> 表示会自觉遵守页面规定，如果不让爬虫则不会进行爬虫。</p>
+<h3 id="生成爬虫代码"><a href="#生成爬虫代码" class="headerlink" title="生成爬虫代码"></a>生成爬虫代码</h3><p>第二步，切换目录，然后生成一个爬虫：</p>
+<pre><code class="sh">cd /d D:\my_spider
+scrapy genspider ithome mobile.ithome.com # 生成爬虫
+</code></pre>
+<p>此时 <code>D:\my_spider\my_spider\spiders</code> 下会自动生成 <code>ithome.py</code>，内容如下：</p>
+<pre><code class="py">import scrapy
+
+class IthomeSpider(scrapy.Spider):
+    name = &#39;ithome&#39;
+    allowed_domains = [&#39;mobile.ithome.com&#39;]
+    start_urls = [&#39;http://mobile.ithome.com/&#39;]
+
+    def parse(self, response): # 解析 (parse) 网页的方法
+        pass
+</code></pre>
+<p>这里可以将 <code>start_urls</code> 链接改为 <code>https</code>。</p>
+<h3 id="定义数据结构"><a href="#定义数据结构" class="headerlink" title="定义数据结构"></a>定义数据结构</h3><p>第三步，定义数据结构。这里没有直接使用 Python 原生的继承于 <code>object</code> 的 <code>class</code>，而是选择继承 <code>scrapy.Item</code> 的类。这样定义的数据结构，更方便 Scrapy 处理。定义放在 <code>D:\my_spider\my_spider\items.py</code>。</p>
+<pre><code class="py">import scrapy
+
+class IthomeData(scrapy.Item):
+    def __init__(self):
+        title = scrapy.Field()
+        time = scrapy.Field()
+        abstract = scrapy.Field()
+        url = scrapy.Field()
+</code></pre>
+<h3 id="解析网站"><a href="#解析网站" class="headerlink" title="解析网站"></a>解析网站</h3><p>第四步，定义数据结构后，开始解析爬虫获得的数据。爬虫本质获得的是 <code>start_urls</code> 对应的 html 文件， 然后解析 html，将解析到的数据进行处理。</p>
+<p>我们用 Chrome 打开 <a href="https://mobile.ithome.com/%EF%BC%8C%E5%8F%B3%E9%94%AE%E4%B8%80%E4%B8%AA%E6%A0%87%E9%A2%98%E5%B9%B6%E2%80%9C%E6%A3%80%E6%9F%A5%E2%80%9D%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E8%AF%A5" target="_blank" rel="noopener">https://mobile.ithome.com/，右键一个标题并“检查”，可以看到该</a> HTML 的结构。</p>
+<p><img src="/images/b1309aaf05e0ad49970483f90cb77c7617a5e269fb19144b6e8f24153b75939b.png" alt="mobile.ithome.com 详情"></p>
+<p>同时，在命令行执行 <code>scrapy shell https://mobile.ithome.com/</code>。看到以下输出：</p>
+<pre><code>2020-07-01 16:55:01 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET https://mobile.ithome.com/&gt; (referer: None)
+2020-07-01 16:55:02 [asyncio] DEBUG: Using proactor: IocpProactor
+[s] Available Scrapy objects:
+[s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)
+[s]   crawler    &lt;scrapy.crawler.Crawler object at 0x000001AEBC19F0A0&gt;
+[s]   item       {}
+[s]   request    &lt;GET https://mobile.ithome.com/&gt;
+[s]   response   &lt;200 https://mobile.ithome.com/&gt;
+[s]   settings   &lt;scrapy.settings.Settings object at 0x000001AEBC19BC70&gt;
+[s]   spider     &lt;DefaultSpider &#39;default&#39; at 0x1aebc4e6730&gt;
+[s] Useful shortcuts:
+[s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects
+[s]   shelp()           Shell help (print this help)
+[s]   view(response)    View response in a browser
+2020-07-01 16:55:02 [asyncio] DEBUG: Using proactor: IocpProactor
+In [1]:
+</code></pre>
+<p><code>200</code> 表示正常。输入 <code>response</code> 并回车：</p>
+<pre><code class="py">In [1]: response
+Out[1]: &lt;200 https://mobile.ithome.com/&gt;
+</code></pre>
+<p>接下来解析 <code>response</code>。解析的方法是使用 <code>xpath</code>。</p>
+<blockquote>
+<p><code>XPath</code> 即为 XML 路径语言，它是一种用来确定 XML 文档中某部分位置的计算机语言。XPath 基于 XML 的树状结构，提供在数据结构树中找寻节点的能力。</p>
+</blockquote>
+<p>在 Chrome 中右键想要爬取的第一个标题，然后 Copy Xpath，如下图：</p>
+<p><img src="/images/31a4adde7ff3bd0d994afb68289034839baecd7b1b62ea959f5a33c4ecdccd0c.png" alt="获取 Xpath"></p>
+<p>然后作为 <code>response</code> 的 <code>xpath</code> 成员函数的参数，执行，结果如下，如果输出不是 <code>[]</code> 则正确。使用 <code>extract_first</code> 看到其内容。</p>
+<pre><code class="py">In [12]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a&#39;)
+Out[12]: [&lt;Selector xpath=&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a&#39; data=&#39;&lt;a href=&quot;https://www.ithome.com/0/491...&#39;&gt;]
+
+In [14]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a&#39;).extract_first()
+Out[14]: &#39;&lt;a href=&quot;https://www.ithome.com/0/491/113.htm&quot; target=&quot;_blank&quot;&gt;小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做&lt;/a&gt;&#39;
+</code></pre>
+<p>可以看到，标题已经出来了，并且和前面的图是一致的。</p>
+<p>然后尝试找到遍历的方法。html 里，<code>ul</code> 是列表（<code>unordered list</code>），下面的每一个元素为 <code>li</code>（<code>list item</code>）。将上面的 Xpath 从 <code>li</code> 分开，因为我们需要在 Python 中遍历每个元素。注意在 Xpath 中下标从 1 开始，而在 Python 中下标从 0 开始。</p>
+<pre><code class="py">In [16]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[0].xpath(&#39;./div/h2/a&#39;).extract_first() # 注意第二个 Xpath 的开头有个 .
+Out[16]: &#39;&lt;a href=&quot;https://www.ithome.com/0/491/113.htm&quot; target=&quot;_blank&quot;&gt;小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做&lt;/a&gt;&#39;
+In [17]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[1].xpath(&#39;./div/h2/a&#39;).extract_first() # 测试下一篇文章是否也是对应的
+Out[17]: &#39;&lt;a href=&quot;https://www.ithome.com/0/491/111.htm&quot; target=&quot;_blank&quot;&gt;荣耀30系列强势霸榜618，蝉联多日销量冠军，立减300仅要2699起&lt;/a&gt;&#39;
+</code></pre>
+<p>再进一步获取其文本和链接，使用 <code>text()</code> 函数和 <code>@href</code>：</p>
+<pre><code class="py">In [18]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[0].xpath(&#39;./div/h2/a/text()&#39;).extract_first()
+Out[18]: &#39;小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做&#39;
+In [36]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[0].xpath(&#39;./div/h2/a/@href&#39;).extract_first()
+Out[36]: &#39;https://www.ithome.com/0/491/113.htm&#39;
+</code></pre>
+<p>用同样的方法可以获取其时间、摘要：</p>
+<pre><code class="py">In [41]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[0].xpath(&#39;./div/div/p&#39;).extract_first()
+Out[41]: &#39;&lt;p&gt;小米早前曾发布了一款名为“小米NFC碰碰贴”的产品。今日小米集团智能硬件部总经理刘新宇表示，当时碰碰贴概念太超前，如今大家喜欢，“那我们就做新版碰碰贴”。似乎也在暗示小米NFC碰碰贴产品即将回归&lt;/p&gt;&#39;
+In [48]: response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)[0].xpath(&#39;./div/h2/span/text()&#39;).extract_first()
+Out[48]: &#39;今日 17:35&#39;
+</code></pre>
+<p>到这里就已经成功一半了。</p>
+<h3 id="编写解析函数"><a href="#编写解析函数" class="headerlink" title="编写解析函数"></a>编写解析函数</h3><blockquote>
+<p><code>parse()</code> 是 <code>spider</code> 的一个方法。 被调用时，每个初始 URL 完成下载后生成的 <code>Response</code> 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(<code>response data</code>)，提取数据(生成<code>item</code>)以及生成需要进一步处理的 URL 的 <code>Request</code> 对象。</p>
+</blockquote>
+<p>回到 <code>D:\my_spider\my_spider\spiders\ithome.py</code>，编写 <code>parse</code> 成员函数。<code>parse</code> 函数的思想就是，遍历 <code>ul</code> 的 <code>li</code>，取出我们需要的信息存进 <code>item</code>，然后返回 <code>item</code>。这里直接上代码。</p>
+<pre><code class="py"># ithome.py
+
+import scrapy
+from my_spider.items import IthomeData
+
+class IthomeSpider(scrapy.Spider):
+    name = &#39;ithome&#39;
+    allowed_domains = [&#39;mobile.ithome.com&#39;]
+    start_urls = [&#39;https://mobile.ithome.com/&#39;]
+
+    def parse(self, response):
+        li_list = response.xpath(&#39;//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li&#39;)
+        item_list = []
+        for li in li_list:
+            item = IthomeData()
+            item[&quot;title&quot;] = li.xpath(&#39;./div/h2/a/text()&#39;).extract_first()
+            item[&quot;url&quot;] = li.xpath(&#39;./div/h2/a/@href&#39;).extract_first()
+            item[&quot;abstract&quot;] = li.xpath(&#39;./div/div/p&#39;).extract_first()
+            item[&quot;time&quot;] = li.xpath(&#39;./div/h2/span/text()&#39;).extract_first()
+            item_list.append(item)
+
+        return item_list
+</code></pre>
+<p>注意，<code>import</code> 引入 <code>item</code> 的方式有点不一样，这里是 <code>from my_spider.items import IthomeData</code>。</p>
+<h3 id="编写管道"><a href="#编写管道" class="headerlink" title="编写管道"></a>编写管道</h3><p>管道则是将上面 <code>parse</code> 函数的解析出来的 <code>item_list</code> 进行处理、存储。这里为简化代码，直接输出；当然也可以写入文本文件、存储到数据库等。代码如下：</p>
+<pre><code class="py"># pipelines.py
+class MySpiderPipeline:
+    def process_item(self, item, spider):
+        print(item)
+</code></pre>
+<h3 id="运行爬虫"><a href="#运行爬虫" class="headerlink" title="运行爬虫"></a>运行爬虫</h3><p>最后的最后，运行爬虫。可以直接在 <code>D:\my_spider\my_spider</code> 目录下运行 <code>scrapy crawl ithome</code>，也可以在该目录下编写以下 <code>python</code> 代码并运行。</p>
+<pre><code class="py">from scrapy.cmdline import execute
+
+execute(&#39;scrapy crawl ithome&#39;.split(&#39; &#39;))
+</code></pre>
+<p>如果部分输出如下则正常（IT 之家貌似爬虫和直接访问得到的 HTML 不一样？可能做了防爬虫。至少方法是对的）。</p>
+<pre><code>{&#39;abstract&#39;: &#39;&lt;p&gt;今天小米10 Pro手机正式推送MIUI 12.0.1稳定版更新，并且不是稳定版内测，这意味着小米10 &#39;
+             &#39;Pro手机普通用户也可以方便升级MIUI 12.0.1稳定版系统了。&lt;/p&gt;&#39;,
+ &#39;time&#39;: &#39;今日 23:09&#39;,
+ &#39;title&#39;: &#39;小米 10 Pro 正式推送 MIUI 12 稳定版&#39;,
+ &#39;url&#39;: &#39;https://www.ithome.com/0/493/559.htm&#39;}
+2020-07-01 18:20:38 [scrapy.core.scraper] DEBUG: Scraped from &lt;200 https://mobile.ithome.com/&gt;
+{&#39;abstract&#39;: &#39;&lt;p&gt;今日消息人士Jon_Prosser也曝光了代号为C68的苹果AirPower充电板原型机的真机照：此次曝光的AirPower充电板似乎解决了
+过热问题，其已可满足AirPods &#39;
+             &#39;Pro和一块Apple Watch同时充电&lt;/p&gt;&#39;,
+ &#39;time&#39;: &#39;今日 22:37&#39;,
+ &#39;title&#39;: &#39;苹果AirPower充电板原型机曝光！Apple Watch/AirPods可一起充电&#39;,
+ &#39;url&#39;: &#39;https://www.ithome.com/0/493/555.htm&#39;}
+</code></pre>

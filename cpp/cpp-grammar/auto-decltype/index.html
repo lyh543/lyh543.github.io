@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>auto 和 decltype 类型 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="auto1auto i &#x3D; 1;  auto 和 const 引用引用字面常量需要手动 const，引用类型常量就自带 const 了 12345678int i;const int ic &#x3D; I;auto &amp;ri &#x3D; i;			&#x2F;&#x2F; int &amp;ri&#x3D;iauto &amp;rc &#x3D; ic;			&#x2F;&#x2F; const int &amp;rc&#x3D;ic, 顶层constauto &amp;r0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="auto 和 decltype 类型">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="auto1auto i &#x3D; 1;  auto 和 const 引用引用字面常量需要手动 const，引用类型常量就自带 const 了 12345678int i;const int ic &#x3D; I;auto &amp;ri &#x3D; i;			&#x2F;&#x2F; int &amp;ri&#x3D;iauto &amp;rc &#x3D; ic;			&#x2F;&#x2F; const int &amp;rc&#x3D;ic, 顶层constauto &amp;r0">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.099Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">auto 和 decltype 类型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">auto 和 decltype 类型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-16T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#auto"><span class="post-toc-text">auto</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#auto-和-const-引用"><span class="post-toc-text">auto 和 const 引用</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#decltype"><span class="post-toc-text">decltype</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#decltype-和-const-引用"><span class="post-toc-text">decltype 和 const 引用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#atuo-decltype-和-数组"><span class="post-toc-text">atuo decltype 和 数组</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/auto-decltype"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">auto 和 decltype 类型</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-17 00:00:00" datetime="2019-08-16T16:00:00.000Z"  itemprop="datePublished">2019-08-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> i = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="auto-和-const-引用"><a href="#auto-和-const-引用" class="headerlink" title="auto 和 const 引用"></a>auto 和 const 引用</h3><p>引用字面常量需要手动 <code>const</code>，引用类型常量就自带 <code>const</code> 了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ic = I;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> &amp;ri = i;			<span class="comment">// int &amp;ri=i</span></span><br><span class="line"><span class="keyword">auto</span> &amp;rc = ic;			<span class="comment">// const int &amp;rc=ic, 顶层const</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> &amp;r0=<span class="number">4.3</span>			<span class="comment">//错误，不能够将非常绑定到常数</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> &amp;r1=<span class="number">4.3</span>		<span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
+
+<p>一条auto可以同时定义多个变量，但数据类型只能有一种。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x = <span class="number">3</span>, y = <span class="number">12</span>, z = <span class="number">30</span>;         <span class="comment">//正确，x,y,z为int类型</span></span><br><span class="line"><span class="keyword">auto</span> a = <span class="number">3</span>, b = <span class="number">3.2</span>;                <span class="comment">//错误，a和b的类型不同</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(表达式<span class="number">1</span>) 变量=表达式<span class="number">2</span>；</span><br><span class="line"><span class="keyword">decltype</span>((表达式<span class="number">1</span>)) 变量=表达式<span class="number">2</span>;     <span class="comment">//定义引用</span></span><br></pre></td></tr></table></figure>
+
+<p>从表达式1的结果类型定义变量，并用表达式2的值初始化量。</p>
+<p><del>当表达式1是变量时，decltype不会忽略顶层const，其结果是定义与表达式1相同类型的变量（包括顶层const和引用在内）。</del> 不懂</p>
+<p>用双重括号把表达式括起来时，定义的一定是引用。而用单括号时，只有当变量本身是引用时，定义的才是引用。</p>
+<h3 id="decltype-和-const-引用"><a href="#decltype-和-const-引用" class="headerlink" title="decltype 和 const 引用"></a>decltype 和 const 引用</h3><p>引用字面常量和常量表达式需要手动 <code>const</code>，引用类型常量就自带 <code>const</code> 了</p>
+<p>样例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>, j,*p=&amp;i,&amp;r=i;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ic = i,&amp;cj=ic;</span><br><span class="line"><span class="keyword">decltype</span>(i + <span class="number">3.4</span>) x = <span class="number">9</span>;	<span class="comment">// double x;</span></span><br><span class="line"><span class="keyword">decltype</span>(ic + <span class="number">3</span>) y1;		<span class="comment">// int y1;</span></span><br><span class="line"><span class="keyword">decltype</span>(ic) y2 = <span class="number">4</span>;		<span class="comment">// const int y2=4;</span></span><br><span class="line"><span class="comment">//decltype(ic) y3;			// 错误，const int y3</span></span><br><span class="line"><span class="keyword">decltype</span>(p) p1;				<span class="comment">// int *p1</span></span><br><span class="line"><span class="keyword">decltype</span>((i)) ri = j;		<span class="comment">// int &amp;ri=j</span></span><br><span class="line"><span class="keyword">decltype</span>(*p) rp = i;		<span class="comment">// int &amp;rp=i</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="atuo-decltype-和-数组"><a href="#atuo-decltype-和-数组" class="headerlink" title="atuo decltype 和 数组"></a>atuo decltype 和 数组</h3><p>在处理数组的问题上，auto将对象定义为指向数组第一个元素类型的指针，decltype采用与数组完全相同的类型变定义数组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> p1 = a;		<span class="comment">// 等价： int *p1</span></span><br><span class="line"><span class="keyword">decltype</span>(a) p2;		<span class="comment">// 等价： int p2[5]</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.099Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&title=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&title=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/acm/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97_LIS/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">最长上升连续子序列 LIS</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/lowerbound-upperbound/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">lower_bound() 和 upper_bound() 返回值</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&title=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&title=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《auto 和 decltype 类型》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/auto-decltype/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aS27DMAwFwNz/0um2QBH7PcopEnm8Kgx/NA7AkhQfj/h4xsfv6/Mn/33L4x0HBgbG1zLyZa1gjpeY3PXqLRgYGPdh5I8+jnXHHyhfdL42DAwMjOSaJEwfw2bvxcDAwJgxZvXmxwVcDAyMj2S05WhecOZFbFs8Y2Bg3Icxa9//z99v2d/AwMD4KsZKu789/2qJz+UDAwNjb0Ye4PLkbJYCJkX1yVswMDA2Zcy2FevvtJCGRmcwMDBuwMjb8W1YzEPt8fkTDAYGxg0Yx7e1rfmV9n0Sak/+b2BgYGzHaFO6pFmWPDkJ8cPPhIGBsTVj1jhb2YxM0sELCmMMDIwtGG0rLUkl80B5WSqJgYGxKSN/ZTuKkTwnj5knIRgDA2NrRtuCb5v7CenaghkDA2NXxnqpmYfgpOjNW28YGBh3YLTjX7MAOksci+EwDAyMrRkriWBepuZjZ+1oWp1LYmBgfCFjltJddeVVKSkGBsbejPZxs23IWXvu+JqldhsGBsbXMtrH5ex2M3K45YmBgXEDRtTSGm0xtsF6uAYMDIwbMGbDFnmaOJwByXM/DAyMTRnP8mi3M/OhivZDvPwdMDAwtmO025z5JmW+uHY4o556w8DA2IIxC5crhe6sGC6KWAwMjE0ZbeBrMVelei+vxMDAwFhoh+X3tmNhGBgYGHk6mI9EJFfORjQwMDDuwJhtTLYBt220FWAMDIytGW3pOCtH28RxNsCBgYGxHeMH+plLqQ46o0YAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

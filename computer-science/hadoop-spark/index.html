@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>数据挖掘之 Hadoop Spark | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="计算机科学,数据挖掘,Python">
+    <meta name="description" content="这里只用到了 Hadoop 的 Hadoop Distributed File System (HDFS)，即分布式文件系统。而数据处理是交给 Spark 了。 安装Hadoop 和 Spark 在 Linux 下的安装方法 注意 Hadoop 的 namenode 默认管理 Web 页面是 http:&#x2F;&#x2F;localhost:9870&#x2F;，而从 hdfs 协议访问 namenode 是从 9000">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘之 Hadoop Spark">
+<meta property="og:url" content="https://blog.lyh543.cn/computer-science/hadoop-spark/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="这里只用到了 Hadoop 的 Hadoop Distributed File System (HDFS)，即分布式文件系统。而数据处理是交给 Spark 了。 安装Hadoop 和 Spark 在 Linux 下的安装方法 注意 Hadoop 的 namenode 默认管理 Web 页面是 http:&#x2F;&#x2F;localhost:9870&#x2F;，而从 hdfs 协议访问 namenode 是从 9000">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lyh543.cn/images/0016b9a25fdf18799477d80859dbeb74991e2a96a678680e2bea517deeab73f8.png">
+<meta property="og:image" content="https://blog.lyh543.cn/images/87f78df095c9155ebc6112ac7041df2337d02a44ab980b7b52fb5d7078ac927f.png">
+<meta property="article:published_time" content="2020-07-02T01:55:28.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.083Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="数据挖掘">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lyh543.cn/images/0016b9a25fdf18799477d80859dbeb74991e2a96a678680e2bea517deeab73f8.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">数据挖掘之 Hadoop Spark</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">数据挖掘之 Hadoop Spark</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-02T01:55:28.000Z" itemprop="datePublished" class="page-time">
+  2020-07-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装"><span class="post-toc-text">安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hadoop-分布式文件管理"><span class="post-toc-text">Hadoop 分布式文件管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spark"><span class="post-toc-text">Spark</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#读取文本文件"><span class="post-toc-text">读取文本文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#统计城市房源数并存入临时数据库"><span class="post-toc-text">统计城市房源数并存入临时数据库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#将数据存入-MySQL-数据库"><span class="post-toc-text">将数据存入 MySQL 数据库</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-computer-science/hadoop-spark"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">数据挖掘之 Hadoop Spark</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-02 09:55:28" datetime="2020-07-02T01:55:28.000Z"  itemprop="datePublished">2020-07-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>这里只用到了 Hadoop 的 Hadoop Distributed File System (HDFS)，即分布式文件系统。而数据处理是交给 Spark 了。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="https://wangchangchung.github.io/2017/09/28/Ubuntu-16-04%E4%B8%8A%E5%AE%89%E8%A3%85Hadoop%E5%B9%B6%E6%88%90%E5%8A%9F%E8%BF%90%E8%A1%8C/" target="_blank" rel="noopener">Hadoop</a> 和 <a href="https://blog.csdn.net/lengconglin/article/details/77847623" target="_blank" rel="noopener">Spark</a> 在 Linux 下的安装方法</p>
+<p>注意 Hadoop 的 namenode 默认管理 Web 页面是 <code>http://localhost:9870/</code>，而从 hdfs 协议访问 namenode 是从 9000 端口。</p>
+<h2 id="Hadoop-分布式文件管理"><a href="#Hadoop-分布式文件管理" class="headerlink" title="Hadoop 分布式文件管理"></a>Hadoop 分布式文件管理</h2><p>管理 HDFS 的命令和 Linux 的命令很像。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HADOOP_HOME</span></span><br><span class="line">./sbin/start-dfs.cmd        <span class="comment"># 启动</span></span><br><span class="line">hdfs dfs -mkdir /mydata     <span class="comment"># 创建目录</span></span><br><span class="line">hdfs dfs -put /path/to/file /mydata <span class="comment"># 上传</span></span><br><span class="line">hdfs dfs -cat /mydata/file　<span class="comment"># 读取</span></span><br><span class="line">hdfs dfs -rm -r /mydata     <span class="comment"># 删除</span></span><br></pre></td></tr></table></figure>
+
+<p>为配合后面的测试，将<a href="/python/scrapy">爬虫</a>爬取的<a href="ershoufang_price.txt">二手价格数据</a>下载后，上传到 HDFS：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HADOOP_HOME</span></span><br><span class="line">./sbin/start-dfs.cmd</span><br><span class="line">hdfs dfs -mkdir /mydata</span><br><span class="line">hdfs dfs -put ershoufang_price.txt /mydata</span><br></pre></td></tr></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/0016b9a25fdf18799477d80859dbeb74991e2a96a678680e2bea517deeab73f8.png" alt="文件上传成功" title="">
+                </div>
+                <div class="image-caption">文件上传成功</div>
+            </figure>
+
+<h2 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h2><p>还需要安装 <code>pyspark</code>。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pyspark</span><br></pre></td></tr></table></figure>
+
+<p>然后将环境变量写入 <code>/etc/profile</code>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PYSPARK_PYTHON=python3</span><br><span class="line"><span class="built_in">export</span> PYSPARK_DRIVER_PYTHON=python3</span><br></pre></td></tr></table></figure>
+
+<p>需要注销才能生效。</p>
+<p>顺便一提，安装过程中还会自动安装 <code>py4j</code>，因为 Spark 是运行于 Java 之上，需要用 Python 读取 JVM 中的对象。</p>
+<h3 id="读取文本文件"><a href="#读取文本文件" class="headerlink" title="读取文本文件"></a>读取文本文件</h3><p>尝试读取上面上传的 <code>ershoufang_price.txt</code>。这里的 <code>localhost:9000</code> 可以在 Web 端看到。然后编写一下的 Python 代码，尝试从 HDFS 读取文本文件的内容。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</span><br><span class="line"></span><br><span class="line"><span class="comment"># SparkSession 操作 SparkSQL DataFrame，读取结构化数组</span></span><br><span class="line">spark = SparkSession \</span><br><span class="line">    .builder \</span><br><span class="line">    .appName(<span class="string">"Spark SQL basic example"</span>) \</span><br><span class="line">    <span class="comment">#.config("spark.some.config.option", "some-value") \</span></span><br><span class="line">      .getOrCreate()</span><br><span class="line"></span><br><span class="line"><span class="comment"># SparkContext 用于读取文本文件，读取分结构化数据</span></span><br><span class="line">sc = spark.sparkContext</span><br><span class="line"></span><br><span class="line">filePath = <span class="string">"hdfs://localhost:9000/mydata/ershoufang_price.txt"</span></span><br><span class="line">textFile = sc.textFile(filePath)</span><br><span class="line"><span class="comment"># 返回的 textFile 是 RDD (resilient distributed dataset)，是文件在 Spark 中的表示方法</span></span><br><span class="line"></span><br><span class="line">data = textFile.collect() <span class="comment"># collect 是将所有 datanode 的数据收集整合到 namenode</span></span><br><span class="line"><span class="comment"># 返回的 data 是一个 list，其中每个元素对应 txt 的每一行</span></span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>如果输出了 <code>44&#39;, &#39;杭州,下沙,77,17382,44&#39;, &#39;杭州,下沙,77,17382,44&#39;, &#39;杭州,下沙,77,17382,44&#39;, &#39;杭州,下沙,77,17382,44&#39;, &#39;杭州,下沙,92,20924,43&#39;]</code> 等，则正常。</p>
+<p>如果报错：<code>Python in worker has different version 2.7 than that in driver 3.7, PySpark cannot run with different minor versions.Please check environment variables PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON are correctly set.</code>，则检查一下是否把环境变量加入 <code>/etc/profile</code>。</p>
+<h3 id="统计城市房源数并存入临时数据库"><a href="#统计城市房源数并存入临时数据库" class="headerlink" title="统计城市房源数并存入临时数据库"></a>统计城市房源数并存入临时数据库</h3><p>接下来尝试将数据存到数据库。为测试语法，这里直接输出到 Spark SQL 的全局临时表中，然后做一个简单的查询。</p>
+<p>这里的代码是紧接着上面的 <code>textFile = sc.textFile(filePath)</code>。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession, Row</span><br><span class="line"></span><br><span class="line">filePath = <span class="string">"hdfs://localhost:9000/mydata/ershoufang_price.txt"</span></span><br><span class="line">textFile = sc.textFile(filePath)</span><br><span class="line"><span class="comment"># 返回的 textFile 是 RDD (resilient distributed dataset)，是文件在 Spark 中的一个表示</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># data = textFile.collect() # collect 是将所有 datanode 的数据收集整合到 namenode</span></span><br><span class="line"><span class="comment"># # 返回的 data 是一个 list，其中每个元素对应 txt 的每一行</span></span><br><span class="line"><span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 item 变为 (北京,1)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_pair</span><span class="params">(item)</span>:</span></span><br><span class="line">    item_list = item.split(<span class="string">','</span>)</span><br><span class="line">    <span class="keyword">return</span> item_list[<span class="number">1</span>], <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 (北京,1)(北京,1)(成都,1) 整合为 (北京,2)(成都,1)</span></span><br><span class="line">rdd = textFile.map(to_pair).reduceByKey(<span class="keyword">lambda</span> x, y: x + y)</span><br><span class="line"><span class="comment"># 将上述 rdd 转为 DataFrame，放进临时表</span></span><br><span class="line">rowRdd = rdd.map(<span class="keyword">lambda</span> x: Row(city=x[<span class="number">0</span>], count=x[<span class="number">1</span>]))</span><br><span class="line">dataFrame = spark.createDataFrame(rowRdd)</span><br><span class="line"></span><br><span class="line">dataFrame.createGlobalTempView(<span class="string">'city'</span>)</span><br><span class="line">spark.sql(<span class="string">'SELECT * FROM global_temp.city ORDER BY count desc LIMIT 5'</span>).show()</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">+----+</span>-----+</span><br><span class="line">|city|count|</span><br><span class="line"><span class="code">+----+</span>-----+</span><br><span class="line">|高新| 5717|</span><br><span class="line">|江北| 5100|</span><br><span class="line">|渝中| 4920|</span><br><span class="line">|和平| 4770|</span><br><span class="line">|南岸| 4710|</span><br><span class="line"><span class="code">+----+</span>-----+</span><br></pre></td></tr></table></figure>
+
+<p>重新运行代码，并在 <code>dataFrame.createGlobalTempView(&#39;city&#39;)</code> 一行打断点暂停。暂停以后可进入 <code>localhost:4040</code>，即 Spark 的管理页面。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/87f78df095c9155ebc6112ac7041df2337d02a44ab980b7b52fb5d7078ac927f.png" alt="Spark 管理页面" title="">
+                </div>
+                <div class="image-caption">Spark 管理页面</div>
+            </figure>
+
+<h3 id="将数据存入-MySQL-数据库"><a href="#将数据存入-MySQL-数据库" class="headerlink" title="将数据存入 MySQL 数据库"></a>将数据存入 MySQL 数据库</h3><p>这里首先需要提前配好 MySQL 数据库。</p>
+<p>然后为 Spark 下载额外的 jar 包，用以操作 MySQL 数据库。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20.jar <span class="comment"># 根据数据库版本而定</span></span><br><span class="line">mv mysql-connector-java-8.0.20.jar /usr/<span class="built_in">local</span>/spark/jars</span><br></pre></td></tr></table></figure>
+
+<p>接着上文的 <code>dataFrame = spark.createDataFrame(rowRdd)</code> 写：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dataFrame = spark.createDataFrame(rowRdd)</span><br><span class="line"></span><br><span class="line"><span class="comment"># dataFrame.createGlobalTempView('city')</span></span><br><span class="line"><span class="comment"># spark.sql('SELECT * FROM global_temp.city ORDER BY count desc LIMIT 5').show()</span></span><br><span class="line"></span><br><span class="line">MySQL_Conn = <span class="string">'jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC'</span></span><br><span class="line">conn_param = &#123;<span class="string">'user'</span>: <span class="string">'root'</span>,</span><br><span class="line">              <span class="string">'password'</span>: <span class="string">'lyh54333'</span>,</span><br><span class="line">              <span class="string">'driver'</span>: <span class="string">'com.mysql.cj.jdbc.Driver'</span>&#125;</span><br><span class="line">dataFrame.write.jdbc(MySQL_Conn, <span class="string">'city_count'</span>, <span class="string">'overwrite'</span>, conn_param)</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.083Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/" rel="tag">数据挖掘</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag">计算机科学</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/computer-science/hadoop-spark/&title=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/computer-science/hadoop-spark/&title=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/computer-science/hadoop-spark/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/computer-science/hadoop-spark/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/computer-science/hadoop-spark/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/sql/mysql/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MySQL</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/computer-science/big-data-learning-diary/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">华迪大数据专业实习日记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/computer-science/hadoop-spark/&title=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/computer-science/hadoop-spark/&title=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/computer-science/hadoop-spark/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数据挖掘之 Hadoop Spark》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/computer-science/hadoop-spark/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/computer-science/hadoop-spark/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3a0WrDMAwF0P3/T3ewp0JxdiUlY3GOn0poGx8/CMnS11e8Xj/r/fP7k9X3P79ZfX7ywsDAuC3jdbgSxueLk384PqZ8bxgYGM9hJEE2CcdXH9DyOQYGBsZh0paH1+NQmx8fBgYGRi+ZW1Grx4SBgYExKWKTsNu7ekuenFaLY2Bg3JDRawz8zefL+xsYGBj/nvFqrXkS2Quvy/1gYGBszciHJ5JEMLmeqx5NIRBjYGBszahe8VdDal7WVgvmJQwDA2NTRhLOJqlh9QhGBS0GBsZGjF4wzYNytfStBnoMDIwnMKrJXC+VnBelUfMSAwNja0Y+EjG5LOux87EMDAyMvRnVl01aBVe0OTEwMPZm5COk+RVYHuOPw3deAGNgYOzNGJWL45ZkuXdRrcsxMDC2YOQJX69JmYfLvOUw6r5iYGDcllHFJEVvdTqiehy/ZLgYGBibMvKVNzWr/9Ab1MDAwHgao7rFang9q82JgYHxHEY17M6HM3qpYRSOMTAwHsBISs18u3lj8uS2JQYGxtaM6hYnA17V7R6HYAwMjCcw8rTs3NRwPmzR7GBgYGDcijFP76qbm5Syy8PFwMDYmlENc710cFKsYmBgYEyu8s9qJ+RJ5yhBxMDA2IIxCbLzEYpq+bq8aMPAwMBoMargaiqJgYGBkb8yv5jLf3v5zAgGBsatGL1xrnxzySXdJHHEwMDYm1FtDOTBNPmHyRtH/Q0MDIx7ML4BjN36CFsnSrcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

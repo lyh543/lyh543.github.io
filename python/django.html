@@ -1,0 +1,440 @@
+<hr>
+<p>title: Django 3.1 学习笔记<br>date: 2020-12-27 18:20:23<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>后端<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<h2 id="Django-后端学习路线"><a href="#Django-后端学习路线" class="headerlink" title="Django 后端学习路线"></a>Django 后端学习路线</h2><p>推荐从上往下看。</p>
+<ul>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/install/" target="_blank" rel="noopener">官方快速安装指南（3.1 版本）</a>，安装的教程</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial01/" target="_blank" rel="noopener">官方中文教程（3.1 版本）</a>，开发的教程</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/learn/Server-side/Django" target="_blank" rel="noopener">MDN 上的 Django 教程</a>，和上面的教程有重叠，推荐只看<a href="https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Sessions" target="_blank" rel="noopener">会话</a>和<a href="https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Authentication" target="_blank" rel="noopener">用户认证</a>部分</li>
+<li><a href="https://q1mi.github.io/Django-REST-framework-documentation/" target="_blank" rel="noopener">Django REST Framework</a>，这是一个基于 Django 的 RESTful 后端框架，为常见 RESTful 操作提供了模板，大大降低 REST API 开发量</li>
+</ul>
+<h2 id="Django-官方教程-关键步骤"><a href="#Django-官方教程-关键步骤" class="headerlink" title="Django 官方教程 关键步骤"></a>Django 官方教程 关键步骤</h2><p>本小节记录了 <a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial01/" target="_blank" rel="noopener">官方中文教程（3.1 版本）</a> 中的关键步骤。</p>
+<h3 id="1-创建项目、项目和一个视图"><a href="#1-创建项目、项目和一个视图" class="headerlink" title="1. 创建项目、项目和一个视图"></a>1. 创建项目、项目和一个视图</h3><ul>
+<li>安装：<code>pip install Django</code></li>
+<li>验证安装：<code>python -m django --version</code></li>
+<li>创建并初始化项目文件夹：<code>django-admin startproject &lt;projectname&gt;</code></li>
+<li>即时预览：在 <code>&lt;projectname&gt;</code> 目录下 <code>python manage.py runserver [port]</code></li>
+<li>创建应用：<code>python manage.py startapp &lt;appname&gt;</code></li>
+<li>编写视图：</li>
+</ul>
+<pre><code class="py"># polls/views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse(&quot;Hello, world. You&#39;re at the polls index.&quot;)
+</code></pre>
+<ul>
+<li>在应用中添加写好的视图：</li>
+</ul>
+<pre><code class="py"># polls/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path(&#39;&#39;, views.index, name=&#39;index&#39;),
+]
+</code></pre>
+<ul>
+<li>在站点中添加应用的视图：</li>
+</ul>
+<pre><code class="py"># mysite/urls.py
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path(&#39;polls/&#39;, include(&#39;polls.urls&#39;)),
+    path(&#39;admin/&#39;, admin.site.urls),
+]
+</code></pre>
+<h3 id="2-数据库使用、管理员"><a href="#2-数据库使用、管理员" class="headerlink" title="2. 数据库使用、管理员"></a>2. 数据库使用、管理员</h3><h4 id="2-1-配置数据库"><a href="#2-1-配置数据库" class="headerlink" title="2.1 配置数据库"></a>2.1 配置数据库</h4><ul>
+<li>安装 mysqlclient：<code>pip install mysqlclient</code></li>
+<li>修改项目配置文件：</li>
+</ul>
+<pre><code class="py"># mysite/settings.py
+
+DATABASES = {
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,
+        &#39;NAME&#39;: &#39;django_learn&#39;,
+        &#39;USER&#39;: &#39;root&#39;,
+        &#39;PASSWORD&#39;: &#39;yourpassword&#39;,
+        &#39;HOST&#39;: &#39;127.0.0.1&#39;,
+        &#39;PORT&#39;: &#39;3306&#39;,
+    }
+}
+</code></pre>
+<h4 id="2-2-创建模型并迁移至数据库"><a href="#2-2-创建模型并迁移至数据库" class="headerlink" title="2.2 创建模型并迁移至数据库"></a>2.2 创建模型并迁移至数据库</h4><p>一个 Django 模型对于一个 SQL 数据表。</p>
+<ul>
+<li>创建模型：</li>
+</ul>
+<pre><code class="py"># polls/models.py
+from django.db import models
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField(&#39;date published&#39;)
+    def __str__(self):
+        return self.question_text
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+    def __str__(self):
+        return self.choice_text
+</code></pre>
+<ul>
+<li>激活模型：</li>
+</ul>
+<pre><code class="py"># mysite/settings.py
+INSTALLED_APPS = [
+    &#39;polls.apps.PollsConfig&#39; # 添加这一项
+]
+</code></pre>
+<ul>
+<li>将模型更改写入数据库：<ul>
+<li>根据类的更改，生成一个 <code>迁移</code>（一个存储在 <code>&lt;app_lable&gt;/migrations</code> 下的 py 文件，存储了变化）：<code>python manage.py makemigrations [app_label]</code>（<a href="https://docs.djangoproject.com/zh-hans/3.1/ref/django-admin/#makemigrations" target="_blank" rel="noopener">文档</a>）</li>
+<li>将一个 <code>迁移</code> 应用到数据库，并迁移数据：<code>python manage.py migrate [app_label] [migration_name]</code>（<a href="https://docs.djangoproject.com/zh-hans/3.1/ref/django-admin/#django-admin-migrate" target="_blank" rel="noopener">文档</a>）</li>
+<li>查看一个 <code>迁移</code> 将对数据库造成的影响：<code>python manage.py sqlmigrate &lt;app_label&gt; &lt;migration_name&gt;</code>（<a href="https://docs.djangoproject.com/zh-hans/3.1/ref/django-admin/#django-admin-sqlmigrate" target="_blank" rel="noopener">文档</a>）</li>
+<li>一般来说，类变更以后，需要：<code>python manage.py makemigrations &amp;&amp; python manage.py migrate</code></li>
+<li>第一次部署的时候，需要 <code>python manage.py makemigrations &lt;app1&gt; &lt;app2&gt; &lt;...appn&gt; &amp;&amp; python manage.py migrate</code></li>
+</ul>
+</li>
+</ul>
+<p>对了，<code>migrations</code> 文件夹应当加入 <code>.gitignore</code>，否则不同开发者的 <code>migrations</code> 就要冲突啦。</p>
+<h4 id="2-3-数据库-API"><a href="#2-3-数据库-API" class="headerlink" title="2.3 数据库 API"></a>2.3 数据库 API</h4><ul>
+<li>进入 Python 命令行：<code>python manage.py shell</code></li>
+<li>使用前先引入类：<code>from polls.models import Choice, Question</code></li>
+</ul>
+<hr>
+<p>对于一个数据表：</p>
+<ul>
+<li>一个表的所有元素：<code>Question.objects.all()</code></li>
+<li>以成员筛选记录：<code>Question.objects.filter(id=1)</code></li>
+<li>以 <code>pub_date</code> 成员的 <code>year</code> 成员筛选（成员方法同理）：<code>pub_date.year</code>：<code>Question.objects.filter(pub_date__year)</code></li>
+</ul>
+<hr>
+<p>对于一个记录：</p>
+<ul>
+<li>构造一个新记录：<code>q = Question(question_text=&quot;What&#39;s new?&quot;, pub_date=timezone.now())</code></li>
+<li>将记录插入表：<code>q.save()</code></li>
+<li>查询、修改记录的属性（同理可调用其方法）：<code>q.question_text</code></li>
+<li>删除一个记录：<code>q.delete()</code></li>
+</ul>
+<hr>
+<p>对于一个外键（<code>Choice</code> 存在外键，为 <code>Question</code>）：</p>
+<ul>
+<li>查询一个 Choice 对应的 Question：<code>c.qeustion</code></li>
+<li>查询一个 Question 对应的 Choice：<code>q.choice_set.all()</code></li>
+<li>为 Question 创建一个 Choice：<code>q.choice_set.create(choice_text=&#39;Not much&#39;, votes=0)</code></li>
+</ul>
+<h4 id="2-4-管理员相关"><a href="#2-4-管理员相关" class="headerlink" title="2.4 管理员相关"></a>2.4 管理员相关</h4><ul>
+<li>创建管理员：<code>python manage.py createsuperuser</code></li>
+<li>管理员登录界面：<code>http://127.0.0.1:8000/admin/</code></li>
+<li>在管理员页面中添加 <code>Question</code> 模型：</li>
+</ul>
+<pre><code class="py"># polls/admin.py
+from django.contrib import admin
+
+from .models import Question
+
+admin.site.register(Question)
+</code></pre>
+<h3 id="3-视图和-urls"><a href="#3-视图和-urls" class="headerlink" title="3. 视图和 urls"></a>3. 视图和 urls</h3><h4 id="3-1-添加更多视图，并用参数匹配-url"><a href="#3-1-添加更多视图，并用参数匹配-url" class="headerlink" title="3.1 添加更多视图，并用参数匹配 url"></a>3.1 添加更多视图，并用参数匹配 url</h4><pre><code class="py"># /polls/views.py
+def detail(request, question_id: int):
+    return HttpResponse(&quot;You&#39;re looking at question %s.&quot; % question_id)
+    # 这里可以做更多的事情，比如调用其他 Python 包
+</code></pre>
+<pre><code class="py"># /polls/url.py
+urlpatterns = [
+        path(&#39;&lt;int:question_id&gt;/&#39;, views.detail, name=&#39;detail&#39;),
+]
+</code></pre>
+<p>访问 <code>/polls/34</code> 会返回 <code>You&#39;re looking at question 34.</code></p>
+<h4 id="3-2-使用-HTML-模板"><a href="#3-2-使用-HTML-模板" class="headerlink" title="3.2 使用 HTML 模板"></a>3.2 使用 HTML 模板</h4><p>编写一个 HTML 模板：</p>
+<pre><code class="html">&lt;!-- /polls/templates/polls/index.html --&gt;
+{% if latest_question_list %}
+    &lt;ul&gt;
+    {% for question in latest_question_list %}
+        &lt;li&gt;&lt;a href=&quot;/polls/{{ question.id }}/&quot;&gt;{{ question.question_text }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;No polls are available.&lt;/p&gt;
+{% endif %}
+</code></pre>
+<p>再在视图中：加载模板、用数据渲染、然后转为 HTTP Response，三步使用 <code>django.shortcuts.render()</code> 完成</p>
+<pre><code class="py">from django.shortcuts import render
+
+def index(request):
+    latest_question_list = Question.objects.order_by(&#39;-pub_date&#39;)[:5]
+    context = {&#39;latest_question_list&#39;: latest_question_list}
+    return render(request, &#39;polls/index.html&#39;, context)
+</code></pre>
+<h4 id="3-3-抛出-404-错误码"><a href="#3-3-抛出-404-错误码" class="headerlink" title="3.3 抛出 404 错误码"></a>3.3 抛出 404 错误码</h4><pre><code class="py">from django.http import Http404
+
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404(&quot;Question does not exist&quot;)
+    return render(request, &#39;polls/detail.html&#39;, {&#39;question&#39;: question})
+</code></pre>
+<p>也可以使用 <code>django.shortcuts.get_object_or_404</code>。该函数在 <code>object</code> 不存在会 <code>raise Http404()</code>：</p>
+<pre><code class="py">from django.shortcuts import get_object_or_404, render
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, &#39;polls/detail.html&#39;, {&#39;question&#39;: question})
+</code></pre>
+<p>也有 <code>get_list_or_404()</code> 函数，工作原理和 <code>get_object_or_404()</code> 一样，除了 <code>get()</code> 函数被换成了 <code>filter()</code> 函数。如果列表为空的话会抛出 <code>Http404</code> 异常。</p>
+<h4 id="3-4-使用-name-替代-URL-中的硬编码、为-URL-名称添加命名空间-app-name"><a href="#3-4-使用-name-替代-URL-中的硬编码、为-URL-名称添加命名空间-app-name" class="headerlink" title="3.4 使用 name 替代 URL 中的硬编码、为 URL 名称添加命名空间(app_name)"></a>3.4 使用 name 替代 URL 中的硬编码、为 URL 名称添加命名空间(app_name)</h4><p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial03/#removing-hardcoded-urls-in-templates" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial03/#removing-hardcoded-urls-in-templates</a></p>
+<p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial03/#namespacing-url-names" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial03/#namespacing-url-names</a></p>
+<h3 id="4-编写一个简单的表单"><a href="#4-编写一个简单的表单" class="headerlink" title="4. 编写一个简单的表单"></a>4. 编写一个简单的表单</h3><p>因为我想用 Django 做纯 REST 后端，所以这部分略。</p>
+<p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial04/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial04/</a></p>
+<h3 id="5-测试"><a href="#5-测试" class="headerlink" title="5. 测试"></a>5. 测试</h3><p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial05/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial05/</a></p>
+<p>关于测试还是值得单独拿一个章节出来的：<a href="/back-end/django-test/">测试</a></p>
+<h3 id="6-插入静态文件"><a href="#6-插入静态文件" class="headerlink" title="6. 插入静态文件"></a>6. 插入静态文件</h3><p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial06/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial06/</a></p>
+<h3 id="7-修改-Admin-页面"><a href="#7-修改-Admin-页面" class="headerlink" title="7. 修改 Admin 页面"></a>7. 修改 Admin 页面</h3><p><a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial07/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial07/</a></p>
+<p>如果想要修改某元素对应外键的信息（而不是修改其外键），可以参考 <a href="https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.StackedInline" target="_blank" rel="noopener"><code>django.contrib.admin.StackedInline</code></a></p>
+<p>如果想要汉化 Admin 页面，可以参考：<a href="https://blog.csdn.net/aaazz47/article/details/78666099" target="_blank" rel="noopener">https://blog.csdn.net/aaazz47/article/details/78666099</a></p>
+<h2 id="Django-用户认证"><a href="#Django-用户认证" class="headerlink" title="Django 用户认证"></a>Django 用户认证</h2><h3 id="Django-用户认证（后端篇）"><a href="#Django-用户认证（后端篇）" class="headerlink" title="Django 用户认证（后端篇）"></a>Django 用户认证（后端篇）</h3><blockquote>
+<p>MDN 教程：<a href="https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Authentication" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Authentication</a><br>文档：<a href="https://docs.djangoproject.com/zh-hans/3.1/topics/auth/default/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/topics/auth/default/</a></p>
+</blockquote>
+<ul>
+<li>创建用户：<code>user = User.objects.create_user(&#39;john&#39;, &#39;lennon@thebeatles.com&#39;, &#39;johnpassword&#39;)</code></li>
+<li>创建超级用户：在命令行中 <code>python manage.py createsuperuser</code></li>
+<li>登录：</li>
+</ul>
+<pre><code class="py">from django.contrib.auth import authenticate, login
+
+def my_view(request):
+    username = request.POST[&#39;username&#39;]
+    password = request.POST[&#39;password&#39;]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        # Redirect to a success page.
+        ...
+    else:
+        # Return an &#39;invalid login&#39; error message.
+        ...
+</code></pre>
+<ul>
+<li>判断用户身份：可以通过 <code>request.user.is_authenticated==False</code> 表示为匿名者；否则 <code>request.user</code> 会被设置为 <code>User</code> 实例。</li>
+<li>更改密码：</li>
+</ul>
+<pre><code class="py">from django.contrib.auth.models import User
+
+u = User.objects.get(username=&#39;john&#39;)
+u.set_password(&#39;new password&#39;)
+u.save()
+</code></pre>
+<ul>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.1/topics/auth/default/#the-login-required-decorator" target="_blank" rel="noopener"><code>login_required</code></a> 装饰器：</li>
+</ul>
+<pre><code class="py">from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+</code></pre>
+<ul>
+<li>登出：<code>django.contrib.auth.logout(request)</code></li>
+</ul>
+<h3 id="Django-用户认证（前端篇）"><a href="#Django-用户认证（前端篇）" class="headerlink" title="Django 用户认证（前端篇）"></a>Django 用户认证（前端篇）</h3><p>Django 的用户认证是用 Session 实现的，和其他的 Session 应该是类似的。但对于零基础前后端开发的我，不清楚这之中究竟发生了什么。于是我简单测试了一下。</p>
+<p>在登录成功后，应答的 headers 中就会出现 <code>Set-Cookies</code> 字段：</p>
+<pre><code>$ http POST http://127.0.0.1:8000/api/accounts/login/ &lt;&lt;&lt; &#39;{&quot;username&quot;:&quot;lyh543@outlook.com&quot;, &quot;password&quot;:&quot;xxxxxxxx&quot;}&#39;
+HTTP/1.1 200 OK
+Allow: OPTIONS, POST
+Connection: close
+Content-Length: 493
+Content-Type: application/json
+Date: Tue, 09 Feb 2021 05:34:41 GMT
+Referrer-Policy: same-origin
+Server: WSGIServer/0.2 CPython/3.9.1
+Set-Cookie: csrftoken=sJQyvoxpJ7nIwFpbgXSKKiBIoo7GxogKKTmsFwJshfyFMBIEyPlhQrvl8OK6FlQR; expires=Tue, 08 Feb 2022 05:34:40 GMT; Max-Age=31449600; Path=/; SameSite=Lax
+Set-Cookie: sessionid=kmst16goqdwof54ycuynbz7wzk1scboc; expires=Tue, 23 Feb 2021 05:34:40 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
+Vary: Accept, Cookie, Origin
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+</code></pre>
+<p>前一个 <code>csrftoken</code> 是防止跨站请求的，如果项目是前后端分离的话，就需要进行配置（关于 CSRF，可以看 <a href="../handle-cors-and-csrf">和 CSRF 与 CORS 斗智斗勇</a>）；<br>后一个 <code>sessionid</code> 就是登录成功后的 <code>sessionid</code> 了。如果我们在下次请求中的 headers 中加入了这个 <code>sessionid</code>，服务器就能识别到我们。对于 Django 来说，就是 <code>request.user</code> 为登录的这个用户。</p>
+<p>对于浏览器、<code>requests.sessions.Session</code> 等，会自动设置 Cookie。下面是利用 <code>requests.sessions.Session</code> 完成登录、查询管理员字段的过程：</p>
+<pre><code class="py">In [2]: import requests
+
+In [3]: s = requests.Session()
+
+In [20]: r1 = s.post(&quot;http://localhost:8000/api/accounts/login/&quot;, data={&quot;username&quot;:&quot;lyh543@outlook.com&quot;, &quot;password&quot;:&quot;xxxxxxxx&quot;})
+
+In [21]: r1
+Out[21]: &lt;Response [200]&gt;
+
+In [22]: dict(s.cookies)
+Out[22]:
+{&#39;csrftoken&#39;: &#39;s1aepuw0A08k9PsFtTWn6CbCkLU24MU6tTuk3DieW4uj1b6PAXwSjrfHqfCvufz3&#39;,
+ &#39;sessionid&#39;: &#39;f9ofrqwar9rs0phbg4p89647pwryowrs&#39;}
+
+In [23]: r1.request.headers
+Out[23]: {&#39;User-Agent&#39;: &#39;python-requests/2.18.4&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;, &#39;Accept&#39;: &#39;*/*&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;, &#39;Content-Length&#39;: &#39;47&#39;, &#39;Content-Type&#39;: &#39;application/x-www-form-urlencoded&#39;}
+
+In [25]: r1.headers
+Out[25]: {&#39;Date&#39;: &#39;Tue, 09 Feb 2021 03:48:32 GMT&#39;, &#39;Server&#39;: &#39;WSGIServer/0.2 CPython/3.9.1&#39;, &#39;Content-Type&#39;: &#39;application/json&#39;, &#39;Vary&#39;: &#39;Accept, Cookie, Origin&#39;, &#39;Allow&#39;: &#39;OPTIONS, POST&#39;, &#39;X-Frame-Options&#39;: &#39;DENY&#39;, &#39;Content-Length&#39;: &#39;493&#39;, &#39;X-Content-Type-Options&#39;: &#39;nosniff&#39;, &#39;Referrer-Policy&#39;: &#39;same-origin&#39;, &#39;Set-Cookie&#39;: &#39;csrftoken=s1aepuw0A08k9PsFtTWn6CbCkLU24MU6tTuk3DieW4uj1b6PAXwSjrfHqfCvufz3; expires=Tue, 08 Feb 2022 03:48:32 GMT; Max-Age=31449600; Path=/; SameSite=Lax, sessionid=f9ofrqwar9rs0phbg4p89647pwryowrs; expires=Tue, 23 Feb 2021 03:48:32 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax&#39;, &#39;Connection&#39;: &#39;close&#39;}
+
+In [26]: r1 = s.get(&quot;http://localhost:8000/api/activities/1/admin/&quot;)
+
+In [27]: r1
+Out[27]: &lt;Response [200]&gt;
+</code></pre>
+<p>而对于非登录操作、或登录失败，应答中的字段就不会有 <code>Set-Cookies</code> 字段，<code>requests.sessions.Session</code> 也不会设置 <code>Cookies</code>：</p>
+<pre><code class="py">In [2]: import requests
+
+In [3]: s = requests.Session()
+
+In [7]: r1 = s.get(&quot;http://localhost:8000/api/activities/1/admin/&quot;)
+
+In [8]: r1
+Out[8]: &lt;Response [403]&gt;
+
+In [9]: s.cookies
+Out[9]: &lt;RequestsCookieJar[]&gt;
+
+In [10]: list(s.cookies)
+Out[10]: []
+</code></pre>
+<p>Django Session 的过期时间也是可以通过修改 <a href="https://docs.djangoproject.com/zh-hans/3.1/ref/settings/#session-cookie-age" target="_blank" rel="noopener"><code>SESSION_COOKIE_AGE</code></a> 来修改的。</p>
+<h3 id="使用-JWT-进行身份验证"><a href="#使用-JWT-进行身份验证" class="headerlink" title="使用 JWT 进行身份验证"></a>使用 JWT 进行身份验证</h3><p>Django 自带的 Session 对于很多项目已经够用了。如果想要更高级一点的安全验证，如 Json Web Token，可以尝试 <a href="https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Simple JWT</a> 配合 Django REST Framework 食用。文档给的示例代码很详细，有需要也可以仿照源码编写自己的 API。</p>
+<h2 id="Django-定时任务"><a href="#Django-定时任务" class="headerlink" title="Django 定时任务"></a>Django 定时任务</h2><p>可参考 <a href="https://pypi.org/project/django-crontab/" target="_blank" rel="noopener">Django-crontab</a>。</p>
+<h2 id="Django-REST-Framework"><a href="#Django-REST-Framework" class="headerlink" title="Django REST Framework"></a>Django REST Framework</h2><p>这部分就<a href="../django-rest-framework-study-notes">另开一篇博文</a>来写了。</p>
+<h2 id="Django-项目部署-WSGI"><a href="#Django-项目部署-WSGI" class="headerlink" title="Django 项目部署 (WSGI)"></a>Django 项目部署 (WSGI)</h2><p>Django 部署可以采用 WSGI，也可以使用 ASGI。WSGI 是为同步 Web Server 编写的，而 ASGI 是为异步 Web Server 编写的。虽然可以混用，但是同步函数和异步函数可以混用，但是会有约 1ms 的用于线程切换的性能损失。</p>
+<p>。如果你主要使用的是异步函数，你可以快进到下一章，进行 ASGI 的部署。看完以后，再回来看看如何 <a href="#%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6">处理静态文件</a>。</p>
+<h3 id="Gunicorn"><a href="#Gunicorn" class="headerlink" title="Gunicorn"></a>Gunicorn</h3><p>诚然，<code>python manage.py runserver 8000</code> 然后将 8000 端口交给 Nginx / Apache / Caddy 反向代理到 80(http) / 443(https)，是最简单且最直接的方法。但是，其替代方案有多线程、占用内存小等优势。</p>
+<blockquote>
+<p>Django 的管理命令 <code>startproject</code> 生成了一个最小化的默认 WSGI 配置，你可以按照自己项目的需要去调整这个配置，任何兼容 WSGI 的应用程序服务器都可以直接使用。</p>
+</blockquote>
+<p>而其中一个 WSGI 应用程序服务器的方案，就是使用 Gunicorn。由于细节比较多，各位先不要急着实践，建议先通读这部分，再决定是否采用这种方式还是直接 <code>startproject</code>。</p>
+<p>安装 Gunicorn：</p>
+<pre><code class="sh">python -m pip install gunicorn
+</code></pre>
+<p>在项目文件夹下运行：</p>
+<pre><code class="sh">gunicorn -b &quot;127.0.0.1:8000&quot; &lt;projectname&gt;.wsgi
+</code></pre>
+<p>其中 <code>&lt;projectname&gt;.wsgi</code> 也是 Python 的模块的表示方法，其表示 <code>./&lt;projectname&gt;/wsgi.py</code> 这个模块。</p>
+<p>可以将执行这条命令的过程写为 Systemd 服务，并实现 2 进程、每进程 3 线程，以及自动重启等：</p>
+<pre><code class="ini"># djangoproject.service
+[Unit]
+Description=Django Project
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/path/to/&lt;projectname&gt;/
+ExecStart=/usr/local/bin/gunicorn -b &quot;127.0.0.1:8000&quot; \
+    --workers=2 \
+    --threads=3 \
+    --access-logfile - \
+    &lt;projectname&gt;.wsgi
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>命令的 <code>--access-logfile -</code> 表示将 log 输出在控制台，在 Systemd 中即表示可以通过 <code>systemctl status djangoproject</code> 查询日志。</p>
+<p>然后就是将这项服务复制到 <code>/etc/systemd/system/</code>，然后 enable 和 start 了：</p>
+<pre><code class="sh">sudo cp ./djangoproject.service /etc/systemd/system/
+sudo systemctl enable djangoproject # 激活
+sudo systemctl start djangoproject  # 启动
+sudo systemctl status djangoproject # 查询状态
+</code></pre>
+<h3 id="处理静态文件"><a href="#处理静态文件" class="headerlink" title="处理静态文件"></a>处理静态文件</h3><p>但是！这并没有完成部署。访问 <code>localhost:8000</code> 时，可以看到 Django 有正常响应，但是所有静态文件全部失效，Swagger 文档生成也失效了。</p>
+<p>为了解决这个问题，需要配置静态文件。</p>
+<p>在 <code>&lt;projectname&gt;/settings.py</code> 中配置以下几个参数</p>
+<pre><code class="py">import os
+STATIC_ROOT = os.path.join(BASE_DIR, &#39;.static&#39;)
+STATIC_URL = &#39;/api/static/&#39;
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, &#39;static&#39;)
+]
+</code></pre>
+<p>三个参数的意义如下：</p>
+<ul>
+<li><code>BASE_DIR/static</code> 是开发中静态文件所在文件夹</li>
+<li><code>BASE_DIR/.static</code> 是项目生成后静态文件所在文件夹，应当加入 <code>.gitignore</code></li>
+<li><code>/api/static/</code> 是在网页中访问静态文件的路径</li>
+</ul>
+<p>整个过程是这样的：</p>
+<ol>
+<li>开发者将所需的静态文件放入 <code>BASE_DIR/static</code></li>
+<li>开发者运行 <code>python3 manage.py collectstatic</code>，Django 将开发者提供的 <code>BASE_DIR/static</code> 文件，和 Swagger 等 APP 提供的静态文件，一并复制进 <code>BASE_DIR/.static</code></li>
+<li>用户在浏览器中访问 <code>/api/static/</code> 路径，表示用户想访问的文件夹是 <code>BASE_DIR/.static</code></li>
+</ol>
+<p>所以还需要进行以下两步：</p>
+<ol>
+<li>运行 <code>python3 manage.py collectstatic</code></li>
+<li>通过 Nginx / Apache / Caddy 等将静态文件提供给用户</li>
+</ol>
+<p>Gunicorn 提供了一个 <a href="https://docs.gunicorn.org/en/latest/deploy.html#id5" target="_blank" rel="noopener">Nginx.conf 配置模板</a>，我也提供一份 Caddy 的配置模板：</p>
+<pre><code>example.com {
+    handle /api/static/* {
+        uri strip_prefix /api/static
+        root * /etc/uestcmsc_webapp/backend/.static
+        file_server
+    }
+
+    handle /api/* {
+        reverse_proxy localhost:8000
+    }
+    
+    handle {
+        root * /etc/uestcmsc_webapp/frontend
+        try_files {path} /index.html
+        file_server
+    }
+}
+</code></pre>
+<p>需要注意的是，这种配置的前提是所有 REST API 放在了 <code>/api/</code> 下，这种方法使用的 <code>&lt;projectname&gt;/urls.py</code> 如下：</p>
+<pre><code class="py">api_urlpatterns = [
+    url(r&#39;^docs(?P&lt;format&gt;\.json|\.yaml)$&#39;, schema_view.without_ui(cache_timeout=0), name=&#39;schema-json&#39;),
+    url(r&#39;^docs/$&#39;, schema_view.with_ui(&#39;swagger&#39;, cache_timeout=0), name=&#39;schema-swagger-ui&#39;),
+    url(r&#39;^redoc/$&#39;, schema_view.with_ui(&#39;redoc&#39;, cache_timeout=0), name=&#39;schema-redoc&#39;),
+    path(&#39;admin/&#39;, admin.site.urls),
+    # ...
+]
+
+urlpatterns = [
+    url(&#39;api/&#39;, include(api_urlpatterns))
+]
+</code></pre>
+<h3 id="Gunicorn-日志-ip-总是显示-127-0-0-1"><a href="#Gunicorn-日志-ip-总是显示-127-0-0-1" class="headerlink" title="Gunicorn 日志 ip 总是显示 127.0.0.1"></a>Gunicorn 日志 ip 总是显示 127.0.0.1</h3><p>出现这个问题，我第一反应是 Caddy 反代的锅，第二反应是 Django 的锅，最后查了一下才发现是 Gunicorn 的锅。</p>
+<p><a href="https://stackoverflow.com/questions/25737589/gunicorn-doesnt-log-real-ip-from-nginx" target="_blank" rel="noopener">Gunicorn doesn’t log real ip from nginx - Stack Overflow</a></p>
+<p>回答也说的很清楚，只需要按照格式修改好后追加到 <code>--access-logformat</code> 参数即可。</p>
+<p>我把时间、两个 <code>-</code>和 127.0.0.1 去掉以后的配置如下：</p>
+<pre><code class="ini">ExecStart=/usr/local/bin/gunicorn -b &quot;127.0.0.1:8000&quot; \
+    --workers=2 \
+    --threads=3 \
+    --access-logfile - \
+    --access-logformat &quot;%({X-Real-IP}i)s \&quot;%(r)s\&quot; %(s)s %(b)s \&quot;%(f)s\&quot; \&quot;%(a)s\&quot;&quot; \
+    &lt;projectname&gt;.wsgi
+</code></pre>
+<h2 id="Django-项目部署-ASGI"><a href="#Django-项目部署-ASGI" class="headerlink" title="Django 项目部署 (ASGI)"></a>Django 项目部署 (ASGI)</h2><p>Django 主推的 ASGI 部署方式，应该是它自己维护的 <a href="https://github.com/django/daphne" target="_blank" rel="noopener">Daphne</a>。</p>
+<p>安装 Daphne</p>
+<pre><code class="py">python -m pip install daphne
+</code></pre>
+<p>在项目文件夹下运行：</p>
+<pre><code class="sh">daphne &lt;projectname&gt;.asgi:application
+</code></pre>
+<pre><code class="ini">ExecStart=/usr/local/bin/daphne -p 8000 &lt;projectname&gt;.asgi:application
+</code></pre>
+<p>目前 Daphne 还不支持多进程，如需多进程，请使用 <code>uvicorn</code>。</p>
+<h2 id="项目开源地址"><a href="#项目开源地址" class="headerlink" title="项目开源地址"></a>项目开源地址</h2><p>上面提到的项目开源在 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/tree/e1f3208664770ccf0b50522a2620d3ccf766024b" target="_blank" rel="noopener">GitHub</a>。</p>

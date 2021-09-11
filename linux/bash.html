@@ -1,0 +1,98 @@
+<hr>
+<p>title: bash 笔记<br>date: 2019-8-16<br>tags:</p>
+<ul>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<p>入坑 Linux 以后，命令行也是一个非常重要的工具。本文简单总结一下常用的 bash 语法。</p>
+<p>这里只讲纯语法，文件操作、系统工具等可以看 <a href="../linux-daily-command">Linux 日常</a>。</p>
+<h2 id="cheatsheet"><a href="#cheatsheet" class="headerlink" title="cheatsheet"></a>cheatsheet</h2><ul>
+<li>变量赋值 <code>=</code> 左右不能有空格  </li>
+<li><code>if</code> <code>=</code> 左右都要有空格</li>
+<li><code>var=$s</code> 等价于 <code>var=${s}</code></li>
+<li><code>var=$(echo 123)</code> 等价于 <code>var=$`echo 123` </code></li>
+<li>多条语句串行执行：<code>echo 1; sleep 1; echo 2</code></li>
+<li>多条语句并行执行：<code>echo 1 &amp; echo 2</code></li>
+<li>多条语句等待前一句正确执行后执行：<code>echo 1 &amp;&amp; echo 2</code></li>
+<li>命令行末加 <code>\</code> 可使得命令跨行</li>
+<li>for：<code>for ((i=1; i&lt;=10; i ++)); do echo $i; done</code></li>
+<li>或者：<code>for i in {1..10}; do echo $i; done</code></li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>对变量名的要求和 C/C++ 相同。</p>
+<pre><code class="bash">var=123
+</code></pre>
+<p>注意等号左右都不能有空格。左边有空格，<code>var</code> 会被视为命令；右边有空格，<code>123</code> 会被视为命令。<br>（而 bash 的 <code>if</code> 则强制要求等号左右必须有空格）</p>
+<p>若赋值有空格，可以使用引号括起来，赋值的结果没有引号。</p>
+<pre><code class="bash">$ var=&quot;123 456&quot;
+$ echo $var
+123 456
+</code></pre>
+<p>在变量名前加 <code>$</code> 即可。也可以把变量名用大括号括起来。</p>
+<pre><code class="bash">echo $var
+echo ${var}
+</code></pre>
+<p>值得注意的是，也可以把命令执行的结果看作是一个取值的过程，如下：</p>
+<pre><code class="bash">var=`command`
+
+var=$(command)
+echo the current time is $(date +%c)
+</code></pre>
+<p>后者支持嵌套。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p><code>echo</code> 使用较简单。</p>
+<p>需要看 <code>echo</code> 的帮助请使用 <code>man echo</code> 而不是一般的 <code>echo --help</code>。</p>
+<h2 id="一行一语句？"><a href="#一行一语句？" class="headerlink" title="一行一语句？"></a>一行一语句？</h2><p>bash 默认是一行一条命令。但是某些特殊符号可以打破这个规定：</p>
+<ol>
+<li><code>;</code> 使得一行多个命令。和一般情况相同的是，命令是串行执行：</li>
+</ol>
+<pre><code class="sh">echo 1; sleep 1; echo 2;
+</code></pre>
+<p>输出 1，停顿一秒，然后输出 2。</p>
+<hr>
+<ol start="2">
+<li><code>&amp;</code> 使得一行多个命令。和一般情况相同的是，命令是并行执行：</li>
+</ol>
+<pre><code class="sh">echo 1; sleep 1 &amp; echo 2
+</code></pre>
+<p>这里的 <code>echo 2</code> 和 <code>sleep 1</code> 同时执行，所以用户并不会感觉输出 <code>1</code> 和 <code>2</code> 间出现了停顿。</p>
+<p>bash 的具体实现是，会创建一个新进程执行 <code>&amp;</code> 前的代码（同时会将新进程的 <code>pid</code> 显示在屏幕上如 <code>[1] 174</code>），然后主进程继续执行这行之后的代码。</p>
+<p>顺便，这里的 <code>&amp;</code> 配合 <code>for</code> 可以实现并行 for 语句。nb！</p>
+<hr>
+<ol start="3">
+<li><code>&amp;&amp;</code> 使得一行多个命令。但是，只有前面的命令没有出错，才会执行后面的命令。（显然命令需要串行执行）：</li>
+</ol>
+<pre><code class="sh">ping localhost -c 1 &amp;&amp; echo 2
+# ping 成功执行，然后输出 2
+
+ping whatthefuck -c 1 &amp;&amp; echo 2
+# ping 失败，不输出 2
+</code></pre>
+<ol start="4">
+<li><code>\</code> 使得多行一个命令。常用于参数较多时，将命令参数分行写。</li>
+</ol>
+<pre><code class="sh">ffmpeg \
+    -allowed_extensions ALL \
+    -hwaccel cuda -i \
+    117652-8.m3u8 \
+    -c:v h264_nvenc \
+    8.mp4
+</code></pre>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h3><h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>有个 C 语言风格的：</p>
+<pre><code class="bash">for ((i=1; i&lt;=10; i ++))
+do
+    echo $i
+done
+</code></pre>
+<p>写成一行的版本：</p>
+<pre><code class="bash">for ((i=1; i&lt;=10; i ++)); do echo $i; done
+</code></pre>
+<hr>
+<p>除此之外，还有：</p>
+<pre><code class="bash">for i in {1..10}
+do
+    echo $i # 显示 1 至 10
+done
+</code></pre>
+<p>同样可以写为单行的版本：</p>
+<pre><code class="bash">for i in {1..10}; do echo $i; done
+</code></pre>

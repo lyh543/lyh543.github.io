@@ -1,0 +1,24 @@
+<hr>
+<p>title: MATLAB 并行运算<br>date: 2019-10-09 9:44:45<br>tags:</p>
+<ul>
+<li>MATLAB<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<p>MATLAB 有强大的 Parallel Computing Toolbox，可以使用 MATLAB 来用 CPU 和 GPU 跑并行运算。</p>
+<p>更重要的是，他方便啊！！！比起 C/C++ 还要调库、学更多的东西，MATLAB 有些跑多线程的方法简直就是一键启动多线程，方便的不要不要的。</p>
+<h2 id="parfor"><a href="#parfor" class="headerlink" title="parfor"></a>parfor</h2><p>最简单的一种，就是把 <code>for</code> 改为 <code>parfor</code>。如下代码：</p>
+<pre><code class="m">for i = 1:testCases
+    AverageWaitTime = AverageWaitTime + QueueStimulator(serviceTime, comeTime) / testCases;
+end
+</code></pre>
+<p>如需要并行运算，只需：</p>
+<pre><code class="m">parfor i = 1:testCases
+    AverageWaitTime = AverageWaitTime + QueueStimulator(serviceTime, comeTime) / testCases;
+    end
+</code></pre>
+<p>如果出现不能并行运算的语法，MATLAB 会报错。</p>
+<p>并行计算需要数十秒，用于初始化 Parallel Pool，所以请注意，如果本身单线程只需要几秒就能跑完的程序，是没有必要并行运算的。除掉初始化的时间，并行运算会比普通的快的多（12核心下：4.2s -&gt; 0.6s）。</p>
+<p>另外，CPU 12 核心的 Parallel Pool 占用内存达到了 8GB 额，16GB 内存可能会有点吃紧。建议加内存条。</p>
+<h2 id="GPU-并行运算"><a href="#GPU-并行运算" class="headerlink" title="GPU 并行运算"></a>GPU 并行运算</h2><p>目前 MATLAB R2019b 的 GPU 运算只适用于运行 NVIDIA CUDA 的 GPU。</p>
+<p><a href="https://ww2.mathworks.cn/solutions/gpu-computing/getting-started.html" target="_blank" rel="noopener">官方快速入门文档</a></p>

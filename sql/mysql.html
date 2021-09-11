@@ -1,0 +1,48 @@
+<hr>
+<p>title: MySQL<br>date: 2020-07-07 8:32:50<br>tags:</p>
+<ul>
+<li>SQL<br>category:</li>
+<li>SQL</li>
+</ul>
+<hr>
+<p>本篇作为 <a href="/others/sql-server">SQL Server</a> 的补充。SQL Server 有不少很不错的功能。</p>
+<h2 id="MySQL-8-特性"><a href="#MySQL-8-特性" class="headerlink" title="MySQL 8 特性"></a>MySQL 8 特性</h2><p>在 MySQL 8 中写表的名字最好把数据库带上，如 <code>test_tb.table1</code>。否则可能会报错。</p>
+<h2 id="表操作"><a href="#表操作" class="headerlink" title="表操作"></a>表操作</h2><h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><h4 id="设置主键自增"><a href="#设置主键自增" class="headerlink" title="设置主键自增"></a>设置主键自增</h4><pre><code class="sql">CREATE TABLE user(
+       userid       INT(4)      PRIMARY KEY NOT NULL AUTO_INCREMENT,
+       username     VARCHAR(16) NOT NULL,
+       userpassword VARCHAR(32) NOT NULL
+);
+</code></pre>
+<ul>
+<li>主键自增是为了防止 <code>id</code> 重复，如果存 <code>NULL</code>，他就会设置为目前最大的 <code>id + 1</code>；</li>
+<li>主键自增只有主键可以设置；</li>
+</ul>
+<h3 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h3><h4 id="表改名"><a href="#表改名" class="headerlink" title="表改名"></a>表改名</h4><pre><code class="sql">RENAME TABLE test.login TO test.login_backup
+</code></pre>
+<h4 id="更改表的定义"><a href="#更改表的定义" class="headerlink" title="更改表的定义"></a>更改表的定义</h4><p><a href="https://dev.mysql.com/doc/refman/8.0/en/alter-table.html#alter-table-redefine-column" target="_blank" rel="noopener">官方文档</a></p>
+<p>用下面这种方式可以修改属性名或属性定义。原表中该属性的分量也会自动转换类型。</p>
+<pre><code class="sql">ALTER TABLE test.top100_count
+CHANGE id id INT PRIMARY KEY;
+</code></pre>
+<h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><h4 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h4><p>在需要类型转换的时候（如将 A 表的 SELECT 的 <code>TEXT</code> 数据 INSERT 进 B 表的 <code>INTEGER</code> 属性），MySQL 会自动完成类型转换（如 <code>TEXT</code> 转为 <code>VARCHAR(10)</code> 或 <code>INTEGER</code>）。</p>
+<h4 id="字符串替换、拼接、截取"><a href="#字符串替换、拼接、截取" class="headerlink" title="字符串替换、拼接、截取"></a>字符串替换、拼接、截取</h4><ul>
+<li><strong>字符串的替换</strong>使用 <code>replace(date, &#39;.&#39;, &#39;&#39;)</code>，会将 <code>date</code> 中的 <code>.</code> 删去；</li>
+<li><strong>字符串的拼接</strong>使用 <code>concat(date, time)</code>，会将两个字符串进行拼接；</li>
+<li><code>date + time</code> 会尝试将两个字符串<strong>转为数字以后相加</strong>。如果无法转为数字则报错；</li>
+<li><code>left(date, 3)</code> 和 <code>right(date, 3)</code> 分别取 <code>date</code> 的<strong>左三个字符</strong>和<strong>右三个字符</strong>；</li>
+</ul>
+<p>示例代码：</p>
+<pre><code class="sql">INSERT IGNORE INTO test.online_count_2 (date_time, count)
+SELECT CONCAT(REPLACE(date, &#39;.&#39;, &#39;&#39;), REPLACE(time, &#39;:&#39;, &#39;&#39;)), count
+  FROM test.online_count;
+</code></pre>
+<p>对于 <code>online_count</code> 中记录为 <code>(07.01, 12:30, 12345)</code> 的行，导入 <code>online_count_2</code> 的内容是 <code>(7011230, 123450)</code>。</p>
+<h3 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h3><h3 id="插入子查询的结果"><a href="#插入子查询的结果" class="headerlink" title="插入子查询的结果"></a>插入子查询的结果</h3><h4 id="忽略部分错误"><a href="#忽略部分错误" class="headerlink" title="忽略部分错误"></a>忽略部分错误</h4><p>我们想要将 A 表的数据插入 B 表，但是直接插入的话部分行会是无法插入的（如 A 的部分行插入 B 会使得 B 的主键重复）。这会导致插入操作被终止，所有行都没有被插入 B 表。</p>
+<p>如果我们想要在插入的时候忽略掉掉错误行，把其他正确行插入，可以使用 <code>IGNORE</code> 关键字：</p>
+<pre><code class="sql">INSERT IGNORE INTO A(VALUE1, VALUE2)
+SELECT *
+  FROM B
+</code></pre>
+<h2 id="执行-sql-代码"><a href="#执行-sql-代码" class="headerlink" title="执行 .sql 代码"></a>执行 .sql 代码</h2><p>如执行 <code>~/run.sql</code>：</p>
+<pre><code class="sql">source ~/run.sql
+</code></pre>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>搭建 Spring Boot REST API 项目 (2) -- 数据库和测试 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Java,Spring">
+    <meta name="description" content="系列目录 搭建 Spring Boot REST API 项目 (1) – Hello World 搭建 Spring Boot REST API 项目 (2) – 数据库和测试 搭建 Spring Boot REST API 项目 (3) – 请求和应答 搭建 Spring Boot REST API 项目 (4) – 字段校验 搭建 Spring Boot REST API 项目 (5) –">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建 Spring Boot REST API 项目 (2) -- 数据库和测试">
+<meta property="og:url" content="https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="系列目录 搭建 Spring Boot REST API 项目 (1) – Hello World 搭建 Spring Boot REST API 项目 (2) – 数据库和测试 搭建 Spring Boot REST API 项目 (3) – 请求和应答 搭建 Spring Boot REST API 项目 (4) – 字段校验 搭建 Spring Boot REST API 项目 (5) –">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.107Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建 Spring Boot REST API 项目 (2) -- 数据库和测试</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建 Spring Boot REST API 项目 (2) -- 数据库和测试</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-06-08T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2021-06-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系列目录"><span class="post-toc-text">系列目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建数据库"><span class="post-toc-text">创建数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单写一个获取用户信息的-API"><span class="post-toc-text">简单写一个获取用户信息的 API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#测试！"><span class="post-toc-text">测试！</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加测试依赖"><span class="post-toc-text">添加测试依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置测试数据库"><span class="post-toc-text">配置测试数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编写第一个测试"><span class="post-toc-text">编写第一个测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#编写第二个测试"><span class="post-toc-text">编写第二个测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自动清理数据库"><span class="post-toc-text">自动清理数据库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重构测试类"><span class="post-toc-text">重构测试类</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-java/spring-boot-rest-api-tutorial/2-database-and-test"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建 Spring Boot REST API 项目 (2) -- 数据库和测试</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-06-09 00:00:00" datetime="2021-06-08T16:00:00.000Z"  itemprop="datePublished">2021-06-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java/">Java</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="系列目录"><a href="#系列目录" class="headerlink" title="系列目录"></a>系列目录</h2><ul>
+<li><a href="../1-hello-world/">搭建 Spring Boot REST API 项目 (1) – Hello World</a></li>
+<li><a href="../2-database-and-test/">搭建 Spring Boot REST API 项目 (2) – 数据库和测试</a></li>
+<li><a href="../3-request-and-response/">搭建 Spring Boot REST API 项目 (3) – 请求和应答</a></li>
+<li><a href="../4-validation/">搭建 Spring Boot REST API 项目 (4) – 字段校验</a></li>
+<li><a href="../5-serialization/">搭建 Spring Boot REST API 项目 (5) – 序列化和反序列化</a></li>
+<li><a href="../6-authentication-and-security/">搭建 Spring Boot REST API 项目 (6) – 认证和安全</a></li>
+<li><a href="../7-docs-generator/">搭建 Spring Boot REST API 项目 (7) – 自动生成 REST API 文档</a></li>
+</ul>
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>在上一次提到的 <code>springbootdemo</code> 数据库中添加一个表 <code>users</code>，并插入两条测试数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">users</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span> auto_increment,</span><br><span class="line">    email <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">constraint</span> User_email_uindex <span class="keyword">unique</span> (email),</span><br><span class="line">    <span class="keyword">constraint</span> User_id_uindex <span class="keyword">unique</span> (<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> springtest.users (<span class="keyword">id</span>, email, <span class="keyword">password</span>, <span class="keyword">name</span>) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'lyh543@outlook.com'</span>, <span class="string">'123456'</span>, <span class="string">'lyh543'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> springtest.users (<span class="keyword">id</span>, email, <span class="keyword">password</span>, <span class="keyword">name</span>) <span class="keyword">VALUES</span> (<span class="number">2</span>, <span class="string">'test@example.com'</span>, <span class="string">'test'</span>, <span class="string">'test'</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单写一个获取用户信息的-API"><a href="#简单写一个获取用户信息的-API" class="headerlink" title="简单写一个获取用户信息的 API"></a>简单写一个获取用户信息的 API</h2><p>编写一个 User（模型层），并用 IDEA 自动生成构造函数、Getters 和 Setters：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/lyh543/springbootdemo/entity/User.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">private</span> String email, password, name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> id, String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.email = email;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String email, String password, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.email = email;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getEmail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> email;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmail</span><span class="params">(String email)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.email = email;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写一个 UserMapper（数据访问层）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/lyh543/springbootdemo/mapper/UserMapper.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"SELECT * FROM users WHERE email = #&#123;email&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">getByEmail</span><span class="params">(@Param(<span class="string">"email"</span>)</span> String email)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写一个 UserService（业务逻辑层）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/lyh543/springbootdemo/service/UserService.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getByEmail</span><span class="params">(String email)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userMapper.getByEmail(email);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后是 UserController（视图层）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/lyh543/springbootdemo/web/UserController.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserService userService;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/api/user/1"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userService.getByEmail(<span class="string">"lyh543@outlook.com"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>安装命令行工具 httpie，然后 <code>http http://localhost:8080/api/user/1</code>：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install httpie</span><br><span class="line">$ http http://localhost:8080/api/user/1</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>: 1,</span><br><span class="line">  <span class="string">"email"</span>: <span class="string">"lyh543@outlook.com"</span>,</span><br><span class="line">  <span class="string">"password"</span>: <span class="string">"123456"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"lyh543"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试！"><a href="#测试！" class="headerlink" title="测试！"></a>测试！</h2><p>每次写完一个 API 都得运行好几次 httpie，太麻烦了。有没有运行代码、每次修改以后自动发送 HTTP 请求测试之前的 API 的工具呢？有！那就是测试！</p>
+<p>Spring Boot 项目常见的测试形式有单元测试和集成测试。<strong>单元测试</strong>是对每一层 (Mapper, Service, Controller) 进行测试；而像我们这种发送 HTTP 请求调用 API、需要集成所有层的测试，叫做<strong>集成测试</strong>。</p>
+<p>Spring Boot 单元测试可以参考 <a href="https://zhuanlan.zhihu.com/p/111418479" target="_blank" rel="noopener">SpringBoot Test 人类使用指南- 知乎</a>。</p>
+<h2 id="添加测试依赖"><a href="#添加测试依赖" class="headerlink" title="添加测试依赖"></a>添加测试依赖</h2><p>我们添加以下依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.hsqldb<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hsqldb<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>HSQLDB 是一个小型嵌入式数据库，我们测试的时候使用 HSQLDB，开发和测试时就不会使用同一个数据库。  </p>
+<p>需要注意的是，MySQL 默认隔离级别为可重复读，HSQLDB 不支持可重复读、默认为读提交，因此在测试的时候可能无法使用事务。</p>
+<h2 id="配置测试数据库"><a href="#配置测试数据库" class="headerlink" title="配置测试数据库"></a>配置测试数据库</h2><p>安装了 HSQLDB 依赖，我们还要进行配置，告诉 Spring Boot 在测试的时候使用 HSQLDB 而不是 MySQL。修改 <code>/src/test/resources/application.yaml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="comment"># sql.syntax_mys 会让 hsqldb 兼容 mysql 的语法，虽然兼容的不完全</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:hsqldb:mem:testdb;sql.syntax_mys=true;DB_CLOSE_DELAY=-1</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">sa</span></span><br><span class="line">    <span class="attr">password:</span></span><br></pre></td></tr></table></figure>
+
+<p>测试的时候还需要执行生成表结构的 SQL，Spring 也提供了接口（<a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto.data-initialization.using-basic-sql-scripts" target="_blank" rel="noopener">文档</a>），在测试前会依次执行 <code>/src/test/resource/schema.sql</code> 和 <code>/src/test/resource/schema.sql</code>。于是我们写一个 <code>schema.sql</code>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* src/test/resources/schema.sql */</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> <span class="keyword">users</span></span><br><span class="line">(</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">int</span> auto_increment,</span><br><span class="line">    email <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">constraint</span> User_email_uindex <span class="keyword">unique</span> (email),</span><br><span class="line">    <span class="keyword">constraint</span> User_id_uindex <span class="keyword">unique</span> (<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写第一个测试"><a href="#编写第一个测试" class="headerlink" title="编写第一个测试"></a>编写第一个测试</h2><blockquote>
+<p>参考：<a href="https://spring.io/guides/gs/testing-web/" target="_blank" rel="noopener">Getting Started | Testing the Web Layer</a><br><a href="https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html" target="_blank" rel="noopener">测试 | docs.spring.io</a><br><a href="https://zhuanlan.zhihu.com/p/111418479" target="_blank" rel="noopener">SpringBoot Test 人类使用指南- 知乎</a></p>
+</blockquote>
+<p>编写一个测试类 <code>test/UserTest.java</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/test/UserTest.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.lyh543.springbootdemo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest.WebEnvironment;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.web.client.TestRestTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.server.LocalServerPort;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Spring Boot 会随机指定一个端口运行，如果需要端口号，可以像下面这样注入</span></span><br><span class="line">    <span class="comment">// @LocalServerPort</span></span><br><span class="line">    <span class="comment">// private int port;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 一个可用于测试的 Client</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写完以后，有三个方法运行这个测试：</p>
+<ol>
+<li>点击 IDEA <code>test</code> 左边的绿色箭头，可以运行这一个测试函数</li>
+<li>点击 IDEA <code>UserTest</code> 左边的绿色箭头，可以运行这一个类的测试</li>
+<li>运行 <code>mvn test</code> 命令，或点击右边的 Maven <code>test</code>，可以运行整个项目的测试。</li>
+</ol>
+<p>可以看到测试成功通过，因为我们数据库里什么都没有，所以页面什么也没返回。</p>
+<p>我们使用 MyBatis Plus 往数据库塞一点数据，然后再测试。</p>
+<h2 id="编写第二个测试"><a href="#编写第二个测试" class="headerlink" title="编写第二个测试"></a>编写第二个测试</h2><p>由于测试需要会向空数据插入数据，所以我们完善一下 <code>UserMapper</code>，加一个 <code>insert</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/lyh543/springbootdemo/mapper/UserMapper.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"SELECT * FROM users WHERE email = #&#123;email&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">getByEmail</span><span class="params">(@Param(<span class="string">"email"</span>)</span> String email)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span>(<span class="string">"INSERT INTO users (email, password, name) VALUES (#&#123;email&#125;, #&#123;password&#125;, #&#123;name&#125;)"</span>)</span><br><span class="line">    <span class="meta">@Options</span>(useGeneratedKeys=<span class="keyword">true</span>, keyProperty = <span class="string">"id"</span>) <span class="comment">// 注意 insert 的返回值返回仍然是插入行数，而 id 被放自动在了 user.id 里</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(User user)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>然后我们就可以编写第二个测试函数了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/test/UserTest.java</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@LocalServerPort</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Long&gt; userIds = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            User user = <span class="keyword">new</span> User(<span class="string">"lyh543@outlook.com"</span> + Math.random(), <span class="string">"123456"</span>, <span class="string">"lyh543"</span>);</span><br><span class="line">            userMapper.insert(user);</span><br><span class="line">            userIds.add(user.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Long i : userIds) &#123;</span><br><span class="line">            assertTrue(restTemplate</span><br><span class="line">                    .getForObject(<span class="string">"/api/user/"</span> + i, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">                    .contains("lyh543"));</span><br><span class="line">        &#125;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.min(userIds) - <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.max(userIds) + <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line"></span><br><span class="line">        assertEquals(<span class="number">400</span>, restTemplate</span><br><span class="line">                .getForEntity(<span class="string">"/api/user/lyh543"</span>, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">                .<span class="title">getStatusCodeValue</span>())</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行测试类 / <code>mvn test</code>，发现两个测试均成功。</p>
+<h2 id="自动清理数据库"><a href="#自动清理数据库" class="headerlink" title="自动清理数据库"></a>自动清理数据库</h2><p>上面的测试虽然成功运行了，但是好像有点问题：<code>test2</code> 向数据库插入了数据而没有清理。</p>
+<p>如果我们的 <code>test</code> 测试是在 <code>test2</code> 后进行的，就会出错。（试试交换两个函数名以交换其执行顺序）</p>
+<hr>
+<p>一个解决方案是使用 <a href="https://www.baeldung.com/junit-5-test-order" target="_blank" rel="noopener"><code>@Order</code></a> 指定测试类中每个测试函数的顺序，但是这还需要考虑到不同测试类对数据库造成的影响。</p>
+<hr>
+<p>另一个解决方案是事务。但是这种方法目前挂掉了，所以先想想别的办法吧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/test/UserTest.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.lyh543.springbootdemo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lyh543.springbootdemo.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.lyh543.springbootdemo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest.WebEnvironment;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.web.client.TestRestTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.server.LocalServerPort;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.ResponseEntity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@LocalServerPort</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> port;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Long&gt; userIds = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            User user = <span class="keyword">new</span> User(<span class="string">"lyh543@outlook.com"</span> + Math.random(), <span class="string">"123456"</span>, <span class="string">"lyh543"</span>);</span><br><span class="line">            userMapper.insert(user);</span><br><span class="line">            userIds.add(user.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Long i : userIds) &#123;</span><br><span class="line">            assertTrue(restTemplate</span><br><span class="line">                    .getForObject(<span class="string">"/api/user/"</span> + i, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">                    .contains("lyh543"));</span><br><span class="line">        &#125;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.min(userIds) - <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.max(userIds) + <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line"></span><br><span class="line">        assertEquals(<span class="number">400</span>, restTemplate</span><br><span class="line">                .getForEntity(<span class="string">"/api/user/lyh543"</span>, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">                .<span class="title">getStatusCodeValue</span>())</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>第三个解决方案，是在每次函数执行完成以后手动清空数据库。我们当然不必在每个测试函数以后都加两行代码，直接使用 <code>@AfterEach</code> 就行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.jdbc.JdbcTestUtils.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@AfterEach</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    deleteFromTables(jdbcTemplate, <span class="string">"users"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring 在<code>JdbcTestUtils</code> 中提供了<a href="https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#integration-testing-support-jdbc" target="_blank" rel="noopener">五个好用的静态函数</a>，这里我们使用 <code>deleteFromTables</code> 一键清空表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/test/UserTest.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.jdbc.JdbcTestUtils.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterEach</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        deleteFromTables(jdbcTemplate, <span class="string">"users"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Long&gt; userIds = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/1"</span>, String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            User user = <span class="keyword">new</span> User(<span class="string">"lyh543@outlook.com"</span> + Math.random(), <span class="string">"123456"</span>, <span class="string">"lyh543"</span>);</span><br><span class="line">            userMapper.insert(user);</span><br><span class="line">            userIds.add(user.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Long i : userIds) &#123;</span><br><span class="line">            assertTrue(restTemplate</span><br><span class="line">                    .getForObject(<span class="string">"/api/user/"</span> + i, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line">                    .contains("lyh543"));</span><br><span class="line">        &#125;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.min(userIds) - <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">        assertNull(restTemplate.getForObject(<span class="string">"/api/user/"</span> + (Collections.max(userIds) + <span class="number">1</span>), String<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line"></span><br><span class="line">        assertEquals(<span class="number">400</span>, restTemplate</span><br><span class="line">                .getForEntity(<span class="string">"/api/user/lyh543"</span>, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">                .<span class="title">getStatusCodeValue</span>())</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertEquals(<span class="number">0</span>, countRowsInTable(jdbcTemplate, <span class="string">"users"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三个测试都能成功通过。</p>
+<h2 id="重构测试类"><a href="#重构测试类" class="headerlink" title="重构测试类"></a>重构测试类</h2><p>注意到 <code>UserTest</code> 有非常多的重复代码，于是我们简单重构一下：</p>
+<ol>
+<li>将判断请求的状态码封装为 <code>assertStatusCodeEquals</code>；</li>
+<li>将 <code>@Autowired</code> 放到父类，这样所有的子类就不用再写；</li>
+<li>将清空数据库的 <code>clearDatabase</code> 也放到父类。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/utils/TestTemplate.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.lyh543.springbootdemo.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lyh543.springbootdemo.mapper.UserMapper;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.AfterEach;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.web.client.TestRestTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.jdbc.JdbcTestUtils.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TestTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">protected</span> JdbcTemplate jdbcTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">protected</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">protected</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">assertStatusCodeEquals</span><span class="params">(<span class="keyword">int</span> expected, String url)</span> </span>&#123;</span><br><span class="line">        assertEquals(expected, restTemplate</span><br><span class="line">                .getForEntity(url, String<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">                .<span class="title">getStatusCodeValue</span>())</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterEach</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        deleteFromTables(jdbcTemplate, <span class="string">"users"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重构后的  UserTest 类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/com/lyh543/springbootdemo/test/UserTest.java</span></span><br><span class="line"><span class="keyword">package</span> com.lyh543.springbootdemo.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lyh543.springbootdemo.entity.User;</span><br><span class="line"><span class="keyword">import</span> com.lyh543.springbootdemo.utils.TestTemplate;</span><br><span class="line"><span class="keyword">import</span> org.junit.jupiter.api.Test;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest.WebEnvironment;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertEquals;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertTrue;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.springframework.test.jdbc.JdbcTestUtils.countRowsInTable;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootTest</span>(webEnvironment = WebEnvironment.RANDOM_PORT)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserTest</span> <span class="keyword">extends</span> <span class="title">TestTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertStatusCodeEquals(<span class="number">404</span>, <span class="string">"/api/user/1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertStatusCodeEquals(<span class="number">404</span>, <span class="string">"/api/user/1"</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;Long&gt; userIds = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            User user = <span class="keyword">new</span> User(<span class="string">"lyh543@outlook.com"</span> + Math.random(), <span class="string">"123456"</span>, <span class="string">"lyh543"</span>);</span><br><span class="line">            userMapper.insert(user);</span><br><span class="line">            userIds.add(user.getId());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (Long i : userIds)</span><br><span class="line">            assertTrue(restTemplate.getForObject("/api/user/" + i, String.class).contains("lyh543"));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">long</span> i: <span class="keyword">new</span> <span class="keyword">long</span>[]&#123;-<span class="number">1</span>, <span class="number">0</span>, Collections.min(userIds) - <span class="number">1</span>, Collections.max(userIds) + <span class="number">1</span>&#125;)</span><br><span class="line">            assertStatusCodeEquals(<span class="number">404</span>, <span class="string">"/api/user/"</span> + i);</span><br><span class="line"></span><br><span class="line">        assertStatusCodeEquals(<span class="number">400</span>, <span class="string">"/api/user/lyh543"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assertEquals(<span class="number">0</span>, countRowsInTable(jdbcTemplate, <span class="string">"users"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.107Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/" rel="tag">Spring</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&title=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&title=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/java/spring-boot-rest-api-tutorial/3-request-and-response/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">搭建 Spring Boot REST API 项目 (3) -- 请求和应答</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/java/spring-boot-rest-api-tutorial/1-hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">搭建 Spring Boot REST API 项目 (1) -- Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&title=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&title=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建 Spring Boot REST API 项目 (2) -- 数据库和测试》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/java/spring-boot-rest-api-tutorial/2-database-and-test/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsElEQVR42u3ay24jMQwEQP//T2eBHHfXcbcoxglQcwrix6jmINFNPh7x9fF5ff3qs/ckrz67y8c/12PjwsPDwzta+rPr2SLadyaf/RqcfM9/HgEeHh7eGi/Zslvk2afyu0cHGB4eHt5beXmR3ZbIyTvx8PDwfiMvKX8npXZ7Lzw8PLz38vISOQ9qk/+312LWgoeHhxfz2gbYT/h7sb+Hh4eHN+iqJ22q/PZtKHzhCMHDw8Nb4LURbRvd5kV5XojXDxcPDw/vW3jt9n12VJyNUrWBLx4eHt73887AbeB7a2ggKqnx8PDw1ngJ6daAVN4qq1tueHh4eFd5kxgijwzOHkEyrFB07fDw8PAu8fI+e37LNqSIAoVyuAEPDw9vj9c2qM42/fyBTgKRFyU1Hh4e3lVe23DKj5N8hGtSRr8IcPHw8PAWeG1smjf78zGCfLsvIgw8PDy8ZV7ydbeOihx8Nv5V/wLAw8PDK3ltJNH2m84GESZxMx4eHt42L9mON0Lb9l7tCBceHh7eHi9Zbh7ytktpt/siAsbDw8Nb4OXBRDvJlRfledgxadTh4eHh3eW1MevkeGjD2fa4ik4/PDw8vAEvDxHa2Lddel4DFwcPHh4e3gJvUtpujEzVEUP+AwAPDw/vEm9joe241ST8ffEI8PDw8JZ5yW3y8ayzkYJ8NCFqkuHh4eEt8OaN/Mmg1Vn0kK8WDw8Pb4OXh7DJdtxu65OBgyKMwMPDw1vj5W37xfK3LLWjZBoPDw/vKm+++SYPIl9i+1jx8PDw3sWbfHUb4Oak+aPBw8PD2+a1S2kPksnRciGSwMPDw3sTL48M2qI8aX0d/h8PDw/vB/Am5XU+FtCyL5TUeHh4eCWvDWTbUYMkX23T16R8x8PDw9vgjX7qlwdAe8DkyJX+Hh4eHt7f1x/ef/k+NbZ64wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,507 @@
+<hr>
+<p>title: LaTeX 数学公式学习笔记<br>date: 2019-10-15<br>tags:</p>
+<ul>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<p>LaTeX 更多语法请见另一篇<a href="../LaTeX-class-note">博客</a>。</p>
+<p>纯正的 LaTeX 调用公式的语法请见<a href="#%E7%BA%AF%E6%AD%A3-LaTeX-%E6%8F%92%E5%85%A5%E5%85%AC%E5%BC%8F">最后一部分</a>。</p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ol>
+<li>MathJax 在一对 <code>$</code> 中间即是行内公式，在一对 <code>$$</code> 即是行间居中公式。亦可以在 <code>\begin{equation}</code> 和 <code>\end{equation}</code> 之间打行间公式。<br>LaTeX 稍有区别（<a href="#%E7%BA%AF%E6%AD%A3-LaTeX-%E6%8F%92%E5%85%A5%E5%85%AC%E5%BC%8F">见后</a>），但也可以使用上面的东西。</li>
+</ol>
+<pre><code>$$a+b=c$$
+</code></pre>
+<p>$$a+b=c$$</p>
+<hr>
+<pre><code>\begin{equation}a+b\end{equation}
+</code></pre>
+<p>\begin{equation}a+b\end{equation}</p>
+<p>另外，还可以使用 <code>\(</code> <code>\)</code>、</p>
+<ol start="2">
+<li>下标<code>_</code>，上标<code>^</code>，后面跟<code>{}</code><br>如<code>$a^{2}_{j}$</code>: $a^{2}_{j}$</li>
+<li><code>[]</code>即是中括号。<br>如<code>$[1+2]$</code>: $[1+2]$</li>
+<li>编译时无视空格、回车，空格只用于分隔识别符。公式中需要空格请前往<a href="#%E6%8E%92%E7%89%88">#排版</a></li>
+<li>LaTeX换行中行末需要<code>\\</code>，由于 Markdown(Hexo) 和 MathJax 进行了两次渲染，所以需要<code>\\\\</code>。</li>
+<li>目前已发现的需要用 <code>\</code>转义的符号有：<code>%</code>，<code>&amp;</code>，<code>\</code>，<code>{}</code>。<ul>
+<li>Markdown(Hexo) 中需要 <code>\\</code>。下文如不提及是在 Markdown(Hexo) 中使用 <code>\</code>，均为<code>\\</code>。</li>
+</ul>
+</li>
+</ol>
+<pre><code class="latex">\begin{equation}
+\begin{aligned}
+x&amp;=a+b+c\\\\
+&amp;=d+e\\\\
+&amp;=f+g
+\end{aligned}
+\end{equation}
+</code></pre>
+<p>\begin{equation}<br>\begin{aligned}<br>x&amp;=a+b+c\\<br>&amp;=d+e\\<br>&amp;=f+g<br>\end{aligned}<br>\end{equation}</p>
+<ol start="7">
+<li>符号和 Onenote 的基本一样，大概是相互借鉴 <del>Onenote 把 LaTeX 的符号照搬</del>，然后 Onenote 简化了分数等一些部分吧。</li>
+</ol>
+<h2 id="常用运算符"><a href="#常用运算符" class="headerlink" title="常用运算符"></a>常用运算符</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>点乘</td>
+<td><code>\cdot</code></td>
+<td>$\cdot$</td>
+</tr>
+<tr>
+<td>叉乘</td>
+<td><code>\times</code></td>
+<td>$\times$</td>
+</tr>
+<tr>
+<td>除号</td>
+<td><code>\div</code></td>
+<td>$\div$</td>
+</tr>
+<tr>
+<td>分数</td>
+<td><code>\frac{1}{x^2+1}</code></td>
+<td>$\frac{1}{x^2+1}$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>1/2</code></td>
+<td>$1/2$</td>
+</tr>
+<tr>
+<td>方根</td>
+<td><code>\sqrt[3]{2}</code></td>
+<td>$\sqrt[3]{2}$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\surd{2}</code></td>
+<td>$\surd{2}$</td>
+</tr>
+<tr>
+<td>取模</td>
+<td><code>a \bmod b</code></td>
+<td>$a \bmod b$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>7 \equiv 1 \pmod 3</code></td>
+<td>$7 \equiv 1 \pmod 3$</td>
+</tr>
+<tr>
+<td>范数</td>
+<td><code>| x |</code></td>
+<td>$\</td>
+</tr>
+</tbody></table>
+<h2 id="常用关系符"><a href="#常用关系符" class="headerlink" title="常用关系符"></a>常用关系符</h2><p>在关系符前面加<code>\not</code>可得其否定形式。<br><code>\not\equiv</code>: $\not\equiv$</p>
+<p>另外，可以使用 <code>\stackrel{}{}</code> 实现两符号的上下重叠。见<a href="#%E6%8E%92%E7%89%88">排版</a>。</p>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>等价</td>
+<td><code>\equiv</code></td>
+<td>$\equiv$</td>
+</tr>
+<tr>
+<td>不等于</td>
+<td><code>\neq</code></td>
+<td>$\neq$</td>
+</tr>
+<tr>
+<td>相似</td>
+<td><code>\sim</code></td>
+<td>$\sim$</td>
+</tr>
+<tr>
+<td>全等</td>
+<td><code>\simeq</code></td>
+<td>$\simeq$</td>
+</tr>
+</tbody></table>
+<h2 id="微积分"><a href="#微积分" class="headerlink" title="微积分"></a>微积分</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>极限</td>
+<td><code>\lim_(n-&gt;\infty)\frac{\sin n}{n}</code></td>
+<td>$\lim_{n\to 0}\frac{\sin n}{n}$</td>
+</tr>
+<tr>
+<td>连续求和</td>
+<td><code>\sum_{n=1}^{\infty}{\frac{1}{n}}</code></td>
+<td>$\sum_{n=1}^{\infty} {\frac{1}{n}}$</td>
+</tr>
+<tr>
+<td>连续求积</td>
+<td><code>\prod_\varepsilon</code></td>
+<td>$\prod_\varepsilon$</td>
+</tr>
+<tr>
+<td>积分</td>
+<td><code>\int_{0}^{1}{\frac{1}{n+1}}</code></td>
+<td>$\int_{0}^{1}{\frac{1}{n+1}}$</td>
+</tr>
+<tr>
+<td>二重积分</td>
+<td><code>\iint_{0}^{1}{\frac{1}{n+1}}</code></td>
+<td>$\iint_{0}^{1}{\frac{1}{n+1}}$</td>
+</tr>
+<tr>
+<td>偏导数</td>
+<td><code>\frac{\partial y}{\partial x}</code></td>
+<td>$\frac{\partial y}{\partial x}$</td>
+</tr>
+</tbody></table>
+<p>有些上下标的位置在文中公式和独立公式中是不一样的，以 <code>\sum</code> 为例：</p>
+<ul>
+<li>文中公式 <code>$\sum_1^2x$</code> 的效果为：$\sum_1^2x$；</li>
+<li>独立公式 <code>$$\sum_1^2x$$</code> 的效果为：</li>
+</ul>
+<p>$$\sum_1^2x$$</p>
+<p>但也可以用 <code>\limits</code> 和 <code>\nolimits</code> 来控制上下标的出现位置：</p>
+<ul>
+<li>使用方法如 <code>$\sum\limits_1^2x$</code> 就强制将上下标写在上边和下边：$\sum\limits_1^2x$  </li>
+<li>而 <code>$$\sum\nolimits_1^2x$$</code> 使其强制出现在右边角上：</li>
+</ul>
+<p>$$\sum\nolimits_1^2x$$</p>
+<h2 id="上下划线"><a href="#上下划线" class="headerlink" title="上下划线"></a>上下划线</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加粗</td>
+<td><code>\mathbf{x}</code></td>
+<td>$\mathbf{x}$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\bm{x}</code> 在 <code>bm</code> package 中</td>
+<td>MathJax 不支持</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\boldsymbol{x}</code> 在 <code>amsmath</code> 中</td>
+<td>$\boldsymbol{x}$</td>
+</tr>
+<tr>
+<td>上划线</td>
+<td><code>\overline{123}</code></td>
+<td>$\overline{123}$</td>
+</tr>
+<tr>
+<td>下划线</td>
+<td><code>\underline{123}</code></td>
+<td>$\underline{123}$</td>
+</tr>
+<tr>
+<td>上括弧</td>
+<td><code>\overbrace{a+b+\cdots+z}^{26}</code></td>
+<td>$\overbrace{a+b+\cdots+z}^{26}$</td>
+</tr>
+<tr>
+<td>下括弧</td>
+<td><code>\underbrace{a+b+\cdots+z}_{26}</code></td>
+<td>$\underbrace{a+b+\cdots+z}_{26}$</td>
+</tr>
+<tr>
+<td>向量</td>
+<td><code>\vec{a}\qquad\vec{AB}</code></td>
+<td>$\vec{a}\qquad\vec{AB}$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\overrightarrow{AB}</code></td>
+<td>$\overrightarrow{AB}$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\overleftarrow{AB}</code></td>
+<td>$\overleftarrow{AB}$</td>
+</tr>
+</tbody></table>
+<h2 id="矩阵-matrix"><a href="#矩阵-matrix" class="headerlink" title="矩阵 matrix"></a>矩阵 matrix</h2><blockquote>
+<p>参考博客：<a href="https://blog.csdn.net/bendanban/article/details/44221279" target="_blank" rel="noopener">https://blog.csdn.net/bendanban/article/details/44221279</a></p>
+</blockquote>
+<p>另外貌似也可以使用 <code>\begin{array}</code>。</p>
+<h3 id="裸矩阵"><a href="#裸矩阵" class="headerlink" title="裸矩阵"></a>裸矩阵</h3><p>使用 <code>$$\begin{matrix}...\end{matrix}$$</code> 生成矩阵。矩阵中每一行以 <code>\\</code>换行（Markdown 中是<code>\\\\</code>），矩阵的元素用 <code>&amp;</code> 来分隔开。  </p>
+<p>行间矩阵 $$\left(\begin{smallmatrix}1&amp;2\\3&amp;4\end{smallmatrix}\right)$$ 请使用 <code>$$\begin{smallmatrix}...\end{smallmatrix}$$</code></p>
+<p>如，</p>
+<pre><code class="latex">$$
+    \begin{matrix}
+    1 &amp; 2 &amp; 3 \\\\
+    4 &amp; 5 &amp; 6 \\\\
+    7 &amp; 8 &amp; 9
+    \end{matrix} \tag{1}
+$$
+</code></pre>
+<p>$$<br>    \begin{matrix}<br>    1 &amp; 2 &amp; 3 \\<br>    4 &amp; 5 &amp; 6 \\<br>    7 &amp; 8 &amp; 9<br>    \end{matrix}<br>$$</p>
+<h3 id="带括号的矩阵"><a href="#带括号的矩阵" class="headerlink" title="带括号的矩阵"></a>带括号的矩阵</h3><p>如果需要带括号的矩阵，一种是用 <code>\left(</code> 和 <code>\right)</code> 括住 <code>\begin{matrix} ... \end{matrix}</code>。注意，如果不加 <code>\left</code> 和 <code>\right</code>，括号是和其他字符等高，而不是完全括住了矩阵。</p>
+<p>另一种是使用 <code>\begin{bmatrix}...\end{bmatrix}</code>。  </p>
+<p>不同的 matrix 名对应的矩阵列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th><code>pmatrix</code></th>
+<th><code>bmatrix</code></th>
+<th><code>Bmatrix</code></th>
+<th><code>vmatrix</code></th>
+<th><code>Vmatrix</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>示例</td>
+<td>$$\begin{pmatrix} 1&amp;2\\3&amp;4\end{pmatrix}$$</td>
+<td>$$\begin{bmatrix} 1&amp;2\\3&amp;4\end{bmatrix}$$</td>
+<td>$$\begin{Bmatrix} 1&amp;2\\3&amp;4\end{Bmatrix}$$</td>
+<td>$$\begin{vmatrix} 1&amp;2\\3&amp;4\end{vmatrix}$$</td>
+<td>$$\begin{Vmatrix} 1&amp;2\\3&amp;4\end{Vmatrix}$$</td>
+</tr>
+</tbody></table>
+<p>但是直接用 <code>{}</code>，它不香吗？</p>
+<p>对于 <code>smallmatrix</code>，只能使用第一种方法，不能使用后面的更改 <code>matrix</code> 类型的方法。</p>
+<h3 id="数组-array"><a href="#数组-array" class="headerlink" title="数组 array"></a>数组 array</h3><p>貌似 <code>array</code> 也可以用于建矩阵，而且<strong>必须</strong>指定列对齐的形式：</p>
+<p>$$<br>\begin{array}{clr}<br>1 &amp; 2 &amp; 3 \\<br>4 &amp; 5 &amp; 6 \\<br>7 &amp; 8 &amp; 9<br>\end{array}<br>$$</p>
+<pre><code>\begin{array}{clr}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9
+\end{array}
+</code></pre>
+<p><code>clr</code> 的每个字母分别代表了一列的对齐方式：第一列居中 <code>c(enter)</code>、第二列左对齐 <code>l(eft)</code>、第三列右对齐 <code>r(ight)</code>。</p>
+<h3 id="讨论情况-cases"><a href="#讨论情况-cases" class="headerlink" title="讨论情况 cases"></a>讨论情况 cases</h3><pre><code class="latex">$$f(x)=
+\begin{cases}
+0&amp; x=0\\
+1&amp; x \neq 0
+\end{cases}$$
+</code></pre>
+<p>$$f(x)=<br>\begin{cases}<br>0&amp; x=0\\<br>1&amp; x \neq 0<br>\end{cases}$$</p>
+<p>如果是需要对齐等于号，可以使用 <code>\begin{align}</code>（详解看 <a href="#%E6%8E%92%E7%89%88">排版</a>）。大括号需要下一段提到的 <code>\left\{ \right.</code> 来实现。</p>
+<p>$$ \left\{ \begin{aligned}<br>I_0 &amp;= 1 - e^{-1} \\<br>I_n &amp;= 1-nI_{n-1} \quad (n=1,2,…)<br>\end{aligned} \right.$$</p>
+<h2 id="奇奇怪怪的括号"><a href="#奇奇怪怪的括号" class="headerlink" title="奇奇怪怪的括号"></a>奇奇怪怪的括号</h2><blockquote>
+<p>参考博客：<a href="https://blog.csdn.net/miao0967020148/article/details/78712811" target="_blank" rel="noopener">https://blog.csdn.net/miao0967020148/article/details/78712811</a></p>
+</blockquote>
+<p>使用括号的时候，可以加一句<code>\left</code> <code>\right</code>，大概是告诉 LaTeX，我要用括号了，这样 LaTeX 会根据括号中内容中的高度自动调整括号的高度。</p>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大括号</td>
+<td><code>$\left\{ \frac{a}{b} \right\}$</code> <code>$\{ \}$</code></td>
+<td>$\left\{ \frac{a}{b} \right\}$</td>
+</tr>
+<tr>
+<td>尖括号</td>
+<td><code>$\left \langle \frac{a}{b} \right \rangle$</code></td>
+<td>$\left \langle \frac{a}{b} \right \rangle$</td>
+</tr>
+<tr>
+<td>单、双竖线</td>
+<td>由于和 Markdown 表格语法冲突，单竖线和双竖线的语法写在表格下</td>
+<td></td>
+</tr>
+<tr>
+<td>取整函数</td>
+<td><code>$\left \lfloor \frac{a}{b} \right \rfloor$</code></td>
+<td>$\left \lfloor \frac{a}{b} \right \rfloor$</td>
+</tr>
+<tr>
+<td>取顶函数</td>
+<td><code>$\left \lceil \frac{c}{d} \right \rceil$</code></td>
+<td>$\left \lceil \frac{c}{d} \right \rceil$</td>
+</tr>
+<tr>
+<td>混合括号</td>
+<td><code>$\left [ 0,1 \right )\left \langle \psi \right |$</code></td>
+<td>$\left [ 0,1 \right )\left \langle \psi \right|$</td>
+</tr>
+<tr>
+<td>单左括号</td>
+<td><code>$\left \{ \frac{a}{b} \right .$</code> <br>加个点就可以省略了</td>
+<td>$\left \{ \frac{a}{b} \right .$</td>
+</tr>
+</tbody></table>
+<p>单竖线：<code>$\left| \frac{a}{b} \right|$</code> $\left| \frac{a}{b} \right|$<br>双竖线：<code>$\left\| \frac{a}{b} \right\|$</code> $\left\| \frac{a}{b} \right\|$</p>
+<p>（提醒 MathJax 用户：上述符号前的 <code>\</code> 都应使用 <code>\\</code>，而 <code>left</code> 和 <code>right</code> 前仍为 <code>\</code>）</p>
+<p>但是要注意，<code>\left</code> 和 <code>\right</code> 中间不能出现换行 <code>\\</code>。如果实在需要调整括号高度，可以参照下一行。</p>
+<p>还可以使用 <code>\big</code>，<code>\Big</code>，<code>\bigg</code>，<code>\Bigg</code> 手动控制括号的高度。</p>
+<pre><code class="latex">$$\Bigg ( \bigg [ \Big \\{ \big \langle \left | \| x \| \right | \big \rangle \Big \\} \bigg ] \Bigg )$$
+</code></pre>
+<p>$$\Bigg ( \bigg [ \Big \{ \big \langle \left | | x | \right | \big \rangle \Big \} \bigg ] \Bigg )$$</p>
+<h2 id="排版"><a href="#排版" class="headerlink" title="排版"></a>排版</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>LaTeX语句</th>
+<th>数学符号</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通空格</td>
+<td><code>$a \space b \\; c \\  d$</code></td>
+<td>$a \space b \; c \  d$</td>
+<td></td>
+</tr>
+<tr>
+<td>1cm短空格</td>
+<td><code>$a\quad b$</code></td>
+<td>$a\quad b$</td>
+<td></td>
+</tr>
+<tr>
+<td>2cm长空格</td>
+<td><code>$a\qquad b$</code></td>
+<td>$a\qquad b$</td>
+<td></td>
+</tr>
+<tr>
+<td>换行并对齐</td>
+<td><code>$\begin{aligned}</code><br><code>x&amp;=a+b+c\\</code><br><code>&amp;=d+e\\</code><br><code>&amp;=g+f</code><br><code>\end{aligned}$</code></td>
+<td>$\begin{aligned}x&amp;=a+b+c\\&amp;=d+e\\&amp;=g+f\end{aligned}$</td>
+<td>开头 <code>\begin{aligned}</code> <br>结束 <code>\end{aligned}</code><br>行末 <code>\\</code> <br>需要对齐的符号前 <code>&amp;</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><code>&amp;</code> 可以放在任意符号之前表示“在此处对齐”</td>
+<td></td>
+</tr>
+<tr>
+<td>省略号</td>
+<td><code>1...n</code><br><code>1 \dots n</code></td>
+<td>$1 \dots n$</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>1 \cdots n</code></td>
+<td>$1 \cdots n$</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>\vdots</code></td>
+<td>$\vdots$</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><code>\ddots</code></td>
+<td>$\ddots$</td>
+<td></td>
+</tr>
+<tr>
+<td>公式标号</td>
+<td><code>a^2 + b^2 = c^2 \tag{1}</code></td>
+<td>$a^2 + b^2 = c^2 \tag{1}$</td>
+<td>原生 LaTeX 的 <code>$$a+b$$</code> 是自带编号的</td>
+</tr>
+<tr>
+<td>重叠符号</td>
+<td><code>\stackrel{F}{=}</code></td>
+<td>$\stackrel{F}{=}$</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="数学符号表"><a href="#数学符号表" class="headerlink" title="数学符号表"></a>数学符号表</h2><p>常用希腊字母表：</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">小写</th>
+<th align="left">大写</th>
+<th align="left"><code>var</code>小写</th>
+<th align="left"><code>var</code>大写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>delta</code></td>
+<td align="left">$\delta$</td>
+<td align="left">$\Delta$</td>
+<td align="left">\</td>
+<td align="left">$\varDelta$</td>
+</tr>
+<tr>
+<td align="left"><code>phi</code></td>
+<td align="left">$\phi$</td>
+<td align="left">$\Phi$</td>
+<td align="left">$\varphi$</td>
+<td align="left">$\varPhi$</td>
+</tr>
+<tr>
+<td align="left"><code>psi</code></td>
+<td align="left">$\psi$</td>
+<td align="left">$\Psi$</td>
+<td align="left">\</td>
+<td align="left">$\varPsi$</td>
+</tr>
+<tr>
+<td align="left"><code>epsilon</code></td>
+<td align="left">$\epsilon$</td>
+<td align="left">\</td>
+<td align="left">$\varepsilon$</td>
+<td align="left">\</td>
+</tr>
+<tr>
+<td align="left"><code>chi</code></td>
+<td align="left">$\chi$</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>用法：小写即为 <code>\</code> 加英文名；大写只要首字母大小就行；<code>var</code> 是 <code>\var</code> 加大/小写字母。</p>
+<p>如 <code>\varPsi</code> 为 $\varPsi$。</p>
+<p>更多的：</p>
+<p>{%asset_img 50.gif%}<br>{%asset_img 51.gif%}<br>{%asset_img 52.gif%}<br>{%asset_img 53.gif%}<br>{%asset_img 54.gif%}<br>{%asset_img 55.gif%}<br>{%asset_img 56.gif%}</p>
+<h2 id="纯正-LaTeX-插入公式"><a href="#纯正-LaTeX-插入公式" class="headerlink" title="纯正 LaTeX 插入公式"></a>纯正 LaTeX 插入公式</h2><p>由于我在接触 LaTeX 之前就学了 MathJax，所以上述的大多数语法都是基于 MathJax 而非纯正 LaTeX 语法。</p>
+<p>LaTeX 插入公式的格式和 MathJax 稍有区别，但是公式的语法还是差不多的。</p>
+<p>LaTeX 插入数学公式需要调用宏包：</p>
+<pre><code class="latex">\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm} % 某些数学定理和证明会用到
+</code></pre>
+<p>（貌似 TeXstudio 自带，不需要这两行命令也能写数学公式）</p>
+<p>行内公式的格式有：</p>
+<pre><code class="latex">\(a+b\)
+$a+b$ %最常用；MathJax 仅支持这种
+\begin{math}a+b\end{math}
+</code></pre>
+<p>行间公式：</p>
+<pre><code class="latex">\[a+b\]
+$$a+b$$ %最常用；MathJax 仅支持这种
+\begin{displaymath}a+b\end{displaymath}
+</code></pre>
+<p>MathJax 支持另一种行间公式：<code>\begin{equation}a+b\end{equation}</code>。</p>
+<p>LaTeX 也支持这个功能，但是会进行自动标号（MathJax 不会标号）。</p>
+<p>要想不标号，请使用 <code>\begin{equation*}</code>。与 <code>\section*{}</code> 如出一辙。</p>
+<h3 id="在-LaTeX-引用公式"><a href="#在-LaTeX-引用公式" class="headerlink" title="在 LaTeX 引用公式"></a>在 LaTeX 引用公式</h3><p>可见 <a href="https://blog.csdn.net/robert_chen1988/article/details/53315012" target="_blank" rel="noopener">latex 引用公式_天天向上的专栏-CSDN博客</a>。</p>
+<p>需要注意的是，和其他引用相同，在 LaTeX 引用公式可能需要编译两遍。</p>
+<h3 id="LaTeX-中换行"><a href="#LaTeX-中换行" class="headerlink" title="LaTeX 中换行"></a>LaTeX 中换行</h3><p>MathJax 中可以在 <code>$$a+b$$</code> 之中 插入 <code>\\</code> 以换行，这样就可以在内输入多个公式。然而 LaTeX 中不允许这样做。这种情况下需要写为多个公式，每个公式用一对 <code>$$</code> 括起来。</p>

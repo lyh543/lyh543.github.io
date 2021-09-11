@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>数学建模入门 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="课程笔记,数学建模">
+    <meta name="description" content="无生活，不建模。——覃思义 课程及比赛安排泥电开展的课程 《漫话数学建模》（大一下，核心通识课） 《数学建模实验》《数学建模方法》（即现在的集训，面向大二，素质选修课） 《数学建模实验》《高级程序设计方法（进行科学计算的）》（面向大二及以上，素质选修课）  本课程的开展过程 学分在下学期，本学期无 本学期上到 16 周左右、不考试，不与主课考试冲突 下学期除上课之外，在老师指导下以组为单位自学数模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数学建模入门">
+<meta property="og:url" content="https://blog.lyh543.cn/mcm/getting-started-mcm/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="无生活，不建模。——覃思义 课程及比赛安排泥电开展的课程 《漫话数学建模》（大一下，核心通识课） 《数学建模实验》《数学建模方法》（即现在的集训，面向大二，素质选修课） 《数学建模实验》《高级程序设计方法（进行科学计算的）》（面向大二及以上，素质选修课）  本课程的开展过程 学分在下学期，本学期无 本学期上到 16 周左右、不考试，不与主课考试冲突 下学期除上课之外，在老师指导下以组为单位自学数模">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.131Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="课程笔记">
+<meta property="article:tag" content="数学建模">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">数学建模入门</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">数学建模入门</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-10-25T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-10-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#课程及比赛安排"><span class="post-toc-text">课程及比赛安排</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#泥电开展的课程"><span class="post-toc-text">泥电开展的课程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#本课程的开展过程"><span class="post-toc-text">本课程的开展过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#比赛"><span class="post-toc-text">比赛</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#校队选拔标准"><span class="post-toc-text">校队选拔标准</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#美赛和国赛风格区别"><span class="post-toc-text">美赛和国赛风格区别</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数学建模方法和规律"><span class="post-toc-text">数学建模方法和规律</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习资料"><span class="post-toc-text">学习资料</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分工准备"><span class="post-toc-text">分工准备</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#建模方面"><span class="post-toc-text">建模方面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于写作"><span class="post-toc-text">关于写作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关于编程"><span class="post-toc-text">关于编程</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-mcm/getting-started-mcm"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">数学建模入门</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-10-26 00:00:00" datetime="2019-10-25T16:00:00.000Z"  itemprop="datePublished">2019-10-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>无生活，不建模。——覃思义</p>
+<h2 id="课程及比赛安排"><a href="#课程及比赛安排" class="headerlink" title="课程及比赛安排"></a>课程及比赛安排</h2><h3 id="泥电开展的课程"><a href="#泥电开展的课程" class="headerlink" title="泥电开展的课程"></a>泥电开展的课程</h3><ol>
+<li>《漫话数学建模》（大一下，核心通识课）</li>
+<li>《数学建模实验》《数学建模方法》（即现在的集训，面向大二，素质选修课）</li>
+<li>《数学建模实验》《高级程序设计方法（进行科学计算的）》（面向大二及以上，素质选修课）</li>
+</ol>
+<h3 id="本课程的开展过程"><a href="#本课程的开展过程" class="headerlink" title="本课程的开展过程"></a>本课程的开展过程</h3><ul>
+<li>学分在下学期，本学期无</li>
+<li>本学期上到 16 周左右、不考试，不与主课考试冲突</li>
+<li>下学期除上课之外，在老师指导下以组为单位自学数模</li>
+</ul>
+<h3 id="比赛"><a href="#比赛" class="headerlink" title="比赛"></a>比赛</h3><ul>
+<li>秋季 11 月中旬（2019 年为 2019.11.27）：美国模拟赛（大面积，主要面向大三）  </li>
+<li>春季 5 月中旬（2020 年为 2020.5.14）：校内赛（主要面向大二）</li>
+</ul>
+<h3 id="校队选拔标准"><a href="#校队选拔标准" class="headerlink" title="校队选拔标准"></a>校队选拔标准</h3><ol>
+<li>课程结业考核（很随意的，满分 150 分）</li>
+<li>校内比赛</li>
+<li>平时活动中老师的评价</li>
+<li>选拔面试表现（三人为单位）</li>
+</ol>
+<p>选拔人数不定。</p>
+<h3 id="美赛和国赛风格区别"><a href="#美赛和国赛风格区别" class="headerlink" title="美赛和国赛风格区别"></a>美赛和国赛风格区别</h3><blockquote>
+<p>如果你参加的是国赛，应该尽量完成所有问题，并保证结果的正确性，创新但要评委能看懂是最好的；<br>如果你参加的是美赛，重点把主要问题做的很出彩就够了，其他问题可以在主要问题的应用下能完成就行。</p>
+</blockquote>
+<h2 id="数学建模方法和规律"><a href="#数学建模方法和规律" class="headerlink" title="数学建模方法和规律"></a>数学建模方法和规律</h2><ol>
+<li>适当的假设和简化</li>
+<li>找出问题中最关键的量，找出支配问题的内在规律</li>
+<li>用数学的语言（即公式、图表或算法等）描述这些俩之间的数学关系，即数学模型</li>
+<li>用数学的方法进行编译、推断、求解、数值解</li>
+<li>用各种方法进行验证</li>
+<li>改进模型</li>
+</ol>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p>校内讲义《数学方法与实践》《数学建模方法与编程培训》《数学建模竞赛优秀论文》</p>
+<p>参考书籍：</p>
+<ul>
+<li>姜启源、谢金星、叶俊《数学建模（第三版）》，高等教育出版社</li>
+<li>杨启帆《数学建模》，高等教育出版社</li>
+<li>徐全智、杨晋浩《数学建模》，高等教出版社</li>
+<li>韩中庚《数学建模方法及其应用》，高等教育出版社</li>
+</ul>
+<h2 id="分工准备"><a href="#分工准备" class="headerlink" title="分工准备"></a>分工准备</h2><h3 id="建模方面"><a href="#建模方面" class="headerlink" title="建模方面"></a>建模方面</h3><p>熟悉并掌握一些常见的模型。</p>
+<ul>
+<li>分析类——机理分析、微分方程、差分方程、动力系统…</li>
+<li>概率统计类——概率、统计、抽样、多元统计、回归、聚类、判别分析、时间序列…</li>
+<li>优化类——优化、规划、运筹线性规划、非线性规划、目标规划、动态规划…</li>
+<li>组合、离散类——排列、组合、递归等，图、路、匹配、网络等…</li>
+<li>常见模型中的数值计算的方法</li>
+</ul>
+<h3 id="关于写作"><a href="#关于写作" class="headerlink" title="关于写作"></a>关于写作</h3><p>竞赛结果的唯一体现形式是论文，所以也有必要多看一下往年的优秀竞赛论文（国一论文）。学习他们的行文语言、论文格式、一些习惯。以及如何从实际问题，进行简化假设，一步步导出最终的数学模型。</p>
+<h3 id="关于编程"><a href="#关于编程" class="headerlink" title="关于编程"></a>关于编程</h3><p>好好学 Matlab 就够了。基础编程一定要会，工具箱函数可以现查。<br>学有余力，可以学 SPSS/R 等统计专用软件，Visio 绘图软件。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.131Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/getting-started-mcm/&title=《数学建模入门》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/getting-started-mcm/&title=《数学建模入门》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/getting-started-mcm/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数学建模入门》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/getting-started-mcm/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/getting-started-mcm/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/mcm/mcm-training-note/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">数学建模集训课程笔记目录</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/linux/download-file-on-server/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">服务器下载文件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/getting-started-mcm/&title=《数学建模入门》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/getting-started-mcm/&title=《数学建模入门》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/getting-started-mcm/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数学建模入门》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/getting-started-mcm/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/getting-started-mcm/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3a0W6DMAwF0P7/T7PXSR302qaTEg5P1cpCDpM8x/brFV/H23X27e+fvH8+W/lsnZsvDAyMZRnH5ZU8IEFebzq/53QnGBgYD2AkoTB/fB6OJ3diYGBgXC+XJ4jJK8ifi4GBgfGNgNtDYmBgYPQOsVVSXoBL1rntLI6BgbEgI6+6///nr/Q3MDAwlmIcxWvSN7xrD388BQMDY2tGHuCqaVmOjw6oyQoYGBibMpLBiF7xK99Kb7UPfwcMDIytGb1j5Dxk91LM04CLgYGxHSMvyifp3aRw3wzxGBgYD2BUk7P5AOv8Nd2QY2JgYCzCmCRtSYjsrdYM3xgYGFszekWuu1oF1bD7IcRjYGBszageKfNR12R0o9rybP4/wcDAWJaRD4FVj5cJqZrjnf4uBgbGpoxJAM1J+YZ6LwgDA2NvRuGm1hDGNak6gjaaccPAwFiWUW0J9ApnvWZnXsLDwMB4AqNah6sG0AkpOkJjYGBszcg3mhf3q22GvEiHgYHxZEaSkPWGw+4q4UVBGQMD4zGMaspYJc1f0A2zIRgYGFsw8kJYteg2Ka59SEAxMDA2ZRzFK39ML0xXxz4wMDCewKgOTFRLbHkKWG08NDEYGBjLMpIgm5Tv8/ZAb2gj6sdiYGBszcgD33XATZoEhRN2visMDAyMImPeNigfYjEwMDBayV/v2/zVjAIuBgbGgoze4FdSyk8KbZMRDQwMjCcweiMO1cSxt9FJ6MfAwNiC8QMt+rwqaqw6twAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

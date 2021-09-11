@@ -1,0 +1,7 @@
+INCREMENT System_Edition xilinxd 2016.12 permanent uncounted \
+	EF4E6433FF0D \
+	VENDOR_STRING=Xilinx_CN_Customer,System_Edition,software,permanent,_135256_15690819_173552794_661 \
+	HOSTID=ANY ISSUER="Xilinx Inc" START=03-May-2010 TS_OK
+PACKAGE System_Edition xilinxd 2016.12 796A92CBC34B \
+	COMPONENTS="AccelDSP ChipscopePro_SIOTK ChipscopePro ISIM \
+	SysGen ISE sdk xps PlanAhead" OPTIONS=SUITE

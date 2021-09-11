@@ -1,0 +1,126 @@
+<hr>
+<p>title: Django 测试那些事<br>date: 2020-1-8 18:20:23<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>Django</li>
+<li>RESTful</li>
+<li>后端</li>
+<li>测试<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<ul>
+<li>Django 测试的教程：<a href="https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial06/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/intro/tutorial06/</a>  </li>
+<li>Django 测试的文档：<a href="https://docs.djangoproject.com/zh-hans/3.1/topics/testing/" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/topics/testing/</a></li>
+</ul>
+<p>在后端开发中，自己写测试样例还是非常重要的，不然每次修改程序以后手动测试，工作量又大，还很难测完整。</p>
+<p>Django 项目中用到的测试主要是集成测试。</p>
+<p>同作为 Web 框架的 Spring Boot 可以单元测试和集成测试，因为 Spring Boot 项目的分层很明显 (Controller, Service, DAO)，可以对其中一层进行单元测试。</p>
+<p>而 Django 框架本身已经实现了大部分功能 (DAO 由 Django Models 实现、Controller 由 Django Router 实现)，只剩下 Service 业务逻辑部分需要做测试，所以直接集成测试就可以了。</p>
+<h3 id="Django-runserver-时测试-API"><a href="#Django-runserver-时测试-API" class="headerlink" title="Django runserver 时测试 API"></a>Django runserver 时测试 API</h3><p>DRF 教程提到，在 <code>runserver</code> 时手动测试看效果时可以使用 <code>httpie</code> 或者其他工具。但是 <code>POST</code> 数据似乎有点麻烦。我更常使用 Python 的 requests 库。</p>
+<pre><code>pip install requests
+</code></pre>
+<pre><code class="py">from requests import get, post, put, delete
+post(&quot;http://localhost:8000/login/&quot;, {
+    &quot;username&quot;: &quot;lyh543&quot;, 
+    &quot;password&quot;: &quot;password&quot;
+})
+</code></pre>
+<p>语法和 <code>django.test.client.Client</code> 几乎一模一样。</p>
+<h3 id="Django-test-环境初始化和清理"><a href="#Django-test-环境初始化和清理" class="headerlink" title="Django test 环境初始化和清理"></a>Django test 环境初始化和清理</h3><p>在编写一个 <code>django.test.TestCase</code> 类的每个函数时，可能涉及到某些重复步骤。如对活动内容进行测试前都需要创建一个活动。文档里提到，可以把相同的准备工作写为这个测试类的 <code>setUp</code> 方法，这个方法在每个测试函数之前都会被调用一次。</p>
+<p>而与 <code>setUp</code> 对应的就是 <code>tearDown</code> 方法，它可以完成每个测试函数以后的清理工作（如清空邮箱、删除测试文件）。需要注意的是，一般来说不需要清理数据库，因为 Django 的每个测试函数都是一个事务，测试完成后会回滚。所以如果测试函数只修改了数据库，就不需要单独编写 <code>tearDown</code> 函数了。</p>
+<pre><code class="py"># 重置密码相关测试
+class ResetPasswordTest(TestCase):
+    email = &quot;admin@example.com&quot;
+    password = &quot;adminadmin&quot;
+
+    def setUp(self):
+        tester_signup(self.email, self.password, &#39;Admin&#39;, &#39;20210101&#39;)
+        self.user = User.objects.first()
+
+    def tearDown(self):
+        mail.outbox.clear()
+
+    # Django test 中不会真的发送邮件
+    # 文档：https://docs.djangoproject.com/zh-hans/3.1/topics/testing/tools/#email-services
+    def test_forget_password_whole_process(self):
+        # ...
+        pass
+</code></pre>
+<p><code>setUp</code> 和 <code>tearDown</code> 在每个函数执行前/后都会执行，而 <code>setUpClass</code> 和 <code>tearDownClass</code> 就是在测试类执行前/后执行。（注意 Django 也编写了 <code>setUpClass</code> 和 <code>tearDownClass</code>，因此重写的时候，不要忘了 <code>super().setUpClass()</code>）</p>
+<h3 id="Django-test-测试邮件服务"><a href="#Django-test-测试邮件服务" class="headerlink" title="Django test 测试邮件服务"></a>Django test 测试邮件服务</h3><p>Django test 还会替换掉默认的 SMTP 服务器，改为一个虚拟的、不会真正发送邮件的服务器。</p>
+<p>文档：<a href="https://docs.djangoproject.com/zh-hans/3.1/topics/testing/tools/#email-services" target="_blank" rel="noopener">https://docs.djangoproject.com/zh-hans/3.1/topics/testing/tools/#email-services</a></p>
+<p>官方也给了一个读取发件箱的方法，这样每次测试的时候就不用人工查询邮件，而是直接在测试代码里读取邮件信息，再配合正则表达式就可以提取出需要的信息了。下面是一个示例：</p>
+<pre><code class="py">from django.core import mail
+
+def pop_token_from_virtual_mailbox(test_function):
+    &quot;&quot;&quot;
+    测试时从虚拟的邮箱中找到验证码，并清空测试发件箱
+    虚拟邮箱：https://docs.djangoproject.com/zh-hans/3.1/topics/testing/tools/#email-services
+    调用示例：https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/5ca6316e6de8c42f28e3b7e9f0866b5cba4280c8/users/tests.py#L188
+    &quot;&quot;&quot;
+    test_function.assertEqual(len(mail.outbox), 1)
+    message = mail.outbox[0].message().as_string()
+    mail.outbox = []
+    token = re.findall(&#39;token=.+&#39;, message)[0][6:]
+    return token
+</code></pre>
+<p>上面这个函数自动抓取发送邮件中的 <code>token=XXXXX</code> 字段中的 <code>XXXXX</code>，保存到 <code>token</code> 变量然后返回。</p>
+<h3 id="Django-test-mock-当前时间"><a href="#Django-test-mock-当前时间" class="headerlink" title="Django test mock 当前时间"></a>Django test mock 当前时间</h3><p>我在写签到的 TestCase 的时候，想要修改 <code>now()</code> 时间来进行测试。Google 了一下找到了 mock 的几种写法，这里演示一种（<a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/7ccdcaa674a53a4b4099f9f7dbc8ccfd01793646/activities/tests.py#L442" target="_blank" rel="noopener">源代码</a>）：</p>
+<pre><code class="py">from unittest import mock
+
+class ActivityCheckInTest(TestCase):
+    @mock.patch(&#39;activities.views.now&#39;)
+    def test_check_in_anytime(self, mocked_now):    # 需要在 test 函数的参数部分增加一个参数
+        for day in [1, 2, 3]:
+            is_today = day == 2
+            for hour in range(24):
+                mocked_now.return_value = datetime(2020, 1, day, hour, 15, tzinfo=pytz.timezone(&#39;Asia/Shanghai&#39;))  # 可任意修改 activities.views.now 的参数
+                client = Client()
+                client.force_login(self.user)
+                response = client.post(activity_check_in_url(self.activity.id), {  # 此处测试的 activities.views.now 会返回上面的 return_value
+                    &quot;check_in_code&quot;: self.activity.check_in_code
+                })
+                self.assertEqual(response.status_code, 200 if is_today else 403, f&#39;date={mocked_now.return_value}&#39;)
+                self.activity.refresh_from_db()
+                self.assertEqual(self.activity.attender.count(), 1 if is_today else 0)
+                self.activity.attender.clear()
+</code></pre>
+<p>对于整个类的每个测试函数都需要 mock 的情况，可以参考 <a href="https://docs.python.org/3/library/unittest.mock-examples.html#applying-the-same-patch-to-every-test-method" target="_blank" rel="noopener">Applying the same patch to every test method - unittest.mock</a>。</p>
+<p>mock 的对象是类和函数，如果想修改变量，直接赋值修改就可以了，不需要 mock。</p>
+<h3 id="Django-test-和-Integration-Error？"><a href="#Django-test-和-Integration-Error？" class="headerlink" title="Django test 和 Integration Error？"></a>Django test 和 Integration Error？</h3><p>我在写登录的 TestCase 时出现了很奇怪的现象：正常运行时 API 貌似没有问题，在一个 Test 函数中调用一次 <code>login</code> 函数也没有问题，但如果调用两次 <code>login</code> 函数，Python<br>解释器会不报错而停止，错误码为 <code>-1073741819 (0xC0000005)</code>。<code>login()</code> 函数如下：</p>
+<pre><code class="py">def login(request):
+    try:
+        username = request.data[&#39;username&#39;]
+        password = request.data[&#39;password&#39;]
+        with transaction.atomic():
+            user = authenticate(request, username=username, password=password)
+            django_login(request, user)
+        return Response(status=status.HTTP_200_OK)
+    except IntegrityError or KeyError:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+</code></pre>
+<p>test 函数如下：</p>
+<pre><code class="py">class LogInTest(TestCase):
+    def test_log_in_with_less_argument(self):
+        r = Client().post(&#39;/users/login/&#39;)
+        self.assertEqual(r.status_code, 401)
+
+        r = Client().post(&#39;/users/login/&#39;)
+        self.assertEqual(r.status_code, 401)
+</code></pre>
+<p>我参考了 Django 文档的 <a href="https://docs.djangoproject.com/zh-hans/3.1/topics/db/transactions/#controlling-transactions-explicitly" target="_blank" rel="noopener">事务</a> 部分，按照官方推荐的方法编写这段代码，但是出了问题。</p>
+<p>个人猜测可能是 TestCase 中涉及的数据库回滚和 <code>IntegrityError</code> 触发回滚的冲突？</p>
+<p>最终我只能按照 <code>if</code> 的方法替代掉 <code>try-catch</code> 的方法。尽量不要触发 <code>IntegrityError</code> 吧。</p>
+<h3 id="Django-test-时，POST-和-PATCH-记得添加-content-type-’application-json’"><a href="#Django-test-时，POST-和-PATCH-记得添加-content-type-’application-json’" class="headerlink" title="Django test 时，POST 和 PATCH 记得添加 content_type=’application/json’"></a>Django test 时，POST 和 PATCH 记得添加 content_type=’application/json’</h3><p>笔者已经两次被这个坑了。第一次是在测试 PATCH 时，使用 <code>django.test.client.Client.patch(path, data)</code>，返回的 HTTP 状态码为 415 <code>Unsupported media type &quot;application/octet-stream&quot; in request.&#39;</code>：</p>
+<p>添加参数 <code>Client.patch(path, data, content_type=&#39;application/json&#39;)</code> 就好了。</p>
+<p><a href="https://stackoverflow.com/questions/44609020/getting-415-code-with-django-test-clients-patch-method" target="_blank" rel="noopener">Getting 415 code with django.test.Client’s patch method</a></p>
+<p>后来，在 POST 的时候莫名其妙发现我写的下面这段 JSON，手动 POST 时能正常工作，但使用 <code>Client.post(path, data)</code> 时，嵌套的 <code>{&quot;id&quot;:1}</code> 部分不能被正确识别到。</p>
+<pre><code class="json">{
+    &quot;title&quot;: &quot;test&quot;,
+    &quot;datetime&quot;: &quot;2021-01-20T10:29:26+08:00&quot;,
+    &quot;location&quot;: &quot;test&quot;,
+    &quot;presenter&quot;: [{&quot;id&quot;:1}]
+}
+</code></pre>
+<p>DEBUG 的时候注意到，response 中包含的 <code>wsgi_request</code> 里面，<code>{&quot;id&quot;:1}</code> 就没有被正确提交。猜测可能是 Django Client 没有以 JSON 的形式解析这段代码，于是加上 <code>content_type=&#39;application/json&#39;</code>，就返回 <code>201 Created</code> 了。</p>

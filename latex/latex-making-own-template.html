@@ -1,0 +1,69 @@
+<hr>
+<p>title: 编写自己的 LaTeX 模板<br>date: 2020-06-13 16:11:55<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<p>一般来说，网上的 LaTeX 模板已经足够用了，只需要会用就行了，基础语法请看<a href="../LaTeX-class-note">LaTeX 基础</a>。</p>
+<p>如果想要自己编写模板，则涉及到了一些高级一点的语法。</p>
+<h2 id="texdoc-手册"><a href="#texdoc-手册" class="headerlink" title="texdoc 手册"></a>texdoc 手册</h2><p>遇到不会的语法，常用自带的手册。可以使用 <code>texdoc &lt;command&gt;</code> 查询。</p>
+<h2 id="常用纸张布局"><a href="#常用纸张布局" class="headerlink" title="常用纸张布局"></a>常用纸张布局</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<pre><code class="tex">% 参考 Word 默认格式
+\usepackage[a4paper, inner=3.18cm, outer=3.18cm, top=2.54cm, bottom=2.54cm, bindingoffset=0cm]{geometry}
+</code></pre>
+<h2 id="页眉控制"><a href="#页眉控制" class="headerlink" title="页眉控制"></a>页眉控制</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<p>注意中括号的内容的含义如下：<code>H, F</code> 页眉页脚、<code>L, C, R</code> 左中右部分、<code>O, E</code> 奇偶页。</p>
+<pre><code class="tex">\usepackage{fancyhdr}
+
+\fancyhead{} % 清空之前的格式
+\fancyhead[HL]{心理学漫谈结课论文}
+\fancyhead[HR]{\zhdate*{2019/1/13}}
+\fancyfoot[FC]{\thepage}
+\setlength{\headsep}{5pt} % 设置页眉距
+
+\begin{document}
+
+\pagestyle{fancy} % 正文运用 fancy
+
+\maketitle
+\thispagestyle{fancy} % 标题页默认没有页眉，这句强制添加页眉
+</code></pre>
+<h2 id="摘要（不分页无大标题）"><a href="#摘要（不分页无大标题）" class="headerlink" title="摘要（不分页无大标题）"></a>摘要（不分页无大标题）</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<p>不需要 <code>\section</code> 或 <code>\chapter</code> 或 <code>\begin{abstract}</code>，直接写就行。</p>
+<pre><code class="tex">{\bfseries 摘要：}随着社交网络渗透到人们生活的方方面面，刷朋友圈似乎已称为大学生生活不可缺少的一部分……
+
+{\bfseries 关键字：}朋友圈；嫉妒；心理分析
+</code></pre>
+<h2 id="修改-Abstract、Reference-为中文摘要、参考文献"><a href="#修改-Abstract、Reference-为中文摘要、参考文献" class="headerlink" title="修改 Abstract、Reference 为中文摘要、参考文献"></a>修改 Abstract、Reference 为中文摘要、参考文献</h2><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<pre><code class="tex">\renewcommand\refname{参考文献}
+\renewcommand{\abstractname}{\textbf{\large {摘\quad 要}}} %更改摘要二字的样式
+\begin{document}
+% ...
+</code></pre>
+<h2 id="中文数字、日期"><a href="#中文数字、日期" class="headerlink" title="中文数字、日期"></a>中文数字、日期</h2><p>参见 <code>texdoc zhnumber</code>。</p>
+<pre><code class="tex">\zhdate{2019/1/13} % 生成 2019 年 1 月 13 日
+\zhdate*{2019/1/13} % 生成 2019 年 1 月 13 日 星期日
+</code></pre>
+<h2 id="newcommand-和-newenvironment"><a href="#newcommand-和-newenvironment" class="headerlink" title="newcommand 和 newenvironment"></a>newcommand 和 newenvironment</h2><pre><code class="tex">\newcommand{\customcmd}{\realthing}
+
+
+\newenvironment{customenv}
+{
+
+}
+
+\customcmd
+\begin{customenv}
+    % ...
+\end{customenv}
+</code></pre>

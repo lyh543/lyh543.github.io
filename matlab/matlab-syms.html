@@ -1,0 +1,109 @@
+<hr>
+<p>title: MATLAB 符号编程<br>date: 2020-03-31 22:00:58<br>tags:</p>
+<ul>
+<li>MATLAB</li>
+<li>课程笔记<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<blockquote>
+<p>符号对象 (Symbolic Objects 不同于普通的数值计算) 是 Matlab 中的一种特殊数据类型，它可以用来表示符号变量、表达式以及矩阵。<br>利用符号对象能够在不考虑符号所对应的具体数值的情况下能够进行代数分析和符号计算 (symbolic math operations)，例如解代数方程、微分方程、进行矩阵运算等。<br>符号对象需要通过 <code>sym</code> 或 <code>syms</code> 函数来指定, 普通的数字转换成符号类型后也可以被作为符号对象来处理。<br>我们可以用一个简单的例子来表明数值计算和符号计算的区别：</p>
+<blockquote>
+<p><code>2/5+1/3</code> 的结果为 <code>0.7333</code> (<code>double</code>类型数值运算)，而 <code>sym(2)/sym(5)+sym(1)/sym(3)</code> 的结果为 <code>11/15</code>，且这里 <code>11/15</code> 仍然是属于 <code>sym</code> 类型, 是符号数。</p>
+</blockquote>
+<p>– <a href="https://www.cnblogs.com/zhouqing/p/3306076.html" target="_blank" rel="noopener">MATLAB符号对象与符号运算</a></p>
+</blockquote>
+<p>符号编程即 $y = ax^2 + bx + c$ 此类函数，并可以对其进行求极限、求导、积分等操作。</p>
+<p>除此之外，符号编程还有精确的优点，比如可以用 <code>sym(1)/sym(3)</code> 来表示精确的分数。</p>
+<h2 id="sym-类型"><a href="#sym-类型" class="headerlink" title="sym 类型"></a>sym 类型</h2><p>和 <code>double</code> 一样，<code>sym</code> 也是一种类型，可以用 <code>whos</code> 命令查看。</p>
+<p><code>sym</code> 类型不仅可以存储 <code>x</code> <code>y</code> 这样的数学意义上的（而不是编程意义上的）变量，还可以存储 <code>1</code>、<code>1/3</code> 这样的数。但请注意，这里的 <code>1/3</code> 是精确的，而不是用浮点数存储的 <code>double</code> 类型的 <code>0.33333...</code>。</p>
+<p><code>sym</code> 类型的数值可以和 <code>double</code> 类型互相转换，转换方法和其他的类似。</p>
+<pre><code class="m">a = sym(1)         # 将 double 值转换为 sym
+b = a/3；          # b 为 sym, 1/3
+c = double(b)      # 将 sym 转为 double, c = 0.3333
+</code></pre>
+<p>除此之外，还可以使用 <code>vpa()</code> 函数来求一个 <code>sym</code> 数值的任意精度的小数（没错，任意！）。不过请注意， <code>vpa</code> 的返回值仍然是一个 <code>sym</code>。</p>
+<p>另外请注意，<code>sym</code> 也支持加减乘除幂运算，也支持等于和不等于，但是不支持大于、小于。<br>如需大于、小于，可以考虑将其转为 <code>double</code> 再比较，或者使用 <code>sort</code> 函数，这之后小的会在前面，大的会在后面。</p>
+<h2 id="函数代值"><a href="#函数代值" class="headerlink" title="函数代值"></a>函数代值</h2><p>可以在定义 <code>f</code> 的时候就显式地指出其自变量 <code>f(x,y)</code>，然后就可以用 <code>f(1,2)</code> 的形式代入。</p>
+<pre><code class="MATLAB">syms x y;
+syms f;
+f(x,y) = x^2 + y^2;
+f(1,2) # 输出 5
+</code></pre>
+<p>将 <code>x = 1, y = 2</code> 代入，返回 5。注意这里返回的 <code>5</code> 同样是一个 <code>syms</code>。</p>
+<p>此外，还有使用 <code>subs</code> 和 <code>eval</code> 的方法，如下例：</p>
+<pre><code class="m">% 来源链接 https://blog.csdn.net/zengxiantao1994/java/article/details/77943305
+
+f = sin(x^x / x^2/exp(x));
+% 利用符号计算求f(x)的二阶导数
+% diff函数用于求导数或者向量和矩阵的比较。
+% 如果输入一个长度为n的一维向量，则该函数将会返回长度为n-1的向量，向量的值是原向量相邻元素的差
+d2f = diff(f, x, 2);
+ 
+% 第一种方法：利用subs函数求d2f在x=1时的值。
+d2fx1 = subs(d2f, x, 1);  % d2fx1 = 2.2082
+ 
+% 第二种方法：x赋值1后，利用eval函数求d2f在x = 1时的值
+x = 1;
+d2_fx1 = eval(d2f); %d2_fx1 = 2.2082
+   
+% 第三种方法：将d2f转化成匿名函数，求其在x = 1时的值
+% vectorize的含义就是将乘转成点乘等。  &#39;*&#39; -&gt; &#39;.*&#39;； &#39;/&#39; -&gt; &#39;./&#39;； &#39;^&#39; -&gt; &#39;.^&#39;； 最后再将替换结果中的“..”删除一个&quot;.&quot;。
+F = eval([&#39;@(x)&#39;,vectorize(char(d2f))]);
+F(1)  % ans=  2.2082
+</code></pre>
+<h2 id="解方程"><a href="#解方程" class="headerlink" title="解方程"></a>解方程</h2><pre><code class="m">syms x;
+y = x^2 + 2*x;
+solve(y-1,x);
+</code></pre>
+<p>解 <code>y-1=0</code> 关于 x  的方程。返回：</p>
+<pre><code>[- 2^(1/2) - 1
+   2^(1/2) - 1]
+</code></pre>
+<p>另有：</p>
+<pre><code class="m">equa = x^2 + 2*x == 1;
+solve(equa);
+
+syms u v
+eqns = [2*u + v == 0, u - v == 1];
+S = solve(eqns,[u v])
+</code></pre>
+<p>以上都是 <code>solve</code> 函数。如有必要，还可以考虑使用 <code>roots</code>（给定多项式系数）<code>fzero</code>、<code>fsolve</code>（给定匿名函数）、<code>vpasolve</code>，用法可查看官方文档或<a href="https://blog.csdn.net/zengxiantao1994/article/details/77943305" target="_blank" rel="noopener">博客</a>。</p>
+<h2 id="化简表达式"><a href="#化简表达式" class="headerlink" title="化简表达式"></a>化简表达式</h2><pre><code class="m">s = simplify(cos(x)^2-sin(x)^2)
+</code></pre>
+<p>返回 <code>cos(2*x)</code>。</p>
+<h2 id="求极限"><a href="#求极限" class="headerlink" title="求极限"></a>求极限</h2><pre><code class="m">s = limit((1+1/n)^n, n, inf);
+</code></pre>
+<p>返回 <code>exp(1)</code>。</p>
+<h2 id="求级数"><a href="#求级数" class="headerlink" title="求级数"></a>求级数</h2><pre><code class="m">s = symsum(1/factorial(x), 0, Inf)
+</code></pre>
+<p>当然，如果上下界使用整数，这就是一个普通的求和过程（无需用 <code>for</code> 语句）。</p>
+<p>返回 <code>exp(1)</code>。</p>
+<h2 id="求导"><a href="#求导" class="headerlink" title="求导"></a>求导</h2><pre><code class="m">s = y^3+x^2; diff(s,y);
+</code></pre>
+<p>返回 <code>3*y^2</code>。</p>
+<p>另有求 dim 阶导数：</p>
+<pre><code class="m">diff(X,n,dim)
+</code></pre>
+<p>另外，对于矩阵 <code>A</code>，<code>diff(A)</code> 是差分。  </p>
+<p>另外可以求近似导数 $f’(x)=\lim\limits_{h \to 0} \frac{f(x+h)-f(x)}{h}$：</p>
+<pre><code>h = 0.001;
+X = 1:h:2;
+Y = sin(X);
+D = diff(Y)/h;
+</code></pre>
+<h2 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h2><pre><code class="m">int(x^2);
+</code></pre>
+<p>返回 <code>x^3/3</code>。</p>
+<p>另有以下形式：</p>
+<pre><code class="m">int(expr,var);
+int(expr,a,b);
+int(expr,var,a,b);
+</code></pre>
+<h2 id="泰勒展开"><a href="#泰勒展开" class="headerlink" title="泰勒展开"></a>泰勒展开</h2><pre><code class="m">taylor(exp(x),x,0,&#39;order&#39;,3)
+</code></pre>
+<p>2 阶泰勒展开，返回 <code>x^2/2+x+1</code>。 </p>
+<h2 id="解常微分方程"><a href="#解常微分方程" class="headerlink" title="解常微分方程"></a>解常微分方程</h2><pre><code class="MATLAB">dsolve(&#39;Dy=(50-0.01*y)*y&#39;,&#39;y(0)=4&#39;,&#39;x&#39;); % 二阶导的写法为&#39;D2y&#39;
+</code></pre>
+<p>详见<a href="../differential-equation/#MATLAB-%E8%A7%A3%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B">MATLAB 解常微分方程</a>。</p>
+<h2 id="分段函数"><a href="#分段函数" class="headerlink" title="分段函数"></a>分段函数</h2><p>分段函数：<code>pw = piecewise(cond1,val1,cond2,val2,...,otherwiseVal)</code>，如<code>y=piecewise(x&lt;0,-x^2,x^2);</code>。</p>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>句柄（handle） | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="计算机科学">
+    <meta name="description" content="参考链接：https:&#x2F;&#x2F;zh.wikipedia.org&#x2F;wiki&#x2F;%E5%8F%A5%E6%9F%84https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;27656256  句柄（HANDLE）是什么？ 维基百科：  在程序设计中，句柄（handle）是 Windows 操作系统用来标识被应用程序所创建或使用的对象的整数。其本质相当于带有引用计数的智能指针。当一个应用程序要引用其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="句柄（handle）">
+<meta property="og:url" content="https://blog.lyh543.cn/computer-science/handle/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="参考链接：https:&#x2F;&#x2F;zh.wikipedia.org&#x2F;wiki&#x2F;%E5%8F%A5%E6%9F%84https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;27656256  句柄（HANDLE）是什么？ 维基百科：  在程序设计中，句柄（handle）是 Windows 操作系统用来标识被应用程序所创建或使用的对象的整数。其本质相当于带有引用计数的智能指针。当一个应用程序要引用其他">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.083Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="计算机科学">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">句柄（handle）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">句柄（handle）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-19T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-computer-science/handle"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">句柄（handle）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-20 00:00:00" datetime="2019-08-19T16:00:00.000Z"  itemprop="datePublished">2019-08-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>参考链接：<a href="https://zh.wikipedia.org/wiki/%E5%8F%A5%E6%9F%84" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8F%A5%E6%9F%84</a><br><a href="https://www.zhihu.com/question/27656256" target="_blank" rel="noopener">https://www.zhihu.com/question/27656256</a></p>
+</blockquote>
+<p>句柄（HANDLE）是什么？</p>
+<p>维基百科：</p>
+<blockquote>
+<p>在程序设计中，句柄（handle）是 Windows 操作系统用来标识被应用程序所创建或使用的对象的整数。其本质相当于带有引用计数的智能指针。当一个应用程序要引用其他系统（如数据库、操作系统）所管理的内存块或对象时，可以使用句柄。</p>
+</blockquote>
+<p>知乎上比较简短而有趣的回答有：</p>
+<blockquote>
+<p>如果当初把 handle 这个词翻译成”编号”，那得省大家多少事啊。<br><br>文件编号<br>窗口编号<br><br>太容易理解了<br>一个古怪的词汇，句柄，不知道吓退了多少学习 windows 编程的人</p>
+</blockquote>
+<p>另外一个回答：</p>
+<blockquote>
+<p>最早的 windows 开发书籍，handle 是被翻译成“把手”的。虽然不好听，但是个人认为相当传神。<br><br>1.虽然你握住的只是把手，却能拉动整扇门，而且你根本不用在意那门长什么样子<br>2.一扇门如果有多个把手，被不同的人（进程）握住，门往哪儿走就不好说了</p>
+</blockquote>
+<p>比较专业的回答：</p>
+<blockquote>
+<p>句柄就是个数字，一般和当前系统下的整数的位数一样，比如 32bit 系统下就是4个字节。<br>这个数字是一个对象的唯一标示，和对象一一对应。这个对象可以是一个块内存，一个资源，或者一个服务的 context（如 socket，thread）等等。<br>这个数字的来源可以有很多种，只要能保证和它代表的对象保持唯一对应就可以，比如可以用内存地址，也可以用句柄表的序号，或者干脆用一个自增 ID，再或者用以上的值去异或一个常数。传统上操作系统内核和系统服务 API 都是 C 语言接口的，但是其内部设计理念上又是 OO （面向对象）的，所以有对象概念却没有对应的语言语法支持。<br>句柄的作用就是在 C 语言环境下代替 C++ 的对象指针来用的。创建句柄就是构造，销毁句柄就是析构，用句柄调用函数相当于传入 this 指针。如果有系统 API 是  C++ 接口的，那么就没有句柄了，而是某个接口指针，IXXXPtr 之类的，比如 Windows 的 com ptr。</p>
+</blockquote>
+<p>查了这几个资料，大概说的比较清楚了，我也不多加赘述。</p>
+<p>另外，<code>Windows.h</code> 对 HANDLE 类型的定义，还真就是指针：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> HANDLE *<span class="keyword">void</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.083Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag">计算机科学</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/computer-science/handle/&title=《句柄（handle）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/computer-science/handle/&title=《句柄（handle）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/computer-science/handle/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《句柄（handle）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/computer-science/handle/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/computer-science/handle/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/linux/apt/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">apt 笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/c-priority-between-and-or/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">C/C++ &amp;&amp; 和 || 的优先级</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/computer-science/handle/&title=《句柄（handle）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/computer-science/handle/&title=《句柄（handle）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/computer-science/handle/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《句柄（handle）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/computer-science/handle/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/computer-science/handle/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3a0WrDMAwF0P7/T2ewp8GocyWnhSjHT2NzY58MVEn26xWP43ckc/6O9WffzUzWag4MDIzbMo7l+L+V6pz1Kjls/VkMDIwnMNZBdr319YaS56zXjb4AMDAwMIrUPIBiYGBgfCLgXpVWrn+DgYGB0dtKNXRWe2JfqsUxMDBuyKgeDHzz5w+eb2BgYNyEcRRH9Uiy2rxr7goDA2M049228tJxzaseLVRL3MLmMDAwRjCSqw/JIeV+lpo87aQWx8DAGMfIC9edq11X1dzNEhcDA2MEI9/0tUle70VEeS4GBsY4RjVZzB/9uadFwRcDA+PmjJ3l80OCXipZSC4xMDBGM6qR+GiNXr2ZtNswMDCewMhLyv1gmvCqR6cYGBhPY1QvVVQbbXkqmcMwMDCewOhd2OotVuj2VXNbDAyMBzCql7Gq7bDezN4OMTAwpjLyFtu1J6XrlLG6LgYGxlTGftKWH0Dmrb1yMoqBgTGasX98uJ9Q9hp5GBgYz2HsBNlew27n2ln0f8DAwBjK2L/ylW+01247mYmBgTGakTfI9udUU8w83GNgYMxm9MJrtVV3VSPv7V8xMDBGM/KRpHfV0JxcocivbmBgYMxm5GVqXvrmr2P/RWBgYDyHkS/Za5ntJ3Yn3xgYGBgYcZDNDyarzzzJajEwMDCKpWav6dY7VMDAwHgOIw+jV22oCj5ZHQMDYzSjWkBWC92dMnWnYMbAwBjB+AF6Ijf1JXjbEgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

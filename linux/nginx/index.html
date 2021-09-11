@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Nginx（萌新向） | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux,服务器,Nginx">
+    <meta name="description" content="下面记录 Nginx 在使用过程中遇到的“基本”操作。 修改配置文件、测试重启Nginx 首先检查的配置文件在 &#x2F;etc&#x2F;nginx&#x2F;nginx.conf。在这个文件中如果有如下内容： 1include &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;*.conf;  那么也会检查 &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F; 下的所有 conf 文件。本着干净的原则，我们推荐在 nginx.conf 加入 incl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx（萌新向）">
+<meta property="og:url" content="https://blog.lyh543.cn/linux/nginx/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="下面记录 Nginx 在使用过程中遇到的“基本”操作。 修改配置文件、测试重启Nginx 首先检查的配置文件在 &#x2F;etc&#x2F;nginx&#x2F;nginx.conf。在这个文件中如果有如下内容： 1include &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;*.conf;  那么也会检查 &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F; 下的所有 conf 文件。本着干净的原则，我们推荐在 nginx.conf 加入 incl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-01T12:46:22.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.127Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Nginx（萌新向）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Nginx（萌新向）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-01T12:46:22.000Z" itemprop="datePublished" class="page-time">
+  2020-03-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改配置文件、测试重启"><span class="post-toc-text">修改配置文件、测试重启</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#给全站添加-SSL-证书"><span class="post-toc-text">给全站添加 SSL 证书</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#网页转发"><span class="post-toc-text">网页转发</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#隐性转发-反向代理"><span class="post-toc-text">隐性转发&#x2F;反向代理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#显性转发"><span class="post-toc-text">显性转发</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#识别路径和参数并转发"><span class="post-toc-text">识别路径和参数并转发</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#显示某路径下-index-html"><span class="post-toc-text">显示某路径下 index.html</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linux/nginx"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Nginx（萌新向）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-01 20:46:22" datetime="2020-03-01T12:46:22.000Z"  itemprop="datePublished">2020-03-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>下面记录 Nginx 在使用过程中遇到的“基本”操作。</p>
+<h2 id="修改配置文件、测试重启"><a href="#修改配置文件、测试重启" class="headerlink" title="修改配置文件、测试重启"></a>修改配置文件、测试重启</h2><p>Nginx 首先检查的配置文件在 <code>/etc/nginx/nginx.conf</code>。在这个文件中如果有如下内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">include</span> /etc/nginx/conf.d/<span class="regexp">*.conf</span>;</span><br></pre></td></tr></table></figure>
+
+<p>那么也会检查 <code>/etc/nginx/conf.d/</code> 下的所有 <code>conf</code> 文件。本着干净的原则，我们推荐在 <code>nginx.conf</code> 加入 <code>include</code> 语句，然后在 <code>conf.d</code> 下按域名创建自己的 <code>conf</code> 配置文件。</p>
+<p>修改配置文件以后，Nginx 并不是即时读取配置的，需要使用 reload 命令才能加载配置。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接重启 Nginx 服务。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>如果配置有错误，Nginx 就会启动失败，宕机。为了保证 Nginx 服务器能平稳运行，不宕机，我们推荐使用以下命令而不是尝试重启的形式检查错误：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+
+<h2 id="给全站添加-SSL-证书"><a href="#给全站添加-SSL-证书" class="headerlink" title="给全站添加 SSL 证书"></a>给全站添加 SSL 证书</h2><p>请看<a href="../build-https-sites-with-nginx/">另一篇博客</a>。</p>
+<h2 id="网页转发"><a href="#网页转发" class="headerlink" title="网页转发"></a>网页转发</h2><h3 id="隐性转发-反向代理"><a href="#隐性转发-反向代理" class="headerlink" title="隐性转发/反向代理"></a>隐性转发/反向代理</h3><p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器将其跳转到 <code>127.0.0.1:8080</code>，地址栏仍然显示 <code>https://cloud.example.com</code>。</p>
+<p>首先要将域名 <code>cloud.example.com</code> 以 <code>A</code> 的形式指向你的服务器 ip（也就是 <code>example.com</code> 的服务器）。</p>
+<p>然后在服务器上新建文件 <code>\etc\nginx\conf.d\cloud.example.com</code>（习惯用网站命名配置文件），然后加入以下内容：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">        <span class="attribute">server_name</span> cloud.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>这里默认你已经配置好了 <code>https</code> 以及 <code>http</code> 转发到 <code>https</code> 的操作。如果不想使用 https，将第二行修改为 <code>listen 80;</code> 即可。配置 https 请看<a href="../build-https-sites-with-nginx/">另一篇博客</a>。</li>
+<li>第三行的 <code>server_name</code> 不限形式，可以使用通配符、正则表达式，还可以使用 <code>.example.com</code> 的形式匹配 <code>example.com</code> 及其所有子域名。更多细节可以看 [server_name 的官方文档]</li>
+<li>[server_name 的官方文档]:(<a href="http://nginx.org/en/docs/http/server_names.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/server_names.html</a>)</li>
+<li>也可以转发到别的网址，但是貌似不能转发到 <code>https</code>，并且有些网站可能限制转发。</li>
+</ol>
+<h3 id="显性转发"><a href="#显性转发" class="headerlink" title="显性转发"></a>显性转发</h3><p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器服务器将其跳转到 <code>https://baidu.com/</code>，地址栏显示 <code>https://baidu.com/</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> cloud.example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://baidu.com/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法也可以转发到别的网址，无限制。（顺便一说，这也可以在对应网页放一个 html 转发实现，可以不借助 nginx）</p>
+<h4 id="识别路径和参数并转发"><a href="#识别路径和参数并转发" class="headerlink" title="识别路径和参数并转发"></a>识别路径和参数并转发</h4><p>这里我们讨论更复杂的显性转发情况。方便起见，用表格进行说明：</p>
+<table>
+<thead>
+<tr>
+<th>用户输入的网址</th>
+<th>转发后的网址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>https://www.lyh543.cn/</code></td>
+<td><code>https://blog.lyh543.cn/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/git</code></td>
+<td><code>https://blog.lyh543.cn/Linux/Git/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/linux</code></td>
+<td><code>https://blog.lyh543.cn/Linux/linux-daily-command/</code></td>
+</tr>
+<tr>
+<td><code>https://www.lyh543.cn/&lt;其他参数&gt;</code></td>
+<td><code>https://blog.lyh543.cn/&lt;其他参数&gt;</code></td>
+</tr>
+</tbody></table>
+<p>我使用的配置文件如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> www.lyh543.cn;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> = / &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://blog.lyh543.cn/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> = /git &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://blog.lyh543.cn/Linux/Git/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> = /linux &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://blog.lyh543.cn/Linux/linux-daily-command/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://blog.lyh543.cn<span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到最后的 <code>$request_uri</code> 是个很好用的东西。除此之外，我们可以把任意一个 <code>url</code> 拆分为 <code>$scheme://$host$request_uri</code>。</p>
+<p>具体地，对于访问链接 <code>https://blog.lyh543.cn/nginx/</code>，我们有：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>实际意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$scheme</code></td>
+<td><code>https</code></td>
+</tr>
+<tr>
+<td><code>$host</code></td>
+<td><code>blog.lyh543.cn</code></td>
+</tr>
+<tr>
+<td><code>$request_uri</code></td>
+<td><code>/nginx/</code></td>
+</tr>
+</tbody></table>
+<p>按这种方法，很容易写出 <code>http</code> 强制跳 <code>https</code> 的配置文件：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span> default_server;</span><br><span class="line">    <span class="attribute">listen</span>       [::]:<span class="number">80</span> default_server;</span><br><span class="line">    <span class="attribute">server_name</span>  _;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="显示某路径下-index-html"><a href="#显示某路径下-index-html" class="headerlink" title="显示某路径下 index.html"></a>显示某路径下 index.html</h2><p>这里的情形是：用户访问 <code>https://example.com/</code> 时，服务器显示 <code>/path/to/index.html</code> 的内容。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> /&#123;</span><br><span class="line">        <span class="attribute">root</span> /path/to;</span><br><span class="line">        <span class="attribute">index</span> index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.127Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/nginx/&title=《Nginx（萌新向）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/nginx/&title=《Nginx（萌新向）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/nginx/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx（萌新向）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/nginx/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/nginx/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/front-end/html/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">HTML（萌新向）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/linux/build-https-sites-with-nginx/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">全站添加 https</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/nginx/&title=《Nginx（萌新向）》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/nginx/&title=《Nginx（萌新向）》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/nginx/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx（萌新向）》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/nginx/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/nginx/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABuklEQVR42u3aQXKDMAwF0Nz/0vQADeRLwg7tPK8yMeBnFhok+fWKx/Fr5LPXT3utGLi4uGPucTnm10xm32wJFxd3I/csYpxdkyx/Hbaun3/6Py4u7iO5OT3fAC4u7v/gNhf7ViDDxcVtcfMwlFCSosnyXA0XF3fAzZdc93tJfRcXF7fFPYoj+cTJg2B5dVxc3C3cPKDkLZBr9A3tWFxc3I3ceat1krokrwAXF3cPd1L4uCucFQo0uLi4G7m9RyRtj0np882rxMXF/RI3Xz5PkCaNkw+BDBcXdxm3+jmSlzMms1Hyg4uLu5hbLYwmG+i1WKJAhouLu4ybTPTKJTmrGTpxcXGXcXvpyuQQRrXt2szVcHFxB9xqwaLags3pSZjDxcV9AjcvZ8ybMXlAxMXF3c9Nbr4L2izR4uLibuRWG6hzXK/RgouLu5rbS3Kqx6puO7aFi4u7hVtdPm+35ClTnlbh4uLu5ObF0DxZSu6tFl5xcXH3c6uBpnrMIsrDkrtwcXEfyc0LKL2kq5xX4eLi/hFutSVTEOLi4m7k9g5d3dVEKaRbuLi4W7jVUNI7kFE9hHFDfRcXF7fD/QF58q+OarAUhwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

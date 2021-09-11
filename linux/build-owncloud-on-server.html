@@ -1,0 +1,231 @@
+<hr>
+<p>title: 搭建自己的 Owncloud 云盘<br>date: 2020-2-27 16:33:05<br>tags:</p>
+<ul>
+<li>服务器</li>
+<li>Docker</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<blockquote>
+<p>2020.2.12 更新：相比 Owncloud，NextCloud 貌似更新。所以我转投 NextCloud 了。另外知乎上也有很多人安利 seafile。<br>2020.2.27 更新：接触了 Docker 以后，发现使用 Docker 搭建更加方便（可从<a href="../docker">这篇博客</a>中了解）。于是也花了一点时间钻研，搭建好了 NextCloud 和 Seafile，并把方法一并写在下面。</p>
+</blockquote>
+<h2 id="安装-Owncloud"><a href="#安装-Owncloud" class="headerlink" title="安装 Owncloud"></a>安装 Owncloud</h2><p>转载链接：<a href="https://zhuanlan.zhihu.com/p/28648363" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28648363</a></p>
+<p>官方教程：<a href="https://doc.owncloud.org/server/9.0/admin_manual/installation/linux_installation.html" target="_blank" rel="noopener">https://doc.owncloud.org/server/9.0/admin_manual/installation/linux_installation.html</a></p>
+<p>按照上面无脑配就可以了。不多说。</p>
+<h2 id="配置-Owncloud"><a href="#配置-Owncloud" class="headerlink" title="配置 Owncloud"></a>配置 Owncloud</h2><p>按照知乎的链接装完以后</p>
+<ul>
+<li>配置文件在 <code>/etc/owncloud/config.php</code></li>
+<li>云盘文件默认在 <code>/var/lib/owncloud/data</code>，可在开始使用，进入管理员账户的时候修改。</li>
+</ul>
+<p>顺便一提，对于 NextCloud，配置文件在 ``，安装文件在 <code>/var/www/html/nextcloud/</code>。</p>
+<p>如果需要进行配置，需要用 apache 用户运行 <code>/var/www/html/nextcloud/occ</code> 命令，还需要给可执行权限。</p>
+<pre><code>chmod a+x /var/www/html/nextcloud/occ # 给可执行权限
+sudo -u apache /var/www/html/nextcloud/occ --help
+</code></pre>
+<h2 id="安装基于-Docker-的-NextCloud"><a href="#安装基于-Docker-的-NextCloud" class="headerlink" title="安装基于 Docker 的 NextCloud"></a>安装基于 Docker 的 NextCloud</h2><p>为什么要用 Docker 呢？这是为了系统的干净吧。不过坏处是，Docker 的 NextCloud 访问宿主机的文件就没那么容易了。当然，两种方法各有所长。</p>
+<p>顺便一提，如果使用 Docker 的话，甚至可以在一台 Windows 电脑上部署了，就可以在自己的 Windows 电脑上搭建一个，然后用 <code>frp</code> 等方式内网穿透到公网了（可参考<a href="/Windows/use-remote-desktop-with-frp">博客</a>）。</p>
+<p>首先要安装 Docker 以及 Docker Compose，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后需要几个配置文件，我压缩好以后，放在我的网站上，<a href="nextcloud-docker-compose.tar">链接在这里</a>，当然也可以通过下面的命令直接从服务器下载：</p>
+<pre><code class="bash">wget https://blog.lyh543.cn/Linux/build-owncloud-on-server/nextcloud-docker-compose.tar
+tar -xf nextcloud-docker-compose.tar
+cd nextcloud-docker-compose
+cd nextcloud
+</code></pre>
+<p>然后一句</p>
+<pre><code class="bash">docker-compose up -d
+</code></pre>
+<p>经过漫长的镜像下载以后，即可在 <code>127.0.0.1:7070</code> 看到 NextCloud 初始化页面。</p>
+<h3 id="配置-Nextcloud"><a href="#配置-Nextcloud" class="headerlink" title="配置 Nextcloud"></a>配置 Nextcloud</h3><p>如果需要进入到 <code>docker</code> 的虚拟机中，可以使用一下命令进入容器的命令行：</p>
+<pre><code>[root@iz2ze nextcloud]# docker exec -it nextcloud_web_1 /bin/sh
+/ #
+</code></pre>
+<p>其中 <code>nextcloud_web_1</code> 为你的容器名，一般来说就是这个，可以通过 <code>docker ps</code> 查看。</p>
+<p>进入以后，就是 shell 的操作了。Nextcloud 文件的目录在 <code>/var/www/html</code>。</p>
+<h3 id="添加信任域名"><a href="#添加信任域名" class="headerlink" title="添加信任域名"></a>添加信任域名</h3><p>从别的域名访问的时候，NextCloud 会提示：</p>
+<pre><code>通过不被信任的域名访问
+请联系您的管理员。如果您就是管理员，请参照 config.sample.php 中的示例编辑 config/config.php 中的 &quot;trusted_domains&quot; 设置。
+</code></pre>
+<p>我们需要在容器里配置文件添加自己的域名。</p>
+<p>首先进入容器的命令行：</p>
+<pre><code># docker exec -it nextcloud_web_1 /bin/sh
+</code></pre>
+<p>然后用 vi 修改配置文件：</p>
+<pre><code># vi config/config.php
+</code></pre>
+<p>然后找到 <code>trust_domain</code> 部分，我的在 30 行附近。</p>
+<pre><code class="php">  &#39;trusted_domains&#39; =&gt;
+  array (
+    0 =&gt; &#39;example.com:8080&#39;,
+  ),
+</code></pre>
+<p>按 <code>i</code> 进入编辑模式，然后添加自己的域名。</p>
+<pre><code class="php">  &#39;trusted_domains&#39; =&gt;
+  array (
+    0 =&gt; &#39;example.com:8080&#39;,
+    1 =&gt; &#39;cloud.example.com&#39;,
+  ),
+</code></pre>
+<p>然后按 <code>esc</code> 退出编辑模式，再依次按 <code>:wq</code> 后回车，保存并退出。再输入 <code>exit</code> 退出 NextCloud 容器的命令行，刷新页面即可。</p>
+<h2 id="安装基于-Docker-的-Seafile"><a href="#安装基于-Docker-的-Seafile" class="headerlink" title="安装基于 Docker 的 Seafile"></a>安装基于 Docker 的 Seafile</h2><p>这里我们基于 <a href="https://github.com/HumanBrainProject/seafile-compose/" target="_blank" rel="noopener">HumanBrainProject/seafile-compose</a> 来配置 Seafile。</p>
+<p>为什么要用 Docker 呢？这是为了系统的干净吧。不过坏处是，Docker 的 NextCloud 访问宿主机的文件就没那么容易了。当然，两种方法各有所长。</p>
+<p>顺便一提，如果使用 Docker 的话，甚至可以在一台 Windows 电脑上部署了，就可以在自己的 Windows 电脑上搭建一个，然后用 <code>frp</code> 等方式内网穿透到公网了（可参考<a href="/Windows/use-remote-desktop-with-frp">博客</a>）。</p>
+<p>首先要安装 Docker 以及 Docker Compose，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后我们下载前面提到的项目：</p>
+<pre><code class="bash"># 如果还没有安装 git，记得安装
+git clone https://github.com/HumanBrainProject/seafile-compose
+cd seafile-compose
+</code></pre>
+<p>但是！这个模板直接使用貌似会在一个过程中卡住。在修改一个地方以后，我才能够正常的进行部署。</p>
+<pre><code class="bash">nano seafile_dev_docker/Dockerfile
+</code></pre>
+<p>在这里，我们修改第三行起的 <code>RUN</code> 语句，将其拆分为几个 <code>RUN</code> 语句，顺便也替换了中科大的镜像源。</p>
+<pre><code class="dockerfile">RUN sed -i &#39;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#39; /etc/apt/sources.list \
+    &amp;&amp; apt update
+RUN apt-get install -qq -y --no-install-recommends \
+      vim \
+      htop \
+      net-tools \
+      psmisc \
+      git \
+      wget \
+      curl \
+      build-essential \
+      python-dev \
+      python-pip \
+      python-setuptools \
+      python-wheel \
+      libmysqlclient-dev
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+</code></pre>
+<p>所以完整的 <code>seafile_dev_docker/Dockerfile</code> 应该如下：</p>
+<pre><code class="dockerfile">FROM ubuntu:16.04
+
+RUN sed -i &#39;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#39; /etc/apt/sources.list \
+    &amp;&amp; apt update
+RUN apt-get install -qq -y --no-install-recommends \
+      vim \
+      htop \
+      net-tools \
+      psmisc \
+      git \
+      wget \
+      curl \
+      build-essential \
+      python-dev \
+      python-pip \
+      python-setuptools \
+      python-wheel \
+      libmysqlclient-dev
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    &amp;&amp; tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    &amp;&amp; rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+ENV SEAFILE_VERSION=6.3.3 SEAFILE_SERVER=seafile-server
+
+RUN mkdir -p /opt/seafile/conf &amp;&amp; \
+    mkdir -p /opt/seafile/data &amp;&amp; \
+    mkdir -p /opt/seafile/pids &amp;&amp; \
+    mkdir -p /opt/seafile/ccnet &amp;&amp; \
+    mkdir -p /opt/seafile/sockets &amp;&amp; \
+    mkdir -p /opt/seafile/logs &amp;&amp; \
+    openssl genrsa -out /opt/seafile/ccnet/mykey.peer 4096 &amp;&amp; \
+    touch /opt/seafile/logs/seafile.log &amp;&amp; \
+    touch /opt/seafile/logs/ccnet.log &amp;&amp; \
+    touch /opt/seafile/logs/seahub.log
+
+RUN mkdir -p /opt/seafile/ &amp;&amp; \
+    curl -sSL -o - https://download.seadrive.org/seafile-server_${SEAFILE_VERSION}_x86-64.tar.gz \
+    | tar xzf - -C /opt/seafile/ &amp;&amp; \
+    ln -s /opt/seafile/seafile-server-${SEAFILE_VERSION} /opt/seafile/seafile-server-latest
+
+ENV LD_LIBRARY_PATH=/opt/seafile/seafile-server-latest/seafile/lib:/opt/seafile/seafile-server-latest/seafile/lib64:$LD_LIBRARY_PATH
+ENV SEAFILE_DATA_DIR=/opt/seafile/data CCNET_CONF_DIR=/opt/seafile/ccnet SEAFILE_CENTRAL_CONF_DIR=/opt/seafile/conf SEAFILE_CONF_DIR=/opt/seafile/seafile-data
+ENV PYTHONPATH=/opt/seafile/seafile-server-${SEAFILE_VERSION}/seafile/lib64/python2.7/site-packages:/opt/seafile/seafile-server-6.3.3/seahub:/opt/seafile/seafile-server-6.3.3/seahub/thirdpart:$PYTHONPATH
+
+COPY ./requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir --disable-pip-version-check \
+                -r /tmp/requirements.txt \
+                -r /opt/seafile/seafile-server-${SEAFILE_VERSION}/seahub/requirements.txt
+
+COPY config /opt/seafile/conf/
+COPY ccnet /opt/seafile/ccnet/
+COPY scripts /opt/seafile
+</code></pre>
+<p>然后使用该项目提供的命令进行构建：</p>
+<pre><code>docker-compose \
+  -f docker-compose.yaml \
+  up \
+  --force-recreate \
+  --renew-anon-volumes \
+  --build
+</code></pre>
+<p>整个过程比较慢，最后如果看到了 <code>seahub_1</code> 开头的行，应该是配置完毕了。此时访问 <code>yourip:8000</code>，如果出现了 Seafile 登录页面，那么你就成功了 3/4 了。</p>
+<p>接下来按 <code>Ctrl+C</code> 停止，然后重新让他以后台形式运行：</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>前面的 <code>docker-compose</code> 命令只用于第一个构建 Docker，之后就用常规的 <code>docker-compose up -d</code> 即可。运行完以后可以检查一下 <code>8000</code> 端口是否正常。</p>
+<p>剩下的 1/4 就是注册新账户了。这里 Seafile 不像 NextCloud 在第一次登陆时创建管理员账户，而是需要调用容器内的 Python 脚本。</p>
+<p>在宿主机执行以下命令：</p>
+<pre><code>docker-compose exec seahub python /opt/seafile/seafile-server-latest/seahub/manage.py createsuperuser
+</code></pre>
+<p>如果正常，就会出现下面的情况：</p>
+<pre><code class="sh">$ docker-compose exec seahub python /opt/seafile/seafile-server-latest/seahub/manage.py createsuperuser
+/opt/seafile/seafile-server-6.3.3/seahub/thirdpart/requests/__init__.py:80: RequestsDependencyWarning: urllib3 (1.19) or chardet (3.0.4) doesn&#39;t match a supported version!
+  RequestsDependencyWarning)
+E-mail address: lxl361429916@live.com
+Password:
+Password (again):
+Superuser created successfully.
+</code></pre>
+<p>前面的 Warning 可以忽略。注册完账户以后，就可以在 <code>8000</code> 端口登陆了。</p>
+<h3 id="可能报错及解决方案"><a href="#可能报错及解决方案" class="headerlink" title="可能报错及解决方案"></a>可能报错及解决方案</h3><h4 id="第一次配置时卡住"><a href="#第一次配置时卡住" class="headerlink" title="第一次配置时卡住"></a>第一次配置时卡住</h4><p>如果第一次配置的时候卡住，出现了下面的内容：</p>
+<pre><code># docker-compose \
+&gt;   -f docker-compose.yaml \
+&gt;   up \
+&gt;   --force-recreate \
+&gt;   --renew-anon-volumes \
+&gt;   --build
+Building ccnet
+Step 1/15 : FROM ubuntu:16.04
+ ---&gt; 77be327e4b63
+Step 2/15 : RUN apt update     &amp;&amp; apt-get install -qq -y --no-install-recommends       vim       htop       net-tools       psmisc       git       wget       curl       build-essential       python-dev       python-pip       python-setuptools       python-wheel       libmysqlclient-dev     &amp;&amp; apt-get clean     &amp;&amp; rm -rf /var/lib/apt/lists/*
+ ---&gt; Running in 379f2d9271b1
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Get:1 http://archive.ubuntu.com/ubuntu xenial InRelease [247 kB]
+Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [109 kB]
+Get:3 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [109 kB]
+Get:4 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [1063 kB]
+Get:5 http://archive.ubuntu.com/ubuntu xenial-backports InRelease [107 kB]
+Get:6 http://archive.ubuntu.com/ubuntu xenial/main amd64 Packages [1558 kB]
+Get:7 http://security.ubuntu.com/ubuntu xenial-security/restricted amd64 Packages [12.7 kB]
+Get:8 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 Packages [620 kB]
+Get:9 http://security.ubuntu.com/ubuntu xenial-security/multiverse amd64 Packages [6280 B]
+Get:10 http://archive.ubuntu.com/ubuntu xenial/restricted amd64 Packages [14.1 kB]
+Get:11 http://archive.ubuntu.com/ubuntu xenial/universe amd64 Packages [9827 kB]
+Get:12 http://archive.ubuntu.com/ubuntu xenial/multiverse amd64 Packages [176 kB]
+Get:13 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 Packages [1432 kB]
+Get:14 http://archive.ubuntu.com/ubuntu xenial-updates/restricted amd64 Packages [13.1 kB]
+Get:15 http://archive.ubuntu.com/ubuntu xenial-updates/universe amd64 Packages [1021 kB]
+Get:16 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 Packages [19.3 kB]
+Get:17 http://archive.ubuntu.com/ubuntu xenial-backports/main amd64 Packages [7942 B]
+Get:18 http://archive.ubuntu.com/ubuntu xenial-backports/universe amd64 Packages [8807 B]
+Fetched 16.4 MB in 1min 46s (153 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+All packages are up to date.
+</code></pre>
+<p>可能是你没有修改 <code>Dockerfile</code>，请按照上面的方法修改 <code>Dockerfile</code>，然后重新 <code>docker-compose</code></p>
+<h4 id="设置密码时报错"><a href="#设置密码时报错" class="headerlink" title="设置密码时报错"></a>设置密码时报错</h4><p>如果设置密码时报错：</p>
+<pre><code class="py">seahub.base.accounts.DoesNotExist: User matching query does not exits.
+</code></pre>
+<p>可能是数据库的容器自己退出了。可以用 <code>docker ps --all</code>，然后看 <code>seafile-compose_db_1</code> 的 <code>STATUS</code> 是 <code>UP</code> 还是 <code>EXIT</code>。</p>
+<p>如果确实是 <code>EXIT</code> 退出了，那么 <code>docker-compose up -d</code> 即可重启。</p>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>C++ 结构体 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,C++语法">
+    <meta name="description" content="C++ 中的结构体结合了类，于是就有很多很有意思的写法。 构造函数12345678struct teamS &amp;#123;       int s; &#x2F;&#x2F;solved       int p; &#x2F;&#x2F;penalty       teamS() &amp;#123;&amp;#125;;       teamS(int _s &#x3D; 1, int _p &#x3D; 2):s(_s), p(_p)&amp;#123;&amp;#125;&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 结构体">
+<meta property="og:url" content="https://blog.lyh543.cn/cpp/cpp-grammar/struct/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="C++ 中的结构体结合了类，于是就有很多很有意思的写法。 构造函数12345678struct teamS &amp;#123;       int s; &#x2F;&#x2F;solved       int p; &#x2F;&#x2F;penalty       teamS() &amp;#123;&amp;#125;;       teamS(int _s &#x3D; 1, int _p &#x3D; 2):s(_s), p(_p)&amp;#123;&amp;#125;&amp;#125;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.107Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++语法">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C++ 结构体</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C++ 结构体</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-18T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造函数"><span class="post-toc-text">构造函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重载-使结构变为类似于数组的形式"><span class="post-toc-text">重载 [] 使结构变为类似于数组的形式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#运算符重载"><span class="post-toc-text">运算符重载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类型转换函数"><span class="post-toc-text">类型转换函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重载-自增运算符"><span class="post-toc-text">重载 ++ 自增运算符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重载等于"><span class="post-toc-text">重载等于 &#x3D;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#从基类派生出结构"><span class="post-toc-text">从基类派生出结构</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-cpp/cpp-grammar/struct"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C++ 结构体</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-19 00:00:00" datetime="2019-08-18T16:00:00.000Z"  itemprop="datePublished">2019-08-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>C++ 中的结构体结合了类，于是就有很多很有意思的写法。</p>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">teamS</span> &#123;</span></span><br><span class="line">       <span class="keyword">int</span> s; <span class="comment">//solved</span></span><br><span class="line">       <span class="keyword">int</span> p; <span class="comment">//penalty</span></span><br><span class="line">       teamS() &#123;&#125;;</span><br><span class="line">       teamS(<span class="keyword">int</span> _s = <span class="number">1</span>, <span class="keyword">int</span> _p = <span class="number">2</span>):s(_s), p(_p)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">teamS <span class="title">s</span><span class="params">(<span class="number">6</span>,<span class="number">66</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重载-使结构变为类似于数组的形式"><a href="#重载-使结构变为类似于数组的形式" class="headerlink" title="重载 [] 使结构变为类似于数组的形式"></a>重载 <code>[]</code> 使结构变为类似于数组的形式</h2><p>起初是看到 map 在这么用，试了一下，发现没有报错，有点香。</p>
+<p>对一维数组重载，记得使用引用 <code>&amp;</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">triple</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> first;</span><br><span class="line">    <span class="keyword">int</span> second;</span><br><span class="line">    <span class="keyword">int</span> third;</span><br><span class="line">    <span class="keyword">int</span> &amp; <span class="keyword">operator</span> [](<span class="keyword">int</span> i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">switch</span> (i)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>: <span class="keyword">return</span> first;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:<span class="keyword">return</span> second;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:<span class="keyword">return</span> third;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对二维数组的重载，使用的是指针 <code>*</code>，就不需要引用了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">matrix</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> v[<span class="number">3</span>][<span class="number">3</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> * <span class="keyword">operator</span>[](<span class="keyword">int</span> i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> v[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;m;</span><br><span class="line"></span><br><span class="line">m[<span class="number">1</span>][<span class="number">2</span>] == m.v[<span class="number">1</span>][<span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+
+<h2 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h2><p>C++引入了运算符重载，并有以下规则：</p>
+<ol>
+<li>只能重载已有的运算符，已有的少部分也不能重载（<code>::</code>、<code>#</code> 等）；</li>
+<li>重载以后的优先级不变。</li>
+</ol>
+<p>运算符重载的格式为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">double</span> real, imagine;</span><br><span class="line">    <span class="keyword">public</span>: <span class="comment">/*...*/</span></span><br><span class="line">        Complex() &#123;&#125;;</span><br><span class="line">    	Complex(<span class="keyword">int</span> r = <span class="number">0</span>, <span class="keyword">int</span> i = <span class="number">0</span>) &#123;&#125;;</span><br><span class="line">        Complex <span class="keyword">operator</span> + (Complex num) &#123; <span class="comment">/* */</span> &#125;</span><br><span class="line">&#125;c1,c2;</span><br><span class="line">c1 = c2 + <span class="number">1</span>;</span><br><span class="line">c1 = c2.<span class="keyword">operator</span>+(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是无法使用 <code>c1 = 1 + c2</code>，因为重载的 <code>+</code> 是属于 <code>Complex</code> 类的，而不是 <code>int</code>。  </p>
+<p>正确的使用方法是：把该重载声明为 <code>Complex</code> 类以外的函数（如果函数需要访问 <code>Complex</code> 的 <code>private</code> 成员，注意使用友元关键字）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> Complex <span class="keyword">operator</span> + (Complex num, Complex C) &#123;<span class="comment">/* */</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，编译器就能愉快的把 <code>int</code> 转换为 <code>Complex</code> 了。</p>
+<p>下面写几个值得一提的特殊的运算符重载。</p>
+<h2 id="类型转换函数"><a href="#类型转换函数" class="headerlink" title="类型转换函数"></a>类型转换函数</h2><p>把 <code>int</code> 当作一个一元操作符可还行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">teamS</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> s; <span class="comment">//solved</span></span><br><span class="line">    <span class="keyword">int</span> p; <span class="comment">//penalty</span></span><br><span class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s * <span class="number">100</span> - p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重载-自增运算符"><a href="#重载-自增运算符" class="headerlink" title="重载 ++ 自增运算符"></a>重载 <code>++</code> 自增运算符</h3><blockquote>
+<p>转自：<a href="https://blog.csdn.net/anye3000/article/details/6618495" target="_blank" rel="noopener">https://blog.csdn.net/anye3000/article/details/6618495</a></p>
+</blockquote>
+<p>我写类的时候，重载了 <code>++</code> 运算符，然后 <code>date++</code> VS 报错。查了以后，才意识到，<code>++</code> 分了前置/前缀形式和后置重载/后缀形式。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_i;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment">//++i</span></span><br><span class="line">    A&amp; <span class="keyword">operator</span>++()</span><br><span class="line">    &#123;</span><br><span class="line">        ++m_i;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//i++</span></span><br><span class="line">    <span class="keyword">const</span> A <span class="keyword">operator</span>++(<span class="keyword">int</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        A tmp = *<span class="keyword">this</span>;</span><br><span class="line">        ++(*<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">return</span> A(tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ol>
+<li>为了区分前后，用 <code>++()</code> 表示前自增，用 <code>++(int)</code>后自增。</li>
+<li>**前自增应该返回引用 <code>A&amp;</code>**，因为按照前自增的标准定义，应该支持 <code>++++a</code> 的语法，而且两次前自增都应该是对 a 对象的自身操作。如果返回A类型，那第二次前自增调用的是临时对象的前自增操作，和定义也不同；</li>
+<li><strong>后自增应该返回 <code>const</code><strong>，这可以防止形如 <code>a++++</code> 的用法。不能返回 <code>const &amp;</code>，因为实现里面返回的是临时的 <code>temp</code>，不能返回临时的指针。所以就涉及到了复制构造（Copy Construction）的问题了额。还是</strong>多用前自增吧……</strong></li>
+<li>一般通过前自增操作来实现后自增操作符函数。</li>
+</ol>
+<h3 id="重载等于"><a href="#重载等于" class="headerlink" title="重载等于 ="></a>重载等于 <code>=</code></h3><p>重载 <code>=</code> 和拷贝构造函数很相似，于是放在<a href="../class-and-object/#%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">拷贝构造函数</a>一节。</p>
+<h3 id="从基类派生出结构"><a href="#从基类派生出结构" class="headerlink" title="从基类派生出结构"></a>从基类派生出结构</h3><p>有点不可信，但确实可以。</p>
+<blockquote>
+<p>In C++, a structure’s inheritance is the same as a class except the following differences: When deriving a struct from a class/struct, the default access-specifier for a base class/struct is public. And when deriving a class, the default access specifier is private.2009年6月11日<br>– Struct inheritance in C++ - Stack Overflow</p>
+</blockquote>
+<p>结构和类的区别真就只有 <code>private</code> 和 <code>public</code> 了？</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.107Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&title=《C++ 结构体》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&title=《C++ 结构体》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/struct/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ 结构体》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/cpp/cpp-grammar/c-byte-alignment/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C/C++ 字节对齐（Byte alignment）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/cpp/cpp-grammar/windows-console/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">Windows 控制台常用操作</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&title=《C++ 结构体》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&title=《C++ 结构体》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/cpp/cpp-grammar/struct/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++ 结构体》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/cpp/cpp-grammar/struct/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3a0U7EMAwEQP7/p49XJLiyGxekJtMnVJXU05Os2M7HR3y9vlz5/Xzl69VuuzAwMB7LeF1e717w7sm1EL8/mceGgYFxDiNfOk+1k6DzFTAwMDDWgrtO6EkSx8DAwJgn3OutW5KmMTAwMFpGHlASXN6wy5PybbU4BgbGAxlr7fv/+ftP5hsYGBiPYrzK6zqB3lWm1lFhYGBszcgT3GTjmG8B1+LBwMDYm5GPIdsydT5IKO5gYGBszVgLtMjlwUeZHN14+5tgYGBsxJiUpvl/5a38KLG++x0wMDCOYeRhrR2euE7BOeCHIhYDA2NTRjJKzIcEbZ+vLXd/eQsGBsYBjMUm17j1PznsVfcOMTAwHsuoZ57xIYk8XbZtvpqNgYHxWEbbFJuEvtbCK8pXDAyMYxj56YVJwTlpzxXLYWBgbMHIx4RJ6y0/NJavXxTVGBgYmzJawF1VcpvEb061GBgYj2LcG/S89b92UAMDA+McRjJuvKvplifcYgOKgYFxMGNtV7Y2WmjHFUXCxcDA2IjRDjXzgxptkm3vYGBgnMbIh5R5QkwSa/5RbujhYWBgPITxKq+8xJ0k2fq9GBgYWzPWNnl3Fag5qdggYmBgbMr46xQ52QIWHw4DA+MARtvun6TX/HhHktYxMDAw7npmcuCsaLphYGBglM9fh5KXyhEGAwPjAEZSxE6Gl+22L1kfAwPjHMaodIxfP9n8tcdBMDAwNmJ8AujSdHKBcZv/AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

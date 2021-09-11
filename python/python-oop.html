@@ -1,0 +1,297 @@
+<hr>
+<p>title: Python 面向对象编程<br>date: 2020-04-22 22:29:15<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>面向对象编程<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<p>在学 Python OOP 之前，我在想，怎么还没到结构体，后来才恍然大悟，结构体是 C 的东西，C++ 有了类以后，（不考虑效率问题）就不需要结构体了，而 Python 也是这样，有了类，还需要结构体做什么呢？</p>
+<p>该篇博客默认读者曾学过至少一门 OOP 语言。</p>
+<p>Python 和 C++ 的对同一个概念的称呼的简单对照表：</p>
+<table>
+<thead>
+<tr>
+<th>Python</th>
+<th>C++</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类 <code>class</code></td>
+<td>类 <code>class</code></td>
+</tr>
+<tr>
+<td>实例 <code>instance</code></td>
+<td>对象 <code>object</code></td>
+</tr>
+<tr>
+<td>方法 <code>methods</code></td>
+<td>成员函数 <code>member functions</code></td>
+</tr>
+<tr>
+<td>属性 <code>attributes</code></td>
+<td>成员变量 <code>member variables</code></td>
+</tr>
+</tbody></table>
+<h2 id="类和实例"><a href="#类和实例" class="headerlink" title="类和实例"></a>类和实例</h2><p>类的定义：</p>
+<pre><code class="py">class Student(object): # object 表示被继承的类，如果没有继承类，就写 object
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+    
+    def print_score(self):
+        print(&#39;%s: %s&#39; % (self.name, self.score))
+</code></pre>
+<p>由类生成的东西，在 C++ 中叫对象 <code>object</code>，但是在 Python 中叫实例 <code>instance</code>。可能是因为 Python 的对象被用来指代<code>东西</code>了吧，比如<code>类对象</code>、<code>方法对象</code>。</p>
+<p>创建 <code>实例</code>，并调用实例对应的关联函数（关联函数被称为实例的方法 <code>Method</code>）：</p>
+<pre><code class="py">bart = Student(&#39;Bart Simpson&#39;, 59)
+lisa = Student(&#39;Lisa Simpson&#39;, 87)
+bart.print_score()
+lisa.print_score()
+</code></pre>
+<p>从第一段代码还可以看出，类的构造方法是 <code>__init__</code>。</p>
+<p>另外，在定义类的时候，每个函数无论在声明、还是在使用时，都要写明第一个参数是 <code>self</code>（C++ 只在静态成员函数的时候需要写明）</p>
+<p>和 C++ 不同的是，外部代码在使用对象的时候，Python 还可以创建成员：</p>
+<pre><code class="py">bart.grade = &#39;A&#39;
+</code></pre>
+<h2 id="类属性"><a href="#类属性" class="headerlink" title="类属性"></a>类属性</h2><p>由于 C++ 需要初始化变量，所以 C++ 类一般先是一堆变量声明，再是成员函数。</p>
+<p>到了 Python 这里，不需要声明，直接就是几个方法，反而有点不习惯。</p>
+<p>如果想要给类弄一个属性（类似于 C++ 的静态成员），也是可以的，而且方法也浅显易懂：</p>
+<pre><code class="py">class Student(object):
+    course = &#39;Chinese&#39;
+
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+    
+    def print_score(self):
+        print(&#39;%s: %s&#39; % (self.name, self.score))
+</code></pre>
+<p>类属性是可以被实例属性覆盖的。并且，如果删除了示例的属性，会还原为类属性。</p>
+<pre><code class="py">print(Student.course)       # 显示 Chinese
+bart = Student(&#39;Bart&#39;, 95)
+print(bart.course)          # 显示 Chinese
+bart.course = &#39;Math&#39;        # 示例属性覆盖类属性
+print(bart.course)          # 显示 Math
+print(Student.course)       # 显示 Chinese
+del bart.course             # 删除示例实心
+print(bart.course)          # 显示 Math
+</code></pre>
+<h2 id="私有成员"><a href="#私有成员" class="headerlink" title="私有成员"></a>私有成员</h2><p>如上，Python 并没有 C++ 一样的，必须写明对象是 <code>public</code>，否则就是私有 <code>private</code> 的。而 Python 如何在类中创造私有成员呢：</p>
+<pre><code class="py">class Student(object):
+    def __init__(self, name, score):
+        self.__name = name
+        self.__score = score
+
+    def print_score(self):
+        print(&#39;%s: %s&#39; % (self.__name, self.__score))
+</code></pre>
+<p>此时能够正常执行 <code>print_score</code> 函数，但无法访问 <code>__name</code> 了：</p>
+<pre><code class="py">&gt;&gt;&gt; bart = Student(&#39;bart&#39;, 95)
+&gt;&gt;&gt; bart.print_score()
+bart: 95
+&gt;&gt;&gt; bart.__name
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;Student&#39; object has no attribute &#39;__name&#39;
+</code></pre>
+<p>此时，如果需要获取 <code>name</code>、修改 <code>name</code> 时，就需要在类里面添加 <code>getName</code> 和 <code>setName</code>。这是面向对象编程的经典操作。</p>
+<p>需要注意的是：</p>
+<ol>
+<li>形如 <code>__xxx__</code> 的变量名是特殊变量，可以直接访问；</li>
+<li>其实也可以通过访问 <code>_Student__name</code> 来访问 <code>__name</code>，Python 解释器也只是改了一个名字。仅限从一个对象内部访问的“私有”实例变量在 Python 中并不存在。当然还是强烈建议不要访问。</li>
+<li>大多数 Python 代码还遵循这样一个约定：带有一个下划线的名称 (例如 <code>_spam</code>) 应该被当作是 API 的非公有部分 (无论它是函数、方法或是数据成员)。也就是说，不应该去访问它，虽然他并不是私有成员。</li>
+</ol>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>继承：</p>
+<pre><code class="py">class Animal(object):
+    def run(self):
+        print(&#39;Animal is running...&#39;)
+
+class Dog(Animal):
+    pass
+
+class Cat(Animal):
+    pass
+
+Dog().run()
+# 输出 Animal is running...
+</code></pre>
+<p>注意：如果基类定义在另一个模块中，可以使用：</p>
+<pre><code class="py">class DerivedClassName(modname.BaseClassName):
+</code></pre>
+<h3 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h3><p>多继承的语法没什么好说的。</p>
+<pre><code class="py">class DerivedClassName(Base1, Base2, Base3):
+    &lt;statement-1&gt;
+    .
+    .
+    .
+    &lt;statement-N&gt;
+</code></pre>
+<p>但是多继承涉及到的问题就挺麻烦了（C++ 对多继承问题的处理可以参考博客 <a href="(/cpp/cpp-grammar/cpp-inheritance-derive-polymorphism/#%E5%A4%9A%E7%BB%A7%E6%89%BF%E7%9A%84%E4%BA%8C%E4%B9%89%E6%80%A7-%E8%99%9A%E5%9F%BA%E7%B1%BB)">C++ 面向对象——继承、派生和多态</a>）：</p>
+<ol>
+<li>如果有两个不同父类有同一个属性</li>
+</ol>
+<p>你可以理解为 Python 的处理办法是深度优先、从左至右地搜索父类的属性，搜到了第一个，就不会管后面的同名属性了。简单粗暴。</p>
+<blockquote>
+<p>真实情况比这个更复杂一些；方法解析顺序会动态改变以支持对 <code>super()</code> 的协同调用。 这种方式在某些其他多重继承型语言中被称为后续方法调用，它比单继承型语言中的 <code>super</code> 调用更强大。</p>
+</blockquote>
+<ol start="2">
+<li>如果出现了菱形关联，如同在 C++ 那篇博客题到的下图左边的情况（右边是 C++ 默认的实现）：</li>
+</ol>
+<p><img src="/cpp/cpp-grammar/cpp-inheritance-derive-polymorphism/AMCar.svg" alt="AMCar"></p>
+<p>但是 Python 的 <code>动态改变的方法解析顺序</code> 可以保证只调用每个父类一次。（用 C++ 的话来说就是，所有基类都是虚基类 <code>virtual base</code>）</p>
+<blockquote>
+<p>只调用每个父类一次，并且保持单调（即一个类可以被子类化而不影响其父类的优先顺序）</p>
+</blockquote>
+<p>后面这句不大明白。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态，即子类重载父类的同名方法：</p>
+<pre><code class="py">class Dog(Animal):
+    def run(self):
+        print(&#39;Dog is running...&#39;)
+
+Dog().run()
+# 输出 Dog is running...
+</code></pre>
+<p>所有函数默认都是虚函数的。</p>
+<h2 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h2><p>Python 也支持运算符重载，但是和 C++ 的不一样，C++ 可以对任意运算符进行重载，Python 只能通过重载系统给定的的对应的函数，来重载部分运算符。</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>重载说明</th>
+<th>运算符调用方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>__init__</code></td>
+<td>构造函数</td>
+<td>对象创建: <code>X = Class(args)</code></td>
+</tr>
+<tr>
+<td><code>__del__</code></td>
+<td>析构函数</td>
+<td><code>X</code> 对象收回</td>
+</tr>
+<tr>
+<td><code>__add__</code>/<code>__sub__</code></td>
+<td>加减运算</td>
+<td><code>X+Y</code>，<code>X+=Y/X-Y</code>，<code>X-=Y</code></td>
+</tr>
+<tr>
+<td><code>__or__</code></td>
+<td>运算符`</td>
+<td>`</td>
+</tr>
+<tr>
+<td><code>_repr__</code>／<code>__str__</code></td>
+<td>打印／转换</td>
+<td><code>print(X)</code>、<code>repr(X)</code>／<code>str(X)</code></td>
+</tr>
+<tr>
+<td><code>__call__</code></td>
+<td>函数调用</td>
+<td><code>X(*args, **kwargs)</code></td>
+</tr>
+<tr>
+<td><code>__getattr__</code></td>
+<td>属性引用</td>
+<td><code>X.undefined</code></td>
+</tr>
+<tr>
+<td><code>__setattr__</code></td>
+<td>,属性赋值</td>
+<td><code>X.any=value</code></td>
+</tr>
+<tr>
+<td><code>__delattr__</code></td>
+<td>属性删除</td>
+<td><code>del X.any</code></td>
+</tr>
+<tr>
+<td><code>__getattribute__</code></td>
+<td>属性获取</td>
+<td><code>X.any</code></td>
+</tr>
+<tr>
+<td><code>__getitem__</code></td>
+<td>索引运算</td>
+<td><code>X[key]</code>，<code>X[i:j]</code></td>
+</tr>
+<tr>
+<td><code>__setitem__</code></td>
+<td>索引赋值</td>
+<td><code>X[key]</code>，<code>X[i:j]=sequence</code></td>
+</tr>
+<tr>
+<td><code>__delitem__</code></td>
+<td>索引和分片删除</td>
+<td><code>del X[key]</code>，<code>del X[i:j]</code></td>
+</tr>
+<tr>
+<td><code>__len__</code></td>
+<td>长度</td>
+<td><code>len(X)</code></td>
+</tr>
+<tr>
+<td><code>__bool__</code></td>
+<td>布尔测试</td>
+<td><code>bool(X)</code></td>
+</tr>
+<tr>
+<td><code>__lt__</code>，<code>__gt__</code></td>
+<td>特定的比较</td>
+<td>依次为<code>X&lt;Y</code>，<code>X&gt;Y</code></td>
+</tr>
+<tr>
+<td><code>__le__</code>，<code>__ge__</code></td>
+<td></td>
+<td><code>X&lt;=Y</code>，<code>X&gt;=Y</code></td>
+</tr>
+<tr>
+<td><code>__eq__</code>，<code>__ne__</code></td>
+<td></td>
+<td><code>X==Y</code>，<code>X!=Y</code></td>
+</tr>
+<tr>
+<td><code>__radd__</code></td>
+<td>右侧加法</td>
+<td><code>other+X</code></td>
+</tr>
+<tr>
+<td><code>__iadd__</code></td>
+<td>实地（增强的）加法</td>
+<td><code>X+=Y</code>(or else <code>__add__</code>)</td>
+</tr>
+<tr>
+<td><code>__iter__</code>，<code>__next__</code></td>
+<td>迭代</td>
+<td><code>I=iter(X)</code>，<code>next()</code></td>
+</tr>
+<tr>
+<td><code>__contains__</code></td>
+<td>成员关系测试</td>
+<td><code>item in X</code>(X为任何可迭代对象)</td>
+</tr>
+<tr>
+<td><code>__index__</code></td>
+<td>整数值</td>
+<td><code>hex(X)</code>，<code>bin(X)</code>,  <code>oct(X)</code></td>
+</tr>
+<tr>
+<td><code>__enter__</code>，<code>__exit__</code></td>
+<td>环境管理器</td>
+<td><code>with obj as var:</code></td>
+</tr>
+<tr>
+<td><code>__get__</code>，<code>__set__</code>，<code>__delete__</code></td>
+<td>描述符属性</td>
+<td><code>X.attr</code>，<code>X.attr=value</code>，<code>del X.attr</code></td>
+</tr>
+<tr>
+<td><code>__new__</code></td>
+<td>创建</td>
+<td>在<code>__init__</code>之前创建对象</td>
+</tr>
+</tbody></table>
+<p>更多的数学符号重载请看 <a href="https://docs.python.org/zh-cn/3.7/reference/datamodel.html#emulating-numeric-types" target="_blank" rel="noopener">Python 文档|模拟数字类型</a>。</p>

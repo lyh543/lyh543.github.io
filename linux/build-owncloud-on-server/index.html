@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>搭建自己的 Owncloud 云盘 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux,服务器,Docker">
+    <meta name="description" content="2020.2.12 更新：相比 Owncloud，NextCloud 貌似更新。所以我转投 NextCloud 了。另外知乎上也有很多人安利 seafile。2020.2.27 更新：接触了 Docker 以后，发现使用 Docker 搭建更加方便（可从这篇博客中了解）。于是也花了一点时间钻研，搭建好了 NextCloud 和 Seafile，并把方法一并写在下面。  安装 Owncloud转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建自己的 Owncloud 云盘">
+<meta property="og:url" content="https://blog.lyh543.cn/linux/build-owncloud-on-server/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="2020.2.12 更新：相比 Owncloud，NextCloud 貌似更新。所以我转投 NextCloud 了。另外知乎上也有很多人安利 seafile。2020.2.27 更新：接触了 Docker 以后，发现使用 Docker 搭建更加方便（可从这篇博客中了解）。于是也花了一点时间钻研，搭建好了 NextCloud 和 Seafile，并把方法一并写在下面。  安装 Owncloud转载">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-27T08:33:05.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.123Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">搭建自己的 Owncloud 云盘</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">搭建自己的 Owncloud 云盘</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-02-27T08:33:05.000Z" itemprop="datePublished" class="page-time">
+  2020-02-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装-Owncloud"><span class="post-toc-text">安装 Owncloud</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置-Owncloud"><span class="post-toc-text">配置 Owncloud</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装基于-Docker-的-NextCloud"><span class="post-toc-text">安装基于 Docker 的 NextCloud</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置-Nextcloud"><span class="post-toc-text">配置 Nextcloud</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加信任域名"><span class="post-toc-text">添加信任域名</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装基于-Docker-的-Seafile"><span class="post-toc-text">安装基于 Docker 的 Seafile</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可能报错及解决方案"><span class="post-toc-text">可能报错及解决方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第一次配置时卡住"><span class="post-toc-text">第一次配置时卡住</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#设置密码时报错"><span class="post-toc-text">设置密码时报错</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linux/build-owncloud-on-server"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">搭建自己的 Owncloud 云盘</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-02-27 16:33:05" datetime="2020-02-27T08:33:05.000Z"  itemprop="datePublished">2020-02-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>2020.2.12 更新：相比 Owncloud，NextCloud 貌似更新。所以我转投 NextCloud 了。另外知乎上也有很多人安利 seafile。<br>2020.2.27 更新：接触了 Docker 以后，发现使用 Docker 搭建更加方便（可从<a href="../docker">这篇博客</a>中了解）。于是也花了一点时间钻研，搭建好了 NextCloud 和 Seafile，并把方法一并写在下面。</p>
+</blockquote>
+<h2 id="安装-Owncloud"><a href="#安装-Owncloud" class="headerlink" title="安装 Owncloud"></a>安装 Owncloud</h2><p>转载链接：<a href="https://zhuanlan.zhihu.com/p/28648363" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/28648363</a></p>
+<p>官方教程：<a href="https://doc.owncloud.org/server/9.0/admin_manual/installation/linux_installation.html" target="_blank" rel="noopener">https://doc.owncloud.org/server/9.0/admin_manual/installation/linux_installation.html</a></p>
+<p>按照上面无脑配就可以了。不多说。</p>
+<h2 id="配置-Owncloud"><a href="#配置-Owncloud" class="headerlink" title="配置 Owncloud"></a>配置 Owncloud</h2><p>按照知乎的链接装完以后</p>
+<ul>
+<li>配置文件在 <code>/etc/owncloud/config.php</code></li>
+<li>云盘文件默认在 <code>/var/lib/owncloud/data</code>，可在开始使用，进入管理员账户的时候修改。</li>
+</ul>
+<p>顺便一提，对于 NextCloud，配置文件在 ``，安装文件在 <code>/var/www/html/nextcloud/</code>。</p>
+<p>如果需要进行配置，需要用 apache 用户运行 <code>/var/www/html/nextcloud/occ</code> 命令，还需要给可执行权限。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x <span class="meta-keyword">/var/</span>www<span class="meta-keyword">/html/</span>nextcloud/occ <span class="meta"># 给可执行权限</span></span><br><span class="line">sudo -u apache <span class="meta-keyword">/var/</span>www<span class="meta-keyword">/html/</span>nextcloud/occ --help</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装基于-Docker-的-NextCloud"><a href="#安装基于-Docker-的-NextCloud" class="headerlink" title="安装基于 Docker 的 NextCloud"></a>安装基于 Docker 的 NextCloud</h2><p>为什么要用 Docker 呢？这是为了系统的干净吧。不过坏处是，Docker 的 NextCloud 访问宿主机的文件就没那么容易了。当然，两种方法各有所长。</p>
+<p>顺便一提，如果使用 Docker 的话，甚至可以在一台 Windows 电脑上部署了，就可以在自己的 Windows 电脑上搭建一个，然后用 <code>frp</code> 等方式内网穿透到公网了（可参考<a href="/Windows/use-remote-desktop-with-frp">博客</a>）。</p>
+<p>首先要安装 Docker 以及 Docker Compose，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后需要几个配置文件，我压缩好以后，放在我的网站上，<a href="nextcloud-docker-compose.tar">链接在这里</a>，当然也可以通过下面的命令直接从服务器下载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://blog.lyh543.cn/Linux/build-owncloud-on-server/nextcloud-docker-compose.tar</span><br><span class="line">tar -xf nextcloud-docker-compose.tar</span><br><span class="line"><span class="built_in">cd</span> nextcloud-docker-compose</span><br><span class="line"><span class="built_in">cd</span> nextcloud</span><br></pre></td></tr></table></figure>
+
+<p>然后一句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>经过漫长的镜像下载以后，即可在 <code>127.0.0.1:7070</code> 看到 NextCloud 初始化页面。</p>
+<h3 id="配置-Nextcloud"><a href="#配置-Nextcloud" class="headerlink" title="配置 Nextcloud"></a>配置 Nextcloud</h3><p>如果需要进入到 <code>docker</code> 的虚拟机中，可以使用一下命令进入容器的命令行：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@iz2ze</span> nextcloud]<span class="meta"># docker exec -it nextcloud_web_1 /bin/sh</span></span><br><span class="line">/ <span class="meta">#</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>nextcloud_web_1</code> 为你的容器名，一般来说就是这个，可以通过 <code>docker ps</code> 查看。</p>
+<p>进入以后，就是 shell 的操作了。Nextcloud 文件的目录在 <code>/var/www/html</code>。</p>
+<h3 id="添加信任域名"><a href="#添加信任域名" class="headerlink" title="添加信任域名"></a>添加信任域名</h3><p>从别的域名访问的时候，NextCloud 会提示：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">通过不被信任的域名访问</span><br><span class="line">请联系您的管理员。如果您就是管理员，请参照 <span class="built_in">config</span>.sample.php 中的示例编辑 <span class="built_in">config</span>/<span class="built_in">config</span>.php 中的 <span class="string">"trusted_domains"</span> 设置。</span><br></pre></td></tr></table></figure>
+
+<p>我们需要在容器里配置文件添加自己的域名。</p>
+<p>首先进入容器的命令行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker <span class="built_in">exec</span> -it nextcloud_web_1 /bin/sh</span></span><br></pre></td></tr></table></figure>
+
+<p>然后用 vi 修改配置文件：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi <span class="built_in">config</span>/<span class="built_in">config</span>.php</span><br></pre></td></tr></table></figure>
+
+<p>然后找到 <code>trust_domain</code> 部分，我的在 30 行附近。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'trusted_domains'</span> =&gt;</span><br><span class="line"><span class="keyword">array</span> (</span><br><span class="line">  <span class="number">0</span> =&gt; <span class="string">'example.com:8080'</span>,</span><br><span class="line">),</span><br></pre></td></tr></table></figure>
+
+<p>按 <code>i</code> 进入编辑模式，然后添加自己的域名。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'trusted_domains'</span> =&gt;</span><br><span class="line"><span class="keyword">array</span> (</span><br><span class="line">  <span class="number">0</span> =&gt; <span class="string">'example.com:8080'</span>,</span><br><span class="line">  <span class="number">1</span> =&gt; <span class="string">'cloud.example.com'</span>,</span><br><span class="line">),</span><br></pre></td></tr></table></figure>
+
+<p>然后按 <code>esc</code> 退出编辑模式，再依次按 <code>:wq</code> 后回车，保存并退出。再输入 <code>exit</code> 退出 NextCloud 容器的命令行，刷新页面即可。</p>
+<h2 id="安装基于-Docker-的-Seafile"><a href="#安装基于-Docker-的-Seafile" class="headerlink" title="安装基于 Docker 的 Seafile"></a>安装基于 Docker 的 Seafile</h2><p>这里我们基于 <a href="https://github.com/HumanBrainProject/seafile-compose/" target="_blank" rel="noopener">HumanBrainProject/seafile-compose</a> 来配置 Seafile。</p>
+<p>为什么要用 Docker 呢？这是为了系统的干净吧。不过坏处是，Docker 的 NextCloud 访问宿主机的文件就没那么容易了。当然，两种方法各有所长。</p>
+<p>顺便一提，如果使用 Docker 的话，甚至可以在一台 Windows 电脑上部署了，就可以在自己的 Windows 电脑上搭建一个，然后用 <code>frp</code> 等方式内网穿透到公网了（可参考<a href="/Windows/use-remote-desktop-with-frp">博客</a>）。</p>
+<p>首先要安装 Docker 以及 Docker Compose，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后我们下载前面提到的项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果还没有安装 git，记得安装</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/HumanBrainProject/seafile-compose</span><br><span class="line"><span class="built_in">cd</span> seafile-compose</span><br></pre></td></tr></table></figure>
+
+<p>但是！这个模板直接使用貌似会在一个过程中卡住。在修改一个地方以后，我才能够正常的进行部署。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano seafile_dev_docker/Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们修改第三行起的 <code>RUN</code> 语句，将其拆分为几个 <code>RUN</code> 语句，顺便也替换了中科大的镜像源。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i <span class="string">'s/archive.ubuntu.com/mirrors.ustc.edu.cn/g'</span> /etc/apt/sources.list \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -qq -y --no-install-recommends \</span></span><br><span class="line"><span class="bash">      vim \</span></span><br><span class="line"><span class="bash">      htop \</span></span><br><span class="line"><span class="bash">      net-tools \</span></span><br><span class="line"><span class="bash">      psmisc \</span></span><br><span class="line"><span class="bash">      git \</span></span><br><span class="line"><span class="bash">      wget \</span></span><br><span class="line"><span class="bash">      curl \</span></span><br><span class="line"><span class="bash">      build-essential \</span></span><br><span class="line"><span class="bash">      python-dev \</span></span><br><span class="line"><span class="bash">      python-pip \</span></span><br><span class="line"><span class="bash">      python-setuptools \</span></span><br><span class="line"><span class="bash">      python-wheel \</span></span><br><span class="line"><span class="bash">      libmysqlclient-dev</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get clean</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure>
+
+<p>所以完整的 <code>seafile_dev_docker/Dockerfile</code> 应该如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">16.04</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> sed -i <span class="string">'s/archive.ubuntu.com/mirrors.ustc.edu.cn/g'</span> /etc/apt/sources.list \</span></span><br><span class="line"><span class="bash">    &amp;&amp; apt update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -qq -y --no-install-recommends \</span></span><br><span class="line"><span class="bash">      vim \</span></span><br><span class="line"><span class="bash">      htop \</span></span><br><span class="line"><span class="bash">      net-tools \</span></span><br><span class="line"><span class="bash">      psmisc \</span></span><br><span class="line"><span class="bash">      git \</span></span><br><span class="line"><span class="bash">      wget \</span></span><br><span class="line"><span class="bash">      curl \</span></span><br><span class="line"><span class="bash">      build-essential \</span></span><br><span class="line"><span class="bash">      python-dev \</span></span><br><span class="line"><span class="bash">      python-pip \</span></span><br><span class="line"><span class="bash">      python-setuptools \</span></span><br><span class="line"><span class="bash">      python-wheel \</span></span><br><span class="line"><span class="bash">      libmysqlclient-dev</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get clean</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> rm -rf /var/lib/apt/lists/*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> DOCKERIZE_VERSION v0.<span class="number">6.1</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> wget https://github.com/jwilder/dockerize/releases/download/<span class="variable">$DOCKERIZE_VERSION</span>/dockerize-linux-amd64-<span class="variable">$DOCKERIZE_VERSION</span>.tar.gz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; tar -C /usr/<span class="built_in">local</span>/bin -xzvf dockerize-linux-amd64-<span class="variable">$DOCKERIZE_VERSION</span>.tar.gz \</span></span><br><span class="line"><span class="bash">    &amp;&amp; rm dockerize-linux-amd64-<span class="variable">$DOCKERIZE_VERSION</span>.tar.gz</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> SEAFILE_VERSION=<span class="number">6.3</span>.<span class="number">3</span> SEAFILE_SERVER=seafile-server</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p /opt/seafile/conf &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mkdir -p /opt/seafile/data &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mkdir -p /opt/seafile/pids &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mkdir -p /opt/seafile/ccnet &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mkdir -p /opt/seafile/sockets &amp;&amp; \</span></span><br><span class="line"><span class="bash">    mkdir -p /opt/seafile/logs &amp;&amp; \</span></span><br><span class="line"><span class="bash">    openssl genrsa -out /opt/seafile/ccnet/mykey.peer 4096 &amp;&amp; \</span></span><br><span class="line"><span class="bash">    touch /opt/seafile/logs/seafile.log &amp;&amp; \</span></span><br><span class="line"><span class="bash">    touch /opt/seafile/logs/ccnet.log &amp;&amp; \</span></span><br><span class="line"><span class="bash">    touch /opt/seafile/logs/seahub.log</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p /opt/seafile/ &amp;&amp; \</span></span><br><span class="line"><span class="bash">    curl -sSL -o - https://download.seadrive.org/seafile-server_<span class="variable">$&#123;SEAFILE_VERSION&#125;</span>_x86-64.tar.gz \</span></span><br><span class="line"><span class="bash">    | tar xzf - -C /opt/seafile/ &amp;&amp; \</span></span><br><span class="line"><span class="bash">    ln -s /opt/seafile/seafile-server-<span class="variable">$&#123;SEAFILE_VERSION&#125;</span> /opt/seafile/seafile-server-latest</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> LD_LIBRARY_PATH=/opt/seafile/seafile-server-latest/seafile/lib:/opt/seafile/seafile-server-latest/seafile/lib64:$LD_LIBRARY_PATH</span><br><span class="line"><span class="keyword">ENV</span> SEAFILE_DATA_DIR=/opt/seafile/data CCNET_CONF_DIR=/opt/seafile/ccnet SEAFILE_CENTRAL_CONF_DIR=/opt/seafile/conf SEAFILE_CONF_DIR=/opt/seafile/seafile-data</span><br><span class="line"><span class="keyword">ENV</span> PYTHONPATH=/opt/seafile/seafile-server-$&#123;SEAFILE_VERSION&#125;/seafile/lib64/python2.<span class="number">7</span>/site-packages:/opt/seafile/seafile-server-<span class="number">6.3</span>.<span class="number">3</span>/seahub:/opt/seafile/seafile-server-<span class="number">6.3</span>.<span class="number">3</span>/seahub/thirdpart:$PYTHONPATH</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ./requirements.txt /tmp/requirements.txt</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install --no-cache-dir --<span class="built_in">disable</span>-pip-version-check \</span></span><br><span class="line"><span class="bash">                -r /tmp/requirements.txt \</span></span><br><span class="line"><span class="bash">                -r /opt/seafile/seafile-server-<span class="variable">$&#123;SEAFILE_VERSION&#125;</span>/seahub/requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> config /opt/seafile/conf/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> ccnet /opt/seafile/ccnet/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> scripts /opt/seafile</span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用该项目提供的命令进行构建：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="string">\</span></span><br><span class="line">  -f docker-compose.yaml <span class="string">\</span></span><br><span class="line">  up <span class="string">\</span></span><br><span class="line">  --force-recreate <span class="string">\</span></span><br><span class="line">  --renew-anon-volumes <span class="string">\</span></span><br><span class="line">  --build</span><br></pre></td></tr></table></figure>
+
+<p>整个过程比较慢，最后如果看到了 <code>seahub_1</code> 开头的行，应该是配置完毕了。此时访问 <code>yourip:8000</code>，如果出现了 Seafile 登录页面，那么你就成功了 3/4 了。</p>
+<p>接下来按 <code>Ctrl+C</code> 停止，然后重新让他以后台形式运行：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+
+<p>前面的 <code>docker-compose</code> 命令只用于第一个构建 Docker，之后就用常规的 <code>docker-compose up -d</code> 即可。运行完以后可以检查一下 <code>8000</code> 端口是否正常。</p>
+<p>剩下的 1/4 就是注册新账户了。这里 Seafile 不像 NextCloud 在第一次登陆时创建管理员账户，而是需要调用容器内的 Python 脚本。</p>
+<p>在宿主机执行以下命令：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec seahub <span class="keyword">python</span> /<span class="keyword">opt</span>/seafile/seafile-server-latest/seahub/manage.<span class="keyword">py</span> createsuperuser</span><br></pre></td></tr></table></figure>
+
+<p>如果正常，就会出现下面的情况：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose <span class="built_in">exec</span> seahub python /opt/seafile/seafile-server-latest/seahub/manage.py createsuperuser</span><br><span class="line">/opt/seafile/seafile-server-6.3.3/seahub/thirdpart/requests/__init__.py:80: RequestsDependencyWarning: urllib3 (1.19) or chardet (3.0.4) doesn<span class="string">'t match a supported version!</span></span><br><span class="line"><span class="string">  RequestsDependencyWarning)</span></span><br><span class="line"><span class="string">E-mail address: lxl361429916@live.com</span></span><br><span class="line"><span class="string">Password:</span></span><br><span class="line"><span class="string">Password (again):</span></span><br><span class="line"><span class="string">Superuser created successfully.</span></span><br></pre></td></tr></table></figure>
+
+<p>前面的 Warning 可以忽略。注册完账户以后，就可以在 <code>8000</code> 端口登陆了。</p>
+<h3 id="可能报错及解决方案"><a href="#可能报错及解决方案" class="headerlink" title="可能报错及解决方案"></a>可能报错及解决方案</h3><h4 id="第一次配置时卡住"><a href="#第一次配置时卡住" class="headerlink" title="第一次配置时卡住"></a>第一次配置时卡住</h4><p>如果第一次配置的时候卡住，出现了下面的内容：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># docker-compose \</span><br><span class="line">&gt;   -<span class="keyword">f</span> docker-compose.yaml \</span><br><span class="line">&gt;   <span class="keyword">up</span> \</span><br><span class="line">&gt;   --force-recreate \</span><br><span class="line">&gt;   --renew-anon-volumes \</span><br><span class="line">&gt;   --build</span><br><span class="line">Building ccnet</span><br><span class="line">Step <span class="number">1</span>/<span class="number">15</span> : FROM ubuntu:<span class="number">16.04</span></span><br><span class="line"> ---&gt; <span class="number">77</span>be327e4b63</span><br><span class="line">Step <span class="number">2</span>/<span class="number">15</span> : RUN apt <span class="keyword">update</span>     &amp;&amp; apt-<span class="built_in">get</span> install -qq -<span class="keyword">y</span> --<span class="keyword">no</span>-install-recommends       <span class="keyword">vim</span>       htop       net-tools       psmisc       git       wget       curl       build-essential       <span class="keyword">python</span>-dev       <span class="keyword">python</span>-pip       <span class="keyword">python</span>-setuptools       <span class="keyword">python</span>-wheel       libmysqlclient-dev     &amp;&amp; apt-<span class="built_in">get</span> clean     &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"> ---&gt; Running in <span class="number">379</span>f2d9271b1</span><br><span class="line"></span><br><span class="line">WARNING: apt does not have <span class="keyword">a</span> stable CLI interface. Use with caution in scripts.</span><br><span class="line"></span><br><span class="line">Ge<span class="variable">t:1</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial InRelease [<span class="number">247</span> kB]</span><br><span class="line">Ge<span class="variable">t:2</span> http://security.ubuntu.<span class="keyword">com</span>/ubuntu xenial-security InRelease [<span class="number">109</span> kB]</span><br><span class="line">Ge<span class="variable">t:3</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-updates InRelease [<span class="number">109</span> kB]</span><br><span class="line">Ge<span class="variable">t:4</span> http://security.ubuntu.<span class="keyword">com</span>/ubuntu xenial-security/main amd64 Packages [<span class="number">1063</span> kB]</span><br><span class="line">Ge<span class="variable">t:5</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-backports InRelease [<span class="number">107</span> kB]</span><br><span class="line">Ge<span class="variable">t:6</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial/main amd64 Packages [<span class="number">1558</span> kB]</span><br><span class="line">Ge<span class="variable">t:7</span> http://security.ubuntu.<span class="keyword">com</span>/ubuntu xenial-security/restricted amd64 Packages [<span class="number">12.7</span> kB]</span><br><span class="line">Ge<span class="variable">t:8</span> http://security.ubuntu.<span class="keyword">com</span>/ubuntu xenial-security/universe amd64 Packages [<span class="number">620</span> kB]</span><br><span class="line">Ge<span class="variable">t:9</span> http://security.ubuntu.<span class="keyword">com</span>/ubuntu xenial-security/multiverse amd64 Packages [<span class="number">6280</span> B]</span><br><span class="line">Ge<span class="variable">t:10</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial/restricted amd64 Packages [<span class="number">14.1</span> kB]</span><br><span class="line">Ge<span class="variable">t:11</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial/universe amd64 Packages [<span class="number">9827</span> kB]</span><br><span class="line">Ge<span class="variable">t:12</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial/multiverse amd64 Packages [<span class="number">176</span> kB]</span><br><span class="line">Ge<span class="variable">t:13</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-updates/main amd64 Packages [<span class="number">1432</span> kB]</span><br><span class="line">Ge<span class="variable">t:14</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-updates/restricted amd64 Packages [<span class="number">13.1</span> kB]</span><br><span class="line">Ge<span class="variable">t:15</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-updates/universe amd64 Packages [<span class="number">1021</span> kB]</span><br><span class="line">Ge<span class="variable">t:16</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-updates/multiverse amd64 Packages [<span class="number">19.3</span> kB]</span><br><span class="line">Ge<span class="variable">t:17</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-backports/main amd64 Packages [<span class="number">7942</span> B]</span><br><span class="line">Ge<span class="variable">t:18</span> http://archive.ubuntu.<span class="keyword">com</span>/ubuntu xenial-backports/universe amd64 Packages [<span class="number">8807</span> B]</span><br><span class="line">Fetched <span class="number">16.4</span> MB in <span class="number">1</span><span class="built_in">min</span> <span class="number">46</span>s (<span class="number">153</span> kB/s)</span><br><span class="line">Reading package lists...</span><br><span class="line">Building dependency tree...</span><br><span class="line">Reading state information...</span><br><span class="line">All packages are <span class="keyword">up</span> <span class="keyword">to</span> date.</span><br></pre></td></tr></table></figure>
+
+<p>可能是你没有修改 <code>Dockerfile</code>，请按照上面的方法修改 <code>Dockerfile</code>，然后重新 <code>docker-compose</code></p>
+<h4 id="设置密码时报错"><a href="#设置密码时报错" class="headerlink" title="设置密码时报错"></a>设置密码时报错</h4><p>如果设置密码时报错：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seahub.base.accounts.DoesNotExist: User matching query does <span class="keyword">not</span> exits.</span><br></pre></td></tr></table></figure>
+
+<p>可能是数据库的容器自己退出了。可以用 <code>docker ps --all</code>，然后看 <code>seafile-compose_db_1</code> 的 <code>STATUS</code> 是 <code>UP</code> 还是 <code>EXIT</code>。</p>
+<p>如果确实是 <code>EXIT</code> 退出了，那么 <code>docker-compose up -d</code> 即可重启。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.123Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&title=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&title=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/build-owncloud-on-server/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/linux/build-https-sites-with-nginx/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">全站添加 https</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/linux/docker/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">Docker 笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&title=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&title=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/linux/build-owncloud-on-server/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《搭建自己的 Owncloud 云盘》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/linux/build-owncloud-on-server/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/linux/build-owncloud-on-server/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aO47DMAxF0ex/0552msj3kUoh8aoKDMTWcQBG/Hw+eD3/1vr6tyvknt+esm3JkCHjWMazXISRPiv9vN6bDBky5jD4I9ffJQE3DcHkuTJkyJBBtpI+fu/rkyFDhgwSInm43JUAy5AhYxoj3VCa1q5LaSR53paLy5Ah40DG78pk/c8/6W/IkCHjKMYTLl7ET0tvnSVDhoy7GTzA8WEL3jYIElSyHxkyZFzN2FVESwe8Unw85CFDhoyLGOvyFj8Okm91ymovGBkyZIxh1JqXuw6CrTaDDBkyLmV0AisPqbzEVjs4ypAh425GWjJLy22dEl58fxkyZAxgkMDaCaPkOt9nKxeXIUPG4Qw+AFED9INvnIvLkCHjcAYpq/HjWm38K21bvvwOMmTIGMDgKy2xkQ3x0psMGTLmMHhxjaSj/aIeD/qoSSBDhoyLGCQ17YxT8DZkejcZMmTMZARVuvbm+neLHyNDhoxjGevwWiuN1TZK0loZMmTMZKTBtHaAqxXsghchQ4aMAYw0CJLgy5ud/VaBDBkyJjBIerl38KsTuNH/hgwZMq5g9Acs+kGZHz3R7yBDhozrGHzVim48ZU0HPooYGTJkHMvgQTY98O0qzxWHLWTIkHEdgzQDSEGNv47aUe/lnCtDhgwZ4fGxM+YVtARkyJAho9Ha5EfMTstThgwZcxjp8Fa/0E9iZhCmZciQcTWjljquQ3Ct8ZkmrjJkyBjA+AMG3wPxMLPsZwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

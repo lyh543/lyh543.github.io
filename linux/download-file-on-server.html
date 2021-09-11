@@ -1,0 +1,125 @@
+<hr>
+<p>title: 服务器下载文件<br>date: 2019-10-23 12:39:17<br>tags:</p>
+<ul>
+<li>服务器</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些国外网站，虽然没有被墙，但是下载个东西，几十 KB 的网速很难顶。</p>
+<p>于是想把东西下载服务器上，然后本地从服务器满速下载。这也就是离线下载的原理。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>后台运行也是非常重要的，我就一笔带过，将原本的命令改为 <code>nohup &lt;命令&gt; &amp;</code> 即可后台执行（此时可以按 <code>Ctrl+C</code> 关掉 <code>nohup</code> 的前端）。</p>
+<p>另外，如果服务器显示了“可以通过 <code>127.0.0.1:8080</code> 访问……”，表示的是服务器本机的 8080 端口，就可以在你的电脑访问 <code>[服务器ip]:8080</code>（如 <code>39.1.2.3:8080</code>）来访问对应的网站。后文不再赘述。</p>
+<h2 id="服务器下载文件"><a href="#服务器下载文件" class="headerlink" title="服务器下载文件"></a>服务器下载文件</h2><p>服务器下载 http(s) 直链，最常用、也是最无脑的就是 <code>wget &lt;Link&gt;</code> 了。<br>对付非直链的情况，我们有非直链的解决方案；<br>对于种子/磁力链，我们可以使用</p>
+<h3 id="wget-下载-Google-Drive-文件"><a href="#wget-下载-Google-Drive-文件" class="headerlink" title="wget 下载 Google Drive 文件"></a>wget 下载 Google Drive 文件</h3><p>在时断时续的梯子上，Google Drive 的下载不是很方便，特别是需要下载一个大文件的时候。</p>
+<p>但是 Google Drive 是可以获取直链的。很香。</p>
+<p>服务器用 wget 从 Google Drive 下载小文件的命令为（需要替换链接中的 <code>FILEID</code>）：</p>
+<pre><code>wget --no-check-certificate ‘https://docs.google.com/uc?export=download&amp;id=FILEID’
+</code></pre>
+<p>对于大文件，无法通过安全查杀，所以要用别的命令（注意 <code>FILEID</code> 有两处）：</p>
+<pre><code>wget --load-cookies /tmp/cookies.txt &quot;https://docs.google.com/uc?export=download&amp;confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate &#39;https://docs.google.com/uc?export=download&amp;id=FILEID&#39; -O- | sed -rn &#39;s/.*confirm=([0-9A-Za-z_]+).*/\1\n/p&#39;)&amp;id=FILEID&quot; &amp;&amp; rm -rf /tmp/cookies.txt
+1
+</code></pre>
+<p>其中，需要替换其中的 <code>FILEID</code> 为公开分享的文件 ID，下面是实例：</p>
+<pre><code>https://drive.google.com/open?id=FILEID
+https://drive.google.com/file/d/1_wnCdMKB4_GQM9dtA4AOHxZ21NCGFNm9/edit
+</code></pre>
+<p>第二条的 <code>1_wnCdMKB4_GQM9dtA4AOHxZ21NCGFNm9</code> 即为 <code>FILEID</code>。</p>
+<p>就可以感受国外连服务器的 60M/s 的网速了。</p>
+<h3 id="wget-下载-mediafire-com-的文件"><a href="#wget-下载-mediafire-com-的文件" class="headerlink" title="wget 下载 mediafire.com 的文件"></a>wget 下载 mediafire.com 的文件</h3><blockquote>
+<p>参考链接：<a href="https://moeclub.org/2018/04/11/609/?spm=23.8" target="_blank" rel="noopener">https://moeclub.org/2018/04/11/609/?spm=23.8</a></p>
+</blockquote>
+<p>这个网站就属于一开始说那种的网站，没有被墙，但是国内访问速度平均不到 100 K/s。</p>
+<p>不过这个网站又不像 Google Drive，可以直接找到直链，而是需要你访问网站，然后生成一个直链网页中（这些网站都挺良心，直接把直链放网站上，不像国内某云）。但是不同端登录给的直链时不一样的，所以我们要在服务器访问网站。</p>
+<p>具体来说，就是在服务器用 <code>wget</code> 下载他分享的链接对应的 html，然后从 html 里面找到链接即可用 wget 下载。</p>
+<p>假设我们的直链如下（注意统一用 https）：</p>
+<pre><code>https://www.mediafire.com/file/yrd1py7od5911zt/Catalina_Virtual_Disk_Image_by_Techsviewer.rar/file
+</code></pre>
+<p>可以用以下命令：</p>
+<pre><code class="bash">LINE=https://www.mediafire.com/file/yrd1py7od5911zt/Catalina_Virtual_Disk_Image_by_Techsviewer.rar/file
+
+Index_data=&quot;$(wget --no-check-certificate -qO- &quot;$LINE&quot; | grep -o &#39;https://download.*.mediafire.com/.*/.*&quot;&#39; | cut -d&#39;&quot;&#39; -f1
+# 通过分享的链接获取页面 html，并通过正则表达式抓到下载链接
+</code></pre>
+<p>得到类似下面的 <code>Index_data</code>。其中 <code>download</code> 后的 <code>2331</code> 就是每个直链不同的地方。</p>
+<pre><code>https://download2331.mediafire.com/chmg33d4airg/yrd1py7od5911zt/Catalina+Virtual+Disk+Image+by+Techsviewer.rar 
+</code></pre>
+<p>然后就可以 <code>wget &quot;$Index_data&quot;</code> 或手动 <code>wget &lt;网址&gt;</code> 进行下载。</p>
+<p>如果需要后台下载，当然是用 nohup 了。这样，即使是几十 kb 的下载速度，服务器下个三天三夜，然后就可以以满速下到本地了。</p>
+<pre><code class="bash">nohup wget &quot;$Index_data&quot; &amp;
+</code></pre>
+<p>下载的进度可以 <code>tail nohup.out</code> 查看输出文件的最后几行。</p>
+<h3 id="qbittorrent-下载磁力链-种子"><a href="#qbittorrent-下载磁力链-种子" class="headerlink" title="qbittorrent 下载磁力链/种子"></a>qbittorrent 下载磁力链/种子</h3><pre><code class="bash">apt install qbittorrent
+qbittorent-nox
+</code></pre>
+<p>安装 qbittorrent 以后，提供了两条命令 <code>qbittorrent</code> 和 <code>qbittorrent-nox</code> 的。前者是提供 GUI 的，后者是给命令行使用的（所谓 <code>no X</code>）。</p>
+<p>输入 <code>qbittorent-nox</code> 以后，就可以在本地通过访问对应的网站来管理服务器的 qbittorent 下载种子了。</p>
+<p>如果需要后台执行，可以使用 <code>qbittorrent-nox -d</code>。</p>
+<h2 id="服务器、本机互传文件"><a href="#服务器、本机互传文件" class="headerlink" title="服务器、本机互传文件"></a>服务器、本机互传文件</h2><p>如果想要知道最方便的方法，请跳到 <a href="#webdav%EF%BC%88%E6%94%AF%E6%8C%81%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0%E3%80%81%E5%AF%86%E7%A0%81%E9%AA%8C%E8%AF%81%EF%BC%89">webdav</a> 部分。</p>
+<h3 id="scp-命令：通过-ssh-在服务器和本地互传文件"><a href="#scp-命令：通过-ssh-在服务器和本地互传文件" class="headerlink" title="scp 命令：通过 ssh 在服务器和本地互传文件"></a>scp 命令：通过 ssh 在服务器和本地互传文件</h3><pre><code class="bash">scp /home/work/source.txt work@192.168.0.10:/home/work/
+#把本地的source.txt文件拷贝到192.168.0.10机器上的/home/work目录下
+
+scp work@192.168.0.10:/home/work/source.txt /home/work/
+#把192.168.0.10机器上的source.txt文件拷贝到本地的/home/work目录下
+
+scp work@192.168.0.10:/home/work/source.txt work@192.168.0.11:/home/work/
+#把192.168.0.10机器上的source.txt文件拷贝到192.168.0.11机器的/home/work目录下
+
+scp -r /home/work/sourcedir work@192.168.0.10:/home/work/
+#拷贝文件夹，加-r参数
+
+# 更改端口用 -P 参数
+</code></pre>
+<h3 id="python3-http-server-一行建立-http-文件服务器（不支持断点续传、密码验证）"><a href="#python3-http-server-一行建立-http-文件服务器（不支持断点续传、密码验证）" class="headerlink" title="python3 http.server 一行建立 http 文件服务器（不支持断点续传、密码验证）"></a>python3 http.server 一行建立 http 文件服务器（不支持断点续传、密码验证）</h3><pre><code class="bash">sudo apt-get install python3
+
+python3 -m  http.server 8000
+</code></pre>
+<p>需要更多的选项，可以使用 <code>python3 -m  http.server --help</code></p>
+<p>看到 <code>Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...</code> 以后即可。</p>
+<p>就可以在互联网上通过打开访问到当前文件夹了。后台运行同样是 <code>nohup</code>。</p>
+<p>注意这是没有密码验证的，也不支持断点续传（毕竟 <code>simple</code> ），所以<strong>不要长期开放！！！</strong></p>
+<h3 id="npm-http-server-一行建立-http-文件服务器（支持断点续传，不支持密码验证）"><a href="#npm-http-server-一行建立-http-文件服务器（支持断点续传，不支持密码验证）" class="headerlink" title="npm http-server 一行建立 http 文件服务器（支持断点续传，不支持密码验证）"></a>npm http-server 一行建立 http 文件服务器（支持断点续传，不支持密码验证）</h3><pre><code class="bash">apt install npm
+npm install http-server -g
+
+http-server
+</code></pre>
+<p>其中 <code>http-server</code> 的常用参数为 <code>http-server [path] [-p port]</code>。<code>port</code> 默认为 8080。</p>
+<p>如果想要在后台运行，可以配合 <code>nohup</code> 使用：</p>
+<pre><code class="sh">nohup http-server &amp;
+</code></pre>
+<p>如果想要守护进程（如果被 kill 就立刻重启），可以使用：</p>
+<pre><code class="sh">apt install npm
+npm install pm2 -g
+pm2 --name s1 -f start http-server # 配置 pm2
+pm2 save # 可选命令，作用是保存当前的 pm2 状态，下次开机的时候可以使用 pm2 startup 恢复到当前状态
+pm2 ls   # 可选命令，列出当前 pm2 的任务
+</code></pre>
+<p>另外，实现同样功能的还有：<a href="https://github.com/lwsjs/local-web-server" target="_blank" rel="noopener">https://github.com/lwsjs/local-web-server</a></p>
+<p>不过，需要注意的是，如果连接线程太多，会消耗大量服务器内存。在我的测试中：</p>
+<ul>
+<li>单线程下载一个文件，内存占用 36 MB</li>
+<li>16 线程下载一个文件，内存占用 40 MB</li>
+<li>下载三个文件，每个文件 128 线程，内存占用高达 250MB（不要问我为什么这么高，问就是某线程破解版下载软件默认）</li>
+</ul>
+<h3 id="给不支持密码验证的-http-server-增加密码验证"><a href="#给不支持密码验证的-http-server-增加密码验证" class="headerlink" title="给不支持密码验证的 http server 增加密码验证"></a>给不支持密码验证的 http server 增加密码验证</h3><p>这个方法是借助于 Nginx 的密码验证。实现思路是：</p>
+<ul>
+<li>使用 Nginx 服务器，将 <code>file.lyh543.cn</code> 反向代理到 <code>lyh543.cn:8080</code>，其中 <code>8080</code> 为上述 <code>http-server</code> 的访问端口。方法可参考<a href="../nginx">Nginx （萌新向）</a>。</li>
+<li>同时在 <code>file.lyh543.cn</code> 的配置文件中加入密码验证功能，可参考<a href="https://blog.csdn.net/dream8062/article/details/78416234" target="_blank" rel="noopener">nginx配置访问密码</a>。</li>
+<li>最后为安全起见，可在防火墙中关掉 <code>8080</code> 端口，避免直接从端口访问服务器。可参考<a href="../linux#%E9%98%B2%E7%81%AB%E5%A2%99">Linux 日常命令–防火墙</a>。</li>
+</ul>
+<h3 id="webdav（支持断点续传、密码验证）"><a href="#webdav（支持断点续传、密码验证）" class="headerlink" title="webdav（支持断点续传、密码验证）"></a>webdav（支持断点续传、密码验证）</h3><blockquote>
+<p>参考博客：<a href="https://blog.devzeng.com/blog/build-webdav-server-in-docker.html" target="_blank" rel="noopener">https://blog.devzeng.com/blog/build-webdav-server-in-docker.html</a></p>
+</blockquote>
+<p>我在 2020.6.14 发现了 webdav，最方便的应该就是 webdav 了。</p>
+<p>首先安装 Docker，可参照<a href="../docker">这篇教程</a>。</p>
+<p>然后运行一行命令：</p>
+<pre><code class="sh">docker run -d --name webdav -v /path/to/directory:/var/webdav -e USERNAME=test -e PASSWORD=test -p 8888:80 morrisjobke/webdav
+</code></pre>
+<p>运行前修改上面的 <code>/path/to/directory</code> 为你的文件夹名；修改用户名和密码；修改端口为你想要的端口。</p>
+<p>然后就可以在浏览器中访问 <code>http://yourip:8888/webdav</code>（注意有个 <code>webdav</code>），再进行账户密码验证即可进行下载。</p>
+<p>对于支持 WebDAV 的应用，就可以用这个方法上传、下载了。</p>
+<h3 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h3><p>如果能使用 SMB，就可以把服务器的某个文件夹当做（Windows）本机的一个硬盘，上传下载都是非常的方便。</p>
+<p>然而，SMB 配置起来比较麻烦，一是 SMB 通常用于局域网内，在外网使用会麻烦一点；二是 SMB 的默认端口 445 被阿里云、腾讯云等封禁了，需要使用别的端口。但是确实有人实现过。还是使用 <code>scp</code> 或 webdav 吧。</p>
+<h3 id="Syncthing"><a href="#Syncthing" class="headerlink" title="Syncthing"></a>Syncthing</h3><p>如果需要两个设备的某些文件夹保持完全同步，可以考虑使用 <a href="https://syncthing.net/" target="_blank" rel="noopener">Syncthing</a>。</p>
+<p>这个软件可以让两个设备的文件夹保持完全同步，并且跨平台（Linux/Windows/macOS/FreeBSD/OpenBSD/NetBSD/Dragonfly BSD/Illumos/Solaris）。通过网页进行管理，非常方便。</p>
+<h3 id="给链接添加-HTTPS"><a href="#给链接添加-HTTPS" class="headerlink" title="给链接添加 HTTPS"></a>给链接添加 HTTPS</h3><p>上面都是通过 HTTP 协议 + 端口访问服务，如果需要 HTTPS，需要用 Nginx 做一次反向代理，参见 <a href="/Linux/nginx/#%E9%9A%90%E6%80%A7%E8%BD%AC%E5%8F%91-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">Nginx</a>。</p>

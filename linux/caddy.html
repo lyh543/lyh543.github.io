@@ -1,0 +1,269 @@
+<hr>
+<p>title: Caddy 2<br>date: 2020-06-25 20:46:22<br>tags:</p>
+<ul>
+<li>服务器</li>
+<li>Caddy</li>
+<li>Linux</li>
+<li>编程语言入门<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<h2 id="Caddy-优缺点"><a href="#Caddy-优缺点" class="headerlink" title="Caddy 优缺点"></a>Caddy 优缺点</h2><p>最近了解了一下 Caddy，准备从 Nginx 转到 Caddy。本文指的 Caddy 均为 Caddy 2。</p>
+<p><a href="https://caddyserver.com/docs/" target="_blank" rel="noopener">Caddy 官方文档</a><br><a href="https://dengxiaolong.com/caddy/zh/" target="_blank" rel="noopener">Caddy 中文文档</a></p>
+<p>Caddy 的优点有：</p>
+<ul>
+<li>自动申请 TLS 证书（一大卖点！）</li>
+<li>语法简洁</li>
+</ul>
+<p>缺点有：</p>
+<ul>
+<li>插件较 Nginx 少</li>
+<li>文档不多，而且网上的讨论也不多</li>
+</ul>
+<h2 id="安装-Caddy"><a href="#安装-Caddy" class="headerlink" title="安装 Caddy"></a>安装 Caddy</h2><p>参考链接：<a href="https://caddyserver.com/docs/download" target="_blank" rel="noopener">下载</a> | <a href="https://caddyserver.com/docs/install" target="_blank" rel="noopener">安装</a></p>
+<p>由于 <code>yum</code> 自带的是 Caddy 1，而我按官网从 <code>yum</code> 下载 Caddy 的方法貌似会报错，因选择了手动安装。</p>
+<p>安装好以后，编写一个简单的 Caddyfile 用于测试：</p>
+<pre><code class="sh">mkdir /etc/caddy
+vim /etc/caddy/Caddyfile
+</code></pre>
+<p>输入如下内容，然后保存：</p>
+<pre><code class="sh">:2015
+
+Hello world!
+</code></pre>
+<p>启用 Caddy 服务并启动，然后查看其状态：</p>
+<pre><code class="sh"># 启用
+sudo systemctl daemon-reload
+sudo systemctl enable caddy
+
+# 启动
+sudo systemctl start caddy
+
+# 查看状态
+systemctl status caddy
+</code></pre>
+<p>如果是 <code>active (running)</code>，则安装成功！如果是 <code>failed</code>，请检查 <code>Caddyfile</code> 的位置是否正确（按官方的配置，应该是 <code>/etc/systemd/system/caddy.service</code>）。</p>
+<p>验证一下网站服务，curl 获取网站内容：</p>
+<pre><code class="sh">curl localhost:2015
+</code></pre>
+<p>如果返回 <code>Hello world!</code> 即正确。</p>
+<p>以后，如果修改了 Caddyfile，使用 <code>systemctl reload caddy</code> 即可使其重新读取配置文件。</p>
+<h2 id="运行-Caddy"><a href="#运行-Caddy" class="headerlink" title="运行 Caddy"></a>运行 Caddy</h2><p>Caddy 可以由用户运行，也可以由 caddy 用户以 <code>systemctl</code> 的形式在后台运行。</p>
+<p>由于 <code>systemctl</code> 运行出错时的提示很少，推荐学习、测试的时候使用用户身份运行，测试完成以后使用 <code>systemctl</code>。</p>
+<p>以用户身份运行及停止：</p>
+<pre><code>caddy start
+caddy stop
+</code></pre>
+<p>这两条命令会读取当前目录的 <code>Caddyfile</code>，所以记得提前切换到 <code>/etc/caddy</code>。</p>
+<p>以系统身份运行及停止：</p>
+<pre><code>systemctl start caddy
+systemctl stop caddy
+</code></pre>
+<p>查看调试信息：</p>
+<pre><code class="sh">systemctl status caddy
+</code></pre>
+<p>两种方法的重新加载分别为：</p>
+<pre><code class="sh">caddy reload
+systemctl reload caddy
+</code></pre>
+<h2 id="Caddyfile-常见配置"><a href="#Caddyfile-常见配置" class="headerlink" title="Caddyfile 常见配置"></a>Caddyfile 常见配置</h2><p>在不进行额外设置的情况下，Caddy 都是 443 端口自动申请 HTTPS，80 端口重定向到 443 端口的。</p>
+<p><a href="https://caddyserver.com/docs/caddyfile/patterns" target="_blank" rel="noopener">常见配置</a>，入门 Caddyfile 时也可以参考一下，对 Caddyfile 有个基本的认识。</p>
+<h2 id="Caddyfile-入门"><a href="#Caddyfile-入门" class="headerlink" title="Caddyfile 入门"></a>Caddyfile 入门</h2><p><a href="https://caddyserver.com/docs/caddyfile" target="_blank" rel="noopener">官方教程</a></p>
+<h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World!"></a>Hello World!</h3><p>如果只打算定义一个网站，Caddyfile 的第一行是网址，后面的就是一个或多个指令 <code>directive</code>：</p>
+<pre><code class="sh">localhost
+
+respond &quot;Hello, world!&quot;
+</code></pre>
+<p>将上述文本保存在 <code>/etc/caddy/Caddyfile</code>，然后使用 <code>systemctl reload caddy</code> 重新读取后，就可以尝试用浏览器或 curl 打开该网站：</p>
+<pre><code class="sh">$ curl https://localhost
+Hello, world!
+</code></pre>
+<h3 id="定义多个网站"><a href="#定义多个网站" class="headerlink" title="定义多个网站"></a>定义多个网站</h3><p>一个文件可以定义多个网站。但是需要将上述语法改为下面的等价语法：</p>
+<pre><code class="sh">localhost { # 大括号前必须有空格
+    respond &quot;Hello, world!&quot;
+}
+</code></pre>
+<p>就可以在多个语法块中定义每个网站了。</p>
+<h3 id="import-其他配置文件"><a href="#import-其他配置文件" class="headerlink" title="import 其他配置文件"></a>import 其他配置文件</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/import" target="_blank" rel="noopener">参考</a></p>
+<p>也可以在多个文件中定义配置。如在 <code>a.txt</code> 写入以下内容：</p>
+<pre><code class="sh">a.com {
+    respond &quot;Hello, world!&quot;
+}
+</code></pre>
+<p>在 <code>b.txt</code> 写入以下内容：</p>
+<pre><code class="sh">b.com {
+    respond &quot;Nice to meet you!&quot;
+}
+</code></pre>
+<p>然后在 <code>Caddyfile</code> 中写入：</p>
+<pre><code class="sh"># 以 Caddyfile 形式导入两个 txt
+import a.txt
+import b.txt
+</code></pre>
+<p>即可。</p>
+<p>和 Nginx 一样，你需要提前将 <code>a.com</code> 和 <code>b.com</code> 的域名解析以 A 形式指向你的服务器 IP。</p>
+<h3 id="静态网站-file-server"><a href="#静态网站-file-server" class="headerlink" title="静态网站 file_server"></a>静态网站 file_server</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/file_server" target="_blank" rel="noopener">参考</a></p>
+<pre><code>example.com {
+    root * /var/www
+    file_server
+}
+</code></pre>
+<p>访问 <code>https://example.com</code> 会看到服务器 <code>/var/www/</code> 的内容。如果存在 <code>index.html</code>，则会打开这个网页。还可指定别的 index：</p>
+<pre><code>example.com {
+    root * /var/www
+    file_server {
+        index www.index.html
+    }
+}
+</code></pre>
+<p>还可以使用浏览器浏览文件夹 + 重定向 + 加上反斜线。</p>
+<pre><code>example.com {
+    redir /v /v/
+    handle /v/* {
+        uri strip_prefix /v
+        file_server browse {
+            root /etc/uestcmsc_webapp/getproxy/
+        }
+    }
+}
+</code></pre>
+<h3 id="反向代理-reverse-proxy"><a href="#反向代理-reverse-proxy" class="headerlink" title="反向代理 reverse_proxy"></a>反向代理 reverse_proxy</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/reverse_proxy" target="_blank" rel="noopener">参考</a></p>
+<pre><code>example.com {
+    reverse_proxy localhost:5000
+}
+</code></pre>
+<p>三行即可。访问 <code>https://example.com</code> 实际上访问的是服务器的 5000 端口。</p>
+<p>利用以下配置可将 <code>https://example.com/proxy</code> 反向代理到 <code>localhost:5000</code>。</p>
+<pre><code>example.com {
+    reverse_proxy /proxy localhost:5000
+}
+</code></pre>
+<p>还可利用以下配置可将 <code>https://example.com</code> 反向代理到 <code>localhost:5000/proxy</code>。</p>
+<pre><code>example.com {
+    uri replace / /proxy 1
+    reverse_proxy localhost:5000
+}
+</code></pre>
+<p>上述配置表示，在反向代理之前，将 uri 的前 <code>1</code> 个 <code>/</code> 替换为 <code>/proxy</code>。</p>
+<h3 id="重定向-redir"><a href="#重定向-redir" class="headerlink" title="重定向 redir"></a>重定向 redir</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/redir" target="_blank" rel="noopener">参考</a></p>
+<pre><code>www.example.com {
+    redir https://example.com{uri}
+}
+</code></pre>
+<p>访问 <code>www.example.com</code> 会 <code>302 Redirect</code> 重定向到 <code>https://example.com</code>。</p>
+<p>也可以使用 <code>permanent</code>：</p>
+<pre><code>www.example.com {
+    redir https://example.com{uri} permanent
+}
+</code></pre>
+<p>访问 <code>www.example.com</code> 会 <code>301 Move permanently</code> 重定向到 <code>https://example.com</code>。</p>
+<h3 id="按顺序执行-route"><a href="#按顺序执行-route" class="headerlink" title="按顺序执行 route"></a>按顺序执行 route</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/route" target="_blank" rel="noopener">参考</a></p>
+<p>上述语法 <code>file_server</code>、<code>reverse_proxy</code>、<code>redir</code> 可以混合使用。</p>
+<pre><code>example.com {
+    reverse_proxy /proxy localhost:5000
+    redir         /github github.com
+    redir         /google google.com
+    file_server   *      /var/www/html/
+}
+</code></pre>
+<p>这会使得 <code>example.com/proxy</code>、<code>example.com/github</code>、<code>example.com/google</code> 以及 <code>example.com</code> 的其他地址执行对应的功能。</p>
+<p>但是，默认情况下，在执行过程中，指令的执行顺序会根据指令名进行调整。比如，<code>file_server</code> 是最后执行的。如果改成以下代码，<code>file_server</code> 则不会被运行，因为在执行到 <code>file_server</code> 之前，<code>/google</code> 已经被重定向了。</p>
+<pre><code>example.com {
+    reverse_proxy /proxy localhost:5000
+    redir         /github github.com
+    file_server   /google /var/www/html/
+    redir         *       google.com
+}
+</code></pre>
+<p>如果真的需要这么做，可以将所有命令包含在 <code>route</code> 的语句块中。语句块中的内容将<strong>被顺序执行</strong>：</p>
+<pre><code>example.com {
+    route {
+        reverse_proxy /proxy localhost:5000
+        redir         /github github.com
+        file_server   /google /var/www/html/
+        redir         *       google.com
+    }
+}
+</code></pre>
+<h3 id="处理-handle"><a href="#处理-handle" class="headerlink" title="处理 handle"></a>处理 handle</h3><p><code>handle</code> 类似于 Nginx 中的 <code>location</code>，是一种类似于分支逻辑的 HTTP handler logic（HTTP 处理逻辑）。</p>
+<pre><code>example.com {
+    handle /foo/* {
+        file_server
+    }
+    handle / {
+        reverse_proxy 127.0.0.1:8080
+    }
+}
+</code></pre>
+<p>上述语法就会将 <code>/foo</code> 下面的网址以 <code>file_server</code> 运行，对其他则会进行反向代理。实现的功能和 <code>route</code> 类似，不过我猜测 <code>handle</code> 处理这类问题更高效。</p>
+<h3 id="定义错误页面-handle-errors"><a href="#定义错误页面-handle-errors" class="headerlink" title="定义错误页面 handle_errors"></a>定义错误页面 handle_errors</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/handle_errors#handle-errors" target="_blank" rel="noopener">参考</a></p>
+<p>基于静态网站定义 404 页面的代码如下：</p>
+<pre><code>example.com {
+    root * /var/www/
+    file_server
+    handle_errors {
+        rewrite * /{http.error.status_code}.html
+        file_server
+    }
+}
+</code></pre>
+<p>访问到不存在的网址则会显示 <code>/404.html</code> 的内容（但网址不会变化，仍然是访问的网址）。</p>
+<h3 id="rewrite-url-try-files"><a href="#rewrite-url-try-files" class="headerlink" title="rewrite url try_files"></a>rewrite url try_files</h3><p><a href="https://caddyserver.com/docs/caddyfile/directives/rewrite" target="_blank" rel="noopener">参考</a></p>
+<p>这三条命令都是修改 uri 用。</p>
+<ul>
+<li><code>rewrite</code> 将匹配的 uri 修改为指定的 uri；</li>
+<li><code>uri</code> 在原 uri 上进行修改；</li>
+<li><code>try_files</code> 将 <code>uri</code> 修改为列出路径中，路径对应的文件（文件夹）存在的第一项。</li>
+</ul>
+<p>修改以后，只是访问的路径变化，<strong>并不会在地址栏有所体现</strong>。</p>
+<pre><code class="sh">example1.com {
+    rewrite * /foo.html             # 将所有路径修改为 foo.html
+}
+
+example2.com {
+    uri replace / /proxy 1          # 将第一个 / 修改为 /proxy，即在链接前添加一个 /proxy
+    reverse_proxy localhost:9000    # example2.com/ =&gt; localhost:9000/proxy
+}
+
+example2.com {
+    route /api/* {
+        uri strip_prefix /api
+        reverse_proxy localhost:9000
+    }
+}
+
+example3.com {
+    try_files {path} /index.php # 如果 {path} 存在，访问 {path}；否则访问 index.php
+}
+</code></pre>
+<h3 id="占位符-placeholders"><a href="#占位符-placeholders" class="headerlink" title="占位符 placeholders"></a>占位符 placeholders</h3><p>上文的 <code>{uri}</code> 即是一种占位符。更多的占位符可见：<a href="https://caddyserver.com/docs/caddyfile/concepts#placeholders" target="_blank" rel="noopener">https://caddyserver.com/docs/caddyfile/concepts#placeholders</a></p>
+<h3 id="匹配串-matchers"><a href="#匹配串-matchers" class="headerlink" title="匹配串 matchers"></a>匹配串 matchers</h3><p>配置文件中一个很重要的部分是匹配串（matchers）如 <code>/</code> <code>/proxy</code>。在 <a href="https://caddyserver.com/docs/caddyfile/matchers" target="_blank" rel="noopener">https://caddyserver.com/docs/caddyfile/matchers</a> 做了详细介绍。</p>
+<h2 id="泛域名-HTTPS"><a href="#泛域名-HTTPS" class="headerlink" title="泛域名 HTTPS?"></a>泛域名 HTTPS?</h2><p>当然，以上域名只做到了单域名 HTTPS，对于泛域名解析 HTTPS 则会麻烦得多。这是由于在 Let’s Encrypt，单域名 HTTPS 证书可以使用 HTTP 验证（在网站对应的指定路径放一个指定的 HTML），而泛域名 （如<code>*.example.com</code> HTTPS 证书则需要使用 DNS 验证（在指定的域名下放一个 DNS 解析）。前者交给 Caddy 做非常方便，而后者就不那么方便了。</p>
+<p>对于该问题，有以下解决办法：</p>
+<ol>
+<li><p>Caddy 2 的确可以通过插件调用各 DNS 提供商的 API 来实现修改 DNS，但是 Caddy 2 <a href="https://github.com/caddy-dns" target="_blank" rel="noopener">官方的插件</a>只有很少，像国内阿里云、腾讯云都没有开发。貌似可以在阿里云将域名的 DNS 解析服务器改为 CloudFlare 的，然后利用 CloudFlare API 实现，但是这里我没有深入研究。</p>
+</li>
+<li><p>相比于 Caddy 2，<a href="https://caddyserver.com/v1/download" target="_blank" rel="noopener">Caddy 1</a> 就提供了不少插件（但仍然没有阿里云）。如有需求可改为 Caddy 1。</p>
+</li>
+<li><p>使用 <a href="https://caddyserver.com/docs/automatic-https#on-demand-tls" target="_blank" rel="noopener">On-Demand TLS</a> 技术。这是 Caddy 研发的一种技术。</p>
+</li>
+</ol>
+<p>在第一次 TLS 握手时，如果发现本地没有 HTTPS 证书或已过期以后，就立刻向 Let’s Encrypt 申请证书，成功后保存该证书，并完成此次握手；此后如果发现存在 HTTPS 证书且有效，就会使用该证书完成握手。</p>
+<p>该方法的优点非常明显，就是可以用对访问到的每个域名申请 HTTPS 证书的方法，代替 DNS 验证。缺点也很明显，由于 HTTPS 证书申请需要时间，再加上国内网络问题，在首次访问某域名时，需要等待 10-40 秒不等供 Caddy 服务器申请证书。</p>
+<p>我最终采用了这种方式，因为使用泛域名解析只是为了跳转到主域名上，实际上没有几个人会访问这些域名的。</p>
+<p>On-Demand TLS 语法如下：</p>
+<pre><code>*.example.com {
+    tls {
+        on_demand
+    }
+    redir https://example.com{uri} permanent
+}
+</code></pre>
+<ol start="4">
+<li>最后一种无奈之举，就是不使用 HTTPS。如果该域名只是做一个 <code>redir</code>，其实不使用 HTTP 也还可以接受。</li>
+</ol>
+<p>Caddy 不使用 HTTPS 的语法是，在域名后指定 <code>80</code> 端口。</p>
+<pre><code>*.example.com:80 {
+    redir https://example.com{uri} permanent
+}
+</code></pre>

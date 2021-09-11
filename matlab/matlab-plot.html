@@ -1,0 +1,159 @@
+<hr>
+<p>title: MATLAB 绘图<br>date: 2019-09-23 20:33:01<br>tags:</p>
+<ul>
+<li>MATLAB</li>
+<li>课程笔记<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<h2 id="按自变量、因变量值绘图"><a href="#按自变量、因变量值绘图" class="headerlink" title="按自变量、因变量值绘图"></a>按自变量、因变量值绘图</h2><p>这是老师教的方法。<a href="https://ww2.mathworks.cn/help/matlab/ref/plot.htm" target="_blank" rel="noopener">官方文档</a></p>
+<p>这个方法的实现是：将输入的 n 个点中，相邻两个点都用直线连接。当点足够密时，可以认为曲线是平滑的了。需要散点图在最后加一个参数 <code>.</code>。</p>
+<h3 id="已知表达式"><a href="#已知表达式" class="headerlink" title="已知表达式"></a>已知表达式</h3><pre><code class="MATLAB">xx = linspace(0, 2*pi, 100);
+yy = sin(xx);
+plot(xx,yy);
+</code></pre>
+<h3 id="参数方程"><a href="#参数方程" class="headerlink" title="参数方程"></a>参数方程</h3><pre><code class="matlab">t = linspace(0,2*pi,100);
+x1 = r*cos(t);
+y1 = r*sin(t);
+plot(x1,y1)
+</code></pre>
+<h3 id="plot-散点图"><a href="#plot-散点图" class="headerlink" title="plot 散点图"></a>plot 散点图</h3><pre><code class="m">plot(1:5, 1:5, &#39;.&#39;); % 另可用 `o`, `*`
+</code></pre>
+<h2 id="按符号函数绘图"><a href="#按符号函数绘图" class="headerlink" title="按符号函数绘图"></a>按符号函数绘图</h2><p><a href="https://ww2.mathworks.cn/help/matlab/ref/fplot.html" target="_blank" rel="noopener">官方文档</a></p>
+<p>fplot 可以直接传函数进去（推荐用符号函数，用匿名函数会警告）。传一个函数即是普通函数，传两个就是参数方程。区间用一个二元向量 <code>[1 2]</code>表示。</p>
+<pre><code class="matlab">fplot(f)
+fplot(f,xinterval)
+fplot(funx,funy)
+fplot(funx,funy,tinterval)
+</code></pre>
+<h2 id="ezplot（不知道是什么）"><a href="#ezplot（不知道是什么）" class="headerlink" title="ezplot（不知道是什么）"></a>ezplot（不知道是什么）</h2><pre><code class="MATLAB">ezplot(sin(x)/x);
+ezplot(t,t^2,[1,2]);
+</code></pre>
+<h2 id="scatter-散点图"><a href="#scatter-散点图" class="headerlink" title="scatter 散点图"></a>scatter 散点图</h2><p>后来老师讲了带参数的 <code>plot</code>，真香。</p>
+<pre><code class="m">for i = 1:10
+    scatter(i,rand()), hold on;
+end
+</code></pre>
+<p>使用实心圆可以使用 <code>scatter(i,rand(), 8, &#39;filled&#39;)</code>。</p>
+<h2 id="histogram-直方图"><a href="#histogram-直方图" class="headerlink" title="histogram 直方图"></a>histogram 直方图</h2><p>旧版使用 <code>hist</code>，新版使用 <code>histogram</code>。</p>
+<p>输入一个向量，绘出 x 的每个元素的直方图。</p>
+<p>其中，默认把 x 的值分为 10 个区间。</p>
+<h2 id="三维线图"><a href="#三维线图" class="headerlink" title="三维线图"></a>三维线图</h2><p><code>plot3</code>，和 <code>plot</code> 用法类似，给定 n 个点的 (x, y, z) 坐标，<code>plot3</code> 绘制其连起来的线图。</p>
+<h2 id="三维面图"><a href="#三维面图" class="headerlink" title="三维面图"></a>三维面图</h2><p><code>surf</code> 三维面图要稍微麻烦一点，需要给定 X, Y, Z 三个矩阵（而不是向量），其中 X, Y 可以用 <code>meshgrid</code> 函数和 x, y 的 n 个坐标进行生成。</p>
+<p>下面的代码将生成抛物线 $z=x^2+y^2$ 在 [-5,5] 的范围。</p>
+<pre><code class="m">x = -5:0.1:5;
+y = -5:0.1:5;
+[X, Y] = meshgrid(x, y);
+Z = X.^2 + Y.^2;
+surf(X,Y,Z);
+</code></pre>
+<p>MATLAB 自带了生成绘制标准球（<code>sphere</code>）、椭球（<code>ellipsoid</code>）和标准圆柱侧面（<code>cylinder</code>）的 X,Y,Z 的函数。  </p>
+<p>如果想要生成其他大小、位置的球/圆柱，可以考虑坐标变换。下面的代码生成了半径为 R，球心在 <code>[-R, -R, L]</code> 的球。</p>
+<pre><code class="m">[x1, y1, z1] = sphere;
+x1 = x1 * R - R;
+y1 = y1 * R - R;
+z1 = z1 * R + L;
+surf(x1, y1, z1);
+</code></pre>
+<p>也可以手算得到 X, Y, Z：</p>
+<pre><code class="m">close all
+a = 6000;
+b = 5000;
+[r,t]=meshgrid(linspace(0,a,50),linspace(0,2*pi,50));
+x=r.*cos(t); y=r.*sin(t);
+z = b*sqrt(1-(x.^2+y.^2)/(a*a));
+z = real(z);
+surf(x,y,z);
+hold on;
+surf(x,y,-z)
+axis equal
+</code></pre>
+<p>如果给定函数和范围想要直接画出图形，可以改用 <code>fsurf</code>。</p>
+<h2 id="mesh-散点图"><a href="#mesh-散点图" class="headerlink" title="mesh 散点图"></a>mesh 散点图</h2><h2 id="动画程序框架"><a href="#动画程序框架" class="headerlink" title="动画程序框架"></a>动画程序框架</h2><p>动画框架即是播放一张图片，然后暂停 0.05s。</p>
+<p>显然，如果绘图过程耗时远小于 0.05s，则可以做出 20 帧的动画。</p>
+<pre><code class="matlab">close all;
+N = 100;
+for i=1:N
+    hold off;
+    % ... 绘图语句
+    hold on;
+    % ... 绘图语句
+    % ... 绘图语句
+    % 完成绘图后暂停
+    pause(0.05);
+end;
+</code></pre>
+<h2 id="image-输出图片"><a href="#image-输出图片" class="headerlink" title="image 输出图片"></a>image 输出图片</h2><pre><code class="m">background = imread(&#39;Snakes_And_Ladder.png&#39;);
+image(background);
+</code></pre>
+<p>输出了以后还可以用 <code>hold on; plot</code> 在图上绘制几何图形，每个像素为一个单位长度。但需要注意，该图的原点在左上角，x、y 轴的正方向分别为右方、下方。</p>
+<p>提示：还可以使用 <code>axis equal off</code> 来保持图片的长宽比，然后隐藏坐标轴。</p>
+<h2 id="输出视频"><a href="#输出视频" class="headerlink" title="输出视频"></a>输出视频</h2><p>输出视频的原理是将绘图窗口（<code>gcf</code> 为当前绘图窗口）的图片插入视频，最后导出一个 30 帧的视频。</p>
+<p>下面用到了类的写法。</p>
+<pre><code class="m">mp4 = VideoWriter(&#39;highway.mp4&#39;,&#39;MPEG-4&#39;);
+mp4.open();
+for i=1:N
+    % 绘图
+    mp4.writeVideo(getframe(gcf));
+end
+mp4.close();
+</code></pre>
+<h2 id="图的注释、美化"><a href="#图的注释、美化" class="headerlink" title="图的注释、美化"></a>图的注释、美化</h2><h3 id="hold-on"><a href="#hold-on" class="headerlink" title="hold on"></a>hold on</h3><p>使用两个 <code>plot</code> （或其他画图语句）后，第二个会删掉前面的图并且重新画。</p>
+<p>要想将两个图叠加在一起，需要在第一次绘图以后加一句 <code>hold on</code>。如：</p>
+<pre><code class="m">plot(...);
+hold on;
+plot(...);
+plot(...)
+</code></pre>
+<p>如下次绘图不想叠加了，就在这次绘图之后加一句 <code>hold off</code> 即可。</p>
+<p>但请注意，<code>hold on</code> 和 <code>hold off</code> 的原理是设置图/表的 <code>NextPlot</code> 属性为 <code>add</code> 或 <code>replace</code>，并非立即刷新。在下次绘图时，会检查 <code>NextPlot</code> 的属性，再决定是否覆盖掉，还是将图形进行叠加。</p>
+<p>因此，下图的代码中的 <code>hold off</code> 其实无意义。</p>
+<pre><code class="m">plot(...);
+hold off;
+hold on;
+plot(...);
+plot(...)
+</code></pre>
+<p>另外，很神奇的是，在 MATLAB R2020a 中，<code>rectangle</code> 的语法很诡异。（在 MATLAB R2017a 中没有这个问题）</p>
+<pre><code class="m">plot(...);
+hold off;
+rectangle();
+hold on;
+plot(...);
+plot(...)
+</code></pre>
+<h3 id="多图并排"><a href="#多图并排" class="headerlink" title="多图并排"></a>多图并排</h3><pre><code class="m">subplot(1,2,1);
+scatter(rand(1,10000),rand(1,10000))
+subplot(1,2,2)；
+scatter(rand(1,10000),rand(1,10000))
+</code></pre>
+<p>另外，从 R2019b 开始，您可以使用 <code>tiledlayout</code> 和 <code>nexttile</code> 函数显示平铺绘图。</p>
+<pre><code class="m">x = linspace(0,10);
+y1 = sin(x);
+y2 = cos(x);
+tiledlayout(2,1)
+
+% Top plot
+ax1 = nexttile;
+plot(ax1,x,y1)
+
+% Bottom plot
+ax2 = nexttile;
+plot(ax2,x,y2)
+</code></pre>
+<h3 id="坐标轴格式调整"><a href="#坐标轴格式调整" class="headerlink" title="坐标轴格式调整"></a>坐标轴格式调整</h3><pre><code class="m">axis off     % 隐藏坐标轴
+axis equal   % 使坐标轴的 x, y, z 轴单位长度相同
+</code></pre>
+<h3 id="图的注释"><a href="#图的注释" class="headerlink" title="图的注释"></a>图的注释</h3><pre><code class="m">plot(x,y);
+title(&#39;y=f(x)&#39;)
+xlabel(&#39;x&#39;), ylabel(&#39;y&#39;)
+</code></pre>
+<h3 id="线图的美化"><a href="#线图的美化" class="headerlink" title="线图的美化"></a>线图的美化</h3><pre><code class="m">h = plot(x1,y1, &#39;r-&#39;);      % 选择曲线颜色、线型   r 红色，k 黑色，b 蓝色，o 
+set(h, &#39;linewidth&#39; ,2);     % 调整线的属性
+legend(&#39;X&#39;, &#39;Y&#39;);
+axis([0 25 0 20])           % 调整坐标区的范围
+</code></pre>
+<h3 id="散点图的美化"><a href="#散点图的美化" class="headerlink" title="散点图的美化"></a>散点图的美化</h3><pre><code class="m">plot(d(:,1),y,&#39;o&#39;,&#39;markersize&#39;,12)
+set(gca,&#39;fontsize&#39;,14)
+set(gcf,&#39;color&#39;,&#39;w&#39;)
+</code></pre>

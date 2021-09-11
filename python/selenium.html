@@ -1,0 +1,61 @@
+<hr>
+<p>title: Python 爬虫 —— Selenium<br>date: 2020-10-27 22:19:33<br>tags:</p>
+<ul>
+<li>Python</li>
+<li>爬虫<br>category:</li>
+<li>Python</li>
+</ul>
+<hr>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p><a href="https://wizardforcel.gitbooks.io/selenium-webdriver-simple-tutorial/content/1.html" target="_blank" rel="noopener">Selenium Webdriver 简易教程 - wizardforcel</a></p>
+<p><a href="https://selenium-python-zh.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Selenium with Python中文翻译文档</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些网站的反爬虫机制通过按钮、跳转等功能，能够防止最简单的 <code>requests</code> 爬虫。</p>
+<p><a href="https://www.selenium.dev/" target="_blank" rel="noopener">Selenium WebDriver</a> 是一个测试框架，提供了 Java、Python 等语言的 API，可以用一种更底层、更灵活的方式来操作浏览器，模拟人在浏览器上的操作。可用于 Web 应用的测试，当然也可以用于自动化批量操作（管理员批量部署、爬虫）等等。</p>
+<p>同时，需要下载 <a href="https://chromedriver.chromium.org/" target="_blank" rel="noopener">ChromeDriver</a> 或使用 FireFox 浏览器。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>我编写的<a href="https://github.com/lyh543/Some-Codes/tree/master/2020/yichafen-spyder" target="_blank" rel="noopener">一个爬虫项目</a>代码中出现的用法已经足狗应用于很多情形了。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><pre><code class="py">from selenium import webdriver
+driver = webdriver.Chrome()
+</code></pre>
+<p>我将下载的 ChromeDriver 放在 <code>main.py</code> 同目录下（似乎也可以放在 <code>PATH</code> 下），执行命令后出现了一个 Chrome 测试窗口。</p>
+<p><img src="/images/b89423cc6ff8dd63fb64b363a3b59db5fcc23aab09a0f12fc54369c7739e1405.png" alt="Chrome 测试窗口"></p>
+<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><p>这里是我在项目中使用的爬虫代码。</p>
+<pre><code class="py">url = &quot;https://240334.yichafen.com/public/queryscore/sqcode/OsTcknwmMjkzfGZlYWYyOTQ1YjA5YmM1ZTQxOGQzMmY1NTdiYzNlYjI2fDI0MDMzNAO0O0OO0O0O.html&quot;
+
+def get_score(name: str, student_id: str) -&gt; str:
+    driver.implicitly_wait(1)      # 等待一秒
+    driver.get(url)                # GET 指令
+    driver.refresh()               # 刷新
+
+    # 根据 XPath 寻找元素，XPath 可在 Chrome 检查元素中，对元素右键 - 复制 - 复制 XPath 得到
+    student_id_element = driver.find_element_by_xpath(&quot;//input[@name=&#39;s_xuehao&#39;]&quot;)
+    student_id_element.clear()                 # 清空输入框
+    student_id_element.send_keys(student_id)   # 填入学号
+    name_element = driver.find_element_by_xpath(&quot;//input[@name=&#39;s_xingming&#39;]&quot;)
+    name_element.clear()
+    name_element.send_keys(name)               # 填入姓名
+
+    # 找到按钮
+    button = driver.find_element_by_xpath(&quot;//*[@id=&#39;yiDunSubmitBtn&#39;]&quot;)
+    button.click()                             # 单击按钮
+    driver.implicitly_wait(0.5)                # 等待 0.5s
+
+    try:
+        assert(driver.find_element_by_xpath(&quot;//*[@id=&#39;result_content&#39;]/div[2]/table/tbody/tr[2]/td[1]&quot;).get_attribute(&quot;innerHTML&quot;) == student_id)
+        assert(driver.find_element_by_xpath(&quot;//*[@id=&#39;result_content&#39;]/div[2]/table/tbody/tr[2]/td[2]&quot;).get_attribute(&quot;innerHTML&quot;) == name)
+    except:
+        raise ValueError(&quot;%s %s 信息不对应&quot; %(name, student_id))
+    
+    # 找到需要的文本对应的 XPath，获取其文本
+    return driver.find_element_by_xpath(&quot;//*[@id=&#39;result_content&#39;]/div[2]/table/tbody/tr[2]/td[3]&quot;).get_attribute(&quot;innerHTML&quot;)
+
+
+if __name__ == &#39;__main__&#39;:
+    driver = webdriver.Chrome()
+    with open(&#39;input.csv&#39;) as input:
+        for line in input:
+            name, student_id = line.strip().split(&#39;,&#39;)
+            score = get_score(name, student_id)
+            print(&quot;%s,%s,%s&quot; % (name, student_id, score))
+            with open(&#39;output.csv&#39;, &#39;w&#39;) as output:
+                output.write(&quot;%s,%s,%s\n&quot; % (name, student_id, score))
+</code></pre>
+<p>更多文档可见 <a href="https://selenium-python-zh.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Selenium with Python中文翻译文档</a>。</p>

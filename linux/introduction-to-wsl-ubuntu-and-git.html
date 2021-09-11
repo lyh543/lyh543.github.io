@@ -1,0 +1,162 @@
+<hr>
+<p>title: WSL(Ubuntu)、Git 的配置及简单使用<br>date: 2020-11-18 16:33:02<br>categories:</p>
+<ul>
+<li>Linux<br>tags:</li>
+<li>Linux</li>
+<li>Git</li>
+<li>ssh</li>
+<li>Visual Studio Code</li>
+<li>Windows Terminal</li>
+</ul>
+<hr>
+<p>这篇博文本来是想在<a href="https://uestc-msc.com/" target="_blank" rel="noopener">俱乐部</a>博客写的，不过最近俱乐部博客正计划用 WordPress 重构，链接可能会失效，于是就放到个人博客了。</p>
+<p>本文将简要介绍 Windows Subsystem for Linux、Ubuntu、Git 的配置及简单使用。</p>
+<h2 id="为什么要学习-Git"><a href="#为什么要学习-Git" class="headerlink" title="为什么要学习 Git"></a>为什么要学习 Git</h2><p>Git 是什么？为什么要学习 Git？</p>
+<p><img src="/images/cb1fc2ef186277050e48b76d580429774e3563302ca061e8aecf7609daf138c3.png" alt="Git —— 维基百科"></p>
+<p>什么叫 <strong>分布式</strong> <strong>版本控制</strong> 软件？</p>
+<p>什么是<strong>版本控制</strong>？假设你正在写一个非常重要的程序，为了保险，你可能会对每天下班时的版本进行存档、备份；同时，由于你可能在一个基础版本 A 上尝试添加新功能，写到一半（称作版本 B）失败了，需要回到 A；但是过了几天你又发现 B 版本的代码有可以借鉴的部分，所以需要结合最新的版本和 B 的代码。如果不借助软件来进行管理，可能后果就是你创建了一堆 <code>程序-1.0</code> <code>程序-2.0</code> <code>程序-20201119</code> <code>程序-新功能（失败了呜呜呜）</code> <code>程序-定稿（修改版）-真定稿</code> 文件夹。</p>
+<p>更混乱的是，软件开发通常不是一个人，要是几个人的一堆版本混在一起，要进行管理就更混乱了。</p>
+<p>于是，我们需要版本控制软件 <code>Version Control Software</code> 来做这件事情。</p>
+<h3 id="Git-版本控制基本概念：提交和分支"><a href="#Git-版本控制基本概念：提交和分支" class="headerlink" title="Git 版本控制基本概念：提交和分支"></a>Git 版本控制基本概念：提交和分支</h3><p>Git 做的事情，就是在项目文件夹中创建一个 <code>.git</code> 文件夹，保存你的每一次提交 <code>commit</code>（<code>git</code> 的版本管理以提交为单位）。</p>
+<p>对于单人的项目，你随时可以进行一次提交 <code>git commit</code>，保存这个版本的代码，也可以回到之前的任意一次提交时的版本。这些都是以提交为基础，可见提交真的是 Git 最重要的概念。</p>
+<p>对于多人项目，Git 引入了分支 <code>branch</code> 的概念。</p>
+<p><img src="/images/507901ad15d4d4baf42025e8dfd5dda7d41708df6bcf68861f57cc8a80c3d66c.png" alt="分支和提交（时间线为从左到右）"></p>
+<p>在 Git 图上，提交是每一个点（这个点保存了你提交时的代码版本），分支就是由点（提交）串起来的线。</p>
+<p>上图的 Git 仓库中存在四个分支，正式版 <code>master</code>、开发版 <code>dev</code>、每个人的工作分支 <code>michael</code> <code>bob</code>。</p>
+<p><code>master</code> 分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；</p>
+<p>那在哪干活呢？Michael 和 Bob 都在自己的分支上干活，每个人都有自己的分支。每个人的开发分支都是从 <code>dev</code> 分裂出来的；开发得差不多后，时不时地往 <code>dev</code> 分支上合并 <code>merge</code> 自己的代码。等到一个稳定的版本要发布时（如 <code>v1.0.0</code>），就把 <code>dev</code> 的代码合并到 <code>master</code>。</p>
+<p>即使是单人的项目也可以弄一堆分支出来，用于开发新功能什么的。当然，单人的项目一般不会有这么多分支，就是一条直线。比如，我的博客的分支图（由 VS Code 的 <a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph" target="_blank" rel="noopener">Git Graph 插件</a>生成）如下：</p>
+<p><img src="/images/76a5e8c02e8ab89fded97a4be98f72a885c42799dc9b630455d19f410a595501.png" alt="我的博客的分支图"></p>
+<h3 id="Git-分布式"><a href="#Git-分布式" class="headerlink" title="Git 分布式"></a>Git 分布式</h3><p>Git 为什么是<strong>分布式</strong>的呢？</p>
+<p>Git 每次是把远端（GitHub 或其他同类网站）的整个库克隆下来 <code>git clone</code>，提交是在本地创建一个新的点（提交），而上传到远端需要使用 <code>git push</code> 进行推送。所以，Git 中本地和云端的内容是基本相同的，Git 库内容不仅存于云端，还分布在每个开发者的电脑上。</p>
+<p>Git 远端的默认名为 <code>origin</code>，所以你可能会看到 <code>origin/master</code>，这指的是这个仓库在 GitHub（或同类网站）上的 <code>master</code> 分支。</p>
+<p>我们平时最好在提交之后，及时 <code>push</code> 至 GitHub 上，这也是起了将代码备份到云端的效果（顺便一提，数据无价，备份很重要！！！！这学期我们班已经有三个人电脑挂了，要是没有备份，实验报告和论文就没了）。</p>
+<h2 id="为什么要学习-WSL"><a href="#为什么要学习-WSL" class="headerlink" title="为什么要学习 WSL"></a>为什么要学习 WSL</h2><p>Git 软件本身是跨平台的，为什么不直接在 Windows 上使用 Git，而是在 WSL 上使用 Git 呢？</p>
+<p>我在 WSL 下使用 Git，最大的原因是 Linux 命令行的自动补全：</p>
+<p>在 bash 或 zsh 等 shell 中输入 <code>git </code> （<code>git</code> 后有空格）然后按两次 <code>Tab</code>，它会提示接下来可能的命令；<br>输入 <code>git a</code> 然后按两次 <code>Tab</code>，它会提示 <code>a</code> 开头的可能命令；<br>如果输入 <code>git ad</code> （此时 shell 已经能确定是 <code>git add</code> 了）然后按一次 <code>Tab</code>，就会自动补全为 <code>git add </code>。</p>
+<p><img src="/images/d413abe15d467df1f5f00cdd657961db989a1fc1038d52dcd317d952aafaaec6.png" alt="bash 自动补全"></p>
+<p>可以说，自动补全可以大幅降低萌新对命令行的学习成本，而这是 Windows 的 shell —— cmd 和 powershell 都不具备的（这两个只能补全文件名，不能补全命令）。所以，使用 CLI 工具时，我更提倡使用 WSL 作为基础。</p>
+<p>当然，为了某些能集成 Windows 下 Git 的应用（如 VS Code、各大 IDE、Tortoise Git 这个第三方 Git GUI），我也在 Windows 下安装了 Git，不过，用 Git 命令行时，我也一直使用的是 WSL 下的 Git。</p>
+<p>当然，如果你觉得安装一个 WSL 占空间、太麻烦、不必要，也可以跳过 WSL，体验 Windows 上的 Git。</p>
+<h2 id="安利工具-Visual-Studio-Code-和-Windows-Terminal"><a href="#安利工具-Visual-Studio-Code-和-Windows-Terminal" class="headerlink" title="安利工具 Visual Studio Code 和 Windows Terminal"></a>安利工具 Visual Studio Code 和 Windows Terminal</h2><p><a href="https://www.microsoft.com/zh-cn/p/windows-terminal/9n0dx20hk701" target="_blank" rel="noopener">Windows Terminal</a> 是微软（抬头看看俱乐部名）官方推出的终端应用程序（terminal，可以简单地理解是 cmd powershell bash 等 shell 的外壳），美观好看，且启动速度快。</p>
+<p><img src="/images/3a83589c578b423cfca5304bd6491b3ecb9a647d744a8325fec74a2ac3292fbb.png" alt="前为 Windows Terminal，后为 Powershell"></p>
+<p>在这里安利 Windows Terminal 是因为后面将介绍的 WSL 和 Git 都是 CLI（命令行）的形式，因此一款高颜值的终端应用程序是很有必要的~</p>
+<p><a href="/microsoft/windows/windows-terminal-tips/">一些 Windows Terminal 使用小技巧</a></p>
+<p>为安装了 Windows Terminal 的同学提供一个小练习：输入 cmd 可以启动命令提示符，那么输入什么（不超过三个字母）能启动 Windows Terminal 呢？你可以尝试自行百度 / Google，或自行寻找答案。</p>
+<hr>
+<p><a href="https://code.visualstudio.com/download" target="_blank" rel="noopener">Visual Studio Code</a> 是微软（再次抬头看看俱乐部名）官方推出的一款很强大的文本编辑器（注意，不是 IDE），可以替代 Notepad++ 等同类软件，具有开源、集成 terminal、插件众多、UI 好看、开箱即用同时自定义程度高、能同步设置等优点。（最近写微信小程序，发现它的开发软件也是基于 VS Code 魔改的）</p>
+<p>我就正在 Visual Studio Code 中编写这篇博客。</p>
+<p><img src="/images/1cb2ffa40bb46b70e96fa2457e8200a673b7941453f4187bac27eb129622b2b0.png" alt="套娃警告"></p>
+<p>在这里安利 Visual Studio Code，是因为它装上<a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl" target="_blank" rel="noopener">插件</a>以后，能和 WSL 无缝衔接，作为 WSL 的文本编辑器，不会使用 vim、nano 等命令行文本编辑器的同学就可以使用 VS Code 作为 WSL 的文本编辑器啦~</p>
+<p><img src="/images/d6f24093e24939a3a414766f01fcf588ad5a6e3716257f643e1d4338c8b647e4.jpg" alt="在 wsl 中输入 code &lt;文件名&gt; 即可启动 VS Code 编辑文本文件"></p>
+<p><a href="https://blog.lyh543.cn/microsoft/vscode-tips/">一些 Visual Studio Code 使用小技巧</a></p>
+<h2 id="Windows-Subsystem-for-Linux-下载和安装"><a href="#Windows-Subsystem-for-Linux-下载和安装" class="headerlink" title="Windows Subsystem for Linux 下载和安装"></a>Windows Subsystem for Linux 下载和安装</h2><p>微软提供了<a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10" target="_blank" rel="noopener">官方中文教程</a>，我就不再赘述了。</p>
+<p>对于 WSL1 和 WSL2 的选择，官方也提供了<a href="https://docs.microsoft.com/zh-cn/windows/wsl/compare-versions" target="_blank" rel="noopener">对比文</a>，由于我更常在 WSL 中使用 Git 和 Hexo 对 C 盘的文件进行操作，对“跨 OS 文件系统的性能”需求大，因此选择了 WSL1。</p>
+<p>Linux 开发版的选择上，本文将以 Ubuntu 20.04 LTS 作示范。</p>
+<p>由于下载安装比较费时间，请各位同学在沙龙开始之前完成 WSL 的安装。之后的部分将在沙龙上讲述，并且会在沙龙后进行更新~</p>
+<hr>
+<p><img src="../../images/2e441628373fba934c45ee1d54a41ce2e4ae4386edb0d0ec4238d4a2ac0482c5.png" alt="开始菜单的 Ubuntu"></p>
+<p>下载完成后，点击开始菜单的 <code>Ubuntu</code> 即可开始安装。</p>
+<p><img src="../../images/6346f692639c4eac5a6dfea96c251f62642416c72ce385fbf954c6040c9ecc8e.png" alt="安装过程"></p>
+<p>如果没有出现上面这个界面，而是显示 <code>0x80004003</code> 或类似错误提示，请读者以 <code>WSL</code> + 错误码作关键字进行搜索，或对照上文中提到的 WSL 官方中文教程。</p>
+<p>然后就是初始化账号和密码，这和其他系统安装均类似。注意输入密码时，用户的输入并不会回显在屏幕上，这是为了安全考虑，还请读者不要见怪。</p>
+<p>输入账号、密码、确认密码均正确后，即可进入系统，如下。</p>
+<p><img src="../../images/51517ea344b0d9709e21e9986b4678ea1d8425af931535fac3160825f6337567.png" alt="进入系统"></p>
+<pre><code>To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.
+See &quot;man sudo_root&quot; for details.
+</code></pre>
+<p>上面这行字表示，如果需要以管理员身份运行某些命令（如安装软件），需要在命令前加 <code>sudo</code>。这句的效果类似于 Windows 的用户账户控制，授予管理员权限才可以安装程序。</p>
+<p><img src="../../images/44a63ad641ab77c3f36ca892566fb1629c29c30107280354659ec12a71eac961.png" alt="Windows 用户账户控制"></p>
+<hr>
+<p>如果配置的过程中关闭了初始化用户名和密码的窗口，会导致初始化用户失败，WSL 将以 root 身份（而不是定义的用户）运行。此时可以执行以下命令，卸载 WSL，然后点击开始菜单的 <code>Ubuntu</code> 重新安装。</p>
+<pre><code>wsl --unregister Ubuntu-20.04
+</code></pre>
+<p>其中 <code>Ubuntu-20.04</code> 根据发行版不同而不同，可在 cmd 下使用 <code>wsl -l</code> 命令查询。</p>
+<h2 id="Ubuntu-安装软件"><a href="#Ubuntu-安装软件" class="headerlink" title="Ubuntu 安装软件"></a>Ubuntu 安装软件</h2><p>在 Windows 上，安装软件的方式一般是找到官网的下载页面，下载 exe 或 msi，然后运行。</p>
+<p>也有如 360 软件管家这类软件管理工具。</p>
+<p>在 Ubuntu 上，使用的是官方的软件管理程序 <code>apt</code>。</p>
+<p><img src="../../images/54ba2105bdd95e5d4f48c65f38ecae6bc2da563efd6703b5892132a4f15e4f7f.png" alt="apt"></p>
+<p>下载安装软件的命令为 <code>sudo apt install</code>。下文将演示使用 <code>apt</code> 安装 <code>screenfetch</code>。</p>
+<p><img src="../../images/1799901617264f9dfbbc64c0d201d8e60f166a23a36d4394d50731c04fa4359f.png" alt="在 sudo apt update 之前 sudo apt install screenfetch"></p>
+<p>和 360 软件管家不同的是，apt 并不会自动在线获取软件的最新信息，而是将这些信息缓存在本地。我们刚完成系统安装，信息都还没有缓存，所以需要手动 <code>sudo apt update</code>。</p>
+<p><img src="../../images/d42c25745d011eb17c708db6d3cd90d73ece7f921027b0ecdbd45cd2b95e9958.png" alt="sudo apt update"></p>
+<p>接下来就是 <code>sudo apt install screenfetch</code> 了。</p>
+<p><img src="../../images/3f0fdefd4fcffb275ea31769da375da63942381c375f52b42e9de7b06514a8e7.png" alt="sudo apt install screenfetch"></p>
+<p>安装前提示，需要下载 833 KB 文件，安装后占用 3040 KB 空间。输入 <code>y</code> 继续下一步。然后就是一行行提示划过。到最后如果没有出现报错，即是安装完成。</p>
+<p><img src="../../images/80eeccc893af282367ce26045d0a1895e346472912439bf48786e9dff564dd3e.png" alt="安装完成"></p>
+<p>输入 <code>screenfetch</code> 并回车，测试是否成功安装。</p>
+<p><img src="../../images/b8eb6a86d6ac2d66376a09550baef889b82c2679d80c000cb47939974ea81a79.png" alt="screenfetch"></p>
+<hr>
+<p>请读者自行尝试：</p>
+<ol>
+<li>没有 <code>sudo</code> 时执行 <code>apt update</code> 和 <code>apt install screenfetch</code> 会发生什么。</li>
+<li>本教程使用的是 Ubuntu 的官方源，可能会出现访问不畅、网速跑不满带宽等情况。于是出现了开源网站镜像站，我们也可以从镜像站获取相同的软件。著名的镜像站有<a href="https://mirrors.tuna.tsinghua.edu.cn/" target="_blank" rel="noopener">清华</a>、<a href="https://mirrors.ustc.edu.cn/" target="_blank" rel="noopener">中科大</a>、<a href="https://developer.aliyun.com/mirror/" target="_blank" rel="noopener">阿里云</a>。我校也有<a href="http://mirrors.uestc.cn/" target="_blank" rel="noopener">镜像站</a>，但暂只向校内用户提供访问。请读者尝试自行搜索并更换镜像站。</li>
+</ol>
+<h2 id="配置-Git-个人信息和-SSH-秘钥"><a href="#配置-Git-个人信息和-SSH-秘钥" class="headerlink" title="配置 Git 个人信息和 SSH 秘钥"></a>配置 Git 个人信息和 SSH 秘钥</h2><p>WSL Ubuntu 提供了 Git，因此不需要安装。</p>
+<p>首先完成用户身份配置。请将下文的 <code>lyh543</code> 和 <code>lyh543@outlook.com</code> 替换为自己的用户名和邮箱。虽然这步设置并不影响访问权限等，但推荐设置，这样提交中会包含你的用户名和邮箱。</p>
+<pre><code>git config  --global user.name lyh543
+git config  --global user.email lyh543@outlook.com
+</code></pre>
+<p>配置好后，使用 <code>git config -l</code> 可查看是否配置成功。</p>
+<p><img src="../../images/3924375a151e9b852132d9e6be5a87173e55fcd6e05935de01152dc877298dbc.png" alt="git config -l"></p>
+<hr>
+<p>SSH 协议是 HTTPS 以外，访问 GitHub 的另一协议。</p>
+<p>SSH 协议使用公钥、私钥认证，而不是使用密码认证。也就是说，使用 SSH 协议可以省去每次输密码的过程。</p>
+<p>大概分为两步：</p>
+<ol>
+<li>本地生成密钥对；</li>
+<li>设置 GitHub 上的公钥；</li>
+</ol>
+<p>生成密钥对使用命令 <code>ssh-keygen</code>。</p>
+<p><img src="../../images/5c9347b69c857b09b2f4b24d33d8f629da9076bb8b228a4fdf5e8812e884addb.png" alt="ssh-keygen"></p>
+<p>生成过程的文件夹选择、密码均可以直接按回车，默认即可。</p>
+<p>公钥 <code>public key</code> 存储在 <code>/home/msc/.ssh/id_rsa.pub</code>，私钥 <code>private key</code> 在 <code>/home/msc/.ssh/id_rsa</code>。</p>
+<p>然后使用 <code>cat ~/.ssh/id_rsa.pub</code> 查看你的公钥：</p>
+<p><img src="../../images/2b304b21a2699e3cdc02ba8e6b3a3a33b589c51841137c34b454861080596a3c.png" alt="cat ~/.ssh/id_rsa.pub"></p>
+<p>接下来就是将公钥存到 GitHub：</p>
+<ol>
+<li>登陆你的 <code>github</code> 帐户。然后 <code>Account Settings</code> -&gt; 左栏点击 <code>SSH Keys</code> -&gt; 点击 <code>Add SSH key</code></li>
+<li>然后你复制上面的公钥内容，粘贴进“Key”文本域内。 <code>title</code> 域随意。</li>
+<li>点击 <code>Add key</code>。</li>
+<li>使用 <code>ssh -T git@github.com</code> 测试一下连接。</li>
+</ol>
+<pre><code>$ ssh -T git@github.com
+The authenticity of host &#39;github.com (192.30.255.113)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added &#39;github.com,192.30.255.113&#39; (RSA) to the list of known hosts.
+Hi lyh543! You&#39;ve successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+<p>前三行是因为你的电脑尚未和 GitHub 建立安全连接，需要进行确认以防止中间人攻击。在安全的网络下（比如宿舍等）一般不会出错，而且这些信息都可以在对应公司的官网上查到，如<a href="https://docs.github.com/cn/free-pro-team@latest/github/authenticating-to-github/githubs-ssh-key-fingerprints" target="_blank" rel="noopener">GitHub 的 SSH 密钥指纹</a>。</p>
+<p>看到最后一句就是 OK 了。</p>
+<p>接下来我们将完成：</p>
+<ol>
+<li>把别人的仓库复制一份给自己，这个过程称为 <code>fork</code></li>
+<li>在自己的仓库中提交代码并推送至 GitHub</li>
+<li>将自己仓库中的修改发给原仓库，并请求合并，这个过程称为 <code>pull request</code></li>
+</ol>
+<h2 id="fork-仓库并-clone-到本地"><a href="#fork-仓库并-clone-到本地" class="headerlink" title="fork 仓库并 clone 到本地"></a>fork 仓库并 clone 到本地</h2><p>我们想要为别人的仓库贡献代码，但我们并没有别人仓库的写权限。于是，我们可以把别人的代码复制 <code>fork</code> 一份给自己，在自己的仓库修改后，发给别人审核，仓库所有者同意即可合并代码。</p>
+<p>Git 本身是没有 fork 的，因此需要在 GitHub 官网上进行 fork。</p>
+<p>跳转到别人的仓库，点击 fork 即可。</p>
+<p><img src="../../images/b0e8fcbe84aaf69b934c9bfb8daf95bd3ff1eb82775894cd85510d0892d437e7.png" alt="fork"></p>
+<p>稍等片刻以后，就可以在自己的账户下看到 fork 的仓库：</p>
+<p><img src="../../images/fbb3c766af49d586ca889f5f48e395130659c236efdc83627542078de43e1d54.png" alt="fork 的仓库"></p>
+<p>找到 Clone 的链接。我们想要使用 SSH 协议，因此需要复制带 SSH 的链接。</p>
+<p>然后在 Ubuntu 中输入 <code>git clone &lt;link&gt;</code>：</p>
+<p><img src="../../images/247178108c83cc06edfa19cb286736c9c82de04ebc79cb15cd400ccf2ec8377e.png" alt="git clone git@github.com:lyh543/2020-members.git"></p>
+<p>如果是在 Windows 路径下进行的 clone，可以从 Windows 文件资源管理器看到本地有了 2020-members 文件夹。</p>
+<h2 id="提交自己的代码、推送至-GitHub"><a href="#提交自己的代码、推送至-GitHub" class="headerlink" title="提交自己的代码、推送至 GitHub"></a>提交自己的代码、推送至 GitHub</h2><p>在文件夹中加入自己的代码，然后在 Git 仓库目录下（如果在上面的路径，还需要 <code>cd 2020-members</code> 更改当前文件夹到 <code>2020-members</code>），然后依次执行</p>
+<pre><code class="sh">git add --all
+git commit -m &quot;修改了 XX 文件，添加了 YY 文件&quot;
+git push
+</code></pre>
+<p>其中 <code>修改了 XX 文件，添加了 YY 文件</code> 将会被记录到这次提交中，可使用 <code>git log</code> 看到。推送后，也可以在 GitHub 的仓库页面看到。</p>
+<p><code>add</code> <code>commit</code> <code>push</code> 这三条命令在 Git 初期学习中，已经足够使用（我接触 Git 的三年内都只用到这三条命令 hhhh）。</p>
+<p>至于分支管理等，可以需要的时候、有兴趣的时候再系统性地学。推荐<a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">廖雪峰的 Git 教程</a>。</p>
+<h2 id="提交-Pull-Request"><a href="#提交-Pull-Request" class="headerlink" title="提交 Pull Request"></a>提交 Pull Request</h2><p>将本地的修改推送到自己的远端仓库后，还需要到 GitHub 官网进行 <code>Pull Request</code>。<code>Pull Request</code> 这个命名其实很奇怪，个人更喜欢 GitLab 的叫法 <code>Merge Request</code>，表示请求别人合并你的代码。只是大家 <code>提交 Pull Request</code> <code>发 PR</code> 叫惯了，就这么叫吧。</p>
+<p>在 fork 的仓库的 Pull Request 选项卡下即可新建 Pull Request。</p>
+<p><img src="../../images/a60df28a86c9f8b9f7b24315eebcb5ac27a727c8fb4964cd11873000d058b7fc.png" alt="Pull Request 选项卡"></p>
+<p>在下面的界面选择对应的 <code>head repo</code> 和 <code>branch</code> 为自己的仓库和分支，<code>base repo</code> 和 <code>branch</code> 为目标的仓库和分支。</p>
+<p><img src="../../images/8c465b4c8733b0b53b7e6c4cd0352870b3707c936002204c8056bbd7f2a3d332.png" alt="新建 Pull Request"></p>
+<p>然后点击 Create Pull Request，输入 title 和 comment（这是方便仓库所有者理解你为什么要发这个 PR，你更新了什么等）即可。</p>
+<p>然后就是等仓库所有者读了你的代码以后，如果觉得可以，就会合并进他的仓库了。</p>

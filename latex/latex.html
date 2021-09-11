@@ -1,0 +1,449 @@
+<hr>
+<p>title: LaTeX 基础<br>date: 2019-11-19<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>LaTeX<br>category:</li>
+<li>LaTeX</li>
+</ul>
+<hr>
+<h2 id="LaTeX-简介"><a href="#LaTeX-简介" class="headerlink" title="LaTeX 简介"></a>LaTeX 简介</h2><p><del>课上抄的</del></p>
+<blockquote>
+<p>LaTeX 是：</p>
+<ol>
+<li>一个以排版文章以及数学公式为目标的计算机程序</li>
+<li>充当了文档设计者和排版者</li>
+<li>与 Word 等所见即所得的方式有着巨大区别</li>
+<li>强制使用者声明文档的逻辑结构，避免版式错误</li>
+</ol>
+<p>LaTeX 与 Word 区别</p>
+<ol>
+<li>Word 所遵循的思想是“<strong>所见即所得</strong>”，输出的文档效果与屏幕上显示一致， LateX 所遵循的思想是“<strong>所想即所得</strong>”，它有非常强大的功能，但入门学习要难于 Word，用 LaTeX 编写页面与最终得到的 pdf 有着较大的区别</li>
+<li>从美学观点来看，由于 LaTeX 强大的排版功能，尤其是强大的数学公式编辑功能，使得 LaTeX 排版出来的文档美观性一般强于 Word，这点在科技文档中尤为明显。此外，在编辑一份含大量公式的文档时，LaTeX 的稳定性高于 Word。</li>
+<li>完成一篇篇幅较长，含有很多插图，表格和公式的论文后，一旦论文需要修改，Word 在排版上会发生巨大的工作量，而 LaTeX 的工作量则要小得多。</li>
+<li>大部分国内外杂志，要求寄去的文章按 LateX 格式排版，国内越来越多的学校开始鼓励毕业论文采用 LaTeX 编写。</li>
+</ol>
+</blockquote>
+<h3 id="编译器、IDE-及-参考书"><a href="#编译器、IDE-及-参考书" class="headerlink" title="编译器、IDE 及 参考书"></a>编译器、IDE 及 参考书</h3><p>重度使用推荐 TeX Live 和 TeXStudio。轻度使用可以使用在线编辑器 Overleaf。</p>
+<p>参考书推荐：<a href="%E4%B8%80%E4%BB%BD%E4%B8%8D%E5%A4%AA%E7%AE%80%E7%9F%AD%E7%9A%84LaTeX%E6%95%99%E7%A8%8B.pdf">一份不太简短的LaTeX教程.pdf</a>。</p>
+<p>另外推荐我编写的：<a href="LaTeX%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95.tex">LaTeX常见语法</a>，去掉了该文中复杂的部分，推荐快速入门。</p>
+<p>配置环境可见 <a href="../setting-up-LaTeX-developing-environmnent">配置 LaTeX 开发环境</a>。</p>
+<p>在 tex 代码的开头使用如下注释可指定 xelatex 进行编译。</p>
+<pre><code class="tex">% !TEX program  = xelatex
+</code></pre>
+<h2 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello, world"></a>Hello, world</h2><pre><code class="tex">\documentclass{article} % 源文件第一行必须是介个
+\begin{document}
+    hello, LaTeX
+\end{document}
+</code></pre>
+<p>更多 <code>documentclass</code> 可以自己查询。</p>
+<p>在接下来的学习中，可以使用 Bing/Google 到的模板。</p>
+<h3 id="你好，LaTeX"><a href="#你好，LaTeX" class="headerlink" title="你好，LaTeX"></a>你好，LaTeX</h3><p>原生 LaTeX 不支持中文。需要引入包。课程使用的是 <code>CJK</code>。但是在我的 TeXstudio 编译不过？？？？？？</p>
+<p>引入包的格式是在 <code>begin{document}</code> 后使用 <code>\usepackage[option]{packagename}</code></p>
+<pre><code class="tex">\documentclass{article}
+\usepackage{CJK}
+\begin{document}
+    \begin{CJK}{GBK}{song}
+    hello, LaTeX
+    你好
+    \end{CJK}
+\end{document}
+</code></pre>
+<p>于是我采用了另一个 <code>ctex</code> 包。<code>ctex</code> 用法可见<a href="http://www.ctex.org/PackageCTeX/files.xml?action=download&file=ctex.pdf" target="_blank" rel="noopener">官方文档</a>。</p>
+<pre><code class="tex">\documentclass{article}
+\usepackage[UTF8]{ctex}
+\begin{document}
+     \youyuan 你好，\LaTeX！
+\end{document}
+</code></pre>
+<p>自带的六种字体见下表：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>字体</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\songti</code></td>
+<td>宋体</td>
+</tr>
+<tr>
+<td><code>\heiti</code></td>
+<td>黑体</td>
+</tr>
+<tr>
+<td><code>\fangsong</code></td>
+<td>仿宋</td>
+</tr>
+<tr>
+<td><code>\kaishu</code></td>
+<td>楷书</td>
+</tr>
+<tr>
+<td><code>\lishu</code></td>
+<td>隶书</td>
+</tr>
+<tr>
+<td><code>\youyuan</code></td>
+<td>幼圆</td>
+</tr>
+</tbody></table>
+<p>字号 <code>\zihao</code>、字距 <code>\ziju</code> 等特殊格式请查阅 ctex 官方文档。</p>
+<h2 id="文档基本符号"><a href="#文档基本符号" class="headerlink" title="文档基本符号"></a>文档基本符号</h2><h3 id="空格、回车"><a href="#空格、回车" class="headerlink" title="空格、回车"></a>空格、回车</h3><p>转义的字词后，空格不起作用，除了使用 <code>\space</code>，还可以使用<code>&quot;\ &quot;</code>（不含引号，最常用）、<code>\,</code>、<code>\;</code>、<code>\:</code>。<br>MathJax 的写法：<code>\space</code>、<code>\\;</code>、<code>&quot;\\ &quot;</code>（不含引号）。</p>
+<p>换行使用 <code>\endline</code>、<code>\\</code> ，也可以使用两个回车。一个回车没有用。（MathJax 中得 <code>\\\\</code>）</p>
+<p>连续换行使用 <code>\\ \\</code> 会编译不过，需要使用一个 <code>~</code> 以占位：<code>\\~\\</code>。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ol>
+<li>单行注释：直接加入 <code>%</code> 即可；</li>
+<li>多行注释：</li>
+</ol>
+<pre><code class="tex">\usepackage{verbatim}
+\begin{comment} ... \end{comment}
+</code></pre>
+<h3 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h3><ul>
+<li><code>\LaTeX</code> 即能打出 $\rm\LaTeX$ 的官方图标。</li>
+<li><code>~</code> 在 LaTeX 为空白符，如果想要显示这个字符，请使用<code>\textasciitilde</code>（非数学环境中）或 <code>\sim</code>（数学环境中）</li>
+<li><code>%</code> 注释</li>
+<li><code>_</code> 为下标，如果想要显示这个字符，请使用 <code>\_</code> 进行转义。如果你有很多的 <code>_</code> 需要打，可以使用 <a href="https://ctan.org/pkg/underscore" target="_blank" rel="noopener"><code>\usepackage{underscore}</code></a>，在非数学模式下使用 <code>_</code> 时就无需转义啦。</li>
+</ul>
+<h2 id="文档格式"><a href="#文档格式" class="headerlink" title="文档格式"></a>文档格式</h2><h3 id="文字格式"><a href="#文字格式" class="headerlink" title="文字格式"></a>文字格式</h3><ul>
+<li>粗体：<code>\textbf{}</code>；</li>
+<li>斜体：<code>\emph{}</code>；</li>
+<li>下划线：<code>\underline{}</code>（这是唯一一个数学公式外能用的数学公式功能）。</li>
+</ul>
+<p>可以进行叠加： <code>\textbf{\emph{\underline{Hello}}}</code>。</p>
+<p>下划线处理大段文字时，不能自动换行（大概是数学公式并不需要换行）。  </p>
+<p>需要引入 <code>ulem</code> 宏包，并将 <code>\underline</code> 改为 <code>\ulem</code>。<br>如果中文包使用的是 <code>CJK</code>，需要将引入的宏包改为 <code>CJKulem</code>。</p>
+<h3 id="段落格式"><a href="#段落格式" class="headerlink" title="段落格式"></a>段落格式</h3><p>分页：<code>\newpage</code>、<code>\clearpage</code>；</p>
+<p>使用 <code>\noindent</code> 以去掉首行缩进，使用 <code>\indent</code> 以加入首行缩进。</p>
+<p>左对齐：<code>\begin{flushleft}</code>（默认，所以不常用）<br>右对齐：<code>\begin{flushright}</code><br>居中：<code>\begin{center}</code></p>
+<h3 id="章节格式"><a href="#章节格式" class="headerlink" title="章节格式"></a>章节格式</h3><ul>
+<li>通用：<code>\part{}</code>、<code>\paragraph{}</code>、<code>\subparagraph{}</code>、</li>
+<li><code>\section{}</code>、<code>\subsection{}</code>、<code>\subsubsection{}</code> 关联编号（即 <code>1.1.1</code>）。</li>
+<li>在 <code>book</code> 类中，<code>\section</code> 以上还有一级更高的 ：<code>\chapter{}</code> 。</li>
+<li><code>\section*{}</code> 不参与自动编号。</li>
+</ul>
+<h3 id="页面间距格式"><a href="#页面间距格式" class="headerlink" title="页面间距格式"></a>页面间距格式</h3><pre><code class="tex">\usepackage{geometry}
+\geometry{left=5.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm} % 全局设置
+</code></pre>
+<h3 id="分栏"><a href="#分栏" class="headerlink" title="分栏"></a>分栏</h3><blockquote>
+<p>此部分源码及 PDF 见：<a href="https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/%E5%BF%83%E7%90%86%E5%AD%A6%E6%BC%AB%E8%B0%88" target="_blank" rel="noopener">https://github.com/lyh543/UESTC_LaTeX_Template/blob/master/Course_Thesis_others/心理学漫谈</a></p>
+</blockquote>
+<pre><code class="tex">\begin{multicols}{2} % 双栏控制
+\section{第一段}
+这里是正文。\lipsum[1]
+
+\section{第二段}
+这里是正文 \lipsum[2]
+\end{multicols}
+</code></pre>
+<h3 id="文档信息及标题"><a href="#文档信息及标题" class="headerlink" title="文档信息及标题"></a>文档信息及标题</h3><ul>
+<li><code>\title{}</code>：标题。</li>
+<li><code>\author{}</code>：作者信息，以及邮件信息等等。如需换行，可在大括号中使用换行。</li>
+<li><code>\date{2017\\December}</code>：日期</li>
+</ul>
+<p>以上命令可放全局变量位置或文档正文位置。</p>
+<p>然后在正文里调用一句 <code>\maketitle</code> 产生标题及以上信息。</p>
+<h2 id="引用参考文献"><a href="#引用参考文献" class="headerlink" title="引用参考文献"></a>引用参考文献</h2><p>LaTeX 的引用原理是给每个文献写一个好记的名字，然后引用的时候直接引用名字。<br>编译的时候自动对文献进行标号，并将引用处和文献根据名字绑定，然后标号。最后名字是不会呈现在文档里的。好评。</p>
+<p>了解了原理以后，基本也是无脑抄板子。不需要额外的库。</p>
+<pre><code class="tex">\documentclass{article} % 源文件第一行必须是介个
+\usepackage[UTF8]{ctex}
+\begin{document}
+
+xxx说的对。\cite{Zhang10}
+
+yyy说的也对。\cite{Li10}
+
+\begin{thebibliography}{}
+    
+    \bibitem{Li10}
+    L. Ming, Y. Shucheng, R. Kui, and L. Wenjing, Securing Personal Health Records in Cloud Computing: Patient-Centric and Fine-Grained
+    Data Access Control in Multi-owner Settings, in: Processing of SecureComm 2010, LNICST 50, pp. 89-106, 2010.
+    
+    \bibitem{Zhang10}
+    R. Zhang, and L. Liu, Security Models and Requirements for Healthcare Application Clouds, in: Processing of  Cloud 2010, pp. 268-275, 2010.
+\end{thebibliography}
+
+\end{document} 
+</code></pre>
+<p><img src="bibliography.jpg" alt="引用参考文献 示例"></p>
+<h3 id="摘要和关键字"><a href="#摘要和关键字" class="headerlink" title="摘要和关键字"></a>摘要和关键字</h3><p>摘要可以用自带的，但是关键字需要自己写。</p>
+<pre><code class="tex">\begin{abstract}
+    This is an example of abstract.
+    
+    \textbf{Keywords}: Abstract, Exmaple
+\end{abstract}
+</code></pre>
+<p>如果你正在中文环境上写英文文章，你就会遇到啼笑皆非的情况<del>和我一样</del>：英文摘要上方写着大大的汉字“摘要”！</p>
+<p>遇到这种情况，你只需要在摘要前加一行代码：</p>
+<pre><code class="tex">\renewcommand{\abstractname}{Your Abstract Name}
+</code></pre>
+<p>就可以把你的摘要标题变为 <code>Your Abstract Name</code> 了。</p>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>正式学 LaTeX 之前我就开始写数学公式了，所有内容我就放在另外一篇<a href="../LaTeX-math-equation">博客</a>了。</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>创建表格，除了自己编辑，还可以使用生成工具，如：</p>
+<blockquote>
+<p><a href="https://tablesgenerator.com/" target="_blank" rel="noopener">https://tablesgenerator.com/</a><br><a href="https://github.com/krlmlr/Excel2LaTeX" target="_blank" rel="noopener">https://github.com/krlmlr/Excel2LaTeX</a></p>
+</blockquote>
+<h3 id="创建表格"><a href="#创建表格" class="headerlink" title="创建表格"></a>创建表格</h3><p>使用 <code>\begin{tabular}</code> <code>\end{tabular}</code> 和 <code>&amp;</code> <code>\\</code> 即可创建表格。</p>
+<p>和数学矩阵一样，在 <code>\begin{tabular}</code>  后加入 <code>{clcr}</code> 即可说明每一列的对齐方式（<code>c</code> 居中，<code>l</code> 左对齐、<code>r</code> 右对齐）。</p>
+<pre><code class="tex">\begin{tabular}{cl}
+1 &amp; 2 \\
+3 &amp; 4
+\end{tabular}
+</code></pre>
+<p><img src="tabular.jpg" alt="表格"></p>
+<h3 id="给表格加边框"><a href="#给表格加边框" class="headerlink" title="给表格加边框"></a>给表格加边框</h3><p>可以看到，如不加说明，LaTeX 表格是不带边框的。</p>
+<p>如果要对一整行添加水平边框，在行间（或第一行前，最后一行后，下同）使用 <code>\hline</code> 命令即可。</p>
+<p>注意最后一行加边框时，最后一行必须换行 <code>\\</code>。</p>
+<p>如需部分列添加水平边框（如想在第 i 列到第 j 列加入边框），将 <code>\hline</code> 换为 <code>\cline{i-j}</code> 的形式即可。<br>如果只有一列，则需使用 <code>\cline{i-i}</code>。<br>如果需要添加多个间断的水平边框，连续使用多个命令（如 <code>\cline{1-2}\cline{4-4}</code> 即可。</p>
+<p>对于竖直边框，在表格 <code>\begin</code> 的 <code>clr</code> 部分加入 <code>|</code> 即可，如 <code>\begin{tabular}{|c|l|rr|}</code>。</p>
+<p>如果需要间断的数值边框，书上说的 <code>\vline</code>，但是貌似不可用，会歪的。</p>
+<pre><code class="tex">\begin{tabular}{|c|lr|}
+    \hline
+    ab &amp; cd &amp; ef \\
+    \cline{1-1}\cline{3-3}
+    cd &amp; ef &amp; ab \\
+    \cline{1-2}
+    ef &amp; ab &amp; cd \\
+    \hline
+\end{tabular}
+</code></pre>
+<p><img src="tabular-border.jpg" alt="边框 示例"></p>
+<h3 id="合并单元格"><a href="#合并单元格" class="headerlink" title="合并单元格"></a>合并单元格</h3><p>这一段会比较硬核，于是再分三个小段讲。</p>
+<h4 id="合并水平单元格"><a href="#合并水平单元格" class="headerlink" title="合并水平单元格"></a>合并水平单元格</h4><p>这是最简单的。格式为 <code>\multicolumn{2}{|c|}{ef}</code>。  </p>
+<ol>
+<li>第一个 <code>{2}</code> 为要合并的水平单元格数量；  </li>
+<li>第二个 <code>{|c|}</code> 表示该单元格的对齐方式和列边框（<strong>会覆盖掉上面的列边框设置</strong>）；  </li>
+<li>第三个 <code>{ef}</code> 为文本格式。</li>
+</ol>
+<p>注意合并单元格以后，该行的 <code>&amp;</code> 数较其他行会少一些。</p>
+<p>测试的时候不要把每一行的同两列都合并了，不然合并了还是没效果。（逃</p>
+<h4 id="合并竖直单元格"><a href="#合并竖直单元格" class="headerlink" title="合并竖直单元格"></a>合并竖直单元格</h4><p>合并竖直单元格还需要调宏包 <code>\usepackage{multirow}</code>。</p>
+<p>调用格式为（在合并的第一行写） <code>\multirow{2}{*}{ab}</code>。</p>
+<p><code>{2}</code> 和 <code>{ab}</code> 和上述的意思相近，注意这里的 <code>{*}</code> 是需要无脑抄的参数，没有会报错。</p>
+<p>另外，<code>\cline</code> 和 <code>\hline</code> 设置不会被覆盖，需要自己调整（要不就会出现单元格被穿过去的情况）。</p>
+<h4 id="同时合并行和列"><a href="#同时合并行和列" class="headerlink" title="同时合并行和列"></a>同时合并行和列</h4><p>虽然理论实现非常简单，就是上述两个语句的嵌套，但是因为细节太多太多，这才是最硬核的部分。</p>
+<ol>
+<li>仍然需要在合并的第一行调用。</li>
+<li>必须 <code>\multicolumn</code> 在外，<code>\multirow</code> 在内，如 <code>\multicolumn{2}{c|}{ \multirow{2}{*}{gh} }</code>。不然会报错。</li>
+<li>合并的后面几行需要写 <code>\multicolumn</code>，数量和列对齐格式和第一行的 <code>\multicolumn</code> 相同，内容留空 <code>{}</code>。</li>
+</ol>
+<p>最后是以上几个例子的综合实例。</p>
+<pre><code class="tex">\begin{tabular}{|c|c|c|c|}
+    \hline
+    \multirow{2}{*}{ab} &amp; \multicolumn{2}{|c|}{ef} &amp; cd\\
+    \cline{2-4}
+    &amp; ef &amp; \multicolumn{2}{c|}{\multirow{2}{*}{gh}} \\
+    \cline{1-2}
+    ef &amp; gh &amp; \multicolumn{2}{c|}{} \\
+    \hline
+    1 &amp; 2 &amp; 3 &amp; 4 \\
+    \hline
+\end{tabular}
+</code></pre>
+<p><img src="tabular-multicoluimn-multirow.jpg" alt="合并单元格 示例"></p>
+<h3 id="美观地插入表格"><a href="#美观地插入表格" class="headerlink" title="美观地插入表格"></a>美观地插入表格</h3><p>上面是“如何创建一个表格”，这一部分是“如何将表格美观的插入文档”。</p>
+<p>如下是无脑抄板子：</p>
+<pre><code class="tex">\begin{table}[!hbp]  % 有关[!hbp]，详见：插入浮动体
+    \centering       % 表格居中
+    \begin{tabular}{|c|c|c|c|c|}
+
+    \hline
+    lable 1-1 &amp; label 1-2 &amp; label 1-3 &amp; label 1 -4 &amp; label 1-5 \\
+    \hline
+    label 2-1 &amp; label 2-2 &amp; label 3-3 &amp; label 4-4 &amp; label 5-5 \\
+    \hline
+    \end{tabular}
+
+    \caption{表格标题} % 表格标题
+\end{table} 
+</code></pre>
+<p>有关 <code>[!hbp]</code> 等，详见：<a href="#%E6%8F%92%E5%85%A5%E6%B5%AE%E5%8A%A8%E4%BD%93">插入浮动体</a>。</p>
+<h3 id="对表格进行缩放-防止超宽"><a href="#对表格进行缩放-防止超宽" class="headerlink" title="对表格进行缩放 防止超宽"></a>对表格进行缩放 防止超宽</h3><p>遇到超宽的表格，我们可以使用 <code>\begin{adjustbox}...\end{adjustbox}</code> 对其进行缩放。</p>
+<pre><code class="tex">\documentclass{article}
+\usepackage{adjustbox}
+
+\begin{document}
+\begin{table}[h!]
+    \centering
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{*{14}{|c}|}%%{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        One &amp; Two &amp;Three &amp; Four &amp; Five &amp; Six &amp; Seven &amp; Eight &amp; Nine &amp; Ten &amp; Eleven &amp;
+        Twelve &amp; Thirteen &amp; Fourteen\\
+        \hline
+        \hline
+        $1.111$ &amp; $2.222$ &amp; $3.333$ &amp; $4.444$ &amp; $5.555$ &amp; $6.666$ &amp; $7.777$ &amp;
+        $8.888$ &amp; $9.999$ &amp; $0.000$ &amp; $1.111$ &amp; $2.222$ &amp; $3.333$ &amp; $4.444$\\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Test Table}
+    \label{tab:label_test}
+\end{table}
+
+\end{document}
+</code></pre>
+<p><img src="/images/54bd298f13fd1b399794b0a2a5ac055e0a62b75f9f1835f23528a5a63c655782.png" alt="adjustbox 效果"></p>
+<h3 id="标准三线表格"><a href="#标准三线表格" class="headerlink" title="标准三线表格"></a>标准三线表格</h3><pre><code class="tex">\begin{table}[!htbp]
+    \caption{标准三线表格}\label{tab:001} \centering
+    \begin{tabular}{ccccc}
+        \toprule[1.5pt]
+        $D$(in) &amp; $P_u$(lbs) &amp; $u_u$(in) &amp; $\beta$ &amp; $G_f$(psi.in)\\
+        \midrule[1pt]
+        5 &amp; 269.8 &amp; 0.000674 &amp; 1.79 &amp; 0.04089\\
+        10 &amp; 421.0 &amp; 0.001035 &amp; 3.59 &amp; 0.04089\\
+        20 &amp; 640.2 &amp; 0.001565 &amp; 7.18 &amp; 0.04089\\
+        \bottomrule[1.5pt]
+    \end{tabular}
+\end{table}
+</code></pre>
+<p><img src="/images/e649a9d9744cd33bb97af6ec3752f132c6667567287f93195ed2eeea9521b024.png" alt="标准三线表格"></p>
+<p>另外，[Table Generator] 也支持标准三线表格，只需将 <code>Default Table Style</code> 改为 <code>Booktabs Table Style</code>。</p>
+<h3 id="tabular-表格"><a href="#tabular-表格" class="headerlink" title="tabular* 表格"></a>tabular* 表格</h3><p>tabular* 在兼容 tabular 的语法上，又增加了功能。</p>
+<p>一是必须指定表格的总宽度，二是可以将所有列在设定的表格宽度中均匀展开（即让表格横向均匀展开，不留横向空位）。</p>
+<p>不需要新的宏包。</p>
+<pre><code class="tex">\begin{tabular*}{10cm}{lll}
+    \hline
+    Start &amp; End  &amp; Character Block Name \\
+    \hline
+    3400  &amp; 4DB5 &amp; CJK Unified Ideographs Extension A \\
+    4E00  &amp; 9FFF &amp; CJK Unified Ideographs \\
+    \hline
+\end{tabular*}
+</code></pre>
+<p>这是没有横向展开的。把第一行的 <code>{lll}</code> 改为 <code>{@{\extracolsep{\fill}}lll}</code> 即可横向展开。下面是两个对比图。</p>
+<p><img src="tabular-extracolsep-off.jpg" alt="不使用 extracolsep"><br><img src="tabular-extracolsep-on.jpg" alt="使用 extracolsep"></p>
+<h4 id="tabularx-表格"><a href="#tabularx-表格" class="headerlink" title="tabularx 表格"></a>tabularx 表格</h4><p>tabularx 也可以实现对表格总宽度的设定。</p>
+<pre><code class="tex">\begin{tabularx}{8cm}{llX}  
+    \hline
+    Start &amp; End  &amp; Character Block Name \\
+    \hline
+    3400  &amp; 4DB5 &amp; CJK Unified Ideographs Extension A \\
+    4E00  &amp; 9FFF &amp; CJK Unified Ideographs \\
+    \hline
+\end{tabularx}
+</code></pre>
+<p><img src="tabularx.jpg" alt="tabularx"></p>
+<h2 id="文档内容元素"><a href="#文档内容元素" class="headerlink" title="文档内容元素"></a>文档内容元素</h2><p>这部分的内容，Markdown 也有，但是 LaTeX 可以调各种参数，功能强大。相对应的，命令也会比较长。</p>
+<p><del>Markdown 真香</del></p>
+<h3 id="水平横线"><a href="#水平横线" class="headerlink" title="水平横线"></a>水平横线</h3><p>Markdown 里的预览：</p>
+<hr>
+<p>LaTeX 版本：</p>
+<pre><code class="tex">\rule[raise-height]{width}{thickness}
+\rule[4pt]{18cm}{0.5pt} % 参考配置
+</code></pre>
+<h3 id="分条目命令"><a href="#分条目命令" class="headerlink" title="分条目命令"></a>分条目命令</h3><h4 id="无标号"><a href="#无标号" class="headerlink" title="无标号"></a>无标号</h4><p>Markdown 里的预览：</p>
+<ul>
+<li>a</li>
+<li>b</li>
+</ul>
+<p>LaTeX 版本：</p>
+<pre><code class="tex">\begin{itemize}
+    \item[*] a
+    \item[*] b
+\end{itemize}
+</code></pre>
+<p><code>[*]</code> 可以不要（即默认使用黑点），或者换成其他的符号 <code>+</code> <code>-</code> 等。</p>
+<h4 id="数字标号"><a href="#数字标号" class="headerlink" title="数字标号"></a>数字标号</h4><p>Markdown 里的预览：</p>
+<ol>
+<li>a</li>
+<li>b</li>
+</ol>
+<p>LaTeX 版本：</p>
+<pre><code class="tex">\usepackage{enumerate}
+\begin{enumerate}[1.]
+    \item a
+    \item b
+\end{enumerate}
+</code></pre>
+<p>也可以使用其他的标号，修改 <code>[1.]</code> 部分即可。</p>
+<h4 id="文字描述"><a href="#文字描述" class="headerlink" title="文字描述"></a>文字描述</h4><pre><code class="tex">\begin{description}
+    \item[研究生课程：] 数据挖掘等；
+    \item[本科课程：] 高等代数等；
+    \item[自学课程：] Stanford:编程方法。
+\end{description}
+</code></pre>
+<p><img src="description.jpg" alt="文字描述"></p>
+<h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h3><pre><code class="tex">\includegraphics{file.pdf}    %    按图片原尺寸插入图片 file.pdf
+</code></pre>
+<p>插入的图片可以是 <code>pdf</code>、<code>png</code> 等格式。对于矢量图，不能插入 <code>svg</code>，推荐打印成 pdf 后剪裁成图片，就可以插入了。</p>
+<h4 id="美观的插入图片"><a href="#美观的插入图片" class="headerlink" title="美观的插入图片"></a>美观的插入图片</h4><p>依旧是抄板子。</p>
+<pre><code class="tex">\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{图片文件}
+    \caption{标题名称}
+    \label{fig1}
+\end{figure}
+</code></pre>
+<ul>
+<li>有关这段代码的详细解释，详见：<a href="#%E6%8F%92%E5%85%A5%E6%B5%AE%E5%8A%A8%E4%BD%93">插入浮动体</a>。</li>
+</ul>
+<h4 id="插入子图"><a href="#插入子图" class="headerlink" title="插入子图"></a>插入子图</h4><p>可自行排列。由于情况较复杂，可见 <a href="https://blog.csdn.net/a6822342/article/details/80533135" target="_blank" rel="noopener">https://blog.csdn.net/a6822342/article/details/80533135</a></p>
+<h3 id="插入浮动体"><a href="#插入浮动体" class="headerlink" title="插入浮动体"></a>插入浮动体</h3><p>表格的 <code>\table</code> 和图片的 <code>\figure</code> 等都算是浮动体，他们有类似的语法体系。</p>
+<p>下面以插入图片为例：</p>
+<pre><code class="tex">\begin{figure}[H]
+    \centering               % 居中
+    \includegraphics[width=0.7\textwidth]{图片文件}
+    \caption{标题名称}
+    \label{fig1}
+\end{figure}
+</code></pre>
+<p>关于 <code>[!hbp]</code> 的解释如下（默认为 <code>[tbp]</code>）：</p>
+<ul>
+<li>! 严格按照说明放置，即使看起来不好。（请谨慎的使用）</li>
+<li>h (here)   浮动体<strong>尽量</strong>放在代码对应的位置上。这主要用于小浮动体</li>
+<li>t (top)    <strong>尽量</strong>放在页面顶部</li>
+<li>b (bottom) <strong>尽量</strong>放在页面底部</li>
+<li>p (page)   放在一专门页面，仅含一个浮动体</li>
+<li>H (Here)   使得浮动体<strong>严格地</strong>放在代码对应的位置上<ul>
+<li>需要 <code>\usepackage{float}</code></li>
+<li><code>H</code> 的好处是照片不会和下面的文字错位，但坏处是如果页面放不下，图片会放在在下一页开头，但当前页会有大量空白。</li>
+</ul>
+</li>
+<li>上述字母的顺序不重要（$LaTeX$ 用固定的算法摆放浮动体，中括号的内容仅决定 $LaTeX$ 是否跳过该方法。<a href="https://tex.stackexchange.com/questions/132106/difference-between-h-and-h-in-float-position#comment1302063_132113" target="_blank" rel="noopener">参考</a>）</li>
+</ul>
+<p>如果把 <code>\caption{标题名称}</code> 写在 <code>\includegraphics</code> 之前，则得到的图片的标题在图片的上面。</p>
+<p><code>\label{fig1}</code> 是这个图片的标签，在别的地方那个引用这个图片的话，用 <code>\ref{fig1}</code> 就可以了。（注意：<code>\label</code> 必须放在 <code>\caption</code> 命令的后面，如果放在其他的地方，则插图的计数器就会出错）</p>
+<h3 id="插入代码"><a href="#插入代码" class="headerlink" title="插入代码"></a>插入代码</h3><p><a href="https://www.overleaf.com/learn/latex/Code_listing" target="_blank" rel="noopener">LaTeX 支持的语言</a></p>
+<pre><code class="tex">\begin{lstlisting}[caption={一段C代码}, label={lst:code-example}, captionpos=t, language=c]
+#include &lt;stdio.h&gt;
+int main (int argc, char *argv[]){
+  printf(&quot;Hello world!&quot;);
+}
+\end{lstlisting}
+</code></pre>
+<h2 id="使用-LaTeX-制作幻灯片"><a href="#使用-LaTeX-制作幻灯片" class="headerlink" title="使用 LaTeX 制作幻灯片"></a>使用 LaTeX 制作幻灯片</h2><p>什么是 beamer？</p>
+<p>beamer 是 LaTeX 的一个文档类，和 article、 book 一样；beamer 主要是写幻灯片用的，目前表现最好的书写幻灯片的宏包之一；采用 LaTeX 命令来组织幻灯片，用 <code>frame</code> 命令生成单页幻灯片（<code>Slide</code>）。</p>
+<h3 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello, World!"></a>Hello, World!</h3><p>先跑一下，看下什么效果。</p>
+<p>如果编译不过，请参照文末解决。</p>
+<pre><code class="tex">\documentclass[red]{beamer}
+\usepackage[UTF8]{ctex}
+\usetheme{Warsaw}
+\begin{document}
+    %%------------------------------------------
+    \title{beamer~测试}
+    \author{XXX}
+    \institute{lyh543}
+    \date{\today}
+    
+    \frame{\titlepage}
+    %%------------------------------------------
+    \begin{frame}
+        \frametitle{test}
+        Hello, world!
+    \end{frame}
+    %%------------------------------------------
+\end{document}
+</code></pre>
+<p>需要说明的几点：</p>
+<ol>
+<li><code>\usetheme{}</code> 显然是用来换主题的。可供选择的有：<code>Madrid</code>、<code>Warsaw</code>、<code>CambridgeUS</code>；</li>
+<li><code>\begin{frame}</code> <code>\end{frame}</code> 是 beamer 里面重要的概念，每一个 <code>frame</code> 定义了一张 Page。</li>
+</ol>
+<h2 id="bug-及可能的解决方法"><a href="#bug-及可能的解决方法" class="headerlink" title="bug 及可能的解决方法"></a>bug 及可能的解决方法</h2><h3 id="无法编译-更新宏包"><a href="#无法编译-更新宏包" class="headerlink" title="无法编译/更新宏包"></a>无法编译/更新宏包</h3><p>这里仅列举 beamer 编译不成功的例子，其他宏包是类似的。</p>
+<blockquote>
+<p>使用 beamer 编译不能成功, 可能是使用的 beamer, pgf, xcolor 宏包需要更新，更新地址为：<br><del>当然也可以使用 LaTeX 发行版提供的宏包管理工具</del></p>
+<p>beamer 更新地址: <a href="http://sourceforge.net/projects/latex-beamer/" target="_blank" rel="noopener">http://sourceforge.net/projects/latex-beamer/</a><br>pgf 更新地址: <a href="http://sourceforge.net/projects/pgf/" target="_blank" rel="noopener">http://sourceforge.net/projects/pgf/</a><br>xcolor 更新地址: <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/xcolor/" target="_blank" rel="noopener">http://www.ctan.org/tex-archive/macros/latex/contrib/xcolor/</a>  </p>
+<p>具体更新步骤如下:</p>
+<p>(1) 下载: 下载最新的 <code>beamer</code>, <code>pgf</code>, <code>xcolor</code> 包;<br>(2) 安装: 找到 TeX 的安装目录 <code>texmf</code>, 放到下面的地方即可： <code>texmf/tex/latex/beamer</code>, <code>texmf/tex/latex/pgf</code>,  <code>texmf/tex/latex/xcolor</code><br>这里有一个细节要注意一下: 如果 <code>texmf/tex/latex/</code> 目录下原来有 <code>beamer</code>, <code>pgf</code> 等文件夹, 宜先删除原有的旧文件夹, 再粘贴新文件。(直接覆盖的话，可能会因为文件名不同，使旧文件没有被删除。)</p>
+</blockquote>

@@ -1,0 +1,102 @@
+<hr>
+<p>title: MATLAB 字符串与文件<br>date: 2019-09-23 19:46:47<br>tags:</p>
+<ul>
+<li>课程笔记</li>
+<li>MATLAB<br>category:</li>
+<li>MATLAB</li>
+</ul>
+<hr>
+<h2 id="char-和-string"><a href="#char-和-string" class="headerlink" title="char 和 string"></a>char 和 string</h2><p>老师上课讲的字符串是 char 类型，等价于字符矩阵，形式为 <code>&#39;this is a char&#39;</code>，和 C 语言等不一样的是，结尾无 <code>\0</code>。</p>
+<p>MATLAB R2016b 引入了一种新的 string 字符串类型，每个字符串为一个元素，这样构建一个 n*m 矩阵就只需要一个二维矩阵（如果是 char，需要三维矩阵，或者改用二维 cell）。string 字符串用双引号以示区别 <code>&quot;this is a string&quot;</code>。</p>
+<p>两种类型可以互相转换 <code>cstr = char(str);</code> <code>str = string(cstr);</code>，并且在不少地方都可以通用。</p>
+<h2 id="char-字符串函数"><a href="#char-字符串函数" class="headerlink" title="char 字符串函数"></a>char 字符串函数</h2><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>函数用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>length</code>或<code>strlength</code></td>
+<td>计算 char 字符串的长度</td>
+</tr>
+<tr>
+<td><code>s=[s1,s3,num2str(num)]</code></td>
+<td>连接 char 字符串</td>
+</tr>
+<tr>
+<td><code>num2str</code></td>
+<td>数字转字符串</td>
+</tr>
+<tr>
+<td><code>str2num</code></td>
+<td>字符串转数字</td>
+</tr>
+<tr>
+<td><code>strtok(str, delim)</code></td>
+<td>查找 <code>str</code> 的第一个 <code>delim</code> 之前和之后的字符串</td>
+</tr>
+<tr>
+<td><code>strcat</code>, <code>strvcat</code></td>
+<td>横向/纵向拼接字符串（纵向时可能会补长度）</td>
+</tr>
+<tr>
+<td><code>strsplit(str,delimiter)</code></td>
+<td>按 <code>delimiter</code> 分割 <code>str</code>（多 <code>delimiter</code> 用 <code>cell</code> 传递）</td>
+</tr>
+</tbody></table>
+<h3 id="分割字符串"><a href="#分割字符串" class="headerlink" title="分割字符串"></a>分割字符串</h3><p><code>str2 = strsplit(str,delimiter)</code></p>
+<pre><code class="matlab">str = &#39;ABC;UVW;QWERTY&#39;;
+strsplit(str, {&#39;;&#39;, &#39;V&#39;}); % == &quot;ABC&quot;    &quot;U&quot;    &quot;W&quot;    &quot;QWERTY&quot;
+</code></pre>
+<h2 id="string-字符串"><a href="#string-字符串" class="headerlink" title="string 字符串"></a>string 字符串</h2><blockquote>
+<p>从 R2016b 开始，您可以使用字符串数组而不是字符数组来表示文本。字符串数组的每个元素存储一个字符序列。序列可以具有不同长度，无需填充，例如 “yes” 和 “no”。只有一个元素的字符串数组也称为字符串标量。<br>您可以按照标准数组运算对字符串数组进行索引、重构和串联，还可以使用 + 运算符向字符串追加文本。如果字符串数组表示数字，则可以使用 double 函数将其转换为数值数组。</p>
+</blockquote>
+<p>前面提到，<code>char</code> 和 <code>string</code> 两种类型可以互相转换 <code>cstr = char(str);</code> <code>str = string(cstr);</code>，并且在不少地方都可以通用。</p>
+<p>但是注意，二者对于矩阵处理的函数可能不同，这是因为一个 <code>string</code> 字符串被视为元素，而一个 <code>char</code> 字符串被视为矩阵，二者在字符串拼接、<code>length</code> 函数上的效果会有不同。</p>
+<p><code>string</code> 还引入了更多了函数，也非常方便。</p>
+<p>但是 <code>string</code> 似乎不能处理字符串内的某个字符，此时可能需要将 <code>string</code> 转换为 <code>char</code> 来处理。</p>
+<h2 id="文件函数"><a href="#文件函数" class="headerlink" title="文件函数"></a>文件函数</h2><p>和C语言很像。打开文件、读取、关闭。<code>fid</code> 是文件句柄。</p>
+<pre><code class="matlab">fid = fopen(&#39;myout.txt&#39;, &#39;wt&#39;);     %打开
+fprintf(fid,&#39;name=%s&#39;, name);    %格式化读取
+fgets(fid);                                    %读取一行和回车
+if ~feof(fid)                                 %判断文件末
+    fgetl(fid);                                 %读取一行无回车
+end
+fclose(fid)                                    %关闭
+</code></pre>
+<h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><table>
+<thead>
+<tr>
+<th>打开模式</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>r</code></td>
+<td>只读，文件必须存在</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td>写；若存在，则清空</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>在文末追加</td>
+</tr>
+<tr>
+<td>字母后加 <code>t</code></td>
+<td>以文本形式（默认）</td>
+</tr>
+<tr>
+<td>字母后加 <code>b</code></td>
+<td>以二进制形式</td>
+</tr>
+<tr>
+<td>字母后加 <code>+</code></td>
+<td>读写都可</td>
+</tr>
+</tbody></table>
+<p><code>fclose(&#39;all&#39;)</code> 直接关闭所有文件。</p>
+<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>读一行：<code>A = fgetl(fin);</code>。当读入空行时，返回 <code>0x0</code> 矩阵。<br><code>scanf</code> 天下第一！：<code>A = fscanf(fin,&#39;%d%d%c&#39;)</code>。得到的 <code>A</code> 是一个矩阵。</p>
+<p>这两个够用了.jpg</p>

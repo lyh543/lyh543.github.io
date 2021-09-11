@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>数模自学笔记——图与网络模型及方法 | 小灰灰灰灰的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="数学建模,图论,数模自学笔记">
+    <meta name="description" content="其实离散数学的时候讲过，数据结构又讲过，数模再讲一遍。 什么问题能抽象为图论举了一堆例子，然后得出结论：  能够把问题抽象为两种：元素，以及元素之间的关系  上面的这种问题就可以抽象为图论 基本概念图的元素 $G&#x3D;(V, E)$ $Vertex$ 为顶点，$Edge$ 为边   $V&#x3D;{v_1, v_2, v_3, v_4}, E&#x3D;{e_1, e_2, e_3, e_4}$   $e&#x3D;(u, v)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数模自学笔记——图与网络模型及方法">
+<meta property="og:url" content="https://blog.lyh543.cn/mcm/self-study/graphs/index.html">
+<meta property="og:site_name" content="小灰灰灰灰的博客">
+<meta property="og:description" content="其实离散数学的时候讲过，数据结构又讲过，数模再讲一遍。 什么问题能抽象为图论举了一堆例子，然后得出结论：  能够把问题抽象为两种：元素，以及元素之间的关系  上面的这种问题就可以抽象为图论 基本概念图的元素 $G&#x3D;(V, E)$ $Vertex$ 为顶点，$Edge$ 为边   $V&#x3D;{v_1, v_2, v_3, v_4}, E&#x3D;{e_1, e_2, e_3, e_4}$   $e&#x3D;(u, v)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.lyh543.cn/mcm/self-study/graphs/dijkstra-algorithm.png">
+<meta property="og:image" content="https://blog.lyh543.cn/mcm/self-study/graphs/kruskal-algorithm.png">
+<meta property="article:published_time" content="2020-04-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-09-11T12:19:35.135Z">
+<meta property="article:author" content="lyh543">
+<meta property="article:tag" content="数学建模">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="数模自学笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.lyh543.cn/mcm/self-study/graphs/dijkstra-algorithm.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="mdi mdi-close icon-lg"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">lyh543</h5>
+          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg mdi mdi-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg mdi mdi-archive"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lyh543" target="_blank" >
+                <i class="icon icon-lg mdi mdi-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg mdi mdi-menu"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">数模自学笔记——图与网络模型及方法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg mdi mdi-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg mdi mdi-magnify"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg mdi mdi-share-variant"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">数模自学笔记——图与网络模型及方法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-27T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2020-04-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么问题能抽象为图论"><span class="post-toc-text">什么问题能抽象为图论</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本概念"><span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图的元素"><span class="post-toc-text">图的元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图的分类"><span class="post-toc-text">图的分类</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#图的记法"><span class="post-toc-text">图的记法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#度"><span class="post-toc-text">度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#路"><span class="post-toc-text">路</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最短路问题"><span class="post-toc-text">最短路问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#子图"><span class="post-toc-text">子图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#树"><span class="post-toc-text">树</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成树"><span class="post-toc-text">生成树</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-mcm/self-study/graphs"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">数模自学笔记——图与网络模型及方法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-28 00:00:00" datetime="2020-04-27T16:00:00.000Z"  itemprop="datePublished">2020-04-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/">数学建模</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>其实离散数学的时候讲过，数据结构又讲过，数模再讲一遍。</p>
+<h2 id="什么问题能抽象为图论"><a href="#什么问题能抽象为图论" class="headerlink" title="什么问题能抽象为图论"></a>什么问题能抽象为图论</h2><p>举了一堆例子，然后得出结论：</p>
+<blockquote>
+<p>能够把问题抽象为两种：元素，以及元素之间的关系</p>
+</blockquote>
+<p>上面的这种问题就可以抽象为图论</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="图的元素"><a href="#图的元素" class="headerlink" title="图的元素"></a>图的元素</h3><ul>
+<li>$G=(V, E)$ $Vertex$ 为顶点，$Edge$ 为边  </li>
+<li>$V={v_1, v_2, v_3, v_4}, E={e_1, e_2, e_3, e_4}$  </li>
+<li>$e=(u, v)$ 无向边  </li>
+<li>$e=&lt;u, v&gt;$ 有向边（弧），$u$ 为始点（弧尾），$v$ 为终点（弧头），统称端点  </li>
+<li>边与点：相关联  </li>
+<li>点与点：邻接点/不邻接的  </li>
+<li>边与边：邻接边  </li>
+<li>自回路（环） <del>计算机科学叫自环</del>  </li>
+</ul>
+<h3 id="图的分类"><a href="#图的分类" class="headerlink" title="图的分类"></a>图的分类</h3><p>孤立结点  零图（只有孤立节点）  平凡图（只有一个结点）  $(n, m)$ 图（$n$ 点 $m$ 边）<br>无向图  有向图  混合图<br>平行边  重数  多重图  线图（非多重图）<br>简单图（无环的线图）  阶（顶点的个数）<br>完全图<br>同构图</p>
+<h3 id="图的记法"><a href="#图的记法" class="headerlink" title="图的记法"></a>图的记法</h3><p>关联矩阵（$n*m$ 矩阵，存储边和点关联的次数）  邻接矩阵  邻接表（略）</p>
+<h3 id="度"><a href="#度" class="headerlink" title="度"></a>度</h3><p>度、入度、出度  </p>
+<blockquote>
+<p>握手定理（欧拉定理）：无向图中，所有结点的度数的总和等于边数的两倍<br>推论：度数为奇数的结点数为偶数</p>
+</blockquote>
+<h3 id="路"><a href="#路" class="headerlink" title="路"></a>路</h3><table>
+<thead>
+<tr>
+<th>路</th>
+<th>边不重复</th>
+<th>点不重复</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通路</td>
+<td>简单通路（边不重复）</td>
+<td>基本通路（除端点外任意两点都不同）</td>
+</tr>
+<tr>
+<td>回路（起点和终点相同）</td>
+<td>简单回路（边不重复的回路）</td>
+<td>基本回路/圈（起点和终点相同的长为正的基本通路）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>约定：凡指基本通路或路均认为此路不是圈。</p>
+</blockquote>
+<blockquote>
+<p>易知，图中若点 u 与 v 间存在通路，则 u 与 v 间必存在基本通路；若过点 u 存在简单回路，则过点 u 必存在基本回路。</p>
+</blockquote>
+<h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><p>这里最短路指的是单源最短路。</p>
+<p>这里放一个 Dijsktra 算法的描述。虽然数据结构和离散都讲过，还有代码，但是数模的描述还是稍微有一点不同的。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="dijkstra-algorithm.png" alt="Dijkstra 算法" title="">
+                </div>
+                <div class="image-caption">Dijkstra 算法</div>
+            </figure>
+
+<p>另外也可以用线性规划求解：</p>
+<p>$$<br>\min \sum_{(i,j) \in E} w_{ij}x_{ij} \\<br>\text{such that}<br>\sum_{j=1, (i,j)\in E}^n x_{ij} - \sum_{j=1, (i,j)\in E}^n x_{ji} =<br>\begin{cases}<br>1 &amp; i = 1 \\<br>-1 &amp; i = n \\<br>0 &amp; i \neq 1, n<br>\end{cases} \\<br>~\\<br>x_{ij} \geq 0, (i, j) \in E<br>$$</p>
+<p>例题不少，可以看看 PPT。</p>
+<h2 id="子图"><a href="#子图" class="headerlink" title="子图"></a>子图</h2><p>上面的概念是针对任何图，下面我们针对</p>
+<p>这部分概念只是介绍一下，具体什么的定义还是去看 PPT 吧。</p>
+<ul>
+<li>子图：所有的顶点和边都属于图 G 的图称为 G 的子图。</li>
+<li>真子图：若这个节点子集或边子集是真子集，则称这个子图为真子图</li>
+<li>生成子图：含有 G 的所有顶点的子图称为 G 的生成子图。</li>
+<li>（点）导出子图：由该图顶点的一个子集和该图中两端均在该子集的所有边的集合组成的图</li>
+<li>（边）导出子图：由该图边的一个子集和以该子集中的边相关联的点组成的图</li>
+<li>G 的补图：从完全图删除 G 的所有边得到的图</li>
+<li>G<sub>1</sub> 在 G 的补图：从 G 中删除 G<sub>1</sub> 的所有边得到的图</li>
+</ul>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><blockquote>
+<p>无圈的连通图称为树。树中度为 1 的点称为树叶，其余点称为分枝点。</p>
+</blockquote>
+<blockquote>
+<p>定理：设 $G$ 是具有 $n$ 个点 $m$ 条边的图，则以下关于树的命题等价。</p>
+<ol>
+<li>$G$ 是树。</li>
+<li>$G$ 中任意两个不同点之间存在唯一的路。</li>
+<li>$G$ 连通，删去任一边便不连通。</li>
+<li>$G$ 连通，且 $n=m+1$。</li>
+<li>$G$ 无圈，且 $n=m+1$。</li>
+<li>$G$ 无圈，添加任一条边可得唯一的圈。</li>
+</ol>
+</blockquote>
+<p>居然是一条一条可以证明的，而且是从定义的仅仅 9 个字出发的。精妙精妙。证明略。读者可以自己思考。</p>
+<p>一波定义：</p>
+<blockquote>
+<p>有向树：去掉边方向后是一棵树的有向图<br>根树：恰有一个顶点的入度为 0，其余顶点的入度均为 1 的有向树</p>
+<ul>
+<li>根：入度为 0 的顶点</li>
+<li>叶：出度为 0 的顶点</li>
+<li>分支：出度不为 0 的顶点<br>$m$ 叉树：所有顶点出度不大于 $m$ 的根树<br>完全 $m$ 叉树：各顶点出度要么为 0，要么为 $m$ 的 $m$ 叉树</li>
+</ul>
+</blockquote>
+<p>定理：</p>
+<blockquote>
+<p>设完全 $m$ 叉树的叶子树为 $t$，分支树为 $i$，则有：<br>$$(m-1)i=t-1$$</p>
+</blockquote>
+<p>证明从 各顶点出度之和=弧数 出发。</p>
+<h3 id="生成树"><a href="#生成树" class="headerlink" title="生成树"></a>生成树</h3><p>关于连通图：</p>
+<blockquote>
+<p>边连通度：删掉任意 $k$ 边，图都连通（但不对 $k+1$ 成立），则该图的边连通度为 $k$<br>点连通度：删掉任意 $k$ 点，图都连通（但不对 $k+1$ 成立），则该图的点连通度为 $k$</p>
+</blockquote>
+<p>树的边连通度、点连通度都是 1。</p>
+<p>生成树定义：</p>
+<blockquote>
+<p>若图 G 的生成子图T是树，则称T为G的生成树。</p>
+</blockquote>
+<blockquote>
+<p>定理：连通图的生成树必存在。</p>
+</blockquote>
+<p>证明：给定连通图 G，若 G 无圈，则 G 就是自己的生成树。若 G 有圈，则任取 G 中一个圈 C，记删去 C 中一条边后所得之图为 H1。显然在 H1 中，圈 C 已不存在，但仍连通。若 H1 中还有圈，重复以上过程，直至得到一个无圈的连通图 H。H 便是 G 的生成树。</p>
+<p>没错，这就是“破圈法”——求生成树的一个算法。</p>
+<p>最小生成树定义：</p>
+<blockquote>
+<p>在权图 G 中，边权之和最小的生成树称为G的最优树。 </p>
+</blockquote>
+<p>Krusual 算法好评：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="kruskal-algorithm.png" alt="Kruskal 算法" title="">
+                </div>
+                <div class="image-caption">Kruskal 算法</div>
+            </figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-11T12:19:35.135Z" itemprop="dateUpdated">2021-09-11 20:19:35</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://blog.lyh543.cn">
+            <img src="/img/avatar.png" alt="lyh543">
+            lyh543
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" rel="tag">数学建模</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%A8%A1%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" rel="tag">数模自学笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/self-study/graphs/&title=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/self-study/graphs/&title=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/self-study/graphs/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/self-study/graphs/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/self-study/graphs/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-lg mdi mdi-share-variant"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/csharp/csharp/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon mdi mdi-chevron-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C# 入门笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/python/python-oop/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-lg icon-pl mdi mdi-chevron-right"></i></div>
+        <h4 class="title">Python 面向对象编程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'ec7daa4e047c3c30570d',
+          clientSecret: '025a9e40a1d101f28fd1a945d286a819e9fa1c3d',
+          repo: 'lyh543.github.io',
+          owner: 'lyh543',
+          admin: ['lyh543'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>lyh543 &copy; 2019 - 2021</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
+                
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/mcm/self-study/graphs/&title=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
+          <i class="icon mdi mdi-sina-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/mcm/self-study/graphs/&title=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&source=" data-title=" QQ">
+          <i class="icon mdi mdi-qqchat"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/mcm/self-study/graphs/" data-title=" Facebook">
+          <i class="icon mdi mdi-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数模自学笔记——图与网络模型及方法》 — 小灰灰灰灰的博客&url=https://blog.lyh543.cn/mcm/self-study/graphs/&via=https://blog.lyh543.cn" data-title=" Twitter">
+          <i class="icon mdi mdi-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/mcm/self-study/graphs/" data-title=" Google+">
+          <i class="icon mdi mdi-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3a0W7CMAwFUP7/p9kr0la4NymT6p48IRaKD5MsO87jEa/nyzp6//d63ZM88+hbTlsYGBiXZeShHAV39Kmjne3r97FhYGDch3GUwfKg28S6vxMDAwPj/ePel4ntO/n3YmBgYOyUdG0b3JaSGBgYGGtHZmuJNTm2+2IvjoGBcUFGni7///VX5hsYGBiXYjzL1Y4z82S9FRUGBsZoRp7g2rLs/c62cIyej4GBMZSRhLV20J+Hkqfgxd8MAwPj4ow2Ce4H3V47a8eoGBgY8xjJgfvOSGDts3WqxcDAGM1ox4RJa7pTgLaXXP/oxTEwMMYx8q15Om4vVeT7F7thDAyMQYyzQmyP9vIk/qGJxcDAGM3Ir422aXEncRflJgYGxmhGe6kiHx6sHe2d1RJjYGBMYuTlYF4mtsf9yQ9R9+IYGBjjGEkSzMvHsw7giqYaAwNjNCO/w7A2TtgZT67FhoGBMZuRfHEe4lmk+j+AgYExmpGQ2gO4dufJRSEGBsYgxn4oO0PQ9rOHGAwMjBsw2lFBckrfjjbb4g8DA+NujLPqyrXLZO2Tiz9jYGBcnPEs19pgsk2yeUGJgYFxB0a+2rSYJOKkNW0vkGFgYExlJEm2HRWsDUrzkrEuEDEwMEYw1hLfzvBg7QrFhzoXAwMD49SRZ552v5hwMTAwRjPW+uM2WRd4DAyMGzCSJna/3c0HBu1oAQMDYzajbR3bYWRbFK6lewwMjKGMHxxfLLpNaA/mAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

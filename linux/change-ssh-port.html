@@ -1,0 +1,54 @@
+<hr>
+<p>title: 修改 ssh 的端口<br>date: 2019-10-18 10:01:34<br>tags:</p>
+<ul>
+<li>ssh</li>
+<li>服务器</li>
+<li>Linux<br>category:</li>
+<li>Linux</li>
+</ul>
+<hr>
+<h2 id="修改-ssh-端口的前因后果"><a href="#修改-ssh-端口的前因后果" class="headerlink" title="修改 ssh 端口的前因后果"></a>修改 ssh 端口的前因后果</h2><p>今天用安卓手机 ssh 连接我的服务器的时候，出现了 <code>kex_exchange_identification</code>。又要修 bug 了。</p>
+<p>百度了一下，按照 <a href="https://www.cnblogs.com/starof/p/4709805.html" target="_blank" rel="noopener">ssh连接失败，排错经验</a> 的步骤做了一下，发现 ssh 有时连得上，有时连不上。迷惑行为。</p>
+<p>按照他的方法，关闭 ssh 服务，并开始 ssh 的调试模式：</p>
+<pre><code class="bash">service sshd stop
+/usr/sbin/sshd -d
+</code></pre>
+<p>打开以后，貌似一切正常。</p>
+<p>几秒以后，发现 ssh 显示了很多，然后就直接退出了？？？</p>
+<p>粗略看了一下，有一个未知 ip （最后查出来是法国的）在尝试 ssh 连接我的服务器。大概是来搞我的。</p>
+<p>于是我就把他放进 ssh 的黑名单了。</p>
+<pre><code class="sh">echo x.x.x.x &gt;&gt; /etc/hosts.allow
+</code></pre>
+<p>重新开启调试模式，发现几秒以后他又关掉了。</p>
+<p>这次是江苏的。</p>
+<p>重复了一次，发现又有一个北京的。</p>
+<p>？？？？</p>
+<p>大家都来搞我？？？</p>
+<p>ssh 没有仅允许白名单访问的方法，那咋办嘛。</p>
+<p>后来突然想到，<strong>不应该用默认端口的</strong>，否则他发现端口可用就可以暴力破解了！</p>
+<p>于是下面才是正题：如何更改 ssh 的端口。</p>
+<h2 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h2><pre><code>vi /etc/ssh/sshd_config
+</code></pre>
+<pre><code># The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+#Port 22
+#AddressFamily any
+#ListenAddress 0.0.0.0
+#ListenAddress ::
+
+#HostKey /etc/ssh/ssh_host_rsa_key
+#HostKey /etc/ssh/ssh_host_ecdsa_key
+#HostKey /etc/ssh/ssh_host_ed25519_key
+</code></pre>
+<p>现在的端口 <code>Port</code> 是默认的 22，我们要修改，先要把 <code>Port</code> 前注释的 <code>#</code> 去掉，然后把 22 改为自己想要的数字（0-65535 都可，只要不跟自己其他的端口重合）。</p>
+<pre><code>Port 2333
+#AddressFamily any
+</code></pre>
+<p>然后再开调试模式，发现一切都和平了。</p>
+<p>以后要 <code>ssh</code> 远程的时候，就要带一个端口参数了。对于 <code>39.1.2.3</code> 的服务器的 2333 端口，应该使用</p>
+<pre><code>ssh -p2333 root@39.1.2.3
+</code></pre>
+<p>即可。</p>
