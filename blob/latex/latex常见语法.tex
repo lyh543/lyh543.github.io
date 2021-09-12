@@ -1,0 +1,211 @@
+% LaTeX 常见语法
+
+% 以下是引入宏包，可以理解为 C 语言的 #include<stdio.h>
+% 直接复制到新的 LaTeX 文档就行
+% 如果使用了网上的语法而报错：Undifined ...，可能是没有引入对应的宏包，可百度该语法对应的宏包
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[UTF8]{ctex}
+
+% 在 \begin{document} 和 \end{document} 的内容将被输出到 pdf
+\begin{document}
+
+\section{标题}
+
+\subsection{这是一个小标题}
+
+\subsubsection{这是一个更小的标题}
+
+% 没有 subsubsub 了
+
+\section{文段}
+
+这是一段文字，注意有首行缩进。
+一个回车不能换行。
+
+两个回车可以换行，并且新行有首行缩进。\\
+而两个反斜线和一个回车的换行没有首行缩进。\\
+
+两个反斜线和两个回车的换行有首行缩进，并且有空行。\\
+
+另外，习惯上，中文文段中使用中文标点符号（如逗号、括号）。汉字和数字/英语之间间隔一个空格。中文标点符号和数字/英语之间不用间隔空格。如：\\
+
+错误示范：当BMI小于25时,认为不肥胖.当BMI大于25 ，认为肥胖。
+
+正确示范：当 BMI 小于 25 时，认为不肥胖。当BMI大于 25，认为肥胖。\\
+
+不过，对于公式的引用，由于被引用的公式的形式为
+
+\begin{equation}
+a+b=c
+\end{equation}
+
+引用公式时，为与原公式保持一致，即使在中文文段中，也使用英文括号，且在小括号的两侧添加空格。如 (1) 公式。
+
+\section{列表}
+
+\begin{enumerate}
+	\item 增加体内的肌肉。体内的肌肉越多，代谢率越高。
+	\item 将有氧运动和无氧运动结合，让身体得到全方位锻炼。
+	\item 某些食物，如绿茶，能短时间增加基础代谢率。
+	\item 早餐要吃好。长期不吃早餐会导致人体新陈代谢速率降低。
+	\item 少食多餐。两餐之间相隔较长时间会减缓新陈代谢。
+\end{enumerate}
+
+还可以这样：
+
+\begin{enumerate}[(1)]
+	\item 增加体内的肌肉。体内的肌肉越多，代谢率越高。
+	\item 将有氧运动和无氧运动结合，让身体得到全方位锻炼。
+	\item 某些食物，如绿茶，能短时间增加基础代谢率。
+	\item 早餐要吃好。长期不吃早餐会导致人体新陈代谢速率降低。
+	\item 少食多餐。两餐之间相隔较长时间会减缓新陈代谢。
+\end{enumerate}
+
+\section{表格}
+
+表格推荐使用在 https://www.tablesgenerator.com/ 自动生成。可将 Default table style 更换为 Bookstab table style 以获得三线表格。
+
+\begin{table}[!htbp]
+	\caption{肥胖影响因素调查分析结果}\label{tab:obese_reason} \centering
+	% \caption 是该表的标题
+	% \label 是该表的内部名称
+	% \centering 将该表居中
+	\begin{tabular}{llll}
+		\toprule
+		& \textbf{肥胖患病率}(\%) & \textbf{卡方值} & \textbf{P值}\\
+		\midrule
+		\textbf{性别}     &      &        &                 \\
+		~~男      & 13.2 & 169.8  & \textless{}0.01 \\
+		\ \ 女      & 8.1  &        &                 \\
+		\textbf{城乡}     &      &        &                 \\
+		~~ 城镇     & 10.0 & 18.4   & \textless{}0.01 \\
+		~~ 农村     & 11.8 &        &                 \\
+		\textbf{学历}     &      &        &                 \\
+		~~ 小学及以下  & 18.1 & 200.1  & \textless{}0.01 \\
+		~~ 中学     & 10.8 &        &                 \\
+		~~ 大学     & 8.3  &        &                 \\
+		\textbf{生活压力感}  &      &        &                 \\
+		~~ 从没有    & 13.6 & 49.3   & \textless{}0.01 \\
+		~~ 偶尔     & 10.3 &        &                 \\
+		~~ 经常     & 9.5  &        &                 \\
+		\textbf{睡眠时间}   &      &        &                 \\
+		~~ 不足 6 h & 13.7 & 28.5   & \textless{}0.01 \\
+		~~ 6 h 以上 & 10.2 &        &                 \\
+		\textbf{体质等级}   &      &        &                 \\
+		~~ 不合格    & 28.3 & 1425.4 & \textless{}0.01 \\
+		~~ 合格     & 13.7 &        &                 \\
+		~~ 良好     & 5.4  &        &                 \\
+		~~ 优秀     & 2.4  &        &                 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\section{图片}
+
+下图将引用与 tex 文件同目录的 recommend\_plan.pdf/png/jpg 图片文件。
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=.6\textwidth]{recommend_plan}
+	\caption{腰臀比与 BMI 的拟合图}
+	\label{fig:whr-bmi}
+\end{figure}
+
+\section{公式}
+
+有三种引用公式的方法：\\
+
+行内公式：$a+b=c$\\
+
+带标号的行间公式：
+
+\begin{equation}
+a^2 + b^2 = c^2
+\label{gougu}
+\end{equation}
+
+不带标号的行间公式：
+
+$$a^n+b^n=c^n \ \  n \geq 3$$
+
+由于公式的知识实在太多，可以单写一篇文章，这里不再赘述。只介绍常用的符号。
+
+$$a + \frac{b}{c} - d \times e \div f \leq g \geq h$$
+
+$$\int_{0}^{2} xdx = 2$$
+
+$$\min f_1 = \sum_{i=1}^{11} A_{i1}x_i$$
+
+$$x_i \geq \begin{cases}
+1 & i = 1, 5, 6, 7, 8\\
+0 & Others
+\end{cases}$$
+
+$$\alpha \ \beta \ \theta \ \gamma \ \Delta$$
+
+% 空格可使用 $\$ 长空格可使用 $\quad$
+
+\section{图、表、公式的引用}
+
+在上文，我们给图、表定义了 label。这是一种内部名称，只在 tex 文档里可见。
+
+这样的好处是实际的图 1、2、3 的编号交给 LaTeX，作者仅需用自己喜欢的名称对图片进行命名，然后在正文引用对应的名称即可。当图片的顺序发生变化时（如图 1 前面新插入了一张图片，此时图 1、2、3 应顺延为图 2、3、4），LaTeX 仍能保证正确的引用关系，无需作者修改。
+
+需要注意的是，LaTeX 由于是从上到下进行编译，第一次编译的时候无法将引用正确地链接到原文，出现 [??] 的情况。因此，如果被引用的东西发生了变化，请进行\textbf{两次编译}。
+
+下面是例子：\\
+
+图 \ref{fig:whr-bmi} 展示了腰臀比和 BMI 的拟合图。\\
+
+公式 (\ref{gougu}) 被称为勾股定理。\\
+
+LaTeX 会自动为该引用生成对应的数字。
+
+\section{参考文献的引用}
+
+和图、表等的引用相同，我们需要给每一个参考文献定义一个“内部名字”，LaTeX 在编译时会自动给参考文献编号，并连接原文。\\
+
+张三说的对。\cite{Zhang3}
+
+李华说的也对。\cite{Li10}
+
+\begin{thebibliography}{}
+	
+	\bibitem{Li10}
+	L. Ming, Y. Shucheng, R. Kui, and L. Wenjing, Securing Personal Health Records in Cloud Computing: Patient-Centric and Fine-Grained
+	Data Access Control in Multi-owner Settings, in: Processing of SecureComm 2010, LNICST 50, pp. 89-106, 2010.
+	
+	\bibitem{Zhang3}
+	R. Zhang, and L. Liu, Security Models and Requirements for Healthcare Application Clouds, in: Processing of  Cloud 2010, pp. 268-275, 2010.
+	
+\end{thebibliography}
+
+\section{代码}
+
+默认模板生成的可能不好看，可以考虑使用别的模板。
+
+\begin{lstlisting}[language=matlab]
+A = ElementInFood(3:end,:);
+b = ElementNeed(3:end);
+f = ElementInFood(1,:);
+lb = [1 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.25 0.25 0.25];
+ub = 7 * ones(1,11);
+[x2,fval2,exitflag,output] = linprog(f,-A,-b,[],[],lb,ub);
+lb = [1 0 0 0 1 1 1 1 0 0 0];
+ub = 10 * ones(1,11);
+A = [A; 0 1 1 1 0 0 0 0 0 0 0];
+b = [b, 1];
+[x1,fval1,exitflag,output] = linprog(f,-A,-b,[],[],lb,ub);
+\end{lstlisting}
+
+
+\end{document}

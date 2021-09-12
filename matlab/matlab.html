@@ -1,284 +1,186 @@
-<hr>
-<p>title: MATLAB 编程基础<br>date: 2019-09-30 19:50:36<br>tags:</p>
-<ul>
-<li>MATLAB</li>
-<li>编程语言入门<br>category:</li>
-<li>MATLAB</li>
-</ul>
-<hr>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>推荐官方提供的入门手册：<a href="https://ww2.mathworks.cn/help/matlab/getting-started-with-matlab.html" target="_blank" rel="noopener">MATLAB 快速入门</a></p>
-<ul>
-<li><code>help xxx</code> 用于查看命令，<code>doc xxx</code> 直接调用文档</li>
-<li>单引号 <code>&#39;</code> 和双引号 <code>&quot;</code> 一样，推荐单引号。用单引号转义单引号，如 <code>disp(&#39;f&#39;&#39;(x)&#39;)</code> 输出 <code>f(x)</code> </li>
-<li>用分号 <code>;</code> 结束语句，以屏蔽输出。  </li>
-<li>等于 <code>==</code>，不等 <code>~=</code>，取反 <code>~</code>，与或是 <code>&amp;&amp;</code> 和 <code>||</code>。</li>
-<li>行末 <code>...</code> 表示下一行接着这行。 </li>
-</ul>
-<h2 id="构造矩阵"><a href="#构造矩阵" class="headerlink" title="构造矩阵"></a>构造矩阵</h2><pre><code class="MATLAB">&gt;&gt; a = [2 2; 5 8]
-2 2
-5 8
-&gt;&gt; 1:2:10    % 1 3 5 7 9
-&gt;&gt; 1:5         % 1 2 3 4 5
-&gt;&gt; linspace(1,2,10)
-%  (start, end, length)
-%  1.0000    1.1111    1.2222    1.3333    1.4444   1.5556    1.6667    1.7778    1.8889    2.0000
-</code></pre>
-<p><code>1:5</code> 语法是闭区间，和 Python 左闭右开不一样。</p>
-<h3 id="构造常见矩阵"><a href="#构造常见矩阵" class="headerlink" title="构造常见矩阵"></a>构造常见矩阵</h3><pre><code class="MATLAB">&gt;&gt; rand(2)
-    0.8147    0.0975
-    0.9058    0.2785
-&gt;&gt; eye(5)
-&gt;&gt; ones(3)
-&gt;&gt; zeros(3)   % 可用于初始化
-</code></pre>
-<p>神奇的是， <code>zeros</code> 一开始并没有占用内存，而 <code>ones</code> 就会占用。</p>
-<p>另有 <code>normrnd(mu, sigma)</code> 按正态分布生成随机函数，<code>sparse</code> 构造稀疏矩阵。</p>
-<h3 id="矩阵的合并、取行列"><a href="#矩阵的合并、取行列" class="headerlink" title="矩阵的合并、取行列"></a>矩阵的合并、取行列</h3><pre><code class="MATLAB">&gt;&gt; a = [2 2; 5 8]
-&gt;&gt; A=[a,a]
-&gt;&gt; A=[a;a]
-</code></pre>
-<pre><code class="MATLAB">&gt;&gt; a = [2 2; 5 8]
-&gt;&gt; a(1, 2)                 % 第一行第二列，2
-&gt;&gt; a(1,1:2)                % 2 2
-&gt;&gt; a(1,:)                  % 2 2
-&gt;&gt; a([1,2],:)              % 2 2; 5 8
-&gt;&gt; a(end-1:end,:)          %% 取倒数两列，倒数第一行
-&gt;&gt; A(1,:)=[]               %% 删除第一行，a = [5 8]
-</code></pre>
-<p>可以把矩阵变为线性矩阵：</p>
-<pre><code class="m">A = [1 2 3; 6 5 4];
-A(:); %返回 [1 6 2 5 3 4]&#39;
-</code></pre>
-<p>看起来没什么用，但是求矩阵元素和 <code>sum(A(:))</code>、最大值就很香了。</p>
-<h3 id="四则运算"><a href="#四则运算" class="headerlink" title="四则运算"></a>四则运算</h3><ol>
-<li><code>A\B</code> <code>B/A</code> (当A为方阵）等价于A^(-1)*B</li>
-<li>（对应元素）点乘、点除、幂：<code>A.*A</code>，<code>A./B</code>，<code>A.\B</code>，<code>A.^B</code>，<code>A.^4</code></li>
-</ol>
-<h3 id="矩阵变换"><a href="#矩阵变换" class="headerlink" title="矩阵变换"></a>矩阵变换</h3><ol>
-<li>转置：<code>A&#39;</code></li>
-<li>上、下三角矩阵：<code>tril</code>，<code>triu</code></li>
-<li>逆矩阵：<code>inv(a)</code></li>
-<li>取对角变为列向量：<code>diag(A)</code></li>
-<li>取对角矩阵：<code>diag(diag(A))</code></li>
-<li>左右翻转：<code>fliplr(A)</code></li>
-<li>将增广矩阵化为简化为阶梯形：<code>rrefA)</code></li>
-<li>特征值、特征向量：<code>[V,D] = eig(A)</code></li>
-</ol>
-<p>$V^{-1} \cdot D \cdot V = A$</p>
-<p>即$D$的对角线是特征值.</p>
-<ol start="8">
-<li>范数 <code>norm()</code></li>
-</ol>
-<h2 id="编程语法"><a href="#编程语法" class="headerlink" title="编程语法"></a>编程语法</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p><code>double</code>, <code>char</code>, <code>sym</code>, <code>struct</code>, <code>cell</code><br>数组以1开头（毕竟万物皆矩阵）</p>
-<h4 id="取整函数"><a href="#取整函数" class="headerlink" title="取整函数"></a>取整函数</h4><p><code>ceil</code> 向上取整、<code>floor</code> 向下取整、<code>round</code> 四舍五入、<code>fix</code> 向零取整。</p>
-<p><del>然而 C++ 用户还是喜欢使用 <code>int32</code></del></p>
-<h4 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h4><pre><code class="MATLAB">c = char(49)
-a = double(&#39;1&#39;)
-</code></pre>
-<h4 id="查询数据类型"><a href="#查询数据类型" class="headerlink" title="查询数据类型"></a>查询数据类型</h4><pre><code class="MATLAB">class(A)
-% 返回数据类型名字的字符串khx
-</code></pre>
-<h4 id="cell-数组"><a href="#cell-数组" class="headerlink" title="cell 数组"></a>cell 数组</h4><p>各元素可为不同类型tql</p>
-<pre><code class="MATLAB">a=cell{2,3}
-a{4} = &#39;str&#39;
-a{1,2} = 123
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MATLAB 编程基础 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
 
-class(a{4}) % == ‘str&#39;
-class(a(4)) % == &#39;cell&#39;，注意区别
-</code></pre>
-<p>感觉有点鸡肋，但是 <code>strsplit</code> 能用。</p>
-<h4 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h4><p>MATLAB 脚本执行的时候，其<strong>变量默认是既不跨文件，也不跨函数</strong>的，只是在命令行中调用脚本，其变量会保留在命令行中。  </p>
-<p>如在  <code>test.m</code> 中 <code>a=2; fun(1);</code>（<code>fun.m</code> 为 <code>function y=fun(x); a=1;</code>）以后，<code>a</code> 的值为 2。</p>
-<p>如果需要全局变量，在声明和定义的部分都要写 <code>global a;</code>。</p>
-<p>修改上述脚本得到：</p>
-<pre><code class="m">global a;
-a=2;
-fun(1);
-disp(a);
+推荐官方提供的入门手册：MATLAB 快速入门
 
-function y=fun(x)
-    a=1;
-end
-</code></pre>
-<p>输出 1。</p>
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><pre><code class="MATLAB">score=input(&#39;请输入您的成绩：&#39;)    %输入MATLAB表达式
-name=input(&#39;请输入您的姓名：&#39;,&#39;s&#39;) %输入姓名
-disp(a) 显示数组内容
-fprintf(&#39;%6d&#39;, score)
-str=sprintf(&#39;%6d&#39;,score)         %不能输出
-</code></pre>
-<p>转义字符：单引号<code>&#39;</code></p>
-<p>貌似字符串的单双引号可以混用。</p>
-<p>文件输入输出件另一篇<a href="../matlab-string-and-file-function">博客</a>。</p>
-<h3 id="控制流程"><a href="#控制流程" class="headerlink" title="控制流程"></a>控制流程</h3><h4 id="for"><a href="#for" class="headerlink" title="for"></a>for</h4><pre><code class="MATLAB">for a = 1:10          % for a = [array]
-    string(&#39;njjnb&#39;)
-end
-</code></pre>
-<p>支持 <code>continue</code> 和 <code>break</code>。</p>
-<h4 id="if"><a href="#if" class="headerlink" title="if"></a>if</h4><p>MATLAB 代码实属随和，判断条件部分，加不加括号都可以。</p>
-<pre><code class="MATLAB">if (a == 1)
-    disp(&#39;1&#39;);
-elseif a == 2
-    sprintf(&quot;hehe&quot;);
-else
-    disp(&#39;233&#39;);
-end
-</code></pre>
-<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><p><code>==</code>，<code>&amp;</code>，<code>|</code>，<code>~</code>，<code>~=</code>，<code>&gt;</code>，<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code></p>
-<p>用逻辑运算符比较时，矩阵对应元素比较，得到的结果也是矩阵。</p>
-<p>对于 <code>if</code> <code>while</code> 是否执行的判定，实际上是判断矩阵的每个元素是否都是非零值。这一点在判断等于、大于小于的时候挺合理，但是在某些情况下会有问题：</p>
-<ol>
-<li>比较的两个矩阵维度不同时，会运行报错</li>
-<li>判断不等时容易出错：</li>
-</ol>
-<pre><code class="m">a = [1 2 3];
-b = [2 3 3];
+help xxx 用于查看命令，doc xxx 直接调用文档
+单引号 ' 和双引号 " 一样，推荐单引号。用单引号转义单引号，如 disp('f''(x)') 输出 `f( ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/187.ac3e2d0e.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>推荐官方提供的入门手册：<a href="https://ww2.mathworks.cn/help/matlab/getting-started-with-matlab.html" target="_blank" rel="noopener noreferrer">MATLAB 快速入门<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <ul><li><code>help xxx</code> 用于查看命令，<code>doc xxx</code> 直接调用文档</li> <li>单引号 <code>'</code> 和双引号 <code>&quot;</code> 一样，推荐单引号。用单引号转义单引号，如 <code>disp('f''(x)')</code> 输出 <code>f(x)</code></li> <li>用分号 <code>;</code> 结束语句，以屏蔽输出。</li> <li>等于 <code>==</code>，不等 <code>~=</code>，取反 <code>~</code>，与或是 <code>&amp;&amp;</code> 和 <code>||</code>。</li> <li>行末 <code>...</code> 表示下一行接着这行。</li></ul> <h2 id="构造矩阵"><a href="#构造矩阵" class="header-anchor">#</a> 构造矩阵</h2> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token operator">&gt;</span><span class="token operator">&gt;</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token number">5</span> <span class="token number">8</span><span class="token punctuation">]</span>
+<span class="token number">2</span> <span class="token number">2</span>
+<span class="token number">5</span> <span class="token number">8</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">2</span><span class="token operator">:</span><span class="token number">10</span>    <span class="token comment">% 1 3 5 7 9</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">5</span>         <span class="token comment">% 1 2 3 4 5</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">linspace</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token comment">%  (start, end, length)</span>
+<span class="token comment">%  1.0000    1.1111    1.2222    1.3333    1.4444   1.5556    1.6667    1.7778    1.8889    2.0000</span>
+</code></pre></div><p><code>1:5</code> 语法是闭区间，和 Python 左闭右开不一样。</p> <h3 id="构造常见矩阵"><a href="#构造常见矩阵" class="header-anchor">#</a> 构造常见矩阵</h3> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token number">0.8147</span>    <span class="token number">0.0975</span>
+    <span class="token number">0.9058</span>    <span class="token number">0.2785</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">eye</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">ones</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>   <span class="token comment">% 可用于初始化</span>
+</code></pre></div><p>神奇的是， <code>zeros</code> 一开始并没有占用内存，而 <code>ones</code> 就会占用。</p> <p>另有 <code>normrnd(mu, sigma)</code> 按正态分布生成随机函数，<code>sparse</code> 构造稀疏矩阵。</p> <h3 id="矩阵的合并、取行列"><a href="#矩阵的合并、取行列" class="header-anchor">#</a> 矩阵的合并、取行列</h3> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token operator">&gt;</span><span class="token operator">&gt;</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token number">5</span> <span class="token number">8</span><span class="token punctuation">]</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> A<span class="token operator">=</span><span class="token punctuation">[</span>a<span class="token punctuation">,</span>a<span class="token punctuation">]</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> A<span class="token operator">=</span><span class="token punctuation">[</span>a<span class="token punctuation">;</span>a<span class="token punctuation">]</span>
+</code></pre></div><div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token operator">&gt;</span><span class="token operator">&gt;</span> a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token number">5</span> <span class="token number">8</span><span class="token punctuation">]</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>                 <span class="token comment">% 第一行第二列，2</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">2</span><span class="token punctuation">)</span>                <span class="token comment">% 2 2</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span>                  <span class="token comment">% 2 2</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span>              <span class="token comment">% 2 2; 5 8</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token keyword">end</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span><span class="token keyword">end</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span>          <span class="token comment">%% 取倒数两列，倒数第一行</span>
+<span class="token operator">&gt;</span><span class="token operator">&gt;</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>               <span class="token comment">%% 删除第一行，a = [5 8]</span>
+</code></pre></div><p>可以把矩阵变为线性矩阵：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>A <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token number">6</span> <span class="token number">5</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token function">A</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">%返回 [1 6 2 5 3 4]'</span>
+</code></pre></div><p>看起来没什么用，但是求矩阵元素和 <code>sum(A(:))</code>、最大值就很香了。</p> <h3 id="四则运算"><a href="#四则运算" class="header-anchor">#</a> 四则运算</h3> <ol><li><code>A\B</code> <code>B/A</code> (当A为方阵）等价于A^(-1)*B</li> <li>（对应元素）点乘、点除、幂：<code>A.*A</code>，<code>A./B</code>，<code>A.\B</code>，<code>A.^B</code>，<code>A.^4</code></li></ol> <h3 id="矩阵变换"><a href="#矩阵变换" class="header-anchor">#</a> 矩阵变换</h3> <ol><li>转置：<code>A'</code></li> <li>上、下三角矩阵：<code>tril</code>，<code>triu</code></li> <li>逆矩阵：<code>inv(a)</code></li> <li>取对角变为列向量：<code>diag(A)</code></li> <li>取对角矩阵：<code>diag(diag(A))</code></li> <li>左右翻转：<code>fliplr(A)</code></li> <li>将增广矩阵化为简化为阶梯形：<code>rrefA)</code></li> <li>特征值、特征向量：<code>[V,D] = eig(A)</code></li></ol> <p><span class="vuepress-eq"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>V</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>⋅</mo><mi>D</mi><mo>⋅</mo><mi>V</mi><mo>=</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">V^{-1} \cdot D \cdot V = A</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span></span></p> <p>即<span class="vuepress-eq"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi></mrow><annotation encoding="application/x-tex">D</annotation></semantics></math></span><span aria-hidden="true" class="katex-html"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span></span>的对角线是特征值.</p> <ol start="8"><li>范数 <code>norm()</code></li></ol> <h2 id="编程语法"><a href="#编程语法" class="header-anchor">#</a> 编程语法</h2> <h3 id="数据类型"><a href="#数据类型" class="header-anchor">#</a> 数据类型</h3> <p><code>double</code>, <code>char</code>, <code>sym</code>, <code>struct</code>, <code>cell</code><br>
+数组以1开头（毕竟万物皆矩阵）</p> <h4 id="取整函数"><a href="#取整函数" class="header-anchor">#</a> 取整函数</h4> <p><code>ceil</code> 向上取整、<code>floor</code> 向下取整、<code>round</code> 四舍五入、<code>fix</code> 向零取整。</p> <p><s>然而 C++ 用户还是喜欢使用 <code>int32</code></s></p> <h4 id="强制转换"><a href="#强制转换" class="header-anchor">#</a> 强制转换</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code>c <span class="token operator">=</span> <span class="token function">char</span><span class="token punctuation">(</span><span class="token number">49</span><span class="token punctuation">)</span>
+a <span class="token operator">=</span> <span class="token function">double</span><span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span>
+</code></pre></div><h4 id="查询数据类型"><a href="#查询数据类型" class="header-anchor">#</a> 查询数据类型</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token function">class</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span>
+<span class="token comment">% 返回数据类型名字的字符串khx</span>
+</code></pre></div><h4 id="cell-数组"><a href="#cell-数组" class="header-anchor">#</a> cell 数组</h4> <p>各元素可为不同类型tql</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>a<span class="token operator">=</span>cell<span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">}</span>
+a<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token string">'str'</span>
+a<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token number">123</span>
 
-if (a ~= b)
-    disp(&#39;not equal&#39;)
-end
-</code></pre>
-<p>上面的代码不会输出 <code>not equal</code>。原因是 <code>a~=b</code> 的结果矩阵中，第三个元素是 1，是非零值。将代码改写为 <code>~(a == b)</code> 会有同样的问题。</p>
-<p>解决方案是，使用 <code>~isequal(a, b)</code>。他能比较两个矩阵是否相同，并给出一个逻辑值 <code>1</code>/<code>0</code>。也可以对不同维数的矩阵给出 <code>0</code> 而不是报错。</p>
-<pre><code class="m">a = [1 2 3];
-b = [2 3 3];
+<span class="token function">class</span><span class="token punctuation">(</span>a<span class="token punctuation">{</span><span class="token number">4</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">% == 'str'</span>
+<span class="token function">class</span><span class="token punctuation">(</span><span class="token function">a</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">% == 'cell'，注意区别</span>
+</code></pre></div><p>感觉有点鸡肋，但是 <code>strsplit</code> 能用。</p> <h4 id="全局变量"><a href="#全局变量" class="header-anchor">#</a> 全局变量</h4> <p>MATLAB 脚本执行的时候，其<strong>变量默认是既不跨文件，也不跨函数</strong>的，只是在命令行中调用脚本，其变量会保留在命令行中。</p> <p>如在  <code>test.m</code> 中 <code>a=2; fun(1);</code>（<code>fun.m</code> 为 <code>function y=fun(x); a=1;</code>）以后，<code>a</code> 的值为 2。</p> <p>如果需要全局变量，在声明和定义的部分都要写 <code>global a;</code>。</p> <p>修改上述脚本得到：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>global a<span class="token punctuation">;</span>
+a<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token function">fun</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-if (~isequal(a,b))
-    disp(&#39;not equal&#39;)
-end
-</code></pre>
-<p>输出 <code>not equal</code>。</p>
-<h4 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h4><pre><code class="MATLAB">switch name(1)
-    case {&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;,&#39;f&#39;,&#39;g&#39;,&#39;h&#39;},
-        disp([&#39;Hello,&#39;,name])
-    otherwise,
-        disp([&#39;Welcome,&#39;,name])
-end
-</code></pre>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>MATLAB 函数好多啊，容易被绕进去。那我就不按教程讲叭。</p>
-<p>函数这个词，有两个含义：</p>
-<ul>
-<li>一个是数学上的含义，指数（数组）到数（数组）的映射；</li>
-<li>第二个是编程意义上的，传入一个或多个参数，按规定执行某些操作，然后返回一个或多个参数。</li>
-</ul>
-<p>原生 C 语言作为一种编程语言，只有第二种，因此概念不会混淆；</p>
-<p>而 MATLAB 作为一个数学计算软件+脚本编程软件，两种函数都要有，<br>于是初学者就混淆了。</p>
-<p>MATLAB 的<strong>编程函数</strong>有两种：<a href="#%E5%87%BD%E6%95%B0%E6%96%87%E4%BB%B6%E5%92%8C%E5%AD%90%E5%87%BD%E6%95%B0">函数文件和子函数</a>，具体区别放在后面。<br>MATLAB 的<strong>数学函数</strong>，网上都说有两种，分别是内联函数和匿名函数，但是我觉得要加上符号函数，一共三种。</p>
-<blockquote>
-<p>在以后的版本中将会删除 <code>inline</code> 内联函数。请改用 匿名函数。  </p>
-</blockquote>
-<p>因此对内联函数不做介绍，仅提供<a href="https://ww2.mathworks.cn/help/MATLAB/ref/inline.html" target="_blank" rel="noopener">官方文档</a>以查阅。</p>
-<p>而匿名函数和符号函数呢，前者是可以代值运算的函数，后者是可以进行求导积分泰勒展开等等等等。</p>
-<p>用比较形象的话来说，匿名函数就是 <code>f(x)=x^2</code>，而符号函数是 <code>y=x^2</code>。  </p>
-<ul>
-<li>匿名函数可以求 <code>f(1)</code>、<code>f(2)</code> 等等，但是 <code>x</code> 并不是一个已经声明的符号（或者说，自变量），它只起了占位的功能，代值的时候就会被替换。  </li>
-<li>而符号函数不能直接求 <code>y(1)</code>，而且需要提前声明 x 是符号（<code> sym x;</code>），但是它就可以进行求导等操作。<br>你可能会说，数学上，可以通过 <code>y=f(x)</code> 相互转换吖。确实，二者是可以互相转换的。具体方法在<a href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">后面</a>提到。</li>
-</ul>
-<h4 id="函数文件和子函数"><a href="#函数文件和子函数" class="headerlink" title="函数文件和子函数"></a>函数文件和子函数</h4><p>函数文件是把函数作为模块，可以被其他程序调用，是模块化编程很重要的一点。<br>而子函数是作为主函数的一部分，只能被主函数调用，不能被其他程序调用。</p>
-<p>存储上，函数文件需要单文件存储。而子函数不用。<br>如果涉及到了子函数，该文件所有函数（主函数和子函数）都需要写 <code>end</code>。</p>
-<p>调用时，使用 <code>hello</code> 或 <code>test(1, 2)</code>。  </p>
-<p>正常情况下，函数外的参数不能被使用，自变量也不能被修改。和 C 一样。<br>若想要使用全局变量，在声明和使用变量时，都需要加 <code>global</code> 关键字，</p>
-<pre><code class="m">% hello.md
-function ret = hello
-disp(&#39;hello world&#39;);
-ret = 1;
-</code></pre>
-<pre><code class="MATLAB">% test.m
-function r=test(r1, r2)
-r = r1 + r2 + get_r3();
-end
-function r3 = get_r3
-r3 = 2;
-end
-</code></pre>
-<p>返回值可以为多参数。可以用 <code>nargin</code> 和 <code>nargout</code> 检测输入、输出参数个数。<br>函数中支持 <code>return</code>。</p>
-<pre><code class="m">function [r, v]=myfun(x)
-    r=x.^2;    %计算第1个输出参数
-    if nargout&gt;=2,
-        v = 2*x; %计算第2个输出参数
-    end
-</code></pre>
-<h5 id="Function-in-Function"><a href="#Function-in-Function" class="headerlink" title="Function in Function"></a>Function in Function</h5><blockquote>
-<p>摘自：如何评价 MATLAB R2016b ? - winner245的回答 - 知乎<br><a href="https://www.zhihu.com/question/50662537/answer/122451045" target="_blank" rel="noopener">https://www.zhihu.com/question/50662537/answer/122451045</a></p>
-</blockquote>
-<p>在 MATLAB R2016b 以后，还支持在函数里面写函数，并且对于输入和输出相同的函数（即原地调用），性能会有优化。</p>
-<pre><code class="m">function main
-tic, x = rand(1e8,1); toc
-tic, y = notInplace(x); toc
-tic, x = inplace(x); toc
-isequal(x,y)
+<span class="token keyword">function</span> y<span class="token operator">=</span><span class="token function">fun</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    a<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+</code></pre></div><p>输出 1。</p> <h3 id="输入输出"><a href="#输入输出" class="header-anchor">#</a> 输入输出</h3> <div class="language-matlab extra-class"><pre class="language-matlab"><code>score<span class="token operator">=</span><span class="token function">input</span><span class="token punctuation">(</span><span class="token string">'请输入您的成绩：'</span><span class="token punctuation">)</span>    <span class="token comment">%输入MATLAB表达式</span>
+name<span class="token operator">=</span><span class="token function">input</span><span class="token punctuation">(</span><span class="token string">'请输入您的姓名：'</span><span class="token punctuation">,</span><span class="token string">'s'</span><span class="token punctuation">)</span> <span class="token comment">%输入姓名</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> 显示数组内容
+<span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token string">'%6d'</span><span class="token punctuation">,</span> score<span class="token punctuation">)</span>
+str<span class="token operator">=</span><span class="token function">sprintf</span><span class="token punctuation">(</span><span class="token string">'%6d'</span><span class="token punctuation">,</span>score<span class="token punctuation">)</span>         <span class="token comment">%不能输出</span>
+</code></pre></div><p>转义字符：单引号<code>'</code></p> <p>貌似字符串的单双引号可以混用。</p> <p>文件输入输出件另一篇<a href="../matlab-string-and-file-function">博客</a>。</p> <h3 id="控制流程"><a href="#控制流程" class="header-anchor">#</a> 控制流程</h3> <h4 id="for"><a href="#for" class="header-anchor">#</a> for</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">for</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span>          <span class="token comment">% for a = [array]</span>
+    <span class="token function">string</span><span class="token punctuation">(</span><span class="token string">'njjnb'</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre></div><p>支持 <code>continue</code> 和 <code>break</code>。</p> <h4 id="if"><a href="#if" class="header-anchor">#</a> if</h4> <p>MATLAB 代码实属随和，判断条件部分，加不加括号都可以。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token function">disp</span><span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">elseif</span> a <span class="token operator">==</span> <span class="token number">2</span>
+    <span class="token function">sprintf</span><span class="token punctuation">(</span>&quot;hehe&quot;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">else</span>
+    <span class="token function">disp</span><span class="token punctuation">(</span><span class="token string">'233'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+</code></pre></div><h5 id="逻辑运算符"><a href="#逻辑运算符" class="header-anchor">#</a> 逻辑运算符</h5> <p><code>==</code>，<code>&amp;</code>，<code>|</code>，<code>~</code>，<code>~=</code>，<code>&gt;</code>，<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code></p> <p>用逻辑运算符比较时，矩阵对应元素比较，得到的结果也是矩阵。</p> <p>对于 <code>if</code> <code>while</code> 是否执行的判定，实际上是判断矩阵的每个元素是否都是非零值。这一点在判断等于、大于小于的时候挺合理，但是在某些情况下会有问题：</p> <ol><li>比较的两个矩阵维度不同时，会运行报错</li> <li>判断不等时容易出错：</li></ol> <div class="language-matlab extra-class"><pre class="language-matlab"><code>a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token number">3</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-function y = notInplace(x)
-y = 1.2*x; 
+<span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">~=</span> b<span class="token punctuation">)</span>
+    <span class="token function">disp</span><span class="token punctuation">(</span><span class="token string">'not equal'</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre></div><p>上面的代码不会输出 <code>not equal</code>。原因是 <code>a~=b</code> 的结果矩阵中，第三个元素是 1，是非零值。将代码改写为 <code>~(a == b)</code> 会有同样的问题。</p> <p>解决方案是，使用 <code>~isequal(a, b)</code>。他能比较两个矩阵是否相同，并给出一个逻辑值 <code>1</code>/<code>0</code>。也可以对不同维数的矩阵给出 <code>0</code> 而不是报错。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span> <span class="token number">3</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-function x = inplace(x)
-x = 1.2*x;
-</code></pre>
-<h4 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h4><p><a href="https://ww2.mathworks.cn/help/matlab/matlab_prog/anonymous-functions.html" target="_blank" rel="noopener">官方文档</a>写的很好，就直接引用了。</p>
-<blockquote>
-<p>匿名函数是一个 <code>函数句柄</code> （<code>function_handle</code>）（我注：第一句话官方翻译的太烂了，我重新写了一下；函数句柄可理解为指向某个函数的指针，它并不存储这个函数）。匿名函数可以接受输入并返回输出，就像标准函数一样。但是，它们可能只包含一个可执行语句。  </p>
-<p>例如，创建用于计算平方数的匿名函数的句柄：<br><code>sqr = @(x) x.^2;</code><br>变量 <code>sqr</code> 是一个函数句柄。<code>@</code> 运算符创建句柄，<code>@</code> 运算符后面的圆括号 <code>()</code> 包括函数的输入参数。该匿名函数接受单个输入 <code>x</code>，并显式返回单个输出，即大小与包含平方值的 <code>x</code> 相同的数组。</p>
-<p>通过将特定值 (5) 传递到函数句柄来计算该值的平方，与您将输入参数传递到标准函数一样。<br><code>a = sqr(5)</code> 返回 25</p>
-<p><strong>许多 MATLAB® 函数接受将函数句柄用作输入</strong>（我注：无需创建符号变量 <code>syms</code>，直接调用即可<del>不过貌似不多</del>）。例如，通过将函数句柄传递到 integral 函数，计算 sqr 函数从 0 到 1 范围内的积分：<br><code>q = integral(@(x) x.^2,0,1);</code></p>
-<p>可以对匿名函数嵌套：<br><code>g = @(c) (integral(@(x) (x.^2 + c*x + 1),0,1));</code><br>上述 <code>g(2) == 3</code>。</p>
-<p>可以使用不带参数或多个参数的匿名函数：<br><code>t = @() datestr(now); d = t()</code>  </p>
-<p>匿名函数可以有多个返回值（本文作略，请查阅官方文档）。</p>
-</blockquote>
-<p><code>@</code> 还可以把一个程序函数变成一个函数句柄。<br>如，定义 <code>function y=fun(x)</code>，就可以用 <code>g(@fun,1)</code> 跑遗传算法了。</p>
-<p>匿名函数可以转化为符号函数：<code>f=@(x)x^2; syms x; y=f(x);</code></p>
-<p>符号函数可以转为匿名函数：<code>syms x; y=x^2; f=matlabFunction(y);</code></p>
-<h2 id="MATLAB-结构体"><a href="#MATLAB-结构体" class="headerlink" title="MATLAB 结构体"></a>MATLAB 结构体</h2><p>MATLAB 结构体在实际应用中用到的不多，但是作为程序员，还是简单叙述一下。</p>
-<p>MATLAB 的结构体不需要定义，当有数据要放入结构体中时，就直接用 <code>.</code> 装进去即可。</p>
-<pre><code class="m">s.a = 1;
-s.b = {&#39;A&#39;,&#39;B&#39;,&#39;C&#39;}
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">~</span><span class="token function">isequal</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token function">disp</span><span class="token punctuation">(</span><span class="token string">'not equal'</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre></div><p>输出 <code>not equal</code>。</p> <h4 id="switch"><a href="#switch" class="header-anchor">#</a> switch</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">switch</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">case</span> <span class="token punctuation">{</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token string">'b'</span><span class="token punctuation">,</span><span class="token string">'c'</span><span class="token punctuation">,</span><span class="token string">'d'</span><span class="token punctuation">,</span><span class="token string">'e'</span><span class="token punctuation">,</span><span class="token string">'f'</span><span class="token punctuation">,</span><span class="token string">'g'</span><span class="token punctuation">,</span><span class="token string">'h'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token function">disp</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'Hello,'</span><span class="token punctuation">,</span>name<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">otherwise</span><span class="token punctuation">,</span>
+        <span class="token function">disp</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'Welcome,'</span><span class="token punctuation">,</span>name<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+</code></pre></div><h3 id="函数"><a href="#函数" class="header-anchor">#</a> 函数</h3> <p>MATLAB 函数好多啊，容易被绕进去。那我就不按教程讲叭。</p> <p>函数这个词，有两个含义：</p> <ul><li>一个是数学上的含义，指数（数组）到数（数组）的映射；</li> <li>第二个是编程意义上的，传入一个或多个参数，按规定执行某些操作，然后返回一个或多个参数。</li></ul> <p>原生 C 语言作为一种编程语言，只有第二种，因此概念不会混淆；</p> <p>而 MATLAB 作为一个数学计算软件+脚本编程软件，两种函数都要有，
+于是初学者就混淆了。</p> <p>MATLAB 的<strong>编程函数</strong>有两种：<a href="#%E5%87%BD%E6%95%B0%E6%96%87%E4%BB%B6%E5%92%8C%E5%AD%90%E5%87%BD%E6%95%B0">函数文件和子函数</a>，具体区别放在后面。
+MATLAB 的<strong>数学函数</strong>，网上都说有两种，分别是内联函数和匿名函数，但是我觉得要加上符号函数，一共三种。</p> <blockquote><p>在以后的版本中将会删除 <code>inline</code> 内联函数。请改用 匿名函数。</p></blockquote> <p>因此对内联函数不做介绍，仅提供<a href="https://ww2.mathworks.cn/help/MATLAB/ref/inline.html" target="_blank" rel="noopener noreferrer">官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>以查阅。</p> <p>而匿名函数和符号函数呢，前者是可以代值运算的函数，后者是可以进行求导积分泰勒展开等等等等。</p> <p>用比较形象的话来说，匿名函数就是 <code>f(x)=x^2</code>，而符号函数是 <code>y=x^2</code>。</p> <ul><li>匿名函数可以求 <code>f(1)</code>、<code>f(2)</code> 等等，但是 <code>x</code> 并不是一个已经声明的符号（或者说，自变量），它只起了占位的功能，代值的时候就会被替换。</li> <li>而符号函数不能直接求 <code>y(1)</code>，而且需要提前声明 x 是符号（<code>sym x;</code>），但是它就可以进行求导等操作。
+你可能会说，数学上，可以通过 <code>y=f(x)</code> 相互转换吖。确实，二者是可以互相转换的。具体方法在<a href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">后面</a>提到。</li></ul> <h4 id="函数文件和子函数"><a href="#函数文件和子函数" class="header-anchor">#</a> 函数文件和子函数</h4> <p>函数文件是把函数作为模块，可以被其他程序调用，是模块化编程很重要的一点。<br>
+而子函数是作为主函数的一部分，只能被主函数调用，不能被其他程序调用。</p> <p>存储上，函数文件需要单文件存储。而子函数不用。<br>
+如果涉及到了子函数，该文件所有函数（主函数和子函数）都需要写 <code>end</code>。</p> <p>调用时，使用 <code>hello</code> 或 <code>test(1, 2)</code>。</p> <p>正常情况下，函数外的参数不能被使用，自变量也不能被修改。和 C 一样。<br>
+若想要使用全局变量，在声明和使用变量时，都需要加 <code>global</code> 关键字，</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% hello.md</span>
+<span class="token keyword">function</span> ret <span class="token operator">=</span> hello
+<span class="token function">disp</span><span class="token punctuation">(</span><span class="token string">'hello world'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ret <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% test.m</span>
+<span class="token keyword">function</span> r<span class="token operator">=</span><span class="token function">test</span><span class="token punctuation">(</span>r1<span class="token punctuation">,</span> r2<span class="token punctuation">)</span>
+r <span class="token operator">=</span> r1 <span class="token operator">+</span> r2 <span class="token operator">+</span> <span class="token function">get_r3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">function</span> r3 <span class="token operator">=</span> get_r3
+r3 <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+</code></pre></div><p>返回值可以为多参数。可以用 <code>nargin</code> 和 <code>nargout</code> 检测输入、输出参数个数。<br>
+函数中支持 <code>return</code>。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> <span class="token punctuation">[</span>r<span class="token punctuation">,</span> v<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">myfun</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    r<span class="token operator">=</span>x<span class="token operator">.^</span><span class="token number">2</span><span class="token punctuation">;</span>    <span class="token comment">%计算第1个输出参数</span>
+    <span class="token keyword">if</span> nargout<span class="token operator">&gt;=</span><span class="token number">2</span><span class="token punctuation">,</span>
+        v <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>x<span class="token punctuation">;</span> <span class="token comment">%计算第2个输出参数</span>
+    <span class="token keyword">end</span>
+</code></pre></div><h5 id="function-in-function"><a href="#function-in-function" class="header-anchor">#</a> Function in Function</h5> <blockquote><p>摘自：如何评价 MATLAB R2016b ? - winner245的回答 - 知乎
+https://www.zhihu.com/question/50662537/answer/122451045</p></blockquote> <p>在 MATLAB R2016b 以后，还支持在函数里面写函数，并且对于输入和输出相同的函数（即原地调用），性能会有优化。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> main
+tic<span class="token punctuation">,</span> x <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">1e8</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> toc
+tic<span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token function">notInplace</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> toc
+tic<span class="token punctuation">,</span> x <span class="token operator">=</span> <span class="token function">inplace</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> toc
+<span class="token function">isequal</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
 
-% s = struct with fields:
-% a: 1
-% b: {&#39;A&#39;  &#39;B&#39;  &#39;C&#39;}
-</code></pre>
-<h2 id="MATLAB-自带函数"><a href="#MATLAB-自带函数" class="headerlink" title="MATLAB 自带函数"></a>MATLAB 自带函数</h2><p>这都是查手册可以解决的事情。</p>
-<p>我总结的可见 <a href="../matlab-functions">MATLAB 函数</a>。</p>
-<h2 id="字符串与文件"><a href="#字符串与文件" class="headerlink" title="字符串与文件"></a>字符串与文件</h2><p>见 <a href="../matlab-string-and-file-function">MATLAB 字符串与文件</a>。</p>
-<h2 id="MATLAB-符号编程"><a href="#MATLAB-符号编程" class="headerlink" title="MATLAB 符号编程"></a>MATLAB 符号编程</h2><p><a href="https://ww2.mathworks.cn/help/symbolic/syms.html" target="_blank" rel="noopener">syms 英文文档</a></p>
-<p>见 <a href="../matlab-syms">MATLAB 符号编程</a>。</p>
-<h2 id="MATLAB-绘图"><a href="#MATLAB-绘图" class="headerlink" title="MATLAB 绘图"></a>MATLAB 绘图</h2><p>见 <a href="../matlab-plot">MATLAB 绘图</a>。</p>
-<h2 id="MATLAB显示"><a href="#MATLAB显示" class="headerlink" title="MATLAB显示"></a>MATLAB显示</h2><h3 id="回显"><a href="#回显" class="headerlink" title="回显"></a>回显</h3><p>不回显：使用分号 <code>;</code><br>回显：使用回车或逗号 <code>,</code></p>
-<h3 id="显示模式"><a href="#显示模式" class="headerlink" title="显示模式"></a>显示模式</h3><h4 id="分数模式"><a href="#分数模式" class="headerlink" title="分数模式"></a>分数模式</h4><pre><code class="MATLAB">format rat %% 分数模式
-format %% 小数模式
-</code></pre>
-<p>注意这里的分数仍然是近似解，只是将近似解化为了分数形式。如果需要完全精确的结果，请使用<a href="../matlab-syms">符号编程</a> 或考虑使用其他数学软件如 Mathematica。</p>
-<p>对于符号编程中的函数，由于其返回的是分数，可通过 <code>double()</code> 或 <code>vpa()</code> 函数将其转为小数，后者返回的同样是 <code>sym</code> 类型，但可以给出任意的精度（对，任意！）。</p>
-<h4 id="显示小数位数"><a href="#显示小数位数" class="headerlink" title="显示小数位数"></a>显示小数位数</h4><pre><code class="MATLAB">format long %%小数位数更多
-format short %%回到短模式
-</code></pre>
-<h3 id="清屏、清变量"><a href="#清屏、清变量" class="headerlink" title="清屏、清变量"></a>清屏、清变量</h3><pre><code class="MATLAB">clc %% 清屏
+<span class="token keyword">function</span> y <span class="token operator">=</span> <span class="token function">notInplace</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+y <span class="token operator">=</span> <span class="token number">1.2</span><span class="token operator">*</span>x<span class="token punctuation">;</span> 
+
+<span class="token keyword">function</span> x <span class="token operator">=</span> <span class="token function">inplace</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+x <span class="token operator">=</span> <span class="token number">1.2</span><span class="token operator">*</span>x<span class="token punctuation">;</span>
+</code></pre></div><h4 id="匿名函数"><a href="#匿名函数" class="header-anchor">#</a> 匿名函数</h4> <p><a href="https://ww2.mathworks.cn/help/matlab/matlab_prog/anonymous-functions.html" target="_blank" rel="noopener noreferrer">官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>写的很好，就直接引用了。</p> <blockquote><p>匿名函数是一个 <code>函数句柄</code> （<code>function_handle</code>）（我注：第一句话官方翻译的太烂了，我重新写了一下；函数句柄可理解为指向某个函数的指针，它并不存储这个函数）。匿名函数可以接受输入并返回输出，就像标准函数一样。但是，它们可能只包含一个可执行语句。</p> <p>例如，创建用于计算平方数的匿名函数的句柄：<br> <code>sqr = @(x) x.^2;</code><br>
+变量 <code>sqr</code> 是一个函数句柄。<code>@</code> 运算符创建句柄，<code>@</code> 运算符后面的圆括号 <code>()</code> 包括函数的输入参数。该匿名函数接受单个输入 <code>x</code>，并显式返回单个输出，即大小与包含平方值的 <code>x</code> 相同的数组。</p> <p>通过将特定值 (5) 传递到函数句柄来计算该值的平方，与您将输入参数传递到标准函数一样。<br> <code>a = sqr(5)</code> 返回 25</p> <p><strong>许多 MATLAB® 函数接受将函数句柄用作输入</strong>（我注：无需创建符号变量 <code>syms</code>，直接调用即可<s>不过貌似不多</s>）。例如，通过将函数句柄传递到 integral 函数，计算 sqr 函数从 0 到 1 范围内的积分：<br> <code>q = integral(@(x) x.^2,0,1);</code></p> <p>可以对匿名函数嵌套：<br> <code>g = @(c) (integral(@(x) (x.^2 + c*x + 1),0,1));</code><br>
+上述 <code>g(2) == 3</code>。</p> <p>可以使用不带参数或多个参数的匿名函数：<br> <code>t = @() datestr(now); d = t()</code></p> <p>匿名函数可以有多个返回值（本文作略，请查阅官方文档）。</p></blockquote> <p><code>@</code> 还可以把一个程序函数变成一个函数句柄。<br>
+如，定义 <code>function y=fun(x)</code>，就可以用 <code>g(@fun,1)</code> 跑遗传算法了。</p> <p>匿名函数可以转化为符号函数：<code>f=@(x)x^2; syms x; y=f(x);</code></p> <p>符号函数可以转为匿名函数：<code>syms x; y=x^2; f=matlabFunction(y);</code></p> <h2 id="matlab-结构体"><a href="#matlab-结构体" class="header-anchor">#</a> MATLAB 结构体</h2> <p>MATLAB 结构体在实际应用中用到的不多，但是作为程序员，还是简单叙述一下。</p> <p>MATLAB 的结构体不需要定义，当有数据要放入结构体中时，就直接用 <code>.</code> 装进去即可。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>s<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span>b <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'A'</span><span class="token punctuation">,</span><span class="token string">'B'</span><span class="token punctuation">,</span><span class="token string">'C'</span><span class="token punctuation">}</span>
+
+<span class="token comment">% s = struct with fields:</span>
+<span class="token comment">% a: 1</span>
+<span class="token comment">% b: {'A'  'B'  'C'}</span>
+</code></pre></div><h2 id="matlab-自带函数"><a href="#matlab-自带函数" class="header-anchor">#</a> MATLAB 自带函数</h2> <p>这都是查手册可以解决的事情。</p> <p>我总结的可见 <a href="../matlab-functions">MATLAB 函数</a>。</p> <h2 id="字符串与文件"><a href="#字符串与文件" class="header-anchor">#</a> 字符串与文件</h2> <p>见 <a href="../matlab-string-and-file-function">MATLAB 字符串与文件</a>。</p> <h2 id="matlab-符号编程"><a href="#matlab-符号编程" class="header-anchor">#</a> MATLAB 符号编程</h2> <p><a href="https://ww2.mathworks.cn/help/symbolic/syms.html" target="_blank" rel="noopener noreferrer">syms 英文文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>见 <a href="../matlab-syms">MATLAB 符号编程</a>。</p> <h2 id="matlab-绘图"><a href="#matlab-绘图" class="header-anchor">#</a> MATLAB 绘图</h2> <p>见 <a href="../matlab-plot">MATLAB 绘图</a>。</p> <h2 id="matlab显示"><a href="#matlab显示" class="header-anchor">#</a> MATLAB显示</h2> <h3 id="回显"><a href="#回显" class="header-anchor">#</a> 回显</h3> <p>不回显：使用分号 <code>;</code><br>
+回显：使用回车或逗号 <code>,</code></p> <h3 id="显示模式"><a href="#显示模式" class="header-anchor">#</a> 显示模式</h3> <h4 id="分数模式"><a href="#分数模式" class="header-anchor">#</a> 分数模式</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code>format rat <span class="token comment">%% 分数模式</span>
+format <span class="token comment">%% 小数模式</span>
+</code></pre></div><p>注意这里的分数仍然是近似解，只是将近似解化为了分数形式。如果需要完全精确的结果，请使用<a href="../matlab-syms">符号编程</a> 或考虑使用其他数学软件如 Mathematica。</p> <p>对于符号编程中的函数，由于其返回的是分数，可通过 <code>double()</code> 或 <code>vpa()</code> 函数将其转为小数，后者返回的同样是 <code>sym</code> 类型，但可以给出任意的精度（对，任意！）。</p> <h4 id="显示小数位数"><a href="#显示小数位数" class="header-anchor">#</a> 显示小数位数</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code>format long <span class="token comment">%%小数位数更多</span>
+format short <span class="token comment">%%回到短模式</span>
+</code></pre></div><h3 id="清屏、清变量"><a href="#清屏、清变量" class="header-anchor">#</a> 清屏、清变量</h3> <div class="language-matlab extra-class"><pre class="language-matlab"><code>clc <span class="token comment">%% 清屏</span>
 clear
-clear A B %% 清变量
-</code></pre>
-<h3 id="暂停"><a href="#暂停" class="headerlink" title="暂停"></a>暂停</h3><pre><code class="MATLAB">pause        %按任意键以继续
-pause(0.5)
-</code></pre>
-<h2 id="MATLAB-和-MAT-文件"><a href="#MATLAB-和-MAT-文件" class="headerlink" title="MATLAB 和 MAT 文件"></a>MATLAB 和 MAT 文件</h2><p>MAT 文件即是将 MATLAB 运行中存储在工作区的变量等从内存存储到文件，方便下次继续使用。（这比其他编程语言方便的多）</p>
-<p>读取的方法就一行：</p>
-<pre><code class="m">load data
-</code></pre>
-<h2 id="稀疏矩阵"><a href="#稀疏矩阵" class="headerlink" title="稀疏矩阵"></a>稀疏矩阵</h2><p>创建稀疏矩阵可以使用 <code>sparse</code> 函数：</p>
-<pre><code class="m">% 设 M, N, K 为同维列矩阵，表示稀疏矩阵的 M(i) 行 N(i) 列是 K(i)
-S = sparse(M, N, K);
+clear A B <span class="token comment">%% 清变量</span>
+</code></pre></div><h3 id="暂停"><a href="#暂停" class="header-anchor">#</a> 暂停</h3> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">pause</span>        <span class="token comment">%按任意键以继续</span>
+<span class="token keyword">pause</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="matlab-和-mat-文件"><a href="#matlab-和-mat-文件" class="header-anchor">#</a> MATLAB 和 MAT 文件</h2> <p>MAT 文件即是将 MATLAB 运行中存储在工作区的变量等从内存存储到文件，方便下次继续使用。（这比其他编程语言方便的多）</p> <p>读取的方法就一行：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>load data
+</code></pre></div><h2 id="稀疏矩阵"><a href="#稀疏矩阵" class="header-anchor">#</a> 稀疏矩阵</h2> <p>创建稀疏矩阵可以使用 <code>sparse</code> 函数：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% 设 M, N, K 为同维列矩阵，表示稀疏矩阵的 M(i) 行 N(i) 列是 K(i)</span>
+S <span class="token operator">=</span> <span class="token function">sparse</span><span class="token punctuation">(</span>M<span class="token punctuation">,</span> N<span class="token punctuation">,</span> K<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-% 将普通矩阵转为稀疏矩阵
-S = sparse(A); 
+<span class="token comment">% 将普通矩阵转为稀疏矩阵</span>
+S <span class="token operator">=</span> <span class="token function">sparse</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
-% 构造单位矩阵的稀疏矩阵
-S = speye(10);
-</code></pre>
-<p>稀疏矩阵和其他矩阵一样，可以使用 <code>S(a,b)</code> 读取，<code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code> 运算，以及其他函数。</p>
-<p>稀疏矩阵的特殊操作有：</p>
-<pre><code class="m">% 用图像描述稀疏矩阵的非零元的分布
-spy(S);
-</code></pre>
-<p>稀疏矩阵和普通矩阵的互相转化：</p>
-<pre><code class="m">% S 为稀疏矩阵，M 为普通矩阵
-S = sparse(M);
-M = full(S);
-</code></pre>
+<span class="token comment">% 构造单位矩阵的稀疏矩阵</span>
+S <span class="token operator">=</span> <span class="token function">speye</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>稀疏矩阵和其他矩阵一样，可以使用 <code>S(a,b)</code> 读取，<code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code> 运算，以及其他函数。</p> <p>稀疏矩阵的特殊操作有：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% 用图像描述稀疏矩阵的非零元的分布</span>
+<span class="token function">spy</span><span class="token punctuation">(</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>稀疏矩阵和普通矩阵的互相转化：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% S 为稀疏矩阵，M 为普通矩阵</span>
+S <span class="token operator">=</span> <span class="token function">sparse</span><span class="token punctuation">(</span>M<span class="token punctuation">)</span><span class="token punctuation">;</span>
+M <span class="token operator">=</span> <span class="token function">full</span><span class="token punctuation">(</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div></div></div> <footer><!----></footer></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/187.ac3e2d0e.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
+</html>

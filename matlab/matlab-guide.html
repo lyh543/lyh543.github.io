@@ -1,242 +1,200 @@
-<hr>
-<p>title: MATLAB GUIDE（萌新向）<br>date: 2020-05-15 20:47:50<br>tags:</p>
-<ul>
-<li>MATLAB</li>
-<li>GUI<br>category:</li>
-<li>MATLAB</li>
-</ul>
-<hr>
-<p>第一次从命令行到 GUI，总是不那么顺利的，尤其是 GUIDE 快被 MATLAB 弃用了，导致一向以文档详细著称的 MATLAB，也没有花多少笔墨在 GUIDE 上。</p>
-<p>我因为数模需要速成 GUI，无奈没有很好的教程，走了很多弯路。因此我在数模交完论文之后，简单理一下速成 GUI 的思路。</p>
-<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>MATLAB 为 GUIDE 编写的 Hello World 级别教程：<a href="https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html" target="_blank" rel="noopener">https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html</a></p>
-<h2 id="简单概念"><a href="#简单概念" class="headerlink" title="简单概念"></a>简单概念</h2><h3 id="fig-和-m-的关系"><a href="#fig-和-m-的关系" class="headerlink" title="fig 和 m 的关系"></a>fig 和 m 的关系</h3><p>按上面的教程，打开 guide 并绘制了图形，就会自动生成一个 m 文件。简单的来说，fig 文件保存了 GUI 的窗口的样子，而 m 将会保存程序的逻辑。</p>
-<h3 id="各类函数的意义"><a href="#各类函数的意义" class="headerlink" title="各类函数的意义"></a>各类函数的意义</h3><p>接着上文说，你会看到创建了一堆函数，那么具体是什么呢？</p>
-<p>现在假设我们想创建一个加法器（不是），具有两个按钮 <code>+</code> 和 <code>-</code> 和一个文本框，前者会使文本框内内容 +1，后者会 -1。</p>
-<p>通过在 <code>guide</code> 命令新建的 fig 文件上，我们能很快糊出下面的图，并且把两个按钮改名为 <code>+</code> 和 <code>-</code>：</p>
-<p><img src="/images/8ecbacbfa2c19457b2e24d9783601dc23468d54ba6adcd63bcaa99d23b1e5f4f.png" alt="fig 文件"></p>
-<p>然后保存，得到 m 文件，虽然代码有很多注释，但为读者方便对比差异（如果有），我还是完整贴一下代码如下：</p>
-<pre><code class="m">function varargout = test_gui(varargin)
-% TEST_GUI MATLAB code for test_gui.fig
-%      TEST_GUI, by itself, creates a new TEST_GUI or raises the existing
-%      singleton*.
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MATLAB GUIDE（萌新向） | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="第一次从命令行到 GUI，总是不那么顺利的，尤其是 GUIDE 快被 MATLAB 弃用了，导致一向以文档详细著称的 MATLAB，也没有花多少笔墨在 GUIDE 上。
+
+我因为数模需要速成 GUI，无奈没有很好的教程，走了很多弯路。因此我在数模交完论文之后，简单理一下速成 GUI 的思路。
+
+实例代码
+
+MATLAB 为 GUIDE 编写的 Hello World 级别教程：https:/ ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/182.5c64b0d7.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>第一次从命令行到 GUI，总是不那么顺利的，尤其是 GUIDE 快被 MATLAB 弃用了，导致一向以文档详细著称的 MATLAB，也没有花多少笔墨在 GUIDE 上。</p> <p>我因为数模需要速成 GUI，无奈没有很好的教程，走了很多弯路。因此我在数模交完论文之后，简单理一下速成 GUI 的思路。</p> <h2 id="实例代码"><a href="#实例代码" class="header-anchor">#</a> 实例代码</h2> <p>MATLAB 为 GUIDE 编写的 Hello World 级别教程：https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html</p> <h2 id="简单概念"><a href="#简单概念" class="header-anchor">#</a> 简单概念</h2> <h3 id="fig-和-m-的关系"><a href="#fig-和-m-的关系" class="header-anchor">#</a> fig 和 m 的关系</h3> <p>按上面的教程，打开 guide 并绘制了图形，就会自动生成一个 m 文件。简单的来说，fig 文件保存了 GUI 的窗口的样子，而 m 将会保存程序的逻辑。</p> <h3 id="各类函数的意义"><a href="#各类函数的意义" class="header-anchor">#</a> 各类函数的意义</h3> <p>接着上文说，你会看到创建了一堆函数，那么具体是什么呢？</p> <p>现在假设我们想创建一个加法器（不是），具有两个按钮 <code>+</code> 和 <code>-</code> 和一个文本框，前者会使文本框内内容 +1，后者会 -1。</p> <p>通过在 <code>guide</code> 命令新建的 fig 文件上，我们能很快糊出下面的图，并且把两个按钮改名为 <code>+</code> 和 <code>-</code>：</p> <p><img src="/images/8ecbacbfa2c19457b2e24d9783601dc23468d54ba6adcd63bcaa99d23b1e5f4f.png" alt="fig 文件"></p> <p>然后保存，得到 m 文件，虽然代码有很多注释，但为读者方便对比差异（如果有），我还是完整贴一下代码如下：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui</span><span class="token punctuation">(</span>varargin<span class="token punctuation">)</span>
+<span class="token comment">% TEST_GUI MATLAB code for test_gui.fig</span>
+<span class="token comment">%      TEST_GUI, by itself, creates a new TEST_GUI or raises the existing</span>
+<span class="token comment">%      singleton*.</span>
 %
-%      H = TEST_GUI returns the handle to a new TEST_GUI or the handle to
-%      the existing singleton*.
+<span class="token comment">%      H = TEST_GUI returns the handle to a new TEST_GUI or the handle to</span>
+<span class="token comment">%      the existing singleton*.</span>
 %
-%      TEST_GUI(&#39;CALLBACK&#39;,hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in TEST_GUI.M with the given input arguments.
+<span class="token comment">%      TEST_GUI('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+<span class="token comment">%      function named CALLBACK in TEST_GUI.M with the given input arguments.</span>
 %
-%      TEST_GUI(&#39;Property&#39;,&#39;Value&#39;,...) creates a new TEST_GUI or raises the
-%      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before test_gui_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to test_gui_OpeningFcn via varargin.
+<span class="token comment">%      TEST_GUI('Property','Value',...) creates a new TEST_GUI or raises the</span>
+<span class="token comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+<span class="token comment">%      applied to the GUI before test_gui_OpeningFcn gets called.  An</span>
+<span class="token comment">%      unrecognized property name or invalid value makes property application</span>
+<span class="token comment">%      stop.  All inputs are passed to test_gui_OpeningFcn via varargin.</span>
 %
-%      *See GUI Options on GUIDE&#39;s Tools menu.  Choose &quot;GUI allows only one
-%      instance to run (singleton)&quot;.
+<span class="token comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+<span class="token comment">%      instance to run (singleton)&quot;.</span>
 %
-% See also: GUIDE, GUIDATA, GUIHANDLES
+<span class="token comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
 
-% Edit the above text to modify the response to help test_gui
+<span class="token comment">% Edit the above text to modify the response to help test_gui</span>
 
-% Last Modified by GUIDE v2.5 17-May-2020 22:18:27
+<span class="token comment">% Last Modified by GUIDE v2.5 17-May-2020 22:18:27</span>
 
-% Begin initialization code - DO NOT EDIT
-gui_Singleton = 1;
-gui_State = struct(&#39;gui_Name&#39;,       mfilename, ...
-                   &#39;gui_Singleton&#39;,  gui_Singleton, ...
-                   &#39;gui_OpeningFcn&#39;, @test_gui_OpeningFcn, ...
-                   &#39;gui_OutputFcn&#39;,  @test_gui_OutputFcn, ...
-                   &#39;gui_LayoutFcn&#39;,  [] , ...
-                   &#39;gui_Callback&#39;,   []);
-if nargin &amp;&amp; ischar(varargin{1})
-    gui_State.gui_Callback = str2func(varargin{1});
-end
+<span class="token comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+gui_State <span class="token operator">=</span> <span class="token function">struct</span><span class="token punctuation">(</span><span class="token string">'gui_Name'</span><span class="token punctuation">,</span>       mfilename<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_Singleton'</span><span class="token punctuation">,</span>  gui_Singleton<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_OpeningFcn'</span><span class="token punctuation">,</span> <span class="token operator">@</span>test_gui_OpeningFcn<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_OutputFcn'</span><span class="token punctuation">,</span>  <span class="token operator">@</span>test_gui_OutputFcn<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_LayoutFcn'</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_Callback'</span><span class="token punctuation">,</span>   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> nargin <span class="token operator">&amp;&amp;</span> <span class="token function">ischar</span><span class="token punctuation">(</span>varargin<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    gui_State<span class="token punctuation">.</span>gui_Callback <span class="token operator">=</span> <span class="token function">str2func</span><span class="token punctuation">(</span>varargin<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
 
-if nargout
-    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
-else
-    gui_mainfcn(gui_State, varargin{:});
-end
-% End initialization code - DO NOT EDIT
-
-
-% --- Executes just before test_gui is made visible.
-function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to test_gui (see VARARGIN)
-
-% Choose default command line output for test_gui
-handles.output = hObject;
-
-% Update handles structure
-guidata(hObject, handles);
-
-% UIWAIT makes test_gui wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+<span class="token keyword">if</span> nargout
+    <span class="token punctuation">[</span>varargout<span class="token punctuation">{</span><span class="token number">1</span><span class="token operator">:</span>nargout<span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">gui_mainfcn</span><span class="token punctuation">(</span>gui_State<span class="token punctuation">,</span> varargin<span class="token punctuation">{</span><span class="token operator">:</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">else</span>
+    <span class="token function">gui_mainfcn</span><span class="token punctuation">(</span>gui_State<span class="token punctuation">,</span> varargin<span class="token punctuation">{</span><span class="token operator">:</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token comment">% End initialization code - DO NOT EDIT</span>
 
 
-% --- Outputs from this function are returned to the command line.
-function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+<span class="token comment">% --- Executes just before test_gui is made visible.</span>
+<span class="token keyword">function</span> <span class="token function">test_gui_OpeningFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">,</span> varargin<span class="token punctuation">)</span>
+<span class="token comment">% This function has no output args, see OutputFcn.</span>
+<span class="token comment">% hObject    handle to figure</span>
+<span class="token comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="token comment">% handles    structure with handles and user data (see GUIDATA)</span>
+<span class="token comment">% varargin   command line arguments to test_gui (see VARARGIN)</span>
 
-% Get default command line output from handles structure
-varargout{1} = handles.output;
+<span class="token comment">% Choose default command line output for test_gui</span>
+handles<span class="token punctuation">.</span>output <span class="token operator">=</span> hObject<span class="token punctuation">;</span>
 
+<span class="token comment">% Update handles structure</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-</code></pre>
-<p><del>这博客真好水，放一段全是注释的代码，87 行就有了</del></p>
-<p>注意 27 行到 44 行被 <code>Begin initialization code - DO NOT EDIT</code> 和 <code>End initialization code - DO NOT EDIT</code> 字样的注释包围了，这便是我们的函数的主函数。只是做了一些看不懂的初始化。确实，虽然他对于 GUI 的实现非常重要，但是我们的重点不在这里。</p>
-<h4 id="OpeningFcn"><a href="#OpeningFcn" class="headerlink" title="OpeningFcn"></a>OpeningFcn</h4><pre><code class="m">% --- Executes just before test_gui is made visible.
-function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
-
-handles.output = hObject;
-guidata(hObject, handles);
-</code></pre>
-<p>这个函数。。。<code>Fcn</code> 是 function 的意思，看起来是 test_gui 这个文件的什么重要开场函数。确实，就相当于一个 init 函数，在程序运行时就会执行。</p>
-<p>这个。。。<code>guidata</code>，<code>hObject</code> 和 <code>handles</code> 是个啥。不知道不知道，后面再说。</p>
-<h4 id="OutputFcn"><a href="#OutputFcn" class="headerlink" title="OutputFcn"></a>OutputFcn</h4><pre><code class="m">% --- Outputs from this function are returned to the command line.
-function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
-</code></pre>
-<p>这个函数看说明，应该就是程序的返回值用的，比如正常返回 0，错误返回非 0 之类的。</p>
-<h4 id="pushbutton1-Callback"><a href="#pushbutton1-Callback" class="headerlink" title="pushbutton1_Callback"></a>pushbutton1_Callback</h4><p>好了！这个是重点！</p>
-<p><code>pushbutton</code>，按钮？是我们刚才弄的两个之一吗？</p>
-<p><img src="/images/f02fc3a7bc07c3a8279c6efdc9d831d440e9fe4eca3d3c67753b337a0bbfb526.png" alt="picture 2"></p>
-<p>确实，在 <code>fig</code> 上双击先创建的按钮，会弹出上面的窗口。除了字体、字号、String 等设置以外，我们看到了他！<code>Tag: pushbutton1</code>。</p>
-<p>啊所以这个函数名是靠 Tag 名绑定窗口按钮的？是的！这是 MATLAB 设定。所以，你可以同时把 tag 和函数名的 <code>pushbutton1</code> 改为 <code>plus_button</code>。</p>
-<p>那这个 <code>Callback</code>？啊其实就是当按钮被按下时，会调用的 <code>回调</code>（<code>Callback</code>）函数。</p>
-<p>那那那那那个静态窗口是不是就没有 <code>Callback</code> 函数呢，而还有一个 <code>pushbutton2_Callback</code> 函数呢？</p>
-<p>确实！</p>
-<p><strong>总结一下，<code>handlebutton1</code> 关联了 <code>Tag</code> 叫这个名字的控件，而 <code>Callback</code> 是指这个函数是会在控件被触发时调用的 <code>回调函数</code>。</strong></p>
-<h3 id="handles"><a href="#handles" class="headerlink" title="handles"></a>handles</h3><p>既然我们知道 1. <code>OpeningFcn</code> 在开场时会执行；2. 当 <code>+</code> 按钮被按下，<code>pushbutton1_Callback</code> 会被触发，那我会写了！</p>
-<pre><code class="m">function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
-counter = 0;
-
-function pushbutton1_Callback(hObject, eventdata, handles)
-counter = counter + 1;
-disp(counter);
-</code></pre>
-<p>咦？有点问题？</p>
-<p>根据 MATLAB 知识，两个函数的 <code>counter</code> 是不互通的。他们之间貌似也没有相互调用啊。那那那那咋办呢？</p>
-<p>声明为全局变量？不会吧，要是 GUI 程序不用全局变量就没法写，那也太蠢了吧？</p>
-<p>确实有别的办法，因为有一个东西，能沟通程序的控件的所有内容，她就是，<code>handles</code>。</p>
-<p>handle （此处非 <code>handles</code>）是句柄，也就是一个类似于指针的东西。如果你也不知道指针，那……那就不管了。</p>
-<p>简单的理解，MATLAB 的 <code>handles</code> 就是一个结构体，装了各种各样的数据，包括 GUI 的，包括你的程序需要使用的。</p>
-<p>为什么要搞这个东西呢？因为从上面来看，MATLAB GUI 的实现方式是将所有东西都包装成函数，主函数没有什么存在意义。而没有主函数，如果不使用全局变量，数据就很难交互（比如，这个 <code>pushbutton1</code> 按下时，想读取那个输入框的内容时，就需要跨函数交互了）。</p>
-<p>因此，如果将所有数据存在一个<strong>结构体</strong>下面，同时将这个结构体作为所有 <code>Callback</code> 函数的参数，问题就解决了！还真是，这个<strong>结构体</strong>就叫 <code>handles</code>！</p>
-<p>所以如果想保存数据/更新数据以供其他函数读取，就可以保存到 <code>handles</code> 下面。</p>
-<p>但是但是！并不是说 <code>handles.value = 1;</code> 就是上面说的把数据保存在 <code>handles</code> 下面了。因为根据 MATLAB 知识，你修改的是你的函数下的 <code>handles</code>，并不是系统给你的 <code>handles</code> 了。</p>
-<p>因此，引入一个新的语句：</p>
-<pre><code class="m">guidata(hObject, handles);
-</code></pre>
-<p>该句将你函数内的这个 <code>handles</code> 传给“系统”。至于为什么要 <code>hObject</code>，别问，问就是不知道，你能要求一天速成的人完全明白这一切的一切吗？会用就行了。（这是竞赛交卷以后马上写的，防杠标签）</p>
-<p><code>传给了系统</code>，这句话的意思，是指当别的 <code>Callback</code> 函数被调用时，它的 <code>handles</code> 应该是你在这个函数 <code>guidata</code> 传给“系统”，“系统”调用 <code>Callback</code> 函数时，就会把你的这个 <code>handles</code> 复制一份给它。至于这个“系统”是什么，请参照上一段。</p>
-<p><a href="https://ww2.mathworks.cn/matlabcentral/answers/47189-purpose-of-guidata-hobject-handles" target="_blank" rel="noopener">https://ww2.mathworks.cn/matlabcentral/answers/47189-purpose-of-guidata-hobject-handles</a></p>
-<h4 id="读取、写入-handles-值"><a href="#读取、写入-handles-值" class="headerlink" title="读取、写入 handles 值"></a>读取、写入 handles 值</h4><p>因此，写入 handles 的语句应该如下：</p>
-<pre><code class="m">handles.counter = 0;
-guidata(hObject, handles);
-</code></pre>
-<p>读取则是由 <code>Callback</code> 函数得来。其实也可以手动获取：</p>
-<pre><code class="m">handles = guidata(hObject);
-</code></pre>
-<p>你会发现，读写原来是一个函数！</p>
-<p><del>有毒吧，用 <code>ReadGUIData</code> 和 <code>WriteGUIData</code> 不好吗？</del></p>
-<h3 id="修改静态文本框"><a href="#修改静态文本框" class="headerlink" title="修改静态文本框"></a>修改静态文本框</h3><p>于是，你觉得你又会了！<del>（总觉得有问题）</del></p>
-<pre><code class="m">function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
-counter = 0;
-guidata(hObject, handles);
-
-function pushbutton1_Callback(hObject, eventdata, handles)
-counter = counter + 1;
-disp(counter);
-</code></pre>
-<p>当你准备运行这段代码时，</p>
-<p><code>disp</code>？那不是命令行的东西吗？</p>
-<p>哦哦，突然想起我要输出在静态文本框里。</p>
-<p>静态文本框？输出？静态的东西不能修改，怎么能用来输出？</p>
-<p>是的，我被骗了。我还以为有一种动态文本框的存在。然而 Google 很久都没有——直到我发现了下面的代码：</p>
-<pre><code class="m">set(handles.text1,&#39;String&#39;,&#39;Hello World&#39;);
-% 别忘了 guidata(hObject, handles);
-</code></pre>
-<p>嗯？</p>
-<p>突然意识到什么。</p>
-<p>赶紧看看我的静态文本框的属性。</p>
-<p>（植物）！这个静态文本框的 <code>Tag</code> 为 <code>text1</code>，而且属性 <code>String</code> 的值正是正在屏幕上显示的 <code>静态文本</code>！</p>
-<p>原来这都是可以直接 set 的啊。。。。</p>
-<p>顺便一提，还有 <code>get</code>。</p>
-<p>get:</p>
-<pre><code class="m">str = get(handles.text, &#39;String&#39;);
-</code></pre>
-<p>由于某些原因（一天速成就不要求这些了叭），不推荐通过直接查询/修改 <code>handles.text</code> 的成员，而是推荐 <code>get</code> 和 <code>set</code> 其属性。</p>
-<h2 id="加法器（不是）"><a href="#加法器（不是）" class="headerlink" title="加法器（不是）"></a>加法器（不是）</h2><p>那我是不是用 <code>handles</code> 存 <code>counter</code> 数据，用 <code>set(handles.text1,&#39;String&#39;,counter);</code> 输出就可以了？</p>
-<p>于是你又觉得你好了！</p>
-<hr>
-<p>确实。这次是真的好了（？）。运用上面提到的内容，以及 MATLAB 基础知识，你就能实现一个加法器（不是）了。</p>
-<p>一段非常简单的代码。复制保存为 <code>test_gui.m</code>，并且下载 <a href="test_gui.fig"><code>test_gui.fig</code></a>，在 MATLAB 中运行 <code>test_gui.m</code> 即可看到一个加减按钮和即时显示结果的简单小程序。</p>
-<pre><code class="m">function varargout = test_gui(varargin)
-
-% Begin initialization code - DO NOT EDIT
-gui_Singleton = 1;
-gui_State = struct(&#39;gui_Name&#39;,       mfilename, ...
-                   &#39;gui_Singleton&#39;,  gui_Singleton, ...
-                   &#39;gui_OpeningFcn&#39;, @test_gui_OpeningFcn, ...
-                   &#39;gui_OutputFcn&#39;,  @test_gui_OutputFcn, ...
-                   &#39;gui_LayoutFcn&#39;,  [] , ...
-                   &#39;gui_Callback&#39;,   []);
-if nargin &amp;&amp; ischar(varargin{1})
-    gui_State.gui_Callback = str2func(varargin{1});
-end
-
-if nargout
-    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
-else
-    gui_mainfcn(gui_State, varargin{:});
-end
-% End initialization code - DO NOT EDIT
-
-% --- Executes just before test_gui is made visible.
-function test_gui_OpeningFcn(hObject, eventdata, handles, varargin)
-handles.counter = 0;
-set(handles.text2, &#39;String&#39;, handles.counter);
-handles.output = hObject;
-guidata(hObject, handles);
-
-function varargout = test_gui_OutputFcn(hObject, eventdata, handles) 
-guidata(hObject, handles);
-% Get default command line output from handles structure
-varargout{1} = handles.output;
+<span class="token comment">% UIWAIT makes test_gui wait for user response (see UIRESUME)</span>
+<span class="token comment">% uiwait(handles.figure1);</span>
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-handles.counter = handles.counter + 1;
-set(handles.text2,&#39;String&#39;,handles.counter);
-guidata(hObject, handles);
+<span class="token comment">% --- Outputs from this function are returned to the command line.</span>
+<span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui_OutputFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span> 
+<span class="token comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+<span class="token comment">% hObject    handle to figure</span>
+<span class="token comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="token comment">% handles    structure with handles and user data (see GUIDATA)</span>
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-handles.counter = handles.counter - 1;
-set(handles.text2,&#39;String&#39;,handles.counter);
-guidata(hObject, handles);
-</code></pre>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果你能独立写出加法器（不是），那么你应该能算是入门了。至于 <code>popupmenu</code> 等控件的使用方法和其他一些细枝末节，相信聪明的你一定也可以的！</p>
-<p><del>有毒的结尾</del></p>
-<p>顺便，最后说一句，将控制台 MATLAB 代码改成带有 GUI 的，推荐前者尽量使用函数，主函数几乎只用于调用函数。</p>
+<span class="token comment">% Get default command line output from handles structure</span>
+varargout<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">=</span> handles<span class="token punctuation">.</span>output<span class="token punctuation">;</span>
+
+
+<span class="token comment">% --- Executes on button press in pushbutton1.</span>
+<span class="token keyword">function</span> <span class="token function">pushbutton1_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+<span class="token comment">% hObject    handle to pushbutton1 (see GCBO)</span>
+<span class="token comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="token comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+
+<span class="token comment">% --- Executes on button press in pushbutton2.</span>
+<span class="token keyword">function</span> <span class="token function">pushbutton2_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+<span class="token comment">% hObject    handle to pushbutton2 (see GCBO)</span>
+<span class="token comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="token comment">% handles    structure with handles and user data (see GUIDATA)</span>
+</code></pre></div><p><s>这博客真好水，放一段全是注释的代码，87 行就有了</s></p> <p>注意 27 行到 44 行被 <code>Begin initialization code - DO NOT EDIT</code> 和 <code>End initialization code - DO NOT EDIT</code> 字样的注释包围了，这便是我们的函数的主函数。只是做了一些看不懂的初始化。确实，虽然他对于 GUI 的实现非常重要，但是我们的重点不在这里。</p> <h4 id="openingfcn"><a href="#openingfcn" class="header-anchor">#</a> OpeningFcn</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% --- Executes just before test_gui is made visible.</span>
+<span class="token keyword">function</span> <span class="token function">test_gui_OpeningFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">,</span> varargin<span class="token punctuation">)</span>
+
+handles<span class="token punctuation">.</span>output <span class="token operator">=</span> hObject<span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>这个函数。。。<code>Fcn</code> 是 function 的意思，看起来是 test_gui 这个文件的什么重要开场函数。确实，就相当于一个 init 函数，在程序运行时就会执行。</p> <p>这个。。。<code>guidata</code>，<code>hObject</code> 和 <code>handles</code> 是个啥。不知道不知道，后面再说。</p> <h4 id="outputfcn"><a href="#outputfcn" class="header-anchor">#</a> OutputFcn</h4> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token comment">% --- Outputs from this function are returned to the command line.</span>
+<span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui_OutputFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span> 
+</code></pre></div><p>这个函数看说明，应该就是程序的返回值用的，比如正常返回 0，错误返回非 0 之类的。</p> <h4 id="pushbutton1-callback"><a href="#pushbutton1-callback" class="header-anchor">#</a> pushbutton1_Callback</h4> <p>好了！这个是重点！</p> <p><code>pushbutton</code>，按钮？是我们刚才弄的两个之一吗？</p> <p><img src="/images/f02fc3a7bc07c3a8279c6efdc9d831d440e9fe4eca3d3c67753b337a0bbfb526.png" alt="picture 2"></p> <p>确实，在 <code>fig</code> 上双击先创建的按钮，会弹出上面的窗口。除了字体、字号、String 等设置以外，我们看到了他！<code>Tag: pushbutton1</code>。</p> <p>啊所以这个函数名是靠 Tag 名绑定窗口按钮的？是的！这是 MATLAB 设定。所以，你可以同时把 tag 和函数名的 <code>pushbutton1</code> 改为 <code>plus_button</code>。</p> <p>那这个 <code>Callback</code>？啊其实就是当按钮被按下时，会调用的 <code>回调</code>（<code>Callback</code>）函数。</p> <p>那那那那那个静态窗口是不是就没有 <code>Callback</code> 函数呢，而还有一个 <code>pushbutton2_Callback</code> 函数呢？</p> <p>确实！</p> <p><strong>总结一下，<code>handlebutton1</code> 关联了 <code>Tag</code> 叫这个名字的控件，而 <code>Callback</code> 是指这个函数是会在控件被触发时调用的 <code>回调函数</code>。</strong></p> <h3 id="handles"><a href="#handles" class="header-anchor">#</a> handles</h3> <p>既然我们知道 1. <code>OpeningFcn</code> 在开场时会执行；2. 当 <code>+</code> 按钮被按下，<code>pushbutton1_Callback</code> 会被触发，那我会写了！</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> <span class="token function">test_gui_OpeningFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">,</span> varargin<span class="token punctuation">)</span>
+counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">pushbutton1_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+counter <span class="token operator">=</span> counter <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>咦？有点问题？</p> <p>根据 MATLAB 知识，两个函数的 <code>counter</code> 是不互通的。他们之间貌似也没有相互调用啊。那那那那咋办呢？</p> <p>声明为全局变量？不会吧，要是 GUI 程序不用全局变量就没法写，那也太蠢了吧？</p> <p>确实有别的办法，因为有一个东西，能沟通程序的控件的所有内容，她就是，<code>handles</code>。</p> <p>handle （此处非 <code>handles</code>）是句柄，也就是一个类似于指针的东西。如果你也不知道指针，那……那就不管了。</p> <p>简单的理解，MATLAB 的 <code>handles</code> 就是一个结构体，装了各种各样的数据，包括 GUI 的，包括你的程序需要使用的。</p> <p>为什么要搞这个东西呢？因为从上面来看，MATLAB GUI 的实现方式是将所有东西都包装成函数，主函数没有什么存在意义。而没有主函数，如果不使用全局变量，数据就很难交互（比如，这个 <code>pushbutton1</code> 按下时，想读取那个输入框的内容时，就需要跨函数交互了）。</p> <p>因此，如果将所有数据存在一个<strong>结构体</strong>下面，同时将这个结构体作为所有 <code>Callback</code> 函数的参数，问题就解决了！还真是，这个<strong>结构体</strong>就叫 <code>handles</code>！</p> <p>所以如果想保存数据/更新数据以供其他函数读取，就可以保存到 <code>handles</code> 下面。</p> <p>但是但是！并不是说 <code>handles.value = 1;</code> 就是上面说的把数据保存在 <code>handles</code> 下面了。因为根据 MATLAB 知识，你修改的是你的函数下的 <code>handles</code>，并不是系统给你的 <code>handles</code> 了。</p> <p>因此，引入一个新的语句：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>该句将你函数内的这个 <code>handles</code> 传给“系统”。至于为什么要 <code>hObject</code>，别问，问就是不知道，你能要求一天速成的人完全明白这一切的一切吗？会用就行了。（这是竞赛交卷以后马上写的，防杠标签）</p> <p><code>传给了系统</code>，这句话的意思，是指当别的 <code>Callback</code> 函数被调用时，它的 <code>handles</code> 应该是你在这个函数 <code>guidata</code> 传给“系统”，“系统”调用 <code>Callback</code> 函数时，就会把你的这个 <code>handles</code> 复制一份给它。至于这个“系统”是什么，请参照上一段。</p> <p>https://ww2.mathworks.cn/matlabcentral/answers/47189-purpose-of-guidata-hobject-handles</p> <h4 id="读取、写入-handles-值"><a href="#读取、写入-handles-值" class="header-anchor">#</a> 读取、写入 handles 值</h4> <p>因此，写入 handles 的语句应该如下：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>handles<span class="token punctuation">.</span>counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>读取则是由 <code>Callback</code> 函数得来。其实也可以手动获取：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>handles <span class="token operator">=</span> <span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>你会发现，读写原来是一个函数！</p> <p><s>有毒吧，用 <code>ReadGUIData</code> 和 <code>WriteGUIData</code> 不好吗？</s></p> <h3 id="修改静态文本框"><a href="#修改静态文本框" class="header-anchor">#</a> 修改静态文本框</h3> <p>于是，你觉得你又会了！<s>（总觉得有问题）</s></p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> <span class="token function">test_gui_OpeningFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">,</span> varargin<span class="token punctuation">)</span>
+counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">pushbutton1_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+counter <span class="token operator">=</span> counter <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">disp</span><span class="token punctuation">(</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>当你准备运行这段代码时，</p> <p><code>disp</code>？那不是命令行的东西吗？</p> <p>哦哦，突然想起我要输出在静态文本框里。</p> <p>静态文本框？输出？静态的东西不能修改，怎么能用来输出？</p> <p>是的，我被骗了。我还以为有一种动态文本框的存在。然而 Google 很久都没有——直到我发现了下面的代码：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token function">set</span><span class="token punctuation">(</span>handles<span class="token punctuation">.</span>text1<span class="token punctuation">,</span><span class="token string">'String'</span><span class="token punctuation">,</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">% 别忘了 guidata(hObject, handles);</span>
+</code></pre></div><p>嗯？</p> <p>突然意识到什么。</p> <p>赶紧看看我的静态文本框的属性。</p> <p>（植物）！这个静态文本框的 <code>Tag</code> 为 <code>text1</code>，而且属性 <code>String</code> 的值正是正在屏幕上显示的 <code>静态文本</code>！</p> <p>原来这都是可以直接 set 的啊。。。。</p> <p>顺便一提，还有 <code>get</code>。</p> <p>get:</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code>str <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span>handles<span class="token punctuation">.</span>text<span class="token punctuation">,</span> <span class="token string">'String'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>由于某些原因（一天速成就不要求这些了叭），不推荐通过直接查询/修改 <code>handles.text</code> 的成员，而是推荐 <code>get</code> 和 <code>set</code> 其属性。</p> <h2 id="加法器-不是"><a href="#加法器-不是" class="header-anchor">#</a> 加法器（不是）</h2> <p>那我是不是用 <code>handles</code> 存 <code>counter</code> 数据，用 <code>set(handles.text1,'String',counter);</code> 输出就可以了？</p> <p>于是你又觉得你好了！</p> <hr> <p>确实。这次是真的好了（？）。运用上面提到的内容，以及 MATLAB 基础知识，你就能实现一个加法器（不是）了。</p> <p>一段非常简单的代码。复制保存为 <code>test_gui.m</code>，并且下载 <a href="/blob/matlab/test_gui.fig"><code>test_gui.fig</code></a>，在 MATLAB 中运行 <code>test_gui.m</code> 即可看到一个加减按钮和即时显示结果的简单小程序。</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui</span><span class="token punctuation">(</span>varargin<span class="token punctuation">)</span>
+
+<span class="token comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+gui_State <span class="token operator">=</span> <span class="token function">struct</span><span class="token punctuation">(</span><span class="token string">'gui_Name'</span><span class="token punctuation">,</span>       mfilename<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_Singleton'</span><span class="token punctuation">,</span>  gui_Singleton<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_OpeningFcn'</span><span class="token punctuation">,</span> <span class="token operator">@</span>test_gui_OpeningFcn<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_OutputFcn'</span><span class="token punctuation">,</span>  <span class="token operator">@</span>test_gui_OutputFcn<span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_LayoutFcn'</span><span class="token punctuation">,</span>  <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">,</span> <span class="token punctuation">...</span>
+                   <span class="token string">'gui_Callback'</span><span class="token punctuation">,</span>   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> nargin <span class="token operator">&amp;&amp;</span> <span class="token function">ischar</span><span class="token punctuation">(</span>varargin<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    gui_State<span class="token punctuation">.</span>gui_Callback <span class="token operator">=</span> <span class="token function">str2func</span><span class="token punctuation">(</span>varargin<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token keyword">if</span> nargout
+    <span class="token punctuation">[</span>varargout<span class="token punctuation">{</span><span class="token number">1</span><span class="token operator">:</span>nargout<span class="token punctuation">}</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">gui_mainfcn</span><span class="token punctuation">(</span>gui_State<span class="token punctuation">,</span> varargin<span class="token punctuation">{</span><span class="token operator">:</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">else</span>
+    <span class="token function">gui_mainfcn</span><span class="token punctuation">(</span>gui_State<span class="token punctuation">,</span> varargin<span class="token punctuation">{</span><span class="token operator">:</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token comment">% End initialization code - DO NOT EDIT</span>
+
+<span class="token comment">% --- Executes just before test_gui is made visible.</span>
+<span class="token keyword">function</span> <span class="token function">test_gui_OpeningFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">,</span> varargin<span class="token punctuation">)</span>
+handles<span class="token punctuation">.</span>counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token function">set</span><span class="token punctuation">(</span>handles<span class="token punctuation">.</span>text2<span class="token punctuation">,</span> <span class="token string">'String'</span><span class="token punctuation">,</span> handles<span class="token punctuation">.</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+handles<span class="token punctuation">.</span>output <span class="token operator">=</span> hObject<span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui_OutputFcn</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span> 
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">% Get default command line output from handles structure</span>
+varargout<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">=</span> handles<span class="token punctuation">.</span>output<span class="token punctuation">;</span>
+
+
+<span class="token comment">% --- Executes on button press in pushbutton1.</span>
+<span class="token keyword">function</span> <span class="token function">pushbutton1_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+handles<span class="token punctuation">.</span>counter <span class="token operator">=</span> handles<span class="token punctuation">.</span>counter <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">set</span><span class="token punctuation">(</span>handles<span class="token punctuation">.</span>text2<span class="token punctuation">,</span><span class="token string">'String'</span><span class="token punctuation">,</span>handles<span class="token punctuation">.</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">% --- Executes on button press in pushbutton2.</span>
+<span class="token keyword">function</span> <span class="token function">pushbutton2_Callback</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> eventdata<span class="token punctuation">,</span> handles<span class="token punctuation">)</span>
+handles<span class="token punctuation">.</span>counter <span class="token operator">=</span> handles<span class="token punctuation">.</span>counter <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token function">set</span><span class="token punctuation">(</span>handles<span class="token punctuation">.</span>text2<span class="token punctuation">,</span><span class="token string">'String'</span><span class="token punctuation">,</span>handles<span class="token punctuation">.</span>counter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">guidata</span><span class="token punctuation">(</span>hObject<span class="token punctuation">,</span> handles<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="结语"><a href="#结语" class="header-anchor">#</a> 结语</h2> <p>如果你能独立写出加法器（不是），那么你应该能算是入门了。至于 <code>popupmenu</code> 等控件的使用方法和其他一些细枝末节，相信聪明的你一定也可以的！</p> <p><s>有毒的结尾</s></p> <p>顺便，最后说一句，将控制台 MATLAB 代码改成带有 GUI 的，推荐前者尽量使用函数，主函数几乎只用于调用函数。</p></div></div></div> <footer><!----></footer></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/182.5c64b0d7.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
+</html>

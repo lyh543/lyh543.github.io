@@ -1,816 +1,217 @@
 <!DOCTYPE html>
-<html>
-<head>
-    
-
-    
-
-    
-
-
-
+<html lang="zh-CN">
+  <head>
     <meta charset="utf-8">
-    
-    
-    
-    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>小灰灰灰灰的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="小灰灰灰灰的博客">
-<meta property="og:url" content="https://blog.lyh543.cn/page/19/index.html">
-<meta property="og:site_name" content="小灰灰灰灰的博客">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="lyh543">
-<meta name="twitter:card" content="summary">
-    
-        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
-    <script>window.lazyScripts=[]</script>
-
-    <!-- custom head -->
-    
-
-<meta name="generator" content="Hexo 4.2.1"></head>
-
-<body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu"  >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="mdi mdi-close icon-lg"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.png">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">lyh543</h5>
-          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg mdi mdi-home"></i>
-                主页
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg mdi mdi-archive"></i>
-                归档
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
-                标签
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
-                分类
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/lyh543" target="_blank" >
-                <i class="icon icon-lg mdi mdi-github"></i>
-                Github
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg mdi mdi-menu"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">小灰灰灰灰的博客</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg mdi mdi-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg mdi mdi-magnify"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg mdi mdi-share-variant"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header index-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">小灰灰灰灰的博客</h1>
-        <h5 class="subtitle">
-            
-                
-            
-        </h5>
-    </div>
-
-    
-
-
-</header>
-
-<div class="container body-wrap">
-
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-linux/bash"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-16 00:00:00" datetime="2019-08-15T16:00:00.000Z"  itemprop="datePublished">2019-08-16</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Linux/">Linux</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/linux/bash/">bash 笔记</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        入坑 Linux 以后，命令行也是一个非常重要的工具。本文简单总结一下常用的 bash 语法。
-这里只讲纯语法，文件操作、系统工具等可以看 Linux 日常。
-cheatsheet
-变量赋值 = 左右不能有空格  
-if = 左右都要有空格
-var=$s 等价于 var=${s}
-var=$(echo 123) 等价于 var=$`echo 123` 
-多条语句串行执行：echo 1; sl...
-    
-
-        <a href="/linux/bash/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/string"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-14 00:00:00" datetime="2019-08-13T16:00:00.000Z"  itemprop="datePublished">2019-08-14</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/string/">C++ string</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        string.length() 的复杂度在 C++ 11 以前是未定义，在 C++ 11 及以后为常数，使用时须注意。
-字符串字面量R &quot;分隔符( 原始字符 )分隔符&quot;
-示例：R&quot;66(\njjnb/)66&quot; == &quot;\\njjnb/&quot;
-
-其他语言的类似情况可参考 逐字字符串在各语言中的表达式。
-
-分隔符也可以为空。示例 2：&#3...
-    
-
-        <a href="/cpp/cpp-grammar/string/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/map"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-04 00:00:00" datetime="2019-08-03T16:00:00.000Z"  itemprop="datePublished">2019-08-04</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/map/">(unoredered_)(multi)map &amp; 离散化</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        在 ACM 中经常会接触到数据范围 $10^9$，数据个数 $ 2\times10^5$ 的题，这种题按数据范围开数组都开不下，但是数据没有出现过的数据就没有用，于是可以只讨论那 $ 2\times10^5$ 个数。这个时候，就需要一个把不连续的 $(12,324,76)$ 映射 (map) 到连续的 $(1,2,3,…)$ 上的方法。
-map 分为 treemap 和 hashmap。tr...
-    
-
-        <a href="/cpp/cpp-grammar/map/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-others/very-short-introductions-oxford"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-04 00:00:00" datetime="2019-08-03T16:00:00.000Z"  itemprop="datePublished">2019-08-04</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/others/very-short-introductions-oxford/">牛津通识读本</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        怎么学数学
-数学总是持续在自身的基础上构建，所以学习时的步步跟进就显得很重要。数学中常常会引入重要的新思想，新思想会比旧思想更加复杂，每一个新思想的引入都有可能把我们甩在后面。人们在学习高等数学时，走到一个证明的结尾处，通常会经历这样的思考：“我理解每一行是怎样由前一行得到的，但是我却不明白为什么这个定理是正确的，人们是怎样想到这个论证的。”我们经常想从证明中得到更多的东西，而不仅仅是确信它...
-    
-
-        <a href="/others/very-short-introductions-oxford/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/time"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-02 00:00:00" datetime="2019-08-01T16:00:00.000Z"  itemprop="datePublished">2019-08-02</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/time/">C/C++ 获取秒级、微秒级、纳秒级时间戳</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-转自：https://blog.csdn.net/CAIYUNFREEDOM/article/details/75388111http://sodino.com/2015/03/20/c-time-micro-nano/
-
-获取时间戳（s 级）1234//in &lt;time.h&gt;time_t t= time(NULL);std::cout&lt;&lt;" s秒级 ----:";...
-    
-
-        <a href="/cpp/cpp-grammar/time/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/assert"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-01 00:00:00" datetime="2019-07-31T16:00:00.000Z"  itemprop="datePublished">2019-08-01</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/assert/">assert</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        用途最初看到 assert，是在 ACM 时，看到的别人的高精度板子，限定了除数大于0：
-1assert(b&gt;0)
-
-但是感觉没什么用：如果 此时不等于 0，程序立即停止（abort）并返回一个非 0 值，就算 RE 了， 好像没什么用。
-直到看《编程珠玑》的时候看到了它的用处：
-断言的意思是，按照我为我的代码设定的逻辑，这种情况是绝对、永远为 true，如果是 false 就是代码出...
-    
-
-        <a href="/cpp/cpp-grammar/assert/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/set"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-07-27 00:00:00" datetime="2019-07-26T16:00:00.000Z"  itemprop="datePublished">2019-07-27</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/set/">set——STL 自带的红黑树</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-                
-                    
-                    
-                
-                wdgmultiset
-            
-
-set 的构造函数cppreference
-set 有一堆构造函数。C++ 98 有如下：
-1234567set (const key_compare&am...
-    
-
-        <a href="/cpp/cpp-grammar/set/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/pair"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-07-25 00:00:00" datetime="2019-07-24T16:00:00.000Z"  itemprop="datePublished">2019-07-25</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/pair/">pair 使用方法</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        pair 是。。。pair 是啥？pair 好像就是一个包含两个元素的结构。
-包含头文件及定义变量123#include &lt;utility&gt;using namespace std;pair&lt;int,int&gt; p[10];
-
-数据存储12p[0] = &#123;1,2&#125;;p[1] = make_pair(3,4); //类似于强转吧
-
-访问元素12cout ...
-    
-
-        <a href="/cpp/cpp-grammar/pair/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/" rel="tag">STL</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/cpp-built-in-sort"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-07-25 00:00:00" datetime="2019-07-24T16:00:00.000Z"  itemprop="datePublished">2019-07-25</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/cpp-built-in-sort/">C++ 内置排序的排序顺序</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        结论
-
-
-类型
-自带排序
-定义cmp结构（为&lt;）
-greater&lt;int&gt;
-定义bool cmp函数（为&lt;）
-
-
-
-set
-升序
-升序
-降序
-\
-
-
-priority_queue
-降序
-降序
-升序
-\
-
-
-sort
-升序
-\
-\
-升序
-
-
-表中 \ 表示这种语法无法适用于该排序。
-测试代码12345678910111213141516171819202122//tes...
-    
-
-        <a href="/cpp/cpp-grammar/cpp-built-in-sort/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/STL/" rel="tag">STL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8B%E8%AF%95/" rel="tag">测试</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/acm/调一万年才能发现的bug"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-07-25 00:00:00" datetime="2019-07-24T16:00:00.000Z"  itemprop="datePublished">2019-07-25</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/acm/%E8%B0%83%E4%B8%80%E4%B8%87%E5%B9%B4%E6%89%8D%E8%83%BD%E5%8F%91%E7%8E%B0%E7%9A%84bug/">调一万年才能发现的bug</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        我脑子可能有问题.jpg仔细看题看题看题看题啊！！连续两场比赛因为看错题贡献了数小时的罚时。但是困的话，读英文就很难受，读不进去。所以打 ACM 得有一个良好的作息。
-先读题跑一下样例2019.8.16 的 Codeforces Round #574 (Div. 2) D1，最后20分钟写，一直过不了样例，手跑了一下，发现是理解错样例了。差点 4.5 题。
-爆数组不知道为什么，居然数据范围多...
-    
-
-        <a href="/cpp/acm/%E8%B0%83%E4%B8%80%E4%B8%87%E5%B9%B4%E6%89%8D%E8%83%BD%E5%8F%91%E7%8E%B0%E7%9A%84bug/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-<nav id="page-nav">
-    <div class="inner">
-    <a class="extend prev" rel="prev" href="/page/18/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><span class="page-number current">19</span><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/20/">下一页</a>
-    </div>
-</nav>
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
-            
-            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>lyh543 &copy; 2019 - 2021</span>
-            <span>
-                
-                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
-                
-                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/page/19/&title=小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
-          <i class="icon mdi mdi-sina-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/page/19/&title=小灰灰灰灰的博客&source=" data-title=" QQ">
-          <i class="icon mdi mdi-qqchat"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/page/19/" data-title=" Facebook">
-          <i class="icon mdi mdi-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=小灰灰灰灰的博客&url=https://blog.lyh543.cn/page/19/&via=https://blog.lyh543.cn" data-title=" Twitter">
-          <i class="icon mdi mdi-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/page/19/" data-title=" Google+">
-          <i class="icon mdi mdi-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABuUlEQVR42u3aQYrDMBAEQP//09kHLLF7ZqIhgfIpECOXfWiklq4rvl631/978tGuExcuLu6YW6Xk/352BFxc3H3uu8RI7nn3+PvYysfHxcX9Re49PXkBXFzcX+c+TEGCmFsNMlxc3AE3WZz0qo371z64VsPFxR1w85by3O8j/S4uLm6L+ypeefWZFCLlp+Pi4q5w80CpovNJTHk7FhcX9zC3Wm3kMZTULuXiFRcXd5F7X3xUh65OjwoFDS4u7hdwq+VFdQlUHg0XF3eFOxk6iaFe/BXWari4uOvcfIJyH4LV5VC0J4yLi3uYmz9gckgiP9JROOSBi4t7mHsfW3nEVIOvGZS4uLjHuL3KoxdMk21aXFzcTW4PNN9krUbh6Pvh4uK2uPnEZfIC1Tr1oTDFxcVd5PagkyVNea2Gi4u7zq0+PilVJ8c3r+r3w8XFHXN7k5Ic8bHNVFxc3EVufuVFRrVy7R3gwMXFPc2dh9dkSVPeysXFxV3k5lsaeek5X/zg4uL+CneyEZvf8zDFwcXF/TJuNZ56cfb2flxc3EVuHj29MiUvTx8+EC4u7gq3HCUDXO8YBy4u7iL3D5tFSOckac5wAAAAAElFTkSuQmCC" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="/js/main.min.js?v=1.7.2"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.7.2" async></script>
-
-
-
-
-
-
-
-
-
-
-</body>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div id="base-list-layout"><div class="container ui-posts itemscope itemtype"><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/acm/%E8%AE%B0%E5%A4%A7%E5%AD%A6%E7%9F%AD%E6%9A%82%E7%9A%84ACM%E7%94%9F%E6%B6%AF.html"> <a href="/cpp/acm/%E8%AE%B0%E5%A4%A7%E5%AD%A6%E7%9F%AD%E6%9A%82%E7%9A%84ACM%E7%94%9F%E6%B6%AF.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              记大学短暂的ACM生涯
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-08-18T22:02:19.000Z">2019-08-19</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          高中参加过 OI，大学里面自然对 ACM 比较感兴趣。在自我介绍的时候提了一句，有没有想一起参加 ACM 的还被同学听成了 SM。
+
+但是在大一上的时候，因为闲着没事做，就又报了一个算法研究小组。两边都是很肝的。得放弃一边。我觉得 ACM 太功利了，就选择了算法小组。
+当时的观点是这样的：
+
+&gt; 1. ACM 太功利了，现在参加的人越来越多，也很大程度上是为了拿奖；
+&gt; 2. AC ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/杂谈/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
+  杂谈
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/ACM/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  ACM
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/cpp-grammar/bitset.html"> <a href="/cpp/cpp-grammar/bitset.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              bitset
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-19">2019-08-19</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          数学的集合这个概念，可以用 C 的布尔数组实现。然而，使用 bool 类型，导致每一个元素都会占用一个字节。
+实际上，每一个字节理论上能存 8 个元素的状态，可以使用 char 或 int 数组来模拟。
+而 C++ STL 自带了一种数据结构，bitset，就不用自己手写啦。
+
+声明
+
+#include
+using std::bitse ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/数据结构/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-purple white--text"><span class="v-chip__content">
+  数据结构
+</span></a><a href="/tags/STL/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  STL
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  C++语法
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/cpp-grammar/struct.html"> <a href="/cpp/cpp-grammar/struct.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              C++ 结构体
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-19">2019-08-19</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          C++ 中的结构体结合了类，于是就有很多很有意思的写法。
+
+构造函数
+
+struct teamS {
+       int s; //solved
+       int p; //penalty
+       teamS() {};
+       teamS(int s = 1, int p = 2):s(s), p(p){}
+};
+
+teamS s(6,66);
+`` ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  C++语法
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/cpp-grammar/windows-console.html"> <a href="/cpp/cpp-grammar/windows-console.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Windows 控制台常用操作
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-19">2019-08-19</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          参考链接：https://github.com/guyaqi/backups/blob/master/notes/cpp1-2.md
+
+Win32 API 的函数大多名称较长，如果不是有意向专门学习的话，没有太大的必要特地记住(用的时候还是会忘)
+
+微软公司出产的各种 API，都可以在 msdn 找到详细的文档和简单的例 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Windows/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  Windows
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  C++语法
+</span></a><a href="/tags/Win32 API/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default green white--text"><span class="v-chip__content">
+  Win32 API
+</span></a><a href="/tags/Visual Studio/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
+  Visual Studio
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/acm/oneline-algorithm.html"> <a href="/cpp/acm/oneline-algorithm.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              一句话描述的算法
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-08-18T00:00:00.000Z">2019-08-18</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          求逆序对数：用归并排序，计数交换的次数
+
+用 scanf 读 string （即使关了同步，cin 读 string 太慢）：——2019.7.20
+&gt; 用 scanf 读 char，然后使用 string operator +=。
+
+看到 1e18 就可以考虑二分了。二分天下第一。 ——2019.7.21
+
+给定 $0 \leq k \le ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/数据结构/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-purple white--text"><span class="v-chip__content">
+  数据结构
+</span></a><a href="/tags/数论/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
+  数论
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/ACM/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  ACM
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/acm/Lutece%E9%80%9F%E5%BA%A6.html"> <a href="/cpp/acm/Lutece%E9%80%9F%E5%BA%A6.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Lutece 速度
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-18">2019-08-18</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          ||long long 运算|int 运算|double 运算|
+|--------|--------------|----|------|
+|          |2e9次 406ms|2e9次 395ms|2e9次 794ms|
+|1000ms|5e9次|5e9次|2.5e9次|
+
+//int test
+int main()
+{
+    int a =0;
+    for (in ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/测试/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
+  测试
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/ACM/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  ACM
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/acm/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97_LIS.html"> <a href="/cpp/acm/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97_LIS.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              最长上升连续子序列 LIS
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-18">2019-08-18</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          贪心，二分搜索，O(nlogn)
+
+注意 lowerbound 和 upperbound 的选择：upperbound 是不下降子序列，lowerbound 是上升子序列。
+因为上升子序列的 LIS 里面一个数不能排在相同的数的后面，所以这个数必须要找到 lower_bound()
+
+upperbound() 的 last 参数取不到这个点，类似于end()
+[ ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/数据结构/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-purple white--text"><span class="v-chip__content">
+  数据结构
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/ACM/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  ACM
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/cpp-grammar/cpp-copy-assignment-and-constructor.html"> <a href="/cpp/cpp-grammar/cpp-copy-assignment-and-constructor.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Copy Assignment &amp; Constructor
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-18">2019-08-18</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          #include
+using namespace std;
+
+class Test
+{
+    public:
+    Test() {}
+    Test(const Test &amp;t)
+    {
+        cout&lt;&lt;&quot;Copy constructor called &quot;&lt;&lt;endl;
+    }
+    Test&amp; operator = (const T ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/面向对象编程/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default red white--text"><span class="v-chip__content">
+  面向对象编程
+</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  C++语法
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/blog/hexo-material.html"> <a href="/blog/hexo-material.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Hexo Material 主题配置
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-17">2019-08-17</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
+
+Hexo 更换主题的方法参见另一篇博客。
+
+在网上找到了一个配置过程非常详实的[博客](https://z ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Blog/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
+  Blog
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/cpp/cpp-grammar/auto-decltype.html"> <a href="/cpp/cpp-grammar/auto-decltype.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              auto 和 decltype 类型
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-17">2019-08-17</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+auto i = 1;
+
+auto 和 const 引用
+
+引用字面常量需要手动 const，引用类型常量就自带 const 了
+
+int i;
+const int ic = I;
+
+auto &amp;ri = i;			// int &amp;ri=i
+auto &amp;rc = ic;			// const int &amp;rc=ic, 顶层const
+
+auto ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  C++
+</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  C++语法
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div></div> <!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
 </html>

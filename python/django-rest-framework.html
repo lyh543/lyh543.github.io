@@ -1,303 +1,243 @@
-<hr>
-<p>title: Django REST Framework 学习笔记<br>date: 2021-1-24 18:20:22<br>tags:</p>
-<ul>
-<li>Python</li>
-<li>Django</li>
-<li>RESTful</li>
-<li>后端<br>category:</li>
-<li>Python</li>
-</ul>
-<hr>
-<h2 id="Django-REST-Framework-是什么"><a href="#Django-REST-Framework-是什么" class="headerlink" title="Django REST Framework 是什么"></a>Django REST Framework 是什么</h2><p>如果你打算使用 Django 搭建一个 RESTful API 后端，你完全有必要学习 Django REST Framework。</p>
-<p>Django REST Framework 提供了 Serializers、APIView、GeneticAPIView、ViewSets、权限管理、搜索、分页等功能。这些功能、特性可以全部加入我们的 RESTful 后端，也可以选一部分加入。</p>
-<p>如果你和我一样，第一次接触后端，尚不了解 RESTful 后端的组成、功能，可能也会对上面的这些概念懵圈。</p>
-<p>用通俗的话来说，RESTful 后端开发过程中，包含了相当多的重复元素，比如：</p>
-<ol>
-<li>将数据模型（Django 中特指我们编写的 models.Model 类）变为 json 字符串发送给前端，这个变的过程称为<code>序列化</code>；</li>
-<li>RESTful API 应该对 <code>GET /activities/</code> 这类请求提供<strong>获取活动列表</strong>的功能，对 <code>POST /activities/</code> 提供<strong>创建活动</strong>的功能；</li>
-<li>对于获取活动列表的功能，还应当具有搜索和分页的功能；</li>
-<li>RESTful API 应该对 <code>GET /activities/1/</code> 这类请求提供<strong>获取 id 为 1 的活动信息</strong>的功能，对 <code>PUT /activities/1/</code> 和 <code>PATCH /activities/1/</code> 提供<strong>修改 id 为 1 的活动信息</strong>的功能，对 <code>DELETE /activities/1/</code> 提供<strong>删除 id 为 1 的活动</strong>的功能</li>
-<li>当然，还需要判定用户是否有权限获取、修改</li>
-</ol>
-<p>上述步骤，使用纯 Django 也可以完成。而 Django REST Framework 所完成的，就是将具体的、重复的、步骤抽象化、简短化：将 json 到数据模型抽象化为序列器 <code>Serializer</code> 类，借助 <code>Serializer</code> 类编写 <code>序列化</code> 的过程可以最短缩减到<strong>三行</strong>；将提供了通用 RESTful 功能（如提供列表、创建对象、修改、删除）的一些 Django 视图 <code>View</code> 抽象化为 <code>GeneticAPIView</code>，读者在后面可以看到，对不同的 HTTP 方法提供不同功能的代码借助 <code>GeneticAPIView</code> 可以最短缩减到<strong>三行</strong>，搜索分页加起来也可以<strong>不超过十行</strong>；甚至的甚至，相同操作的不同 Views（如，需要对 <code>/activities/</code> 和 <code>/users/</code> 提供相同的列表、创建、获取、修改、删除方法）甚至可以用一个 <code>ViewSet</code> 进行描述。</p>
-<p>当然，这种方法适合描述 RESTful API 中大部分通用功能，如果涉及到更细化的操作，如 <code>signup</code> 和 <code>login</code>，就没法用到 ViewSets 这类操作了。而在过于抽象的代码上，如果需求发生了少许更改，也可能导致较大的代码改动，如对于 <code>/activities/</code> 和 <code>/users/</code>，原本二者提供的功能相同，使用一个 <code>ViewSet</code> 就可以描述，突然要求对 <code>/users/</code> 中的注册过程添加一个验证码，都会导致这部分的代码重写。</p>
-<p>综上所属，抽象化有其优点也有其缺点，在实际编码过程中，并不一定使用到 <code>ViewSets</code>，我的项目中最抽象也只用到了 <code>GeneticAPIView</code>。</p>
-<h2 id="Django-入门"><a href="#Django-入门" class="headerlink" title="Django 入门"></a>Django 入门</h2><p><a href="../django-study-notes">Django 入门</a></p>
-<p>Django REST Framework 教程中也包含了必要的 Django 知识，不过我仍然建议简单看一下 Django 入门教程；以及，很多时候也会去查 Django 的文档。</p>
-<h2 id="Django-REST-Framework-官方教程"><a href="#Django-REST-Framework-官方教程" class="headerlink" title="Django REST Framework 官方教程"></a>Django REST Framework 官方教程</h2><p><a href="https://q1mi.github.io/Django-REST-framework-documentation/tutorial/1-serialization_zh/" target="_blank" rel="noopener">汉化版教程链接</a></p>
-<h2 id="例：在序列器中定义可修改的外键-id"><a href="#例：在序列器中定义可修改的外键-id" class="headerlink" title="例：在序列器中定义可修改的外键 id"></a>例：在序列器中定义可修改的外键 id</h2><pre><code class="py">class Activity(models.Model):
-    # 为了防止循环引用，这里使用字符串表示 ActivityPhoto 类
-    banner = models.ForeignKey(&#39;activities_photos.ActivityPhoto&#39;, null=True, default=None, on_delete=models.SET_NULL,
-                               verbose_name=&quot;首页图&quot;, related_name=&quot;banner_of&quot;)
-</code></pre>
-<p>Django REST Framework 处理外键 id 有点复杂。因为它的 <code>update</code> 默认是修改 id 值：如果你想修改 Acitivity 的 <code>banner.id</code> 为 4，DRF 的默认操作是把这个 Acitivity 外键现在指向的 banner 的 id 改为 4，而不是把 Acitivity 的外键重新指向 id 为 4 的 banner。</p>
-<p>但是，请注意到，万能的 Django 为这个 Activity 提供了一个 <code>banner_id</code> 属性。在读取的时候，这个东西和 <code>banner.id</code> 的值是一样的，但在写入的时候：</p>
-<ul>
-<li>修改 <code>banner.id</code> 的操作是将外键现在指向的 banner 的 id 改为 4，且修改为 <code>None</code> 时会报错：<code>不存在 ActivityPhoto</code></li>
-<li>修改 <code>banner_id</code> 的操作是将外键重新指向 id 为 4 的 banner，且修改为 <code>None</code> 表示设置这个外键为 null</li>
-</ul>
-<p>于是，Serializer 里直接写 <code>banner_id</code> 就行了。</p>
-<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
-        fields = (&quot;id&quot;, &quot;banner_id&quot;)
-        read_only_fields = (&quot;id&quot;)
-    # 默认的 banner_id 是 allow_null=False, read_only=True，所以需要显式定义
-    banner_id = serializers.CharField(allow_null=True, read_only=False)
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Django REST Framework 学习笔记 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
 
-    # 默认的也不带 validator，如果不写 validator 导致数据库插入失败，就等着服务器抛 500 吧
-    def validate_banner_id(self, banner_id: str):
-        if banner_id is None or ActivityPhoto.objects.filter(id=banner_id):
-            return banner_id
-        raise serializers.ValidationError(&quot;id 对应的图片不存在&quot;)
-</code></pre>
-<p>Django 永远滴神！</p>
-<h2 id="例：自定义-APIException"><a href="#例：自定义-APIException" class="headerlink" title="例：自定义 APIException"></a>例：自定义 APIException</h2><p>Django 中的 <code>raise Http404</code> 用着很爽，可以在任何函数打断当前 view 的执行，直接返回一个 404 的 HttpResponse。但是不能自己定义别的返回值，诸如 104、500、503 等等。</p>
-<p>一种思路是手写一个装饰器，在原本的 view 外包装一个 <code>try ... catch</code> 代码块，再自己定义各种 Exception 就可以实现了。</p>
-<p>不过，Django REST Framework 在自己的 View 中提供了这个功能，我们只需要继承 <code>rest_framework.exceptions.APIException</code> 就可以了。</p>
-<pre><code class="py">class OnedriveUnavailableException(APIException):
-    status_code = 503
-    default_detail = &#39;Onedrive 服务未登录。&#39;
+如果你打算使用 Django 搭建一个 RESTful API 后端，你完全有必要学习 Django REST Framework。
+
+Django REST Framework 提供了 Serializers、APIView、GeneticAPIView、ViewSets、权限管理、搜索、分页等功能。这些功能、特性可以全部加入我们的 RESTful 后端，也可以选一部分加入。
+
+如果你和我一 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/227.cad443ce.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="django-rest-framework-是什么"><a href="#django-rest-framework-是什么" class="header-anchor">#</a> Django REST Framework 是什么</h2> <p>如果你打算使用 Django 搭建一个 RESTful API 后端，你完全有必要学习 Django REST Framework。</p> <p>Django REST Framework 提供了 Serializers、APIView、GeneticAPIView、ViewSets、权限管理、搜索、分页等功能。这些功能、特性可以全部加入我们的 RESTful 后端，也可以选一部分加入。</p> <p>如果你和我一样，第一次接触后端，尚不了解 RESTful 后端的组成、功能，可能也会对上面的这些概念懵圈。</p> <p>用通俗的话来说，RESTful 后端开发过程中，包含了相当多的重复元素，比如：</p> <ol><li>将数据模型（Django 中特指我们编写的 models.Model 类）变为 json 字符串发送给前端，这个变的过程称为<code>序列化</code>；</li> <li>RESTful API 应该对 <code>GET /activities/</code> 这类请求提供<strong>获取活动列表</strong>的功能，对 <code>POST /activities/</code> 提供<strong>创建活动</strong>的功能；</li> <li>对于获取活动列表的功能，还应当具有搜索和分页的功能；</li> <li>RESTful API 应该对 <code>GET /activities/1/</code> 这类请求提供<strong>获取 id 为 1 的活动信息</strong>的功能，对 <code>PUT /activities/1/</code> 和 <code>PATCH /activities/1/</code> 提供<strong>修改 id 为 1 的活动信息</strong>的功能，对 <code>DELETE /activities/1/</code> 提供<strong>删除 id 为 1 的活动</strong>的功能</li> <li>当然，还需要判定用户是否有权限获取、修改</li></ol> <p>上述步骤，使用纯 Django 也可以完成。而 Django REST Framework 所完成的，就是将具体的、重复的、步骤抽象化、简短化：将 json 到数据模型抽象化为序列器 <code>Serializer</code> 类，借助 <code>Serializer</code> 类编写 <code>序列化</code> 的过程可以最短缩减到<strong>三行</strong>；将提供了通用 RESTful 功能（如提供列表、创建对象、修改、删除）的一些 Django 视图 <code>View</code> 抽象化为 <code>GeneticAPIView</code>，读者在后面可以看到，对不同的 HTTP 方法提供不同功能的代码借助 <code>GeneticAPIView</code> 可以最短缩减到<strong>三行</strong>，搜索分页加起来也可以<strong>不超过十行</strong>；甚至的甚至，相同操作的不同 Views（如，需要对 <code>/activities/</code> 和 <code>/users/</code> 提供相同的列表、创建、获取、修改、删除方法）甚至可以用一个 <code>ViewSet</code> 进行描述。</p> <p>当然，这种方法适合描述 RESTful API 中大部分通用功能，如果涉及到更细化的操作，如 <code>signup</code> 和 <code>login</code>，就没法用到 ViewSets 这类操作了。而在过于抽象的代码上，如果需求发生了少许更改，也可能导致较大的代码改动，如对于 <code>/activities/</code> 和 <code>/users/</code>，原本二者提供的功能相同，使用一个 <code>ViewSet</code> 就可以描述，突然要求对 <code>/users/</code> 中的注册过程添加一个验证码，都会导致这部分的代码重写。</p> <p>综上所属，抽象化有其优点也有其缺点，在实际编码过程中，并不一定使用到 <code>ViewSets</code>，我的项目中最抽象也只用到了 <code>GeneticAPIView</code>。</p> <h2 id="django-入门"><a href="#django-入门" class="header-anchor">#</a> Django 入门</h2> <p><a href="../django-study-notes">Django 入门</a></p> <p>Django REST Framework 教程中也包含了必要的 Django 知识，不过我仍然建议简单看一下 Django 入门教程；以及，很多时候也会去查 Django 的文档。</p> <h2 id="django-rest-framework-官方教程"><a href="#django-rest-framework-官方教程" class="header-anchor">#</a> Django REST Framework 官方教程</h2> <p><a href="https://q1mi.github.io/Django-REST-framework-documentation/tutorial/1-serialization_zh/" target="_blank" rel="noopener noreferrer">汉化版教程链接<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="例-在序列器中定义可修改的外键-id"><a href="#例-在序列器中定义可修改的外键-id" class="header-anchor">#</a> 例：在序列器中定义可修改的外键 id</h2> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">Activity</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 为了防止循环引用，这里使用字符串表示 ActivityPhoto 类</span>
+    banner <span class="token operator">=</span> models<span class="token punctuation">.</span>ForeignKey<span class="token punctuation">(</span><span class="token string">'activities_photos.ActivityPhoto'</span><span class="token punctuation">,</span> null<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> default<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">,</span> on_delete<span class="token operator">=</span>models<span class="token punctuation">.</span>SET_NULL<span class="token punctuation">,</span>
+                               verbose_name<span class="token operator">=</span><span class="token string">&quot;首页图&quot;</span><span class="token punctuation">,</span> related_name<span class="token operator">=</span><span class="token string">&quot;banner_of&quot;</span><span class="token punctuation">)</span>
+</code></pre></div><p>Django REST Framework 处理外键 id 有点复杂。因为它的 <code>update</code> 默认是修改 id 值：如果你想修改 Acitivity 的 <code>banner.id</code> 为 4，DRF 的默认操作是把这个 Acitivity 外键现在指向的 banner 的 id 改为 4，而不是把 Acitivity 的外键重新指向 id 为 4 的 banner。</p> <p>但是，请注意到，万能的 Django 为这个 Activity 提供了一个 <code>banner_id</code> 属性。在读取的时候，这个东西和 <code>banner.id</code> 的值是一样的，但在写入的时候：</p> <ul><li>修改 <code>banner.id</code> 的操作是将外键现在指向的 banner 的 id 改为 4，且修改为 <code>None</code> 时会报错：<code>不存在 ActivityPhoto</code></li> <li>修改 <code>banner_id</code> 的操作是将外键重新指向 id 为 4 的 banner，且修改为 <code>None</code> 表示设置这个外键为 null</li></ul> <p>于是，Serializer 里直接写 <code>banner_id</code> 就行了。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivitySerializer</span><span class="token punctuation">(</span>serializers<span class="token punctuation">.</span>ModelSerializer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">class</span> <span class="token class-name">Meta</span><span class="token punctuation">:</span>
+        model <span class="token operator">=</span> Activity
+        fields <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">&quot;id&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;banner_id&quot;</span><span class="token punctuation">)</span>
+        read_only_fields <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">&quot;id&quot;</span><span class="token punctuation">)</span>
+    <span class="token comment"># 默认的 banner_id 是 allow_null=False, read_only=True，所以需要显式定义</span>
+    banner_id <span class="token operator">=</span> serializers<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>allow_null<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> read_only<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 默认的也不带 validator，如果不写 validator 导致数据库插入失败，就等着服务器抛 500 吧</span>
+    <span class="token keyword">def</span> <span class="token function">validate_banner_id</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> banner_id<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> banner_id <span class="token keyword">is</span> <span class="token boolean">None</span> <span class="token keyword">or</span> ActivityPhoto<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span>banner_id<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> banner_id
+        <span class="token keyword">raise</span> serializers<span class="token punctuation">.</span>ValidationError<span class="token punctuation">(</span><span class="token string">&quot;id 对应的图片不存在&quot;</span><span class="token punctuation">)</span>
+</code></pre></div><p>Django 永远滴神！</p> <h2 id="例-自定义-apiexception"><a href="#例-自定义-apiexception" class="header-anchor">#</a> 例：自定义 APIException</h2> <p>Django 中的 <code>raise Http404</code> 用着很爽，可以在任何函数打断当前 view 的执行，直接返回一个 404 的 HttpResponse。但是不能自己定义别的返回值，诸如 104、500、503 等等。</p> <p>一种思路是手写一个装饰器，在原本的 view 外包装一个 <code>try ... catch</code> 代码块，再自己定义各种 Exception 就可以实现了。</p> <p>不过，Django REST Framework 在自己的 View 中提供了这个功能，我们只需要继承 <code>rest_framework.exceptions.APIException</code> 就可以了。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">OnedriveUnavailableException</span><span class="token punctuation">(</span>APIException<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    status_code <span class="token operator">=</span> <span class="token number">503</span>
+    default_detail <span class="token operator">=</span> <span class="token string">'Onedrive 服务未登录。'</span>
 
 
-# raise OnedriveUnavailableException 即可返回 503，{&quot;detail&quot;: &quot;Onedrive 服务未登录。&quot;}
-</code></pre>
-<p>太香了！</p>
-<h2 id="例：自定义对象级权限"><a href="#例：自定义对象级权限" class="headerlink" title="例：自定义对象级权限"></a>例：自定义对象级权限</h2><p><a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/permissions_zh/#_3" target="_blank" rel="noopener">文档</a></p>
-<p>需求是这样的，我们需要仿照 <code>IsAdminOrReadOnly</code>，编写一个 <code>IsPresenterOrAdminOrReadOnly</code>。</p>
-<pre><code class="py">class IsPresenterOrAdminOrReadOnly(BasePermission):
-    def has_object_permission(self, request, view, activity: Activity):
-        return bool(
-            request.method in SAFE_METHODS or
-            request.user and
-            (activity.presenter.filter(id=request.user.id) or request.user.is_staff or request.user.is_superuser)
-        )
-</code></pre>
-<pre><code class="py">class ActivityAttenderUpdateView(GenericAPIView):
-    permission_classes = (IsPresenterOrAdminOrReadOnly,)
+<span class="token comment"># raise OnedriveUnavailableException 即可返回 503，{&quot;detail&quot;: &quot;Onedrive 服务未登录。&quot;}</span>
+</code></pre></div><p>太香了！</p> <h2 id="例-自定义对象级权限"><a href="#例-自定义对象级权限" class="header-anchor">#</a> 例：自定义对象级权限</h2> <p><a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/permissions_zh/#_3" target="_blank" rel="noopener noreferrer">文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>需求是这样的，我们需要仿照 <code>IsAdminOrReadOnly</code>，编写一个 <code>IsPresenterOrAdminOrReadOnly</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">IsPresenterOrAdminOrReadOnly</span><span class="token punctuation">(</span>BasePermission<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">has_object_permission</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">,</span> view<span class="token punctuation">,</span> activity<span class="token punctuation">:</span> Activity<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token builtin">bool</span><span class="token punctuation">(</span>
+            request<span class="token punctuation">.</span>method <span class="token keyword">in</span> SAFE_METHODS <span class="token keyword">or</span>
+            request<span class="token punctuation">.</span>user <span class="token keyword">and</span>
+            <span class="token punctuation">(</span>activity<span class="token punctuation">.</span>presenter<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span>request<span class="token punctuation">.</span>user<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">)</span> <span class="token keyword">or</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_staff <span class="token keyword">or</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_superuser<span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+</code></pre></div><div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivityAttenderUpdateView</span><span class="token punctuation">(</span>GenericAPIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    permission_classes <span class="token operator">=</span> <span class="token punctuation">(</span>IsPresenterOrAdminOrReadOnly<span class="token punctuation">,</span><span class="token punctuation">)</span>
 
-    def patch(self, request: WSGIRequest, id: int) -&gt; Response:
-        activity = get_object_or_404(Activity, id=id)
-        self.check_object_permissions(request, activity)
-</code></pre>
-<blockquote>
-<p>如果你正在编写自己的视图并希望强制执行对象级权限检测，或者你想在通用视图中重写 <code>get_object</code> 方法，那么你需要在检索对象的时候显式调用视图上的 <code>.check_object_permissions(request, obj)</code> 方法。</p>
-</blockquote>
-<h2 id="例：完成序列化后再修改字段"><a href="#例：完成序列化后再修改字段" class="headerlink" title="例：完成序列化后再修改字段"></a>例：完成序列化后再修改字段</h2><p>DRF 的 GeneticAPIView 写起来真的很爽，把 Models 和 Serializer 写好以后，GeneticAPIView 只需要几行就能写完，完成搜索、分页、序列化、返回 Response。但是，不可避免的是，某些时候想要传回更多的字段，或者由于权限问题隐藏某些字段。这个时候，我们就需要自己改写一部分 GeneticAPIView。</p>
-<h3 id="在-view-中的-serializer-data-中添加字段"><a href="#在-view-中的-serializer-data-中添加字段" class="headerlink" title="在 view 中的 serializer_data 中添加字段"></a>在 view 中的 serializer_data 中添加字段</h3><p>需求是这样的：原本的 login 函数完成了接收 <code>username</code> 和 <code>password</code> 并验证，正确后将该用户的信息用 <code>UserSerializer</code> 序列化后返回：</p>
-<pre><code class="py">def login(request: WSGIRequest) -&gt; Response:
-    err_response = Response(status=status.HTTP_401_UNAUTHORIZED)
-    if &#39;username&#39; not in request.data or &#39;password&#39; not in request.data:
-        return err_response
-    username = request.data[&#39;username&#39;]
-    password = request.data[&#39;password&#39;]
-    user = authenticate(request, username=username, password=password)
-    if user is None:
-        return err_response
-    django_login(request, user)
-    serializer = UserSerializer(user)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-</code></pre>
-<p>由于某些原因，我需要把 <code>csrftoken</code> 加入到返回的 JSON 中。<code>csrftoken</code> 的获取方法是 <code>csrf.get_token(request)</code>。如何将 <code>csrftoken</code> 加入序列化字段呢？</p>
-<p>最容易想到，但最麻烦且最不美观的方法是修改 <code>UserSerializer</code>。有没有其他方法呢？</p>
-<p>在最后一行打断点然后调试，执行到这里时看一眼 <code>serializer.data</code> 的类型，是 <code>OrderedDict</code>。<code>OrderedDict</code> 就很好办了，在 Response 之前修改一下，添加一个字段就可以了。</p>
-<pre><code class="py">def login(request: WSGIRequest) -&gt; Response:
-    err_response = Response(status=status.HTTP_401_UNAUTHORIZED)
-    if &#39;username&#39; not in request.data or &#39;password&#39; not in request.data:
-        return err_response
-    username = request.data[&#39;username&#39;]
-    password = request.data[&#39;password&#39;]
-    user = authenticate(request, username=username, password=password)
-    if user is None:
-        return err_response
-    serializer = UserSerializer(user)
-    serializer_data = serializer.data
-    serializer_data[&#39;csrftoken&#39;] = csrf.get_token(request)
-    return Response(serializer_data, status=status.HTTP_200_OK)
-</code></pre>
-<h3 id="在-GeneticAPIView-的-serializer-data-中修改字段"><a href="#在-GeneticAPIView-的-serializer-data-中修改字段" class="headerlink" title="在 GeneticAPIView 的 serializer_data 中修改字段"></a>在 GeneticAPIView 的 serializer_data 中修改字段</h3><p>这个看起来就要麻烦一点了，毕竟本身 GeneticAPIView 部分是一个函数都没有写。</p>
-<pre><code class="py">class UserListView(ListAPIView):
-    queryset = User.objects.all().order_by(&quot;-userprofile__experience&quot;)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = (&#39;username&#39;, &#39;first_name&#39;, &#39;last_name&#39;, &#39;userprofile__student_id&#39;)
-    pagination_class = Pagination
-    serializer_class = UserSerializer
-</code></pre>
-<p>这里的需求是：为了保护用户隐私，对于非管理员用户，不让其获取用户的 <code>username</code> 和 <code>student_id</code>，将返回的 <code>username</code> 改为 <code>***</code>、<code>student_id</code> 改为前四位（代表入学年份）。</p>
-<p>这里就有两种思路了：修改每一个 View 的处理过程（不仅仅是这个 View 需要保护隐私，其他 View 也应当保护隐私）；或者直接修改 <code>Serializer</code> 的序列化过程。</p>
-<h4 id="思路-1：修改-View-的过程"><a href="#思路-1：修改-View-的过程" class="headerlink" title="思路 1：修改 View 的过程"></a>思路 1：修改 View 的过程</h4><p>我们可以考虑类似于上面添加 <code>csrftoken</code> 字段的思路。读 <code>ListAPIView</code> 的源码后，可以知道，<code>get</code> 方法调用了 <code>list</code> 方法，而 <code>list</code> 中做了查询、分页、序列化、包装成分页形式再返回的操作。</p>
-<pre><code class="py">class ListAPIView(mixins.ListModelMixin,
-                  GenericAPIView):
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    <span class="token keyword">def</span> <span class="token function">patch</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+        activity <span class="token operator">=</span> get_object_or_404<span class="token punctuation">(</span>Activity<span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token operator">=</span><span class="token builtin">id</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>check_object_permissions<span class="token punctuation">(</span>request<span class="token punctuation">,</span> activity<span class="token punctuation">)</span>
+</code></pre></div><blockquote><p>如果你正在编写自己的视图并希望强制执行对象级权限检测，或者你想在通用视图中重写 <code>get_object</code> 方法，那么你需要在检索对象的时候显式调用视图上的 <code>.check_object_permissions(request, obj)</code> 方法。</p></blockquote> <h2 id="例-完成序列化后再修改字段"><a href="#例-完成序列化后再修改字段" class="header-anchor">#</a> 例：完成序列化后再修改字段</h2> <p>DRF 的 GeneticAPIView 写起来真的很爽，把 Models 和 Serializer 写好以后，GeneticAPIView 只需要几行就能写完，完成搜索、分页、序列化、返回 Response。但是，不可避免的是，某些时候想要传回更多的字段，或者由于权限问题隐藏某些字段。这个时候，我们就需要自己改写一部分 GeneticAPIView。</p> <h3 id="在-view-中的-serializer-data-中添加字段"><a href="#在-view-中的-serializer-data-中添加字段" class="header-anchor">#</a> 在 view 中的 serializer_data 中添加字段</h3> <p>需求是这样的：原本的 login 函数完成了接收 <code>username</code> 和 <code>password</code> 并验证，正确后将该用户的信息用 <code>UserSerializer</code> 序列化后返回：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">def</span> <span class="token function">login</span><span class="token punctuation">(</span>request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+    err_response <span class="token operator">=</span> Response<span class="token punctuation">(</span>status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_401_UNAUTHORIZED<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">'username'</span> <span class="token keyword">not</span> <span class="token keyword">in</span> request<span class="token punctuation">.</span>data <span class="token keyword">or</span> <span class="token string">'password'</span> <span class="token keyword">not</span> <span class="token keyword">in</span> request<span class="token punctuation">.</span>data<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> err_response
+    username <span class="token operator">=</span> request<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token string">'username'</span><span class="token punctuation">]</span>
+    password <span class="token operator">=</span> request<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token string">'password'</span><span class="token punctuation">]</span>
+    user <span class="token operator">=</span> authenticate<span class="token punctuation">(</span>request<span class="token punctuation">,</span> username<span class="token operator">=</span>username<span class="token punctuation">,</span> password<span class="token operator">=</span>password<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> user <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> err_response
+    django_login<span class="token punctuation">(</span>request<span class="token punctuation">,</span> user<span class="token punctuation">)</span>
+    serializer <span class="token operator">=</span> UserSerializer<span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Response<span class="token punctuation">(</span>serializer<span class="token punctuation">.</span>data<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_200_OK<span class="token punctuation">)</span>
+</code></pre></div><p>由于某些原因，我需要把 <code>csrftoken</code> 加入到返回的 JSON 中。<code>csrftoken</code> 的获取方法是 <code>csrf.get_token(request)</code>。如何将 <code>csrftoken</code> 加入序列化字段呢？</p> <p>最容易想到，但最麻烦且最不美观的方法是修改 <code>UserSerializer</code>。有没有其他方法呢？</p> <p>在最后一行打断点然后调试，执行到这里时看一眼 <code>serializer.data</code> 的类型，是 <code>OrderedDict</code>。<code>OrderedDict</code> 就很好办了，在 Response 之前修改一下，添加一个字段就可以了。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">def</span> <span class="token function">login</span><span class="token punctuation">(</span>request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+    err_response <span class="token operator">=</span> Response<span class="token punctuation">(</span>status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_401_UNAUTHORIZED<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token string">'username'</span> <span class="token keyword">not</span> <span class="token keyword">in</span> request<span class="token punctuation">.</span>data <span class="token keyword">or</span> <span class="token string">'password'</span> <span class="token keyword">not</span> <span class="token keyword">in</span> request<span class="token punctuation">.</span>data<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> err_response
+    username <span class="token operator">=</span> request<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token string">'username'</span><span class="token punctuation">]</span>
+    password <span class="token operator">=</span> request<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token string">'password'</span><span class="token punctuation">]</span>
+    user <span class="token operator">=</span> authenticate<span class="token punctuation">(</span>request<span class="token punctuation">,</span> username<span class="token operator">=</span>username<span class="token punctuation">,</span> password<span class="token operator">=</span>password<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> user <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> err_response
+    serializer <span class="token operator">=</span> UserSerializer<span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    serializer_data <span class="token operator">=</span> serializer<span class="token punctuation">.</span>data
+    serializer_data<span class="token punctuation">[</span><span class="token string">'csrftoken'</span><span class="token punctuation">]</span> <span class="token operator">=</span> csrf<span class="token punctuation">.</span>get_token<span class="token punctuation">(</span>request<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Response<span class="token punctuation">(</span>serializer_data<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_200_OK<span class="token punctuation">)</span>
+</code></pre></div><h3 id="在-geneticapiview-的-serializer-data-中修改字段"><a href="#在-geneticapiview-的-serializer-data-中修改字段" class="header-anchor">#</a> 在 GeneticAPIView 的 serializer_data 中修改字段</h3> <p>这个看起来就要麻烦一点了，毕竟本身 GeneticAPIView 部分是一个函数都没有写。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">UserListView</span><span class="token punctuation">(</span>ListAPIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    queryset <span class="token operator">=</span> User<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>order_by<span class="token punctuation">(</span><span class="token string">&quot;-userprofile__experience&quot;</span><span class="token punctuation">)</span>
+    filter_backends <span class="token operator">=</span> <span class="token punctuation">(</span>filters<span class="token punctuation">.</span>SearchFilter<span class="token punctuation">,</span><span class="token punctuation">)</span>
+    search_fields <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'username'</span><span class="token punctuation">,</span> <span class="token string">'first_name'</span><span class="token punctuation">,</span> <span class="token string">'last_name'</span><span class="token punctuation">,</span> <span class="token string">'userprofile__student_id'</span><span class="token punctuation">)</span>
+    pagination_class <span class="token operator">=</span> Pagination
+    serializer_class <span class="token operator">=</span> UserSerializer
+</code></pre></div><p>这里的需求是：为了保护用户隐私，对于非管理员用户，不让其获取用户的 <code>username</code> 和 <code>student_id</code>，将返回的 <code>username</code> 改为 <code>***</code>、<code>student_id</code> 改为前四位（代表入学年份）。</p> <p>这里就有两种思路了：修改每一个 View 的处理过程（不仅仅是这个 View 需要保护隐私，其他 View 也应当保护隐私）；或者直接修改 <code>Serializer</code> 的序列化过程。</p> <h4 id="思路-1-修改-view-的过程"><a href="#思路-1-修改-view-的过程" class="header-anchor">#</a> 思路 1：修改 View 的过程</h4> <p>我们可以考虑类似于上面添加 <code>csrftoken</code> 字段的思路。读 <code>ListAPIView</code> 的源码后，可以知道，<code>get</code> 方法调用了 <code>list</code> 方法，而 <code>list</code> 中做了查询、分页、序列化、包装成分页形式再返回的操作。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ListAPIView</span><span class="token punctuation">(</span>mixins<span class="token punctuation">.</span>ListModelMixin<span class="token punctuation">,</span>
+                  GenericAPIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span><span class="token builtin">list</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
 
-class ListModelMixin:
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+<span class="token keyword">class</span> <span class="token class-name">ListModelMixin</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">list</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        queryset <span class="token operator">=</span> self<span class="token punctuation">.</span>filter_queryset<span class="token punctuation">(</span>self<span class="token punctuation">.</span>get_queryset<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+        page <span class="token operator">=</span> self<span class="token punctuation">.</span>paginate_queryset<span class="token punctuation">(</span>queryset<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> page <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            serializer <span class="token operator">=</span> self<span class="token punctuation">.</span>get_serializer<span class="token punctuation">(</span>page<span class="token punctuation">,</span> many<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> self<span class="token punctuation">.</span>get_paginated_response<span class="token punctuation">(</span>serializer<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-</code></pre>
-<p>我们只需要把官方的 list 方法复制下来，然后改写一下，在序列化以后判断是否是管理员，对于非管理员，替换每个 <code>username</code> 和 <code>student_id</code> 就可以了。</p>
-<p>注意到官方给的 <code>list</code> 用 if 判断了是否用到分页功能，针对不同情况作了处理。我们已经用到了分页，所以可以把 if 删掉。</p>
-<pre><code class="py">class UserListView(ListAPIView):
-    queryset = User.objects.all().order_by(&quot;-userprofile__experience&quot;)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = (&#39;username&#39;, &#39;first_name&#39;, &#39;last_name&#39;, &#39;userprofile__student_id&#39;)
-    pagination_class = Pagination
-    serializer_class = UserSerializer
+        serializer <span class="token operator">=</span> self<span class="token punctuation">.</span>get_serializer<span class="token punctuation">(</span>queryset<span class="token punctuation">,</span> many<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Response<span class="token punctuation">(</span>serializer<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+</code></pre></div><p>我们只需要把官方的 list 方法复制下来，然后改写一下，在序列化以后判断是否是管理员，对于非管理员，替换每个 <code>username</code> 和 <code>student_id</code> 就可以了。</p> <p>注意到官方给的 <code>list</code> 用 if 判断了是否用到分页功能，针对不同情况作了处理。我们已经用到了分页，所以可以把 if 删掉。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">UserListView</span><span class="token punctuation">(</span>ListAPIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    queryset <span class="token operator">=</span> User<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>order_by<span class="token punctuation">(</span><span class="token string">&quot;-userprofile__experience&quot;</span><span class="token punctuation">)</span>
+    filter_backends <span class="token operator">=</span> <span class="token punctuation">(</span>filters<span class="token punctuation">.</span>SearchFilter<span class="token punctuation">,</span><span class="token punctuation">)</span>
+    search_fields <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'username'</span><span class="token punctuation">,</span> <span class="token string">'first_name'</span><span class="token punctuation">,</span> <span class="token string">'last_name'</span><span class="token punctuation">,</span> <span class="token string">'userprofile__student_id'</span><span class="token punctuation">)</span>
+    pagination_class <span class="token operator">=</span> Pagination
+    serializer_class <span class="token operator">=</span> UserSerializer
 
-    # 复制官方的 list，然后根据自己的需求进行改写
-    def list(self, request: WSGIRequest, *args, **kwargs) -&gt; Response:
-        queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        serializer = self.get_serializer(page, many=True)
-        serializer_data = serializer.data
-        # 对于非管理员，需要替换学号为学号前四位
-        if not (request.user.is_staff or request.user.is_staff):
-            for item in serializer_data:
-                item[&#39;username&#39;] = &#39;***&#39;
-                item[&#39;student_id&#39;] = item[&#39;student_id&#39;][0:4]
-        return self.get_paginated_response(serializer_data)
-</code></pre>
-<p>这种方法的缺点就是需要对每一个 View 进行修改，而且在 List 的结果中，非管理员也不能获得自己的详细信息了。</p>
-<h4 id="思路-2：修改-Serializer"><a href="#思路-2：修改-Serializer" class="headerlink" title="思路 2：修改 Serializer"></a>思路 2：修改 Serializer</h4><p>上面的方法需要对每个 View 进行修改，并且新增的 View 如果忘记修改了，还会导致数据泄露。有没有从 Model 或 Serializer 下手的方法呢？</p>
-<p>这种方案要解决两个问题，一是序列化的过程中并没有 <code>request</code>，没有 <code>request</code> 我们就没法判断当前用户是否是管理员，所以需要通过什么方法传进去；二是需要自定义序列化的过程。</p>
-<hr>
-<p>对于第一个问题，<a href="https://www.django-rest-framework.org/api-guide/serializers/#including-extra-context" target="_blank" rel="noopener">DRF 文档</a> 中提到，可以在序列化时提供 <code>context</code>。</p>
-<pre><code class="py">serializer = AccountSerializer(account, context={&#39;request&#39;: request})
-serializer.data
-# {&#39;id&#39;: 6, &#39;owner&#39;: &#39;denvercoder9&#39;, &#39;created&#39;: datetime.datetime(2013, 2, 12, 09, 44, 56, 678870), &#39;details&#39;: &#39;http://example.com/accounts/6/details&#39;}
-</code></pre>
-<p>在 <code>context</code> 中提供 user 信息，我们就可以判断用户的身份了。更好的是，GeneticAPIView 在序列化时，提供了默认的 <code>context</code>：</p>
-<pre><code class="py">class GenericAPIView(views.APIView):
-    &quot;&quot;&quot;
+    <span class="token comment"># 复制官方的 list，然后根据自己的需求进行改写</span>
+    <span class="token keyword">def</span> <span class="token function">list</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+        queryset <span class="token operator">=</span> self<span class="token punctuation">.</span>filter_queryset<span class="token punctuation">(</span>self<span class="token punctuation">.</span>get_queryset<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        page <span class="token operator">=</span> self<span class="token punctuation">.</span>paginate_queryset<span class="token punctuation">(</span>queryset<span class="token punctuation">)</span>
+        serializer <span class="token operator">=</span> self<span class="token punctuation">.</span>get_serializer<span class="token punctuation">(</span>page<span class="token punctuation">,</span> many<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+        serializer_data <span class="token operator">=</span> serializer<span class="token punctuation">.</span>data
+        <span class="token comment"># 对于非管理员，需要替换学号为学号前四位</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_staff <span class="token keyword">or</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_staff<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> item <span class="token keyword">in</span> serializer_data<span class="token punctuation">:</span>
+                item<span class="token punctuation">[</span><span class="token string">'username'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'***'</span>
+                item<span class="token punctuation">[</span><span class="token string">'student_id'</span><span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">[</span><span class="token string">'student_id'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>get_paginated_response<span class="token punctuation">(</span>serializer_data<span class="token punctuation">)</span>
+</code></pre></div><p>这种方法的缺点就是需要对每一个 View 进行修改，而且在 List 的结果中，非管理员也不能获得自己的详细信息了。</p> <h4 id="思路-2-修改-serializer"><a href="#思路-2-修改-serializer" class="header-anchor">#</a> 思路 2：修改 Serializer</h4> <p>上面的方法需要对每个 View 进行修改，并且新增的 View 如果忘记修改了，还会导致数据泄露。有没有从 Model 或 Serializer 下手的方法呢？</p> <p>这种方案要解决两个问题，一是序列化的过程中并没有 <code>request</code>，没有 <code>request</code> 我们就没法判断当前用户是否是管理员，所以需要通过什么方法传进去；二是需要自定义序列化的过程。</p> <hr> <p>对于第一个问题，<a href="https://www.django-rest-framework.org/api-guide/serializers/#including-extra-context" target="_blank" rel="noopener noreferrer">DRF 文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 中提到，可以在序列化时提供 <code>context</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code>serializer <span class="token operator">=</span> AccountSerializer<span class="token punctuation">(</span>account<span class="token punctuation">,</span> context<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">'request'</span><span class="token punctuation">:</span> request<span class="token punctuation">}</span><span class="token punctuation">)</span>
+serializer<span class="token punctuation">.</span>data
+<span class="token comment"># {'id': 6, 'owner': 'denvercoder9', 'created': datetime.datetime(2013, 2, 12, 09, 44, 56, 678870), 'details': 'http://example.com/accounts/6/details'}</span>
+</code></pre></div><p>在 <code>context</code> 中提供 user 信息，我们就可以判断用户的身份了。更好的是，GeneticAPIView 在序列化时，提供了默认的 <code>context</code>：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">GenericAPIView</span><span class="token punctuation">(</span>views<span class="token punctuation">.</span>APIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;
     Base class for all other generic views.
-    &quot;&quot;&quot;
+    &quot;&quot;&quot;</span>
 
-    def get_serializer(self, *args, **kwargs):
-        &quot;&quot;&quot;
+    <span class="token keyword">def</span> <span class="token function">get_serializer</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;
         Return the serializer instance that should be used for validating and
         deserializing input, and for serializing output.
-        &quot;&quot;&quot;
-        serializer_class = self.get_serializer_class()
-        kwargs[&#39;context&#39;] = self.get_serializer_context()
-        return serializer_class(*args, **kwargs)    
+        &quot;&quot;&quot;</span>
+        serializer_class <span class="token operator">=</span> self<span class="token punctuation">.</span>get_serializer_class<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        kwargs<span class="token punctuation">[</span><span class="token string">'context'</span><span class="token punctuation">]</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>get_serializer_context<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> serializer_class<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>    
 
-    def get_serializer_context(self):
-        &quot;&quot;&quot;
+    <span class="token keyword">def</span> <span class="token function">get_serializer_context</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;
         Extra context provided to the serializer class.
-        &quot;&quot;&quot;
-        return {
-            &#39;request&#39;: self.request,
-            &#39;format&#39;: self.format_kwarg,
-            &#39;view&#39;: self
-        }
-</code></pre>
-<p>这下我们直接在 Serializer 里用就行了，GeneticAPIView 一行都不用修改。</p>
-<hr>
-<p>对于第二个问题，查询资料发现，DRF 序列化的函数为 <code>to_representation</code>，其定义如下：</p>
-<pre><code class="py">class Serializer(BaseSerializer, metaclass=SerializerMetaclass):
-    def to_representation(self, instance):
-        &quot;&quot;&quot;
+        &quot;&quot;&quot;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            <span class="token string">'request'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>request<span class="token punctuation">,</span>
+            <span class="token string">'format'</span><span class="token punctuation">:</span> self<span class="token punctuation">.</span>format_kwarg<span class="token punctuation">,</span>
+            <span class="token string">'view'</span><span class="token punctuation">:</span> self
+        <span class="token punctuation">}</span>
+</code></pre></div><p>这下我们直接在 Serializer 里用就行了，GeneticAPIView 一行都不用修改。</p> <hr> <p>对于第二个问题，查询资料发现，DRF 序列化的函数为 <code>to_representation</code>，其定义如下：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">Serializer</span><span class="token punctuation">(</span>BaseSerializer<span class="token punctuation">,</span> metaclass<span class="token operator">=</span>SerializerMetaclass<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">to_representation</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> instance<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;
         Object instance -&gt; Dict of primitive datatypes.
-        &quot;&quot;&quot;
-        ret = OrderedDict()
-        fields = self._readable_fields
+        &quot;&quot;&quot;</span>
+        ret <span class="token operator">=</span> OrderedDict<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        fields <span class="token operator">=</span> self<span class="token punctuation">.</span>_readable_fields
 
-        for field in fields:
-            try:
-                attribute = field.get_attribute(instance)
-            except SkipField:
-                continue
+        <span class="token keyword">for</span> field <span class="token keyword">in</span> fields<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                attribute <span class="token operator">=</span> field<span class="token punctuation">.</span>get_attribute<span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+            <span class="token keyword">except</span> SkipField<span class="token punctuation">:</span>
+                <span class="token keyword">continue</span>
 
-            # We skip `to_representation` for `None` values so that fields do
-            # not have to explicitly deal with that case.
-            #
-            # For related fields with `use_pk_only_optimization` we need to
-            # resolve the pk value.
-            check_for_none = attribute.pk if isinstance(attribute, PKOnlyObject) else attribute
-            if check_for_none is None:
-                ret[field.field_name] = None
-            else:
-                ret[field.field_name] = field.to_representation(attribute)
+            <span class="token comment"># We skip `to_representation` for `None` values so that fields do</span>
+            <span class="token comment"># not have to explicitly deal with that case.</span>
+            <span class="token comment">#</span>
+            <span class="token comment"># For related fields with `use_pk_only_optimization` we need to</span>
+            <span class="token comment"># resolve the pk value.</span>
+            check_for_none <span class="token operator">=</span> attribute<span class="token punctuation">.</span>pk <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>attribute<span class="token punctuation">,</span> PKOnlyObject<span class="token punctuation">)</span> <span class="token keyword">else</span> attribute
+            <span class="token keyword">if</span> check_for_none <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                ret<span class="token punctuation">[</span>field<span class="token punctuation">.</span>field_name<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">None</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                ret<span class="token punctuation">[</span>field<span class="token punctuation">.</span>field_name<span class="token punctuation">]</span> <span class="token operator">=</span> field<span class="token punctuation">.</span>to_representation<span class="token punctuation">(</span>attribute<span class="token punctuation">)</span>
 
-        return ret
-</code></pre>
-<p>我们只需要重写它即可，把上面的代码复制下来，然后在 return 之前判断用户身份，替换 <code>ret</code> 的 <code>student_id</code> 和 <code>username</code> 字段。</p>
-<p>不对，连复制都不需要，我们只需要调用父类的 <code>to_representation()</code>，然后加两行就可以了！</p>
-<pre><code class="py">    def to_representation(self, instance):
-        ret = super().to_representation(instance)
+        <span class="token keyword">return</span> ret
+</code></pre></div><p>我们只需要重写它即可，把上面的代码复制下来，然后在 return 之前判断用户身份，替换 <code>ret</code> 的 <code>student_id</code> 和 <code>username</code> 字段。</p> <p>不对，连复制都不需要，我们只需要调用父类的 <code>to_representation()</code>，然后加两行就可以了！</p> <div class="language-py extra-class"><pre class="language-py"><code>    <span class="token keyword">def</span> <span class="token function">to_representation</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> instance<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        ret <span class="token operator">=</span> <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to_representation<span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
 
-        # 隐藏 username 和 student_id
-        request = self.context.get(&#39;request&#39;)
-        if request is None:     # django shell 时会出现 request is None
-            return ret
-        if not (request.user.is_staff or request.user.is_superuser or request.user.id == ret[&#39;id&#39;]):
-            ret[&#39;username&#39;] = &#39;***&#39;
-            ret[&#39;student_id&#39;] = ret[&#39;student_id&#39;][0:4]
-        return ret
-</code></pre>
-<h2 id="serializers-ListField-和-models-ManyToManyField-的梦幻联动"><a href="#serializers-ListField-和-models-ManyToManyField-的梦幻联动" class="headerlink" title="serializers.ListField 和 models.ManyToManyField 的梦幻联动"></a>serializers.ListField 和 models.ManyToManyField 的梦幻联动</h2><p>对于外键这类东西，Serializer 虽然不能自动处理，但是也提供了接口，只要加一点代码就可以完成灵活的写入。</p>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>场景是这样的：<code>主讲人</code> 是关于 <code>Activity</code> 和 <code>User</code> 的一个多对多的关系。在 Model 中是这样定义的：</p>
-<pre><code class="py">class Activity(models.Model):
+        <span class="token comment"># 隐藏 username 和 student_id</span>
+        request <span class="token operator">=</span> self<span class="token punctuation">.</span>context<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> request <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>     <span class="token comment"># django shell 时会出现 request is None</span>
+            <span class="token keyword">return</span> ret
+        <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_staff <span class="token keyword">or</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_superuser <span class="token keyword">or</span> request<span class="token punctuation">.</span>user<span class="token punctuation">.</span><span class="token builtin">id</span> <span class="token operator">==</span> ret<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            ret<span class="token punctuation">[</span><span class="token string">'username'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'***'</span>
+            ret<span class="token punctuation">[</span><span class="token string">'student_id'</span><span class="token punctuation">]</span> <span class="token operator">=</span> ret<span class="token punctuation">[</span><span class="token string">'student_id'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> ret
+</code></pre></div><h2 id="serializers-listfield-和-models-manytomanyfield-的梦幻联动"><a href="#serializers-listfield-和-models-manytomanyfield-的梦幻联动" class="header-anchor">#</a> serializers.ListField 和 models.ManyToManyField 的梦幻联动</h2> <p>对于外键这类东西，Serializer 虽然不能自动处理，但是也提供了接口，只要加一点代码就可以完成灵活的写入。</p> <h3 id="背景"><a href="#背景" class="header-anchor">#</a> 背景</h3> <p>场景是这样的：<code>主讲人</code> 是关于 <code>Activity</code> 和 <code>User</code> 的一个多对多的关系。在 Model 中是这样定义的：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">Activity</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    presenter = models.ManyToManyField(User, verbose_name=&quot;主讲人&quot;, related_name=&quot;present_activity&quot;)
-</code></pre>
-<p>对于获取 Actiivty 信息的 REST API，常见的一种写法是返回该 Activity 的所有主讲人的 id 组成的数组。</p>
-<p>在 DRF 中可以使用 <a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/fields_zh/#listfield" target="_blank" rel="noopener">ListField</a> 来实现。</p>
-<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
+    presenter <span class="token operator">=</span> models<span class="token punctuation">.</span>ManyToManyField<span class="token punctuation">(</span>User<span class="token punctuation">,</span> verbose_name<span class="token operator">=</span><span class="token string">&quot;主讲人&quot;</span><span class="token punctuation">,</span> related_name<span class="token operator">=</span><span class="token string">&quot;present_activity&quot;</span><span class="token punctuation">)</span>
+</code></pre></div><p>对于获取 Actiivty 信息的 REST API，常见的一种写法是返回该 Activity 的所有主讲人的 id 组成的数组。</p> <p>在 DRF 中可以使用 <a href="https://q1mi.github.io/Django-REST-framework-documentation/api-guide/fields_zh/#listfield" target="_blank" rel="noopener noreferrer">ListField<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 来实现。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivitySerializer</span><span class="token punctuation">(</span>serializers<span class="token punctuation">.</span>ModelSerializer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">class</span> <span class="token class-name">Meta</span><span class="token punctuation">:</span>
+        model <span class="token operator">=</span> Activity
 
-    presenter = serializers.ListField(child=serializers.IntegerField(), read_only=False)
-</code></pre>
-<p>但是 ListField 并不能直接将 ManyToManyField 的内容转化为 ListField。转化部分需要我们自己写。</p>
-<p>怎么写呢？改 <code>to_representation</code> 吗？我尝试了一下这个，最终放弃了，因为一调用 <code>super().to_representation</code> 就会尝试把 <code>presenter</code> 序列化。</p>
-<p>Python 可以定义一个类的方法为属性，如果定义了 <code>setter</code>，还可以把外界对这个属性的修改，反作用到原来的属性：</p>
-<pre><code class="py">class Activity(models.Model):
+    presenter <span class="token operator">=</span> serializers<span class="token punctuation">.</span>ListField<span class="token punctuation">(</span>child<span class="token operator">=</span>serializers<span class="token punctuation">.</span>IntegerField<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> read_only<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+</code></pre></div><p>但是 ListField 并不能直接将 ManyToManyField 的内容转化为 ListField。转化部分需要我们自己写。</p> <p>怎么写呢？改 <code>to_representation</code> 吗？我尝试了一下这个，最终放弃了，因为一调用 <code>super().to_representation</code> 就会尝试把 <code>presenter</code> 序列化。</p> <p>Python 可以定义一个类的方法为属性，如果定义了 <code>setter</code>，还可以把外界对这个属性的修改，反作用到原来的属性：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">Activity</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    presenter = models.ManyToManyField(User, verbose_name=&quot;主讲人&quot;, related_name=&quot;present_activity&quot;)
+    presenter <span class="token operator">=</span> models<span class="token punctuation">.</span>ManyToManyField<span class="token punctuation">(</span>User<span class="token punctuation">,</span> verbose_name<span class="token operator">=</span><span class="token string">&quot;主讲人&quot;</span><span class="token punctuation">,</span> related_name<span class="token operator">=</span><span class="token string">&quot;present_activity&quot;</span><span class="token punctuation">)</span>
 
-    @property
-    def presenter_id(self) -&gt; List[int]:
-        queryset = self.presenter.all().values(&#39;id&#39;)
-        return list(map(lambda u: u[&#39;id&#39;], queryset))
+    <span class="token decorator annotation punctuation">@property</span>
+    <span class="token keyword">def</span> <span class="token function">presenter_id</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        queryset <span class="token operator">=</span> self<span class="token punctuation">.</span>presenter<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> u<span class="token punctuation">:</span> u<span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> queryset<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-    @presenter_id.setter
-    def presenter_id(self, value: List[int]):
-        self.presenter.clear()
-        self.presenter.add(*value)
-</code></pre>
-<p>然后我们指定一下 ListField 的 <code>source</code> 就可以了：</p>
-<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
+    <span class="token decorator annotation punctuation">@presenter_id<span class="token punctuation">.</span>setter</span>
+    <span class="token keyword">def</span> <span class="token function">presenter_id</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> value<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>presenter<span class="token punctuation">.</span>clear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>presenter<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token operator">*</span>value<span class="token punctuation">)</span>
+</code></pre></div><p>然后我们指定一下 ListField 的 <code>source</code> 就可以了：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivitySerializer</span><span class="token punctuation">(</span>serializers<span class="token punctuation">.</span>ModelSerializer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">class</span> <span class="token class-name">Meta</span><span class="token punctuation">:</span>
+        model <span class="token operator">=</span> Activity
 
-    presenter = serializers.ListField(child=serializers.IntegerField(), source=&quot;presenter_id&quot;, read_only=False)
-</code></pre>
-<p>就这么简单。</p>
-<hr>
-<p>对了，后面发现，<code>create</code> 的时候还是会报错，因为 DRF 会在创建 Activity 时尝试设定 <code>presenter</code> 值，而此时 Activity 还没有写入数据库、没有主键，于是也没法创建多对多的记录。</p>
-<p>解决方法是重载 <code>create</code> 方法，在 Activity 创建之后再写 presenter：</p>
-<pre><code class="py">class ActivitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Activity
+    presenter <span class="token operator">=</span> serializers<span class="token punctuation">.</span>ListField<span class="token punctuation">(</span>child<span class="token operator">=</span>serializers<span class="token punctuation">.</span>IntegerField<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> source<span class="token operator">=</span><span class="token string">&quot;presenter_id&quot;</span><span class="token punctuation">,</span> read_only<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+</code></pre></div><p>就这么简单。</p> <hr> <p>对了，后面发现，<code>create</code> 的时候还是会报错，因为 DRF 会在创建 Activity 时尝试设定 <code>presenter</code> 值，而此时 Activity 还没有写入数据库、没有主键，于是也没法创建多对多的记录。</p> <p>解决方法是重载 <code>create</code> 方法，在 Activity 创建之后再写 presenter：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivitySerializer</span><span class="token punctuation">(</span>serializers<span class="token punctuation">.</span>ModelSerializer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">class</span> <span class="token class-name">Meta</span><span class="token punctuation">:</span>
+        model <span class="token operator">=</span> Activity
 
-    presenter = serializers.ListField(child=serializers.IntegerField(), source=&quot;presenter_id&quot;, read_only=False)
+    presenter <span class="token operator">=</span> serializers<span class="token punctuation">.</span>ListField<span class="token punctuation">(</span>child<span class="token operator">=</span>serializers<span class="token punctuation">.</span>IntegerField<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> source<span class="token operator">=</span><span class="token string">&quot;presenter_id&quot;</span><span class="token punctuation">,</span> read_only<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
 
-    def create(self, validated_data):
-        presenter = validated_data.pop(&#39;presenter&#39;, [])
-        activity = super().create(validated_data)
-        activity.presenter_id = presenter
-        return activity
-</code></pre>
-<h2 id="REST-API-标准"><a href="#REST-API-标准" class="headerlink" title="REST API 标准"></a>REST API 标准</h2><p>开发 REST 的工具有了，那标准呢？这是一个非常重要的问题。就像学了 C 语言后能写出很多的程序，但是常用的代码风格、代码库依旧要参考其他的标准。</p>
-<p>我为此新开了一篇博文：<a href="../restful-api-standard">RESTful API 标准</a>。</p>
-<h2 id="DRF-项目部署"><a href="#DRF-项目部署" class="headerlink" title="DRF 项目部署"></a>DRF 项目部署</h2><p>可以参考 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/lyh543/docs/deploy/deploy.md" target="_blank" rel="noopener">https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/lyh543/docs/deploy/deploy.md</a></p>
-<h2 id="Swagger-文档生成"><a href="#Swagger-文档生成" class="headerlink" title="Swagger 文档生成"></a>Swagger 文档生成</h2><p>可以看 <a href="../drf_yasg">drf-yasg</a>。</p>
+    <span class="token keyword">def</span> <span class="token function">create</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> validated_data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        presenter <span class="token operator">=</span> validated_data<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token string">'presenter'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        activity <span class="token operator">=</span> <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>create<span class="token punctuation">(</span>validated_data<span class="token punctuation">)</span>
+        activity<span class="token punctuation">.</span>presenter_id <span class="token operator">=</span> presenter
+        <span class="token keyword">return</span> activity
+</code></pre></div><h2 id="rest-api-标准"><a href="#rest-api-标准" class="header-anchor">#</a> REST API 标准</h2> <p>开发 REST 的工具有了，那标准呢？这是一个非常重要的问题。就像学了 C 语言后能写出很多的程序，但是常用的代码风格、代码库依旧要参考其他的标准。</p> <p>我为此新开了一篇博文：<a href="../restful-api-standard">RESTful API 标准</a>。</p> <h2 id="drf-项目部署"><a href="#drf-项目部署" class="header-anchor">#</a> DRF 项目部署</h2> <p>可以参考 https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/lyh543/docs/deploy/deploy.md</p> <h2 id="swagger-文档生成"><a href="#swagger-文档生成" class="header-anchor">#</a> Swagger 文档生成</h2> <p>可以看 <a href="../drf_yasg">drf-yasg</a>。</p></div></div></div> <footer><!----></footer></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/227.cad443ce.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
+</html>

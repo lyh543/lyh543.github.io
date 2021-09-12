@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>小灰灰灰灰的博客</title>
+        <link>https://blog.lyh543.cn/</link>
+        <description>正在开发中的 Material Design 风格 Vuepress</description>
+        <lastBuildDate>Sun, 12 Sep 2021 03:30:36 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
+        <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Gravatar 镜像]]></title>
+            <link>https://blog.lyh543.cn/back-end/gravatar-mirror.html</link>
+            <guid>https://blog.lyh543.cn/back-end/gravatar-mirror.html</guid>
+            <pubDate>Wed, 28 Apr 2021 19:55:40 GMT</pubDate>
+            <description><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
+
+网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
+
+测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[和 CSRF 与 CORS 斗智斗勇]]></title>
+            <link>https://blog.lyh543.cn/back-end/handle-cors-and-csrf.html</link>
+            <guid>https://blog.lyh543.cn/back-end/handle-cors-and-csrf.html</guid>
+            <pubDate>Tue, 23 Feb 2021 12:28:15 GMT</pubDate>
+            <description><![CDATA[写前后端的时候遇到了这个问题，花了三天时间解决，就还是简单地写一写。写到最后才发现，这里面涉及的知识量也太大了，也请各位读者耐心阅读。
+
+前言
+
+CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不是很清楚二者的区别，于是就再搜了一下，顺便把另外两个概念也聊一聊。
+
+浏览器、前端和后端的关系大概是：前端  浏览器  后端。前端告诉浏览器它需要访问什么，浏览 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/002a229b9263643bc576ec37992275e9ca2f79f9d63137b018cb5a216a1475cc.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[HTTP 状态码]]></title>
+            <link>https://blog.lyh543.cn/back-end/http-status-code.html</link>
+            <guid>https://blog.lyh543.cn/back-end/http-status-code.html</guid>
+            <pubDate>Sat, 30 Jan 2021 23:08:30 GMT</pubDate>
+            <description><![CDATA[MDN Web Docs
+维基百科
+
+1xx 请求已被接受，需要继续处理
+
+1 打头的其实不是很常用。
+
+不过有一个 102 Processing (WebDAV) 挺有意思，用于表明 W ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[后端利用 REST API 对接 Onedrive]]></title>
+            <link>https://blog.lyh543.cn/back-end/onedrive-rest-api.html</link>
+            <guid>https://blog.lyh543.cn/back-end/onedrive-rest-api.html</guid>
+            <pubDate>Thu, 25 Feb 2021 16:41:13 GMT</pubDate>
+            <description><![CDATA[最近写的后端项目需要云盘，由于各种原因，最终选择了 Onedrive。Onedrive 的一个优点是文档是中文的，但缺点是中文也看不懂。。。。
+
+于是借助文档、博客、示例代码等等，慢慢摸索过来，并把摸索的这个过程形成一篇博文。
+
+注册应用、用户登录授权
+
+> 参考博客：[zhangguanzhang's Blog](https://zhangguanzhang.github.io/2020/ ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/cc719c616ef24cdf4c51997fcbf6c55edf234453c73ea79b81684c8fea1b6d8e.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[RESTful API 标准]]></title>
+            <link>https://blog.lyh543.cn/back-end/restful-api-standard.html</link>
+            <guid>https://blog.lyh543.cn/back-end/restful-api-standard.html</guid>
+            <pubDate>Tue, 15 Sep 2020 21:33:43 GMT</pubDate>
+            <description><![CDATA[文章部分内容转自：https://www.colabug.com/2017/0627/228298/
+
+REST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。
+
+REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于H ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo 使用 Gitalk 评论]]></title>
+            <link>https://blog.lyh543.cn/blog/gitalk.html</link>
+            <guid>https://blog.lyh543.cn/blog/gitalk.html</guid>
+            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。
+> Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 官方网站。
+>
+> 2019.11.6 更新：由于 GitHub OAuth ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hello Hexo]]></title>
+            <link>https://blog.lyh543.cn/blog/hello-hexo.html</link>
+            <guid>https://blog.lyh543.cn/blog/hello-hexo.html</guid>
+            <pubDate>Sun, 23 Jun 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in [trou ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo 备份（及一次翻车的经历）]]></title>
+            <link>https://blog.lyh543.cn/blog/hexo-backup.html</link>
+            <guid>https://blog.lyh543.cn/blog/hexo-backup.html</guid>
+            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[由于 Hexo 的本地文件是没有上传到 Github 的，某天突发奇想，想把 Hexo 文件夹直接移至 Onedrive 自动备份。
+后来发现由于 Hexo 的 node_modules 文件太多了(10000+)，以至于需要同步很久。
+另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。
+
+于是就 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo 建站]]></title>
+            <link>https://blog.lyh543.cn/blog/hexo-building-blog.html</link>
+            <guid>https://blog.lyh543.cn/blog/hexo-building-blog.html</guid>
+            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[先放一个Hexo官方文档的链接。
+
+初始化 hexo 博客
+
+npm install hexo-cli -g
+hexo init lyh543.github.io
+
+这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。
+
+`` ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo Indigo主题配置]]></title>
+            <link>https://blog.lyh543.cn/blog/hexo-indigo.html</link>
+            <guid>https://blog.lyh543.cn/blog/hexo-indigo.html</guid>
+            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[额，在用了两个月的 Material 主题以后，有点喜新厌旧了（逃
+
+其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo Material 主题配置]]></title>
+            <link>https://blog.lyh543.cn/blog/hexo-material.html</link>
+            <guid>https://blog.lyh543.cn/blog/hexo-material.html</guid>
+            <pubDate>Fri, 16 Aug 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
+
+Hexo 更换主题的方法参见另一篇博客。
+
+在网上找到了一个配置过程非常详实的[博客](https://z ...]]></description>
+            <enclosure url="https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[Hexo 写作]]></title>
+            <link>https://blog.lyh543.cn/blog/hexo-writing.html</link>
+            <guid>https://blog.lyh543.cn/blog/hexo-writing.html</guid>
+            <pubDate>Sun, 23 Jun 2019 16:33:03 GMT</pubDate>
+            <description><![CDATA[Hexo写作支持Markdown。
+不懂就查文档
+下面是一些区别于常规Markdown的点。
+
+即时预览
+
+由于 Hexo 博客不全是使用Markdown语法，常规Markdown编辑器无法提供效果完全相同的预览。但是 Hexo 提供了本地网页即时预览博客的功能。
+ ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/./hexo-writing/blog_preview.jpg">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[Markdown 语法]]></title>
+            <link>https://blog.lyh543.cn/blog/markdown.html</link>
+            <guid>https://blog.lyh543.cn/blog/markdown.html</guid>
+            <pubDate>Sun, 16 Jun 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[入门 Markdown 推荐：http://younghz.github.io/Markdown/
+> Markdown Cheatsheet: https://bit.ly/mdcheat
+
+本文主要记录 Markdown（如有必要，也会提到 HTML）中不常见的语法，如文字的下标、代码中含有反引号   ` 的处理方法等。
+
+标题中出现了井号
+
+标题出现了 # 号， ...]]></description>
+            <enclosure url="https://gitee.com/uploads/images/2019/0424/194736_1331e2af_551056.jpeg">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[Markdownlint 使用]]></title>
+            <link>https://blog.lyh543.cn/blog/markdownlint.html</link>
+            <guid>https://blog.lyh543.cn/blog/markdownlint.html</guid>
+            <pubDate>Fri, 30 Aug 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。
+
+markdownlint_intro
+
+[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/./markdownlint/markdownlint_intro.jpg">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[博客迁移 ing...]]></title>
+            <link>https://blog.lyh543.cn/blog/migrating-from-hexo-to-vuepress.html</link>
+            <guid>https://blog.lyh543.cn/blog/migrating-from-hexo-to-vuepress.html</guid>
+            <pubDate>Thu, 29 Jul 2021 14:49:41 GMT</pubDate>
+            <description><![CDATA[我的第一篇博客 Hello Hexo 是在 2019-6-24 创建的。还记得当时还在大一下的期末考试周，但我就是不想复习电路分析等等，就是要搭博客哈哈哈。
+
+转眼间，Hexo 博客用了两年多了，主题也用过两个：hexo-theme-material 和 [he ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[用 GitHub Actions 自动化发布 Hexo 网站到 GitHub Pages（转载）]]></title>
+            <link>https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html</link>
+            <guid>https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html</guid>
+            <pubDate>Mon, 28 Sep 2020 21:03:29 GMT</pubDate>
+            <description><![CDATA[转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金
+
+之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：
+
+#!/bin/bash
+
+echo
+echo pus ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/04d0daf452702bd99d8efc0a193d0b21aef1c6b8a8a5207752429e5fb1d65e01.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[大城市的互联网公司]]></title>
+            <link>https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html</link>
+            <guid>https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html</guid>
+            <pubDate>Thu, 17 Dec 2020 16:06:49 GMT</pubDate>
+            <description><![CDATA[[Microsoft]
+
+上海
+
+[Microsoft]
+[PayPal]
+
+深圳
+
+[TP-LINK]
+
+成都
+
+有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。
+
+[腾讯]
+[字节跳动]
+[阿里]
+[美团]
+[百度]
+[京东]，但基本不招 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[面经集合 - 2020]]></title>
+            <link>https://blog.lyh543.cn/carrers/interview-experience/2020.html</link>
+            <guid>https://blog.lyh543.cn/carrers/interview-experience/2020.html</guid>
+            <pubDate>Fri, 30 Oct 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[推荐搭配 面试相关知识 食用。
+
+2020冬 字节跳动北京 电商后端 日常实习
+
+职位链接
+
+第一面
+
+面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[面经集合 - 2021]]></title>
+            <link>https://blog.lyh543.cn/carrers/interview-experience/2021.html</link>
+            <guid>https://blog.lyh543.cn/carrers/interview-experience/2021.html</guid>
+            <pubDate>Sun, 07 Mar 2021 16:00:00 GMT</pubDate>
+            <description><![CDATA[推荐搭配 面试相关知识 食用。
+
+2021春 腾讯成都 CSIG 后台开发 暑期实习
+
+这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。
+
+一面
+
+自我介绍
+自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。
+会 Ja ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[面试相关知识]]></title>
+            <link>https://blog.lyh543.cn/carrers/interview-notes.html</link>
+            <guid>https://blog.lyh543.cn/carrers/interview-notes.html</guid>
+            <pubDate>Fri, 26 Mar 2021 16:00:00 GMT</pubDate>
+            <description><![CDATA[以下知识均在后台开发面试中实际出现过、总结而来。
+
+C++
+
+多态的实现
+
+即虚函数表。
+
+STL 容器库
+
+容器库 - cppreference.com
+
+unordered_map 和 map 的区别
+
+略。
+
+multimap 和 map 的区别
+
+略。
+ ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png">
+            </enclosure>
+        </item>
+    </channel>
+</rss>

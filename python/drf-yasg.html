@@ -1,218 +1,182 @@
-<hr>
-<p>title: drf-yasg —— Django REST Framework 文档生成<br>date: 2021-1-24 18:20:23<br>tags:</p>
-<ul>
-<li>Python</li>
-<li>Django</li>
-<li>RESTful</li>
-<li>后端<br>category:</li>
-<li>Python</li>
-</ul>
-<hr>
-<p>前两篇：<a href="../django-study-notes">Django 学习笔记</a> | <a href="../django-rest-framework-study-notes">Dango REST Framework 学习笔记</a></p>
-<p>文档对于后端开发是相当重要，即使是一个人写前后端，如果不写文档，可能前天写的接口今天又不知道了。而且，测试部分是基于文档进行编写的，上过软件工程课程的同学应该都有了解。足以看出文档对后端开发的重要性。</p>
-<p>对于 Django REST Framework，也有文档生成的工具。<a href="https://www.cnblogs.com/wangyingblock/p/11103754.html" target="_blank" rel="noopener">django-rest-swagger</a> 就是一款，但是它已经不支持 Django 3.0 了。Django 3.12 可以改用 <strong>drf-yasg: Django REST Framwork Yet Another Swagger Generator</strong>。</p>
-<p><a href="https://github.com/axnsan12/drf-yasg" target="_blank" rel="noopener">GitHub</a> | <a href="https://drf-yasg.readthedocs.io/" target="_blank" rel="noopener">Read the Docs</a> | <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend" target="_blank" rel="noopener">我使用 drf-ysag 编写的开源项目</a></p>
-<h2 id="drf-yasg-安装及全局配置"><a href="#drf-yasg-安装及全局配置" class="headerlink" title="drf-yasg 安装及全局配置"></a>drf-yasg 安装及全局配置</h2><p>安装以及这个<a href="https://drf-yasg.readthedocs.io/en/stable/readme.html#usage" target="_blank" rel="noopener">官方文档</a>非常详细的描述了，我就不多说了。</p>
-<p>配置好并运行 Django 项目以后，就可以使用浏览器访问 <code>/swagger/</code> 和 <code>/redoc/</code> （链接取决于你的 <code>urls</code> 的配置）看到两种风格的文档了。我个人比较喜欢 Swagger 的，所以下面均用 Swagger 文档的界面作截图。</p>
-<p><img src="../../images/841d0d174343f08dbca1de4bd30c2e3178712fb0e1c0c9b306a4ac1dca857b83.png" alt="Swagger"></p>
-<p>另外，我个人更喜欢在 Parameters 和 Response 的地方默认展示 <code>Example Value</code> 而不是 <code>Model</code>，所以各位可以在 <code>&lt;project_name&gt;/settings.py</code> 中添加下面几行：</p>
-<pre><code class="py">SWAGGER_SETTINGS = {
-    &#39;DEFAULT_MODEL_RENDERING&#39;: &#39;example&#39;
-}
-</code></pre>
-<p><img src="../../images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="默认展示 Example Value"></p>
-<h2 id="drf-yasg-使用方法"><a href="#drf-yasg-使用方法" class="headerlink" title="drf-yasg 使用方法"></a>drf-yasg 使用方法</h2><p>但是 drf-yasg 的使用方法并不详细。。。。</p>
-<p>于是继续 Google 看到了另外一篇文章：<a href="https://zoejoyuliao.medium.com/%E8%87%AA%E5%AE%9A%E7%BE%A9-drf-yasg-%E7%9A%84-swagger-%E6%96%87%E6%AA%94-%E4%BB%A5-get-post-%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3%E7%82%BA%E4%BE%8B-eeecd922059b" target="_blank" rel="noopener">自定義 drf-yasg 的 Swagger 文檔— 以 GET、POST、檔案上傳為例</a>，简单了解了一下。</p>
-<p>之后再去怼<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener">文档</a>，了解了更多的方法。</p>
-<h3 id="为-View-的文档添加摘要和说明"><a href="#为-View-的文档添加摘要和说明" class="headerlink" title="为 View 的文档添加摘要和说明"></a>为 View 的文档添加摘要和说明</h3><p>Swagger 的方法是使用 <code>drf_yasg.utils.swagger_auto_schema</code> 作为装饰器修饰每个视图。</p>
-<ol>
-<li>可以装饰 Django 风格的 <code>View</code>：</li>
-</ol>
-<pre><code class="py">from drf_yasg.utils import swagger_auto_schema
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>drf-yasg —— Django REST Framework 文档生成 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="前两篇：Django 学习笔记 | Dango REST Framework 学习笔记
 
-@swagger_auto_schema(
-    method=&#39;POST&#39;,
-    operation_summary=&#39;注册新用户&#39;,
-    operation_description=&#39;成功返回 201\n&#39;
-                          &#39;失败（参数错误或不符合要求）返回 400&#39;,
-)
-@api_view([&#39;POST&#39;])
-def signup(request: WSGIRequest) -&gt; Response:
-    register_serializer = UserRegisterSerializer(data=request.data)
-    if register_serializer.is_valid():
-        u = register_serializer.save()
-        user_serializer = UserSerializer(u)
-        return Response(user_serializer.data, status=status.HTTP_201_CREATED)
-    return Response(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-</code></pre>
-<p><img src="../../images/1653e072b67fc532a381aecb0f55662a83b9adbc6016cfaf5b69efd7a3248874.png" alt="对 View 进行装饰"></p>
-<ol start="2">
-<li>也可以对 <code>APIView</code> 的 <code>post</code> <code>get</code> 等函数进行装饰：</li>
-</ol>
-<pre><code class="py">class ActivityCheckInView(APIView):
-    @swagger_auto_schema(
-        operation_summary=&#39;用户签到&#39;,
-        operation_description=&#39;可能会有以下情况：\n&#39;
-                              &#39;1. 签到成功，用户经验+10，每位管理员经验+50，返回 200\n&#39;
-                              &#39;2. 活动不存在，返回 404\n&#39;
-                              &#39;3. POST 数据不包含签到码，返回 400\n&#39;
-                              &#39;4. 演讲者关闭了签到，返回 403\n&#39;
-                              &#39;5. 签到码错误，返回 403\n&#39;
-                              &#39;注：要求登录，否则返回 403&#39;,
-        request_body=Schema_object(Schema_check_in_code),
-        responses={201: None, 403: Schema_object(Schema_detail)}
-    )
-    def post(self, request: WSGIRequest, id: int) -&gt; Response:
-        if not Activity.objects.filter(id=id):
-            return Response({&quot;detail&quot;: &quot;活动不存在&quot;}, status=status.HTTP_404_NOT_FOUND)
-        activity = Activity.objects.get(id=id)
-        if &quot;check_in_code&quot; not in request.POST:
-            return Response({&quot;detail&quot;: &quot;POST 数据不包含签到码&quot;}, status=status.HTTP_400_BAD_REQUEST)
-        if activity.datetime.date() != datetime.now().date():
-            return Response({&quot;detail&quot;: &quot;非当日活动&quot;}, status=status.HTTP_403_FORBIDDEN)
-        if not activity.check_in_open:
-            return Response({&quot;detail&quot;: &quot;演讲者已关闭签到&quot;}, status=status.HTTP_403_FORBIDDEN)
-        if request.POST[&quot;check_in_code&quot;] != activity.check_in_code:
-            return Response({&quot;detail&quot;: &quot;签到码错误&quot;}, status=status.HTTP_403_FORBIDDEN)
+文档对于后端开发是相当重要，即使是一个人写前后端，如果不写文档，可能前天写的接口今天又不知道了。而且，测试部分是基于文档进行编写的，上过软件工程课程的同学应该都有了解。足以看出文档 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/230.5f85ab0e.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>前两篇：<a href="../django-study-notes">Django 学习笔记</a> | <a href="../django-rest-framework-study-notes">Dango REST Framework 学习笔记</a></p> <p>文档对于后端开发是相当重要，即使是一个人写前后端，如果不写文档，可能前天写的接口今天又不知道了。而且，测试部分是基于文档进行编写的，上过软件工程课程的同学应该都有了解。足以看出文档对后端开发的重要性。</p> <p>对于 Django REST Framework，也有文档生成的工具。<a href="https://www.cnblogs.com/wangyingblock/p/11103754.html" target="_blank" rel="noopener noreferrer">django-rest-swagger<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 就是一款，但是它已经不支持 Django 3.0 了。Django 3.12 可以改用 <strong>drf-yasg: Django REST Framwork Yet Another Swagger Generator</strong>。</p> <p><a href="https://github.com/axnsan12/drf-yasg" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> | <a href="https://drf-yasg.readthedocs.io/" target="_blank" rel="noopener noreferrer">Read the Docs<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> | <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend" target="_blank" rel="noopener noreferrer">我使用 drf-ysag 编写的开源项目<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="drf-yasg-安装及全局配置"><a href="#drf-yasg-安装及全局配置" class="header-anchor">#</a> drf-yasg 安装及全局配置</h2> <p>安装以及这个<a href="https://drf-yasg.readthedocs.io/en/stable/readme.html#usage" target="_blank" rel="noopener noreferrer">官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>非常详细的描述了，我就不多说了。</p> <p>配置好并运行 Django 项目以后，就可以使用浏览器访问 <code>/swagger/</code> 和 <code>/redoc/</code> （链接取决于你的 <code>urls</code> 的配置）看到两种风格的文档了。我个人比较喜欢 Swagger 的，所以下面均用 Swagger 文档的界面作截图。</p> <p><img src="/images/841d0d174343f08dbca1de4bd30c2e3178712fb0e1c0c9b306a4ac1dca857b83.png" alt="Swagger"></p> <p>另外，我个人更喜欢在 Parameters 和 Response 的地方默认展示 <code>Example Value</code> 而不是 <code>Model</code>，所以各位可以在 <code>&lt;project_name&gt;/settings.py</code> 中添加下面几行：</p> <div class="language-py extra-class"><pre class="language-py"><code>SWAGGER_SETTINGS <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'DEFAULT_MODEL_RENDERING'</span><span class="token punctuation">:</span> <span class="token string">'example'</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><img src="/images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="默认展示 Example Value"></p> <h2 id="drf-yasg-使用方法"><a href="#drf-yasg-使用方法" class="header-anchor">#</a> drf-yasg 使用方法</h2> <p>但是 drf-yasg 的使用方法并不详细。。。。</p> <p>于是继续 Google 看到了另外一篇文章：<a href="https://zoejoyuliao.medium.com/%E8%87%AA%E5%AE%9A%E7%BE%A9-drf-yasg-%E7%9A%84-swagger-%E6%96%87%E6%AA%94-%E4%BB%A5-get-post-%E6%AA%94%E6%A1%88%E4%B8%8A%E5%82%B3%E7%82%BA%E4%BE%8B-eeecd922059b" target="_blank" rel="noopener noreferrer">自定義 drf-yasg 的 Swagger 文檔— 以 GET、POST、檔案上傳為例<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，简单了解了一下。</p> <p>之后再去怼<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener noreferrer">文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，了解了更多的方法。</p> <h3 id="为-view-的文档添加摘要和说明"><a href="#为-view-的文档添加摘要和说明" class="header-anchor">#</a> 为 View 的文档添加摘要和说明</h3> <p>Swagger 的方法是使用 <code>drf_yasg.utils.swagger_auto_schema</code> 作为装饰器修饰每个视图。</p> <ol><li>可以装饰 Django 风格的 <code>View</code>：</li></ol> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> drf_yasg<span class="token punctuation">.</span>utils <span class="token keyword">import</span> swagger_auto_schema
 
-        activity.attender.add(request.user)
+<span class="token decorator annotation punctuation">@swagger_auto_schema</span><span class="token punctuation">(</span>
+    method<span class="token operator">=</span><span class="token string">'POST'</span><span class="token punctuation">,</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'注册新用户'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'成功返回 201\n'</span>
+                          <span class="token string">'失败（参数错误或不符合要求）返回 400'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@api_view</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">signup</span><span class="token punctuation">(</span>request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+    register_serializer <span class="token operator">=</span> UserRegisterSerializer<span class="token punctuation">(</span>data<span class="token operator">=</span>request<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> register_serializer<span class="token punctuation">.</span>is_valid<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        u <span class="token operator">=</span> register_serializer<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        user_serializer <span class="token operator">=</span> UserSerializer<span class="token punctuation">(</span>u<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Response<span class="token punctuation">(</span>user_serializer<span class="token punctuation">.</span>data<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_201_CREATED<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Response<span class="token punctuation">(</span>register_serializer<span class="token punctuation">.</span>errors<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_400_BAD_REQUEST<span class="token punctuation">)</span>
+</code></pre></div><p><img src="/images/1653e072b67fc532a381aecb0f55662a83b9adbc6016cfaf5b69efd7a3248874.png" alt="对 View 进行装饰"></p> <ol start="2"><li>也可以对 <code>APIView</code> 的 <code>post</code> <code>get</code> 等函数进行装饰：</li></ol> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">ActivityCheckInView</span><span class="token punctuation">(</span>APIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token decorator annotation punctuation">@swagger_auto_schema</span><span class="token punctuation">(</span>
+        operation_summary<span class="token operator">=</span><span class="token string">'用户签到'</span><span class="token punctuation">,</span>
+        operation_description<span class="token operator">=</span><span class="token string">'可能会有以下情况：\n'</span>
+                              <span class="token string">'1. 签到成功，用户经验+10，每位管理员经验+50，返回 200\n'</span>
+                              <span class="token string">'2. 活动不存在，返回 404\n'</span>
+                              <span class="token string">'3. POST 数据不包含签到码，返回 400\n'</span>
+                              <span class="token string">'4. 演讲者关闭了签到，返回 403\n'</span>
+                              <span class="token string">'5. 签到码错误，返回 403\n'</span>
+                              <span class="token string">'注：要求登录，否则返回 403'</span><span class="token punctuation">,</span>
+        request_body<span class="token operator">=</span>Schema_object<span class="token punctuation">(</span>Schema_check_in_code<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        responses<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">201</span><span class="token punctuation">:</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token number">403</span><span class="token punctuation">:</span> Schema_object<span class="token punctuation">(</span>Schema_detail<span class="token punctuation">)</span><span class="token punctuation">}</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">post</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">,</span> <span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> Activity<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">filter</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> Response<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;detail&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;活动不存在&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_404_NOT_FOUND<span class="token punctuation">)</span>
+        activity <span class="token operator">=</span> Activity<span class="token punctuation">.</span>objects<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token builtin">id</span><span class="token operator">=</span><span class="token builtin">id</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token string">&quot;check_in_code&quot;</span> <span class="token keyword">not</span> <span class="token keyword">in</span> request<span class="token punctuation">.</span>POST<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> Response<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;detail&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;POST 数据不包含签到码&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_400_BAD_REQUEST<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> activity<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>date<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>date<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> Response<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;detail&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;非当日活动&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_403_FORBIDDEN<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> activity<span class="token punctuation">.</span>check_in_open<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> Response<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;detail&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;演讲者已关闭签到&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_403_FORBIDDEN<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> request<span class="token punctuation">.</span>POST<span class="token punctuation">[</span><span class="token string">&quot;check_in_code&quot;</span><span class="token punctuation">]</span> <span class="token operator">!=</span> activity<span class="token punctuation">.</span>check_in_code<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> Response<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;detail&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;签到码错误&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_403_FORBIDDEN<span class="token punctuation">)</span>
 
-        return Response(status=status.HTTP_200_OK)
-</code></pre>
-<p><img src="../../images/a2583ff879543392131c9273a31758aa61ad1a9c421dffe115ce4a988684d2c5.png" alt="对 APIView 的函数进行装饰"></p>
-<ol start="3">
-<li>还可以对 <code>GeneticAPIView</code> 进行装饰：</li>
-</ol>
-<pre><code class="py">from django.utils.decorators import method_decorator
+        activity<span class="token punctuation">.</span>attender<span class="token punctuation">.</span>add<span class="token punctuation">(</span>request<span class="token punctuation">.</span>user<span class="token punctuation">)</span>
 
-@method_decorator(name=&quot;get&quot;, decorator=swagger_auto_schema(
-        operation_summary=&#39;获取沙龙信息&#39;,
-        operation_description=&#39;获取沙龙信息\n&#39;
-                              &#39;注：需要登录&#39;,
-))
-@method_decorator(name=&quot;put&quot;, decorator=swagger_auto_schema(
-    operation_summary=&#39;更新沙龙信息&#39;,
-    operation_description=&#39;应答和 PATCH 方法相同，但 PUT 要求在请求中提交所有信息，不推荐使用&#39;,
-))
-@method_decorator(name=&quot;patch&quot;, decorator=swagger_auto_schema(
-    operation_summary=&#39;更新沙龙部分信息&#39;,
-    operation_description=&#39;更新沙龙信息，成功返回 200\n&#39;
-                          &#39;如沙龙不存在，返回 404\n&#39;
-                          &#39;如更新值不合法，返回 400\n&#39;
-                          &#39;注：更新参与者名单请使用 `/users/check_in/` 或 `/users/check_in_admin/` 接口\n&#39;
-                          &#39;注：需要是沙龙演讲者或管理员，否则返回 403\n&#39;
-                          &#39;注：PATCH 方法可以只提交更新的值，也可以提交所有值&#39;,
-))
-@method_decorator(name=&quot;delete&quot;, decorator=swagger_auto_schema(
-    operation_summary=&#39;删除沙龙&#39;,
-    operation_description=&#39;删除沙龙，成功返回 204\n&#39;
-                          &#39;注：需要是沙龙演讲者或管理员，否则返回 403&#39;,
-))
-class ActivityDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, IsPresenterOrAdminOrReadOnly, )
-    queryset = Activity.objects.all()
-    serializer_class = ActivitySerializer
-</code></pre>
-<p><img src="../../images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="对 GeneticAPIView 进行装饰"></p>
-<p>ActivitySerializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/activities/serializer.py#L9" target="_blank" rel="noopener">GitHub</a>。</p>
-<p>可能有的读者应该已经注意到了，对于 GeneticAPIView，Swagger 能够自动捕获其 <code>Serializer</code> 以及 <code>ModelSerializer</code> 并作为参数！除此之外，它还可以正确识别各 <code>Serializer</code> 类中的<code>read_only_fields</code>，并在请求的 Parameters 中去掉！真是太香了！</p>
-<h3 id="使用-Serializer-为-View-的文档添加-parameter-和-response"><a href="#使用-Serializer-为-View-的文档添加-parameter-和-response" class="headerlink" title="使用 Serializer 为 View 的文档添加 parameter 和 response"></a>使用 Serializer 为 View 的文档添加 parameter 和 response</h3><p>当然，对于 APIView 和 Django View，也是可以在 <code>swagger_auto_schema</code> 手动设置参数、返回值的。而如果对 GeneticAPIView 设置后，就会覆盖原来的设置。</p>
-<p>在后文，我们就不讨论修饰哪一种 View，只讨论 <code>swagger_auto_schema</code> 这个装饰器了。</p>
-<p>而后面的大部分讨论，都会围绕这个这个函数的<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener">文档</a>。</p>
-<p>对于 POST、PATCH 的放在 <code>request_body</code> 里的数据格式，可以放在 <code>request_body</code> 的参数部分，这个参数可以接收 <code>rest_framework.Serializer</code> <del>双厨狂喜</del>，或是 <code>openapi.Schema</code>。</p>
-<p><img src="../../images/e7de4b61c6eb4a287cc9dc07931cf8f6b0a70d41ecf5bbe6fbc2afccf1603ea7.png" alt="swagger_auto_schema 的 request_body"></p>
-<p><code>response</code> 的参数也是类似，只是变成了一个 dict，因为每种 <code>response body</code> 应当对应一个 HTTP 状态码。</p>
-<p><img src="../../images/36cddac8d9ed12d9799b3de270d4ae11bbdbcf83029b30f13d9cec982a5fc40f.png" alt="swagger_auto_schema 的 respoonses"></p>
-<p>对于 <code>rest_framework.Serializer</code> 和 <code>openapi.Schema</code> 的用法，先从熟悉的 <code>rest_framework.Serializer</code> 说起。刚才在 GeneticAPIView 中，相信各位应该已经猜到了，它会默认将 GeneticAPIView 中的 <code>serializer_class</code> 作为 <code>request_body</code> 和 <code>response</code>。当然，我们也可以手动设置。</p>
-<pre><code class="py">@swagger_auto_schema(
-    method=&#39;POST&#39;,
-    operation_summary=&#39;注册新用户&#39;,
-    operation_description=&#39;成功返回 201\n&#39;
-                          &#39;失败（参数错误或不符合要求）返回 400&#39;,
-    request_body=UserRegisterSerializer,
-    responses={201: UserSerializer()}
-)
-@api_view([&#39;POST&#39;])
-def signup(request: WSGIRequest) -&gt; Response:
-    register_serializer = UserRegisterSerializer(data=request.data)
-    if register_serializer.is_valid():
-        u = register_serializer.save()
-        user_serializer = UserSerializer(u)
-        return Response(user_serializer.data, status=status.HTTP_201_CREATED)
-    return Response(register_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-</code></pre>
-<p><img src="../../images/4357603f404b9cc345d2ecfc81e0baab17575634c15cd5e9747e06f4925c548b.png" alt="手动设置 request_body 和 responses"></p>
-<p>两个 Serializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/users/serializer.py" target="_blank" rel="noopener">GitHub</a>。</p>
-<h3 id="绕开-IDE-对-200-None-的错误检测"><a href="#绕开-IDE-对-200-None-的错误检测" class="headerlink" title="绕开 IDE 对 {200: None} 的错误检测"></a>绕开 IDE 对 {200: None} 的错误检测</h3><p>文档中提到，如果 <code>responses</code> 参数中没有 <code>2xx</code> 类的，会自动添加一个 <code>200</code>（对于 <code>GET</code> <code>PUT</code> <code>PATCH</code>），或是 <code>201</code> （对于 <code>POST</code>）或 <code>204</code>（对于 <code>DELETE</code>）。要想屏蔽这个 <code>2xx</code>，只需要添加 <code>{200: None}</code>。</p>
-<p>这个 None 有用，但是并不能通过 Pycharm 的类型检测（强迫症震怒）：</p>
-<p><img src="../../images/bfd5c3dc67ed5ec61adcd26341b5a36db76331e0e2e7b7a7bb060adeff327a2d.png" alt="Pycharm 的类型检测"></p>
-<p>作为强迫症，可以定义一个 <code>Schema_none = None</code>，然后：</p>
-<p><img src="../../images/8046aa3a0ff76365598f4435bda18b56d58d14ba9ac5227a9b7bc44312abe9b2.png" alt="绕开 Pycharm 的类型检测"></p>
-<h3 id="使用-Schema-为-View-的文档添加-parameter-和-response"><a href="#使用-Schema-为-View-的文档添加-parameter-和-response" class="headerlink" title="使用 Schema 为 View 的文档添加 parameter 和 response"></a>使用 Schema 为 View 的文档添加 parameter 和 response</h3><p>如果没有使用 Serializers 而是手动处理的，也可以手动编写 Schema。</p>
-<pre><code class="py">@swagger_auto_schema(
-    method=&#39;POST&#39;,
-    operation_summary=&#39;登录&#39;,
-    operation_description=&#39;成功返回 200&#39;
-                          &#39;失败（账户或密码错误）返回 401\n&#39;
-                          &#39;注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。&#39;,
-    request_body=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
-        &quot;email&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL, description=&#39;邮箱&#39;),
-        &quot;password&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;密码&#39;)
-    }),
-    responses={200: Schema_None}
-)
-</code></pre>
-<p><img src="../../images/0d72890ab7ababee02ae7bcd85083cfad2c46e1d6e70b89391d6a05c523d5a74.png" alt="手动编写的 Schema"></p>
-<p><code>openapi.Schema</code> 的 <code>type</code> 和 <code>format</code> 就不用多说了，IDE 输入 <code>openapi.TYPE_</code> 和 <code>openapi.FORMAT_</code> 就能提示，也可以去看看文档。</p>
-<hr>
-<p>emmm 文档变好看了，但是感觉代码变得又长又丑了</p>
-<p>因此，我创建了一个 <code>swagger.py</code> 专门存放这些 Schema，核心代码里面直接调用就行了。</p>
-<pre><code class="py"># swagger.py
+        <span class="token keyword">return</span> Response<span class="token punctuation">(</span>status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_200_OK<span class="token punctuation">)</span>
+</code></pre></div><p><img src="/images/a2583ff879543392131c9273a31758aa61ad1a9c421dffe115ce4a988684d2c5.png" alt="对 APIView 的函数进行装饰"></p> <ol start="3"><li>还可以对 <code>GeneticAPIView</code> 进行装饰：</li></ol> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> django<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>decorators <span class="token keyword">import</span> method_decorator
 
-# 定义了 Array 和 Object 的简写
-def Schema_array(schema: openapi.Schema) -&gt; openapi.Schema: # 这是将一个 element 转为 Array[element] 的函数
-    return openapi.Schema(type=openapi.TYPE_ARRAY, items=schema)
+<span class="token decorator annotation punctuation">@method_decorator</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> decorator<span class="token operator">=</span>swagger_auto_schema<span class="token punctuation">(</span>
+        operation_summary<span class="token operator">=</span><span class="token string">'获取沙龙信息'</span><span class="token punctuation">,</span>
+        operation_description<span class="token operator">=</span><span class="token string">'获取沙龙信息\n'</span>
+                              <span class="token string">'注：需要登录'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@method_decorator</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">&quot;put&quot;</span><span class="token punctuation">,</span> decorator<span class="token operator">=</span>swagger_auto_schema<span class="token punctuation">(</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'更新沙龙信息'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'应答和 PATCH 方法相同，但 PUT 要求在请求中提交所有信息，不推荐使用'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@method_decorator</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">&quot;patch&quot;</span><span class="token punctuation">,</span> decorator<span class="token operator">=</span>swagger_auto_schema<span class="token punctuation">(</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'更新沙龙部分信息'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'更新沙龙信息，成功返回 200\n'</span>
+                          <span class="token string">'如沙龙不存在，返回 404\n'</span>
+                          <span class="token string">'如更新值不合法，返回 400\n'</span>
+                          <span class="token string">'注：更新参与者名单请使用 `/users/check_in/` 或 `/users/check_in_admin/` 接口\n'</span>
+                          <span class="token string">'注：需要是沙龙演讲者或管理员，否则返回 403\n'</span>
+                          <span class="token string">'注：PATCH 方法可以只提交更新的值，也可以提交所有值'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@method_decorator</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">&quot;delete&quot;</span><span class="token punctuation">,</span> decorator<span class="token operator">=</span>swagger_auto_schema<span class="token punctuation">(</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'删除沙龙'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'删除沙龙，成功返回 204\n'</span>
+                          <span class="token string">'注：需要是沙龙演讲者或管理员，否则返回 403'</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">ActivityDetailView</span><span class="token punctuation">(</span>RetrieveUpdateDestroyAPIView<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    permission_classes <span class="token operator">=</span> <span class="token punctuation">(</span>IsAuthenticated<span class="token punctuation">,</span> IsPresenterOrAdminOrReadOnly<span class="token punctuation">,</span> <span class="token punctuation">)</span>
+    queryset <span class="token operator">=</span> Activity<span class="token punctuation">.</span>objects<span class="token punctuation">.</span><span class="token builtin">all</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    serializer_class <span class="token operator">=</span> ActivitySerializer
+</code></pre></div><p><img src="/images/168db19ddd3a52dfd58c5b2f8b445aebe8a678e540eb7d0f552702fe60af5e90.png" alt="对 GeneticAPIView 进行装饰"></p> <p>ActivitySerializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/activities/serializer.py#L9" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <p>可能有的读者应该已经注意到了，对于 GeneticAPIView，Swagger 能够自动捕获其 <code>Serializer</code> 以及 <code>ModelSerializer</code> 并作为参数！除此之外，它还可以正确识别各 <code>Serializer</code> 类中的<code>read_only_fields</code>，并在请求的 Parameters 中去掉！真是太香了！</p> <h3 id="使用-serializer-为-view-的文档添加-parameter-和-response"><a href="#使用-serializer-为-view-的文档添加-parameter-和-response" class="header-anchor">#</a> 使用 Serializer 为 View 的文档添加 parameter 和 response</h3> <p>当然，对于 APIView 和 Django View，也是可以在 <code>swagger_auto_schema</code> 手动设置参数、返回值的。而如果对 GeneticAPIView 设置后，就会覆盖原来的设置。</p> <p>在后文，我们就不讨论修饰哪一种 View，只讨论 <code>swagger_auto_schema</code> 这个装饰器了。</p> <p>而后面的大部分讨论，都会围绕这个这个函数的<a href="https://drf-yasg.readthedocs.io/en/stable/drf_yasg.html#drf_yasg.utils.swagger_auto_schema" target="_blank" rel="noopener noreferrer">文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <p>对于 POST、PATCH 的放在 <code>request_body</code> 里的数据格式，可以放在 <code>request_body</code> 的参数部分，这个参数可以接收 <code>rest_framework.Serializer</code> <s>双厨狂喜</s>，或是 <code>openapi.Schema</code>。</p> <p><img src="/images/e7de4b61c6eb4a287cc9dc07931cf8f6b0a70d41ecf5bbe6fbc2afccf1603ea7.png" alt="swagger_auto_schema 的 request_body"></p> <p><code>response</code> 的参数也是类似，只是变成了一个 dict，因为每种 <code>response body</code> 应当对应一个 HTTP 状态码。</p> <p><img src="/images/36cddac8d9ed12d9799b3de270d4ae11bbdbcf83029b30f13d9cec982a5fc40f.png" alt="swagger_auto_schema 的 respoonses"></p> <p>对于 <code>rest_framework.Serializer</code> 和 <code>openapi.Schema</code> 的用法，先从熟悉的 <code>rest_framework.Serializer</code> 说起。刚才在 GeneticAPIView 中，相信各位应该已经猜到了，它会默认将 GeneticAPIView 中的 <code>serializer_class</code> 作为 <code>request_body</code> 和 <code>response</code>。当然，我们也可以手动设置。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token decorator annotation punctuation">@swagger_auto_schema</span><span class="token punctuation">(</span>
+    method<span class="token operator">=</span><span class="token string">'POST'</span><span class="token punctuation">,</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'注册新用户'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'成功返回 201\n'</span>
+                          <span class="token string">'失败（参数错误或不符合要求）返回 400'</span><span class="token punctuation">,</span>
+    request_body<span class="token operator">=</span>UserRegisterSerializer<span class="token punctuation">,</span>
+    responses<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">201</span><span class="token punctuation">:</span> UserSerializer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+<span class="token decorator annotation punctuation">@api_view</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">signup</span><span class="token punctuation">(</span>request<span class="token punctuation">:</span> WSGIRequest<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> Response<span class="token punctuation">:</span>
+    register_serializer <span class="token operator">=</span> UserRegisterSerializer<span class="token punctuation">(</span>data<span class="token operator">=</span>request<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> register_serializer<span class="token punctuation">.</span>is_valid<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        u <span class="token operator">=</span> register_serializer<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        user_serializer <span class="token operator">=</span> UserSerializer<span class="token punctuation">(</span>u<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Response<span class="token punctuation">(</span>user_serializer<span class="token punctuation">.</span>data<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_201_CREATED<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Response<span class="token punctuation">(</span>register_serializer<span class="token punctuation">.</span>errors<span class="token punctuation">,</span> status<span class="token operator">=</span>status<span class="token punctuation">.</span>HTTP_400_BAD_REQUEST<span class="token punctuation">)</span>
+</code></pre></div><p><img src="/images/4357603f404b9cc345d2ecfc81e0baab17575634c15cd5e9747e06f4925c548b.png" alt="手动设置 request_body 和 responses"></p> <p>两个 Serializer 的定义可见 <a href="https://github.com/uestc-msc/uestcmsc_webapp_backend/blob/8038e1d0056b00c125056a14a6a3290c637abf0e/users/serializer.py" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p> <h3 id="绕开-ide-对-200-none-的错误检测"><a href="#绕开-ide-对-200-none-的错误检测" class="header-anchor">#</a> 绕开 IDE 对 {200: None} 的错误检测</h3> <p>文档中提到，如果 <code>responses</code> 参数中没有 <code>2xx</code> 类的，会自动添加一个 <code>200</code>（对于 <code>GET</code> <code>PUT</code> <code>PATCH</code>），或是 <code>201</code> （对于 <code>POST</code>）或 <code>204</code>（对于 <code>DELETE</code>）。要想屏蔽这个 <code>2xx</code>，只需要添加 <code>{200: None}</code>。</p> <p>这个 None 有用，但是并不能通过 Pycharm 的类型检测（强迫症震怒）：</p> <p><img src="/images/bfd5c3dc67ed5ec61adcd26341b5a36db76331e0e2e7b7a7bb060adeff327a2d.png" alt="Pycharm 的类型检测"></p> <p>作为强迫症，可以定义一个 <code>Schema_none = None</code>，然后：</p> <p><img src="/images/8046aa3a0ff76365598f4435bda18b56d58d14ba9ac5227a9b7bc44312abe9b2.png" alt="绕开 Pycharm 的类型检测"></p> <h3 id="使用-schema-为-view-的文档添加-parameter-和-response"><a href="#使用-schema-为-view-的文档添加-parameter-和-response" class="header-anchor">#</a> 使用 Schema 为 View 的文档添加 parameter 和 response</h3> <p>如果没有使用 Serializers 而是手动处理的，也可以手动编写 Schema。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token decorator annotation punctuation">@swagger_auto_schema</span><span class="token punctuation">(</span>
+    method<span class="token operator">=</span><span class="token string">'POST'</span><span class="token punctuation">,</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'登录'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'成功返回 200'</span>
+                          <span class="token string">'失败（账户或密码错误）返回 401\n'</span>
+                          <span class="token string">'注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。'</span><span class="token punctuation">,</span>
+    request_body<span class="token operator">=</span>openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_OBJECT<span class="token punctuation">,</span> properties<span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token string">&quot;email&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> <span class="token builtin">format</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>FORMAT_EMAIL<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'邮箱'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token string">&quot;password&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'密码'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    responses<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">200</span><span class="token punctuation">:</span> Schema_None<span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre></div><p><img src="/images/0d72890ab7ababee02ae7bcd85083cfad2c46e1d6e70b89391d6a05c523d5a74.png" alt="手动编写的 Schema"></p> <p><code>openapi.Schema</code> 的 <code>type</code> 和 <code>format</code> 就不用多说了，IDE 输入 <code>openapi.TYPE_</code> 和 <code>openapi.FORMAT_</code> 就能提示，也可以去看看文档。</p> <hr> <p>emmm 文档变好看了，但是感觉代码变得又长又丑了</p> <p>因此，我创建了一个 <code>swagger.py</code> 专门存放这些 Schema，核心代码里面直接调用就行了。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># swagger.py</span>
+
+<span class="token comment"># 定义了 Array 和 Object 的简写</span>
+<span class="token keyword">def</span> <span class="token function">Schema_array</span><span class="token punctuation">(</span>schema<span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">:</span> <span class="token comment"># 这是将一个 element 转为 Array[element] 的函数</span>
+    <span class="token keyword">return</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_ARRAY<span class="token punctuation">,</span> items<span class="token operator">=</span>schema<span class="token punctuation">)</span>
 
 
-def Schema_object(*props: dict) -&gt; openapi.Schema:
-    result_properties = {}
-    for prop in props:
-        result_properties = {**prop, **result_properties} # 将两个 Dict 合为一个 Dict
-    return openapi.Schema(type=openapi.TYPE_OBJECT, properties=result_properties)
+<span class="token keyword">def</span> <span class="token function">Schema_object</span><span class="token punctuation">(</span><span class="token operator">*</span>props<span class="token punctuation">:</span> <span class="token builtin">dict</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">:</span>
+    result_properties <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">for</span> prop <span class="token keyword">in</span> props<span class="token punctuation">:</span>
+        result_properties <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token operator">**</span>prop<span class="token punctuation">,</span> <span class="token operator">**</span>result_properties<span class="token punctuation">}</span> <span class="token comment"># 将两个 Dict 合为一个 Dict</span>
+    <span class="token keyword">return</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_OBJECT<span class="token punctuation">,</span> properties<span class="token operator">=</span>result_properties<span class="token punctuation">)</span>
 
 
-Schema_None = None
-Schema_email = {&quot;email&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL, description=&#39;邮箱&#39;)}
-Schema_password = {&quot;password&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;密码&#39;)}
-</code></pre>
-<p>核心代码：</p>
-<pre><code class="py">@swagger_auto_schema(
-    method=&#39;POST&#39;,
-    operation_summary=&#39;登录&#39;,
-    operation_description=&#39;成功返回 200\n&#39;
-                          &#39;失败（账户或密码错误）返回 401\n&#39;
-                          &#39;注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。&#39;,
-    request_body=Schema_object(Schema_email, Schema_password),
-    responses={200: Schema_None}
-)
-</code></pre>
-<p>效果图和上面相同。简洁多了。</p>
-<p>另一个用到 Array 的例子：</p>
-<pre><code class="py">Schema_title = {&quot;title&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;沙龙标题&#39;)}
-Schema_datetime = {
-    &quot;datetime&quot;: openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_DATETIME, description=&quot;日期时间&quot;)}
-Schema_location = {&quot;location&quot;: openapi.Schema(type=openapi.TYPE_STRING, description=&#39;地点&#39;)}
-Schema_presenter_ids = {&quot;presenter&quot;: Schema_array(Schema_object(Schema_id))}
-</code></pre>
-<pre><code class="py">@method_decorator(name=&#39;post&#39;, decorator=swagger_auto_schema(
-    operation_summary=&#39;创建沙龙&#39;,
-    operation_description=&#39;成功返回 201，参数错误返回 400&#39;,
-    request_body=Schema_object(Schema_title,
-                               Schema_datetime,
-                               Schema_location,
-                               Schema_presenter_ids),
-    responses={201: ActivitySerializer()}
-))
-</code></pre>
-<p><img src="../../images/85e41ad99ec261297f8e7beed095230d2b8943e7822cd57cfdaa8570360a4989.png" alt="Parameters 中 使用 Array 的效果"></p>
-<p>有了 Array 和 Object，就可以构造所有 JSON 语法了。</p>
+Schema_None <span class="token operator">=</span> <span class="token boolean">None</span>
+Schema_email <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;email&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> <span class="token builtin">format</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>FORMAT_EMAIL<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'邮箱'</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+Schema_password <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;password&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'密码'</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+</code></pre></div><p>核心代码：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token decorator annotation punctuation">@swagger_auto_schema</span><span class="token punctuation">(</span>
+    method<span class="token operator">=</span><span class="token string">'POST'</span><span class="token punctuation">,</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'登录'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'成功返回 200\n'</span>
+                          <span class="token string">'失败（账户或密码错误）返回 401\n'</span>
+                          <span class="token string">'注：一个已登录的用户 A 尝试 login 账户 B 失败后，仍具有账户 A 的凭证。'</span><span class="token punctuation">,</span>
+    request_body<span class="token operator">=</span>Schema_object<span class="token punctuation">(</span>Schema_email<span class="token punctuation">,</span> Schema_password<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    responses<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">200</span><span class="token punctuation">:</span> Schema_None<span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre></div><p>效果图和上面相同。简洁多了。</p> <p>另一个用到 Array 的例子：</p> <div class="language-py extra-class"><pre class="language-py"><code>Schema_title <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;title&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'沙龙标题'</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+Schema_datetime <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">&quot;datetime&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> <span class="token builtin">format</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>FORMAT_DATETIME<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">&quot;日期时间&quot;</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+Schema_location <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;location&quot;</span><span class="token punctuation">:</span> openapi<span class="token punctuation">.</span>Schema<span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>openapi<span class="token punctuation">.</span>TYPE_STRING<span class="token punctuation">,</span> description<span class="token operator">=</span><span class="token string">'地点'</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+Schema_presenter_ids <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;presenter&quot;</span><span class="token punctuation">:</span> Schema_array<span class="token punctuation">(</span>Schema_object<span class="token punctuation">(</span>Schema_id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+</code></pre></div><div class="language-py extra-class"><pre class="language-py"><code><span class="token decorator annotation punctuation">@method_decorator</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">'post'</span><span class="token punctuation">,</span> decorator<span class="token operator">=</span>swagger_auto_schema<span class="token punctuation">(</span>
+    operation_summary<span class="token operator">=</span><span class="token string">'创建沙龙'</span><span class="token punctuation">,</span>
+    operation_description<span class="token operator">=</span><span class="token string">'成功返回 201，参数错误返回 400'</span><span class="token punctuation">,</span>
+    request_body<span class="token operator">=</span>Schema_object<span class="token punctuation">(</span>Schema_title<span class="token punctuation">,</span>
+                               Schema_datetime<span class="token punctuation">,</span>
+                               Schema_location<span class="token punctuation">,</span>
+                               Schema_presenter_ids<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    responses<span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">201</span><span class="token punctuation">:</span> ActivitySerializer<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><p><img src="/images/85e41ad99ec261297f8e7beed095230d2b8943e7822cd57cfdaa8570360a4989.png" alt="Parameters 中 使用 Array 的效果"></p> <p>有了 Array 和 Object，就可以构造所有 JSON 语法了。</p></div></div></div> <footer><!----></footer></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/230.5f85ab0e.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
+</html>

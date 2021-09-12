@@ -1,805 +1,211 @@
 <!DOCTYPE html>
-<html>
-<head>
-    
-
-    
-
-    
-
-
-
+<html lang="zh-CN">
+  <head>
     <meta charset="utf-8">
-    
-    
-    
-    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>小灰灰灰灰的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="小灰灰灰灰的博客">
-<meta property="og:url" content="https://blog.lyh543.cn/page/13/index.html">
-<meta property="og:site_name" content="小灰灰灰灰的博客">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="lyh543">
-<meta name="twitter:card" content="summary">
-    
-        <link rel="alternate" type="application/atom+xml" title="小灰灰灰灰的博客" href="/atom.xml">
-    
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
-    <script>window.lazyScripts=[]</script>
-
-    <!-- custom head -->
-    
-
-<meta name="generator" content="Hexo 4.2.1"></head>
-
-<body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu"  >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="mdi mdi-close icon-lg"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.png">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">lyh543</h5>
-          <a href="mailto:lyh543@outlook.com" title="lyh543@outlook.com" class="mail">lyh543@outlook.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg mdi mdi-home"></i>
-                主页
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg mdi mdi-archive"></i>
-                归档
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg mdi mdi-tag-multiple"></i>
-                标签
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg mdi mdi-format-list-bulleted-square"></i>
-                分类
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/lyh543" target="_blank" >
-                <i class="icon icon-lg mdi mdi-github"></i>
-                Github
-              </a>
-            </li>
-        
-      </ul>
-    </div>
-  </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg mdi mdi-menu"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">小灰灰灰灰的博客</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg mdi mdi-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg mdi mdi-magnify"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg mdi mdi-share-variant"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header index-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">小灰灰灰灰的博客</h1>
-        <h5 class="subtitle">
-            
-                
-            
-        </h5>
-    </div>
-
-    
-
-
-</header>
-
-<div class="container body-wrap">
-
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-matlab/matlab-parallel"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-10-09 09:44:45" datetime="2019-10-09T01:44:45.000Z"  itemprop="datePublished">2019-10-09</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/matlab/matlab-parallel/">MATLAB 并行运算</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        MATLAB 有强大的 Parallel Computing Toolbox，可以使用 MATLAB 来用 CPU 和 GPU 跑并行运算。
-更重要的是，他方便啊！！！比起 C/C++ 还要调库、学更多的东西，MATLAB 有些跑多线程的方法简直就是一键启动多线程，方便的不要不要的。
-parfor最简单的一种，就是把 for 改为 parfor。如下代码：
-123for i = 1:test...
-    
-
-        <a href="/matlab/matlab-parallel/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-maths/matrix-derivative"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-10-04 17:22:53" datetime="2019-10-04T09:22:53.000Z"  itemprop="datePublished">2019-10-04</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/maths/matrix-derivative/">矩阵求导（转载）</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        太硬核了，放个链接（挖个坑）就跑。
-
-https://zhuanlan.zhihu.com/p/24709748
-
-https://github.com/microsoft/ai-edu/blob/master/A-基础教程/A2-神经网络基本原理简明教程/Appendix/01.1-基本数学导数公式.md#115-矩阵求导
-
-
-由于链接 2 有变动，因此下面对文章内容进行备份。
-
-
-01....
-    
-
-        <a href="/maths/matrix-derivative/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/acm/network-flow"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-10-04 00:00:00" datetime="2019-10-03T16:00:00.000Z"  itemprop="datePublished">2019-10-04</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/ACM/">ACM</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/acm/network-flow/">网络流</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        在 ACM 中第一次听到网络流，但是还没认真学就被迫退役了。（菜的真实）
-第二次是在肖老师的 算法设计与分析 课程上，大概了解了网络流的思想。
-
-本文参考《算法设计》，对网络流的研究偏向理论，会涉及到一些证明。
-
-定义流网络流网络（flow network）是一种带权有向图，但是有一个源点（source）和一个汇点（sink），每个权叫做该边的容量（capacity）$c(e)$。如下图。
-...
-    
-
-        <a href="/cpp/acm/network-flow/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ACM/" rel="tag">ACM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-matlab/matlab-functions"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-30 19:50:36" datetime="2019-09-30T11:50:36.000Z"  itemprop="datePublished">2019-09-30</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/matlab/matlab-functions/">MATLAB 函数</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        收集一些好用的函数名，具体语法等用时再查文档。
-常用的可以看 MATLAB 教程书籍的附录。这里放一个整理的 pdf。
-统计函数向量的元素和/矩阵的每列和/最值/均值123456789cumsum(A) % 累积和/每列的累积和，即前缀和sum(A)min(A)max(A)mean(A)[x, l] = min(A) % 顺便把最小值位置 index 给 lsum(A,2) % 矩阵的每行和...
-    
-
-        <a href="/matlab/matlab-functions/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96/" rel="tag">最优化</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-matlab/matlab"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-30 19:50:36" datetime="2019-09-30T11:50:36.000Z"  itemprop="datePublished">2019-09-30</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/matlab/matlab/">MATLAB 编程基础</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前言推荐官方提供的入门手册：MATLAB 快速入门
-
-help xxx 用于查看命令，doc xxx 直接调用文档
-单引号 &#39; 和双引号 &quot; 一样，推荐单引号。用单引号转义单引号，如 disp(&#39;f&#39;&#39;(x)&#39;) 输出 f(x) 
-用分号 ; 结束语句，以屏蔽输出。  
-等于 ==，不等 ~=，取反 ~，与或是 &amp;&amp; 和 ||...
-    
-
-        <a href="/matlab/matlab/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%85%A5%E9%97%A8/" rel="tag">编程语言入门</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-cpp/cpp-grammar/cpp-inheritance-derive-polymorphism"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-29 15:03:12" datetime="2019-09-29T07:03:12.000Z"  itemprop="datePublished">2019-09-29</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/C-%E8%AF%AD%E6%B3%95/">C++语法</a></li></ul></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/cpp/cpp-grammar/cpp-inheritance-derive-polymorphism/">C++ 面向对象——继承、派生和多态</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        继承和派生派生，就是从原来的大类，通过增加新的东西、特性、条件，变成了新的小类。如，从哺乳动物通过增加特性（汪汪叫、喵喵叫），派生到狗、猫。
-狗和猫，都继承了哺乳动物的特点（胎生等），派生的时候，狗、猫都会自动继承哺乳动物有的特点，无需重复声明。
-名称上，被派生的（哺乳动物）叫基类（父类），派生出来的猫、狗叫做派生类（子类）。他们间的继承关系，是由派生类到大类。
-（貌似继承和派生是反义词）
-...
-    
-
-        <a href="/cpp/cpp-grammar/cpp-inheritance-derive-polymorphism/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E8%AF%AD%E6%B3%95/" rel="tag">C++语法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B/" rel="tag">面向对象编程</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-computer-science/neural-networks"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-27 16:28:59" datetime="2019-09-27T08:28:59.000Z"  itemprop="datePublished">2019-09-27</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/computer-science/neural-networks/">神经网络 笔记</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        该文章为微软亚洲研究院开的实践空间站的 神经网络基本原理课程 的笔记。
-开始之前可以先看一下知乎：如何简单形象又有趣地讲解神经网络是什么？
-课程大纲
-基本概念
-线性回归
-线性分类
-非线性回归
-非线性分类
-模型的推理与应用部署
-深度神经网络
-卷积神经网络
-循环神经网络
-
-
-    
-
-        <a href="/computer-science/neural-networks/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" rel="tag">计算机科学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-latex/latex-high-level"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-24 21:23:36" datetime="2019-09-24T13:23:36.000Z"  itemprop="datePublished">2019-09-24</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LaTeX/">LaTeX</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/latex/latex-high-level/">LaTeX 高阶部分</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        该文章记录 LaTeX 原理等部分，和前一篇的简单用法分开。
-LaTeX 编译过程LaTeX 编译过程中会有六个文件：
-
-.aux——存放交叉引用信息；  
-.dvi——是 LaTeX 编译运行后的主要结果。用户可以使用 DVI 预览软件查看 .dvi 内容；  
-.log——记录上一次编译器运行的日志；  
-.pdf——PDF 文件，文件是 pdflatex 编译运行后的主要结果；  
-....
-    
-
-        <a href="/latex/latex-high-level/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-matlab/genetic-algorithm"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-23 21:13:10" datetime="2019-09-23T13:13:10.000Z"  itemprop="datePublished">2019-09-23</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/matlab/genetic-algorithm/">遗传算法 和 MATLAB</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-参考链接：如何通俗易懂地解释遗传算法？有什么例子？ - 严晟嘉的回答 - 知乎https://www.zhihu.com/question/23293449/answer/120220974
-
-那就不多说了，仅说说自己更多的理解。
-遗传算法原理遗传算法的原理其实大家在初中生物就学过了，对你没看错，是生物书，就是那个达尔文的进化论。
-
-我们希望有这样一个种群，它所包含的个体所对应的函数值都很...
-    
-
-        <a href="/matlab/genetic-algorithm/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96/" rel="tag">最优化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-matlab/matlab-plot"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-09-23 20:33:01" datetime="2019-09-23T12:33:01.000Z"  itemprop="datePublished">2019-09-23</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/MATLAB/">MATLAB</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/matlab/matlab-plot/">MATLAB 绘图</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        按自变量、因变量值绘图这是老师教的方法。官方文档
-这个方法的实现是：将输入的 n 个点中，相邻两个点都用直线连接。当点足够密时，可以认为曲线是平滑的了。需要散点图在最后加一个参数 .。
-已知表达式123xx = linspace(0, 2*pi, 100);yy = sin(xx);plot(xx,yy);
-
-参数方程1234t = linspace(0,2*pi,100);x1 = r*c...
-    
-
-        <a href="/matlab/matlab-plot/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MATLAB/" rel="tag">MATLAB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="tag">课程笔记</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-<nav id="page-nav">
-    <div class="inner">
-    <a class="extend prev" rel="prev" href="/page/12/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/14/">下一页</a>
-    </div>
-</nav>
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-
-        <p>
-            
-                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg mdi mdi-rss"></i></a></span>
-            
-            <span>博客内容遵循 <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p><span>lyh543 &copy; 2019 - 2021</span>
-            <span>
-                
-                <a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备19034464号</a><br>
-                
-                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
-            </span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg mdi mdi-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://blog.lyh543.cn/page/13/&title=小灰灰灰灰的博客&pic=https://blog.lyh543.cn/img/avatar.png" data-title="微博">
-          <i class="icon mdi mdi-sina-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.lyh543.cn/page/13/&title=小灰灰灰灰的博客&source=" data-title=" QQ">
-          <i class="icon mdi mdi-qqchat"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.lyh543.cn/page/13/" data-title=" Facebook">
-          <i class="icon mdi mdi-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=小灰灰灰灰的博客&url=https://blog.lyh543.cn/page/13/&via=https://blog.lyh543.cn" data-title=" Twitter">
-          <i class="icon mdi mdi-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://blog.lyh543.cn/page/13/" data-title=" Google+">
-          <i class="icon mdi mdi-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3awa6CQAwFUP//p31bN+BtCw2+HFbG4HBk0czc9vWKr/fH9fnN+T35ahdfuLi4Y+779ErumayQG3Bxcfe5RxUjL1vnn49WyA24uLhP5p7TcxwuLu5/4h4Rk3PKI+ouLi5uzE0OJ5MQJN8GXXZWw8XFHXDzlPK+z7fku7i4uC3uPPqcBCLlp+Pi4q5w84KSPziJQkbtWFxc3Ju51RKTl6Ekdsn/2Kua1OLi4l7E7bVU50MYhZeFi4u7wr0qxEyOQ9UQ5PD14eLirnOTH+elrXoQiho2uLi4N3Mn25pq7yM/DpU3N7i4uJdyq9HnZCQiH+mIhjxwcXFv4/YKSv7I6gpf7sfFxV3hVrcdCSu/p3lWw8XFXeHmLY3e7qnwzoJCiYuLu8mdRJy9KyEeFjJcXNx17pdSUow8klGMwuEHFxd3nVsdxeg1TasN3WZag4uL2+LONyXVMGXUnsHFxV3h9lqkyZ/pRa75AAcuLu7d3AQxGcbKN0ZRgcPFxV3kllsaxcijd/jBxcX9LW41HJnEKF/GL3BxcR/Jzccpqhumw1YKLi7uCrdXeqrjGpM2LS4u7ia3XEpOcZPQZLIyLi7uRdw/GZZn1ny+qewAAAAASUVORK5CYII=" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-</script>
-
-<script src="/js/main.min.js?v=1.7.2"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="/js/search.min.js?v=1.7.2" async></script>
-
-
-
-
-
-
-
-
-
-
-</body>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/164.23ecbdd3.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div id="base-list-layout"><div class="container ui-posts itemscope itemtype"><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/maths/mathematical-induction.html"> <a href="/maths/mathematical-induction.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              数学归纳法的七种变式及其应用（转载）
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-31T14:13:11.000Z">2019-10-31</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          分享深度好文。数学归纳法的七种变式及其应用 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/数学/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
+  数学
+</span></a><a href="/tags/转载/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default blue white--text"><span class="v-chip__content">
+  转载
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/maths/difference-equation.html"> <a href="/maths/difference-equation.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              差分方程
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-28T19:35:27.000Z">2019-10-29</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          例：熟悉的汉诺塔游戏（略）。
+
+$
+\begin{cases}
+an = 2a{n-1}+1 \\
+a_1 = 1
+\end{cases}
+$
+
+又例：两个海军交战，两边的火力 $an, bn$。
+
+差分方程是研究/刻画元素之间的规律。
+
+定义
+
+差分方程：有一数列 $\{an\}$，把数列中的 $an$ 和前面的 $a_i\; (i=0,1,2,...)$ 关联起来的方 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/课程笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default amber white--text"><span class="v-chip__content">
+  课程笔记
+</span></a><a href="/tags/数学/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
+  数学
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/computer-science/classnotes/design-and-analysis-of-algorithms.html"> <a href="/computer-science/classnotes/design-and-analysis-of-algorithms.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              算法设计
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019.10.28">2019-10-28</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。
+
+绪论
+
+算法解决的三种问题
+
+Desicion Problem（判断是否）
+Optimal（最优化的结果/解）
+Numeric Calculation（数字计算、解方程）
+
+问题的分类（按复杂度）
+
+P: a solutuon can be ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/课程笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default amber white--text"><span class="v-chip__content">
+  课程笔记
+</span></a><a href="/tags/坑/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default blue white--text"><span class="v-chip__content">
+  坑
+</span></a><a href="/tags/计算机科学/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default lime white--text"><span class="v-chip__content">
+  计算机科学
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/mcm/optimization-in-mcm.html"> <a href="/mcm/optimization-in-mcm.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              最优化算法在数学建模中的应用
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-26T14:35:16.000Z">2019-10-26</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          最优化设计了以下方面：
+
+最优化方法及其应用（含计算机模拟）
+最优化模拟、最优化建模案例、最优化方法、
+典型算法（穷举法、贪心、爆搜、蒙特卡罗法、模拟退火法、粒子群算法、蚁群算法）、随机系统模拟
+
+数模一般使用 MATLAB 进行编程，MATLAB 自带的函数可在 MATLAB 函数 中查看。
+
+如何学习？
+
+1. ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/课程笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default amber white--text"><span class="v-chip__content">
+  课程笔记
+</span></a><a href="/tags/数学建模/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  数学建模
+</span></a><a href="/tags/最优化/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default purple white--text"><span class="v-chip__content">
+  最优化
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/mcm/getting-started-mcm.html"> <a href="/mcm/getting-started-mcm.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              数学建模入门
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-26T00:00:00.000Z">2019-10-26</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          无生活，不建模。——覃思义
+
+课程及比赛安排
+
+泥电开展的课程
+
+《漫话数学建模》（大一下，核心通识课）
+《数学建模实验》《数学建模方法》（即现在的集训，面向大二，素质选修课）
+《数学建模实验》《高级程序设计方法（进行科学计算的）》（面向大二及以上，素质选修课）
+
+本课程的开展过程
+
+学分在下学期，本学期无
+本学期上到 16 周左右、不考试，不与主课 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/课程笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default amber white--text"><span class="v-chip__content">
+  课程笔记
+</span></a><a href="/tags/数学建模/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  数学建模
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/mcm/mcm-training-note.html"> <a href="/mcm/mcm-training-note.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              数学建模集训课程笔记目录
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-26T00:00:00.000Z">2019-10-26</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          2020.3.14 更新：由于个人感觉泥电的数模培训班太偏向理论，因此在后期就不打算听课，也不打算更新了。改为看网课、做笔记的形式来学习数学建模。所有自学笔记的链接：Tags: 数模自学笔记
+
+周次|上午|下午
+-|-|-
+第一周 10.26|数学建模入门|[最优化算 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/课程笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default amber white--text"><span class="v-chip__content">
+  课程笔记
+</span></a><a href="/tags/数学建模/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  数学建模
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/linux/download-file-on-server.html"> <a href="/linux/download-file-on-server.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              服务器下载文件
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-23T12:39:17.000Z">2019-10-23</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+某些国外网站，虽然没有被墙，但是下载个东西，几十 KB 的网速很难顶。
+
+于是想把东西下载服务器上，然后本地从服务器满速下载。这也就是离线下载的原理。
+
+基础知识
+
+后台运行也是非常重要的，我就一笔带过，将原本的命令改为 nohup  &amp; 即可后台执行（此时可以按 Ctrl+C 关掉 nohup 的前端）。
+
+另外，如果服务器显示了“可以通过 `127.0.0.1:8 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/服务器/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  服务器
+</span></a><a href="/tags/Linux/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  Linux
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/linux/change-ssh-port.html"> <a href="/linux/change-ssh-port.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              修改 ssh 的端口
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-18T10:01:34.000Z">2019-10-18</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+今天用安卓手机 ssh 连接我的服务器的时候，出现了 kexexchangeidentification。又要修 bug 了。
+
+百度了一下，按照 ssh连接失败，排错经验 的步骤做了一下，发现 ssh 有时连得上，有时连不上。迷惑行为。
+
+按照他的方法，关闭 ssh 服务，并开始 ssh ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/ssh/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default yellow white--text"><span class="v-chip__content">
+  ssh
+</span></a><a href="/tags/服务器/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  服务器
+</span></a><a href="/tags/Linux/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  Linux
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/microsoft/windows/use-remote-desktop-with-frp.html"> <a href="/microsoft/windows/use-remote-desktop-with-frp.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              利用内网穿透进行远程桌面访问
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-16T20:07:27.000Z">2019-10-17</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          2019.12.5 更新：内网穿透还有更简单、更好的实现方法，具体看文末
+
+前言
+
+平时带一台轻薄的笔记本，打开远程家里/寝室里的台式，进行远程桌面，在有网速保证的前提下，既能获得笔记本的轻便型，也能获得台式电脑的强大性能，更能最大化笔记本的续航，更重要的是可以在同一台机器上进行办公、开发，无需资料同步。是很不错的选择。
+
+我体验过的几款远程桌面软件里，
+
+* ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Microsoft/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default purple white--text"><span class="v-chip__content">
+  Microsoft
+</span></a><a href="/tags/Windows/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  Windows
+</span></a><a href="/tags/服务器/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  服务器
+</span></a><a href="/tags/frp/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  frp
+</span></a><a href="/tags/远程桌面（RDP）/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default purple white--text"><span class="v-chip__content">
+  远程桌面（RDP）
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/latex/Hexo-insert-latex.html"> <a href="/latex/Hexo-insert-latex.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Hexo 插入 LaTeX 公式
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-10-15T00:00:00.000Z">2019-10-15</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+本文摘自 https://www.sail.name/2018/05/31/use-mathjax-in-hexo/.
+
+&gt; MathJax is an open-source JavaScript display engine for LaTeX, MathML, and AsciiMath notation that works in all modern browsers。
+
+理论上方法 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Hexo/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  Hexo
+</span></a><a href="/tags/LaTeX/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
+  LaTeX
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div></div> <!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
 </html>

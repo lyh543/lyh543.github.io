@@ -1,0 +1,158 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "小灰灰灰灰的博客",
+    "home_page_url": "https://blog.lyh543.cn/",
+    "feed_url": "https://blog.lyh543.cn/feed.json",
+    "description": "正在开发中的 Material Design 风格 Vuepress",
+    "items": [
+        {
+            "id": "https://blog.lyh543.cn/back-end/gravatar-mirror.html",
+            "url": "https://blog.lyh543.cn/back-end/gravatar-mirror.html",
+            "title": "Gravatar 镜像",
+            "summary": "最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。\n\n网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。\n\n测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...",
+            "date_modified": "2021-04-28T19:55:40.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/back-end/handle-cors-and-csrf.html",
+            "url": "https://blog.lyh543.cn/back-end/handle-cors-and-csrf.html",
+            "title": "和 CSRF 与 CORS 斗智斗勇",
+            "summary": "写前后端的时候遇到了这个问题，花了三天时间解决，就还是简单地写一写。写到最后才发现，这里面涉及的知识量也太大了，也请各位读者耐心阅读。\n\n前言\n\nCORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不是很清楚二者的区别，于是就再搜了一下，顺便把另外两个概念也聊一聊。\n\n浏览器、前端和后端的关系大概是：前端  浏览器  后端。前端告诉浏览器它需要访问什么，浏览 ...",
+            "image": "https://blog.lyh543.cn/images/002a229b9263643bc576ec37992275e9ca2f79f9d63137b018cb5a216a1475cc.png",
+            "date_modified": "2021-02-23T12:28:15.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/back-end/http-status-code.html",
+            "url": "https://blog.lyh543.cn/back-end/http-status-code.html",
+            "title": "HTTP 状态码",
+            "summary": "MDN Web Docs\n维基百科\n\n1xx 请求已被接受，需要继续处理\n\n1 打头的其实不是很常用。\n\n不过有一个 102 Processing (WebDAV) 挺有意思，用于表明 W ...",
+            "date_modified": "2021-01-30T23:08:30.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/back-end/onedrive-rest-api.html",
+            "url": "https://blog.lyh543.cn/back-end/onedrive-rest-api.html",
+            "title": "后端利用 REST API 对接 Onedrive",
+            "summary": "最近写的后端项目需要云盘，由于各种原因，最终选择了 Onedrive。Onedrive 的一个优点是文档是中文的，但缺点是中文也看不懂。。。。\n\n于是借助文档、博客、示例代码等等，慢慢摸索过来，并把摸索的这个过程形成一篇博文。\n\n注册应用、用户登录授权\n\n> 参考博客：[zhangguanzhang's Blog](https://zhangguanzhang.github.io/2020/ ...",
+            "image": "https://blog.lyh543.cn/images/cc719c616ef24cdf4c51997fcbf6c55edf234453c73ea79b81684c8fea1b6d8e.png",
+            "date_modified": "2021-02-25T16:41:13.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/back-end/restful-api-standard.html",
+            "url": "https://blog.lyh543.cn/back-end/restful-api-standard.html",
+            "title": "RESTful API 标准",
+            "summary": "文章部分内容转自：https://www.colabug.com/2017/0627/228298/\n\nREST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。\n\nREST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于H ...",
+            "date_modified": "2020-09-15T21:33:43.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/gitalk.html",
+            "url": "https://blog.lyh543.cn/blog/gitalk.html",
+            "title": "Hexo 使用 Gitalk 评论",
+            "summary": "2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。\n> Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 官方网站。\n>\n> 2019.11.6 更新：由于 GitHub OAuth ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hello-hexo.html",
+            "url": "https://blog.lyh543.cn/blog/hello-hexo.html",
+            "title": "Hello Hexo",
+            "summary": "Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in [trou ...",
+            "date_modified": "2019-06-23T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hexo-backup.html",
+            "url": "https://blog.lyh543.cn/blog/hexo-backup.html",
+            "title": "Hexo 备份（及一次翻车的经历）",
+            "summary": "由于 Hexo 的本地文件是没有上传到 Github 的，某天突发奇想，想把 Hexo 文件夹直接移至 Onedrive 自动备份。\n后来发现由于 Hexo 的 node_modules 文件太多了(10000+)，以至于需要同步很久。\n另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。\n\n于是就 ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hexo-building-blog.html",
+            "url": "https://blog.lyh543.cn/blog/hexo-building-blog.html",
+            "title": "Hexo 建站",
+            "summary": "先放一个Hexo官方文档的链接。\n\n初始化 hexo 博客\n\nnpm install hexo-cli -g\nhexo init lyh543.github.io\n\n这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。\n\n`` ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hexo-indigo.html",
+            "url": "https://blog.lyh543.cn/blog/hexo-indigo.html",
+            "title": "Hexo Indigo主题配置",
+            "summary": "额，在用了两个月的 Material 主题以后，有点喜新厌旧了（逃\n\n其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hexo-material.html",
+            "url": "https://blog.lyh543.cn/blog/hexo-material.html",
+            "title": "Hexo Material 主题配置",
+            "summary": "Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。\n\nHexo 更换主题的方法参见另一篇博客。\n\n在网上找到了一个配置过程非常详实的[博客](https://z ...",
+            "image": "https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png",
+            "date_modified": "2019-08-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/hexo-writing.html",
+            "url": "https://blog.lyh543.cn/blog/hexo-writing.html",
+            "title": "Hexo 写作",
+            "summary": "Hexo写作支持Markdown。\n不懂就查文档\n下面是一些区别于常规Markdown的点。\n\n即时预览\n\n由于 Hexo 博客不全是使用Markdown语法，常规Markdown编辑器无法提供效果完全相同的预览。但是 Hexo 提供了本地网页即时预览博客的功能。\n ...",
+            "image": "https://blog.lyh543.cn/./hexo-writing/blog_preview.jpg",
+            "date_modified": "2019-06-23T16:33:03.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/markdown.html",
+            "url": "https://blog.lyh543.cn/blog/markdown.html",
+            "title": "Markdown 语法",
+            "summary": "入门 Markdown 推荐：http://younghz.github.io/Markdown/\n> Markdown Cheatsheet: https://bit.ly/mdcheat\n\n本文主要记录 Markdown（如有必要，也会提到 HTML）中不常见的语法，如文字的下标、代码中含有反引号   ` 的处理方法等。\n\n标题中出现了井号\n\n标题出现了 # 号， ...",
+            "image": "https://gitee.com/uploads/images/2019/0424/194736_1331e2af_551056.jpeg",
+            "date_modified": "2019-06-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/markdownlint.html",
+            "url": "https://blog.lyh543.cn/blog/markdownlint.html",
+            "title": "Markdownlint 使用",
+            "summary": "Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。\n\nmarkdownlint_intro\n\n[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...",
+            "image": "https://blog.lyh543.cn/./markdownlint/markdownlint_intro.jpg",
+            "date_modified": "2019-08-30T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/migrating-from-hexo-to-vuepress.html",
+            "url": "https://blog.lyh543.cn/blog/migrating-from-hexo-to-vuepress.html",
+            "title": "博客迁移 ing...",
+            "summary": "我的第一篇博客 Hello Hexo 是在 2019-6-24 创建的。还记得当时还在大一下的期末考试周，但我就是不想复习电路分析等等，就是要搭博客哈哈哈。\n\n转眼间，Hexo 博客用了两年多了，主题也用过两个：hexo-theme-material 和 [he ...",
+            "date_modified": "2021-07-29T14:49:41.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html",
+            "url": "https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html",
+            "title": "用 GitHub Actions 自动化发布 Hexo 网站到 GitHub Pages（转载）",
+            "summary": "转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金\n\n之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：\n\n#!/bin/bash\n\necho\necho pus ...",
+            "image": "https://blog.lyh543.cn/images/04d0daf452702bd99d8efc0a193d0b21aef1c6b8a8a5207752429e5fb1d65e01.png",
+            "date_modified": "2020-09-28T21:03:29.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html",
+            "url": "https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html",
+            "title": "大城市的互联网公司",
+            "summary": "[Microsoft]\n\n上海\n\n[Microsoft]\n[PayPal]\n\n深圳\n\n[TP-LINK]\n\n成都\n\n有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。\n\n[腾讯]\n[字节跳动]\n[阿里]\n[美团]\n[百度]\n[京东]，但基本不招 ...",
+            "date_modified": "2020-12-17T16:06:49.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/carrers/interview-experience/2020.html",
+            "url": "https://blog.lyh543.cn/carrers/interview-experience/2020.html",
+            "title": "面经集合 - 2020",
+            "summary": "推荐搭配 面试相关知识 食用。\n\n2020冬 字节跳动北京 电商后端 日常实习\n\n职位链接\n\n第一面\n\n面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...",
+            "date_modified": "2020-10-30T00:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/carrers/interview-experience/2021.html",
+            "url": "https://blog.lyh543.cn/carrers/interview-experience/2021.html",
+            "title": "面经集合 - 2021",
+            "summary": "推荐搭配 面试相关知识 食用。\n\n2021春 腾讯成都 CSIG 后台开发 暑期实习\n\n这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。\n\n一面\n\n自我介绍\n自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。\n会 Ja ...",
+            "image": "https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png",
+            "date_modified": "2021-03-07T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/carrers/interview-notes.html",
+            "url": "https://blog.lyh543.cn/carrers/interview-notes.html",
+            "title": "面试相关知识",
+            "summary": "以下知识均在后台开发面试中实际出现过、总结而来。\n\nC++\n\n多态的实现\n\n即虚函数表。\n\nSTL 容器库\n\n容器库 - cppreference.com\n\nunordered_map 和 map 的区别\n\n略。\n\nmultimap 和 map 的区别\n\n略。\n ...",
+            "image": "https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png",
+            "date_modified": "2021-03-26T16:00:00.000Z"
+        }
+    ]
+}

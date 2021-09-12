@@ -1,352 +1,127 @@
-<hr>
-<p>title: Docker 笔记<br>date: 2020-02-19 21:01:58<br>tags:</p>
-<ul>
-<li>Docker</li>
-<li>服务器</li>
-<li>Linux<br>category:</li>
-<li>Linux</li>
-</ul>
-<hr>
-<p>Docker 像是一个容器一样，能够让应用运行在隔离的环境中。其实很像一个虚拟机，但是其本质和虚拟机是不同的，结构较虚拟机简单的多，因此速度也远快于虚拟机。<br>Docker 还是跨平台的，可以在 Linux/Windows/MacOS 上运行。<br>对于 Windows 的 Docker（准确的说是 Docker Desktop），它还提供了 Linux 和 Windows 两种子系统。（也就是说，在 Linux 下能运行的 Docker 容器，完全能够在 Windows 上运行）</p>
-<p>而 Docker Compose 可以根据配置文件自动下载镜像、配置、运行 Docker 容器，一气呵成。<br>下载网上写好的配置文件，然后一行代码 <code>docker-compose</code> 即可完成配置，搭建好自己的云服务。它同样是跨平台的。这也是 Docker 方便的原因之一。</p>
-<blockquote>
-<p>Docker 文档：<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">https://docs.docker.com/install/linux/docker-ce/centos/</a><br>Docker Compose 文档：<a href="https://docs.docker.com/compose/install/" target="_blank" rel="noopener">https://docs.docker.com/compose/install/</a></p>
-</blockquote>
-<p>我收集的基于 Docker 的好用的云服务可以见<a href="#docker-%E9%95%9C%E5%83%8F">后面小节</a>。</p>
-<h2 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h2><h3 id="Linux-安装-Docker"><a href="#Linux-安装-Docker" class="headerlink" title="Linux 安装 Docker"></a>Linux 安装 Docker</h3><h4 id="脚本安装"><a href="#脚本安装" class="headerlink" title="脚本安装"></a>脚本安装</h4><pre><code class="sh">bash &lt;(curl -s https://get.docker.com)
-</code></pre>
-<h4 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h4><p>由于项目是基于 Docker 的，所以要先安装 Docker。这篇文章安装的是稳定版的 Docker Engine - Community。</p>
-<p>先卸载以前的 Docker 安装：</p>
-<pre><code class="sh">$ sudo yum remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-engine
-</code></pre>
-<p>再安装所需的包：</p>
-<pre><code class="sh">$ sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2
-</code></pre>
-<p>接下来添加 Docker 的库，并安装 Docker：</p>
-<pre><code class="sh">$ sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-$ sudo yum install -y docker-ce docker-ce-cli containerd.io
-</code></pre>
-<p>到这里，我们安装了 Docker 并建立了 <code>Docker</code> 用户组，但里面还没有成员。  </p>
-<p>接下来启动 Docker：</p>
-<pre><code class="sh">$ sudo systemctl start docker
-</code></pre>
-<p>然后进行一个对 Docker 的 Hello-World 测试：</p>
-<pre><code class="sh">$ sudo docker run hello-world
-Unable to find image &#39;hello-world:latest&#39; locally
-latest: Pulling from library/hello-world
-1b930d010525: Pull complete
-Digest: sha256:9572f7cdcee8591948c2963463447a53466950b3fc15a247fcad1917ca215a2f
-Status: Downloaded newer image for hello-world:latest
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/
-</code></pre>
-<p>表示测试正常。</p>
-<h3 id="Windows-安装-Docker"><a href="#Windows-安装-Docker" class="headerlink" title="Windows 安装 Docker"></a>Windows 安装 Docker</h3><p>Windows 也是支持 Docker 的，他还支持 Windows 容器和 Linux 容器。</p>
-<p>安装方法是去官网下载 Docker Desktop 并安装，然后就可以在命令行中使用 <code>docker</code> 和下面提到的 <code>docker-compose</code> 了，命令和 Linux 也是一样的。</p>
-<h3 id="在-WSL-1-中使用-docker-cli"><a href="#在-WSL-1-中使用-docker-cli" class="headerlink" title="在 WSL 1 中使用 docker-cli"></a>在 WSL 1 中使用 docker-cli</h3><p>WSL 2 中集成了 docker-cli，可以直接管理 Windows 的 Docker。在 WSL 1 中输入 <code>docker</code>，可以看到 Docker 推荐你转换为 WSL 2。</p>
-<pre><code>The command &#39;docker&#39; could not be found in this WSL 1 distro.
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Docker 笔记 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="Docker 像是一个容器一样，能够让应用运行在隔离的环境中。其实很像一个虚拟机，但是其本质和虚拟机是不同的，结构较虚拟机简单的多，因此速度也远快于虚拟机。
+Docker 还是跨平台的，可以在 Linux/Windows/MacOS 上运行。
+对于 Windows 的 Docker（准确的说是 Docker Desktop），它还提供了 Linux 和 Windows 两种子系统。（也就是 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.ba65f1a6.css" as="style"><link rel="preload" href="/assets/js/app.44a1f09f.js" as="script"><link rel="preload" href="/assets/js/164.23ecbdd3.js" as="script"><link rel="preload" href="/assets/js/4.04f0a28b.js" as="script"><link rel="prefetch" href="/assets/js/10.076b8599.js"><link rel="prefetch" href="/assets/js/100.40ea83bb.js"><link rel="prefetch" href="/assets/js/101.d840a4d1.js"><link rel="prefetch" href="/assets/js/102.ebb4ada1.js"><link rel="prefetch" href="/assets/js/103.ac1ba33b.js"><link rel="prefetch" href="/assets/js/104.bd00025b.js"><link rel="prefetch" href="/assets/js/105.201b36c6.js"><link rel="prefetch" href="/assets/js/106.f85eefa1.js"><link rel="prefetch" href="/assets/js/107.03278732.js"><link rel="prefetch" href="/assets/js/108.50aa5837.js"><link rel="prefetch" href="/assets/js/109.850d3acb.js"><link rel="prefetch" href="/assets/js/11.9a1277c8.js"><link rel="prefetch" href="/assets/js/110.519313e6.js"><link rel="prefetch" href="/assets/js/111.42e08c45.js"><link rel="prefetch" href="/assets/js/112.5aeea30f.js"><link rel="prefetch" href="/assets/js/113.4b3d180b.js"><link rel="prefetch" href="/assets/js/114.1e8cabe8.js"><link rel="prefetch" href="/assets/js/115.865645e7.js"><link rel="prefetch" href="/assets/js/116.0a19941c.js"><link rel="prefetch" href="/assets/js/117.f6f68133.js"><link rel="prefetch" href="/assets/js/118.c57fc32b.js"><link rel="prefetch" href="/assets/js/119.5511ea4d.js"><link rel="prefetch" href="/assets/js/12.e4df8aa8.js"><link rel="prefetch" href="/assets/js/120.98ea28eb.js"><link rel="prefetch" href="/assets/js/121.7e012641.js"><link rel="prefetch" href="/assets/js/122.b4268909.js"><link rel="prefetch" href="/assets/js/123.4f864ab5.js"><link rel="prefetch" href="/assets/js/124.39cf2b66.js"><link rel="prefetch" href="/assets/js/125.e6cc5a9b.js"><link rel="prefetch" href="/assets/js/126.ffe898e4.js"><link rel="prefetch" href="/assets/js/127.d601e7a8.js"><link rel="prefetch" href="/assets/js/128.67d436aa.js"><link rel="prefetch" href="/assets/js/129.21c6aa61.js"><link rel="prefetch" href="/assets/js/13.a9a758aa.js"><link rel="prefetch" href="/assets/js/130.371e06a0.js"><link rel="prefetch" href="/assets/js/131.cf9cc3db.js"><link rel="prefetch" href="/assets/js/132.ec78aa9b.js"><link rel="prefetch" href="/assets/js/133.314819b7.js"><link rel="prefetch" href="/assets/js/134.3e0ea341.js"><link rel="prefetch" href="/assets/js/135.735f98fe.js"><link rel="prefetch" href="/assets/js/136.fd859844.js"><link rel="prefetch" href="/assets/js/137.965505f5.js"><link rel="prefetch" href="/assets/js/138.2510ed4c.js"><link rel="prefetch" href="/assets/js/139.741db20a.js"><link rel="prefetch" href="/assets/js/14.99b89c90.js"><link rel="prefetch" href="/assets/js/140.f837b60e.js"><link rel="prefetch" href="/assets/js/141.7a8faaeb.js"><link rel="prefetch" href="/assets/js/142.87399a0b.js"><link rel="prefetch" href="/assets/js/143.799affc9.js"><link rel="prefetch" href="/assets/js/144.cecd4fbf.js"><link rel="prefetch" href="/assets/js/145.d65bcfcd.js"><link rel="prefetch" href="/assets/js/146.183350b9.js"><link rel="prefetch" href="/assets/js/147.2fa580d0.js"><link rel="prefetch" href="/assets/js/148.d509c605.js"><link rel="prefetch" href="/assets/js/149.5e7dcf2f.js"><link rel="prefetch" href="/assets/js/15.2ab48855.js"><link rel="prefetch" href="/assets/js/150.524335e5.js"><link rel="prefetch" href="/assets/js/151.db3a6c9d.js"><link rel="prefetch" href="/assets/js/152.72fdd972.js"><link rel="prefetch" href="/assets/js/153.fb770033.js"><link rel="prefetch" href="/assets/js/154.c5ed4bdc.js"><link rel="prefetch" href="/assets/js/155.8ebfd62b.js"><link rel="prefetch" href="/assets/js/156.5848bc42.js"><link rel="prefetch" href="/assets/js/157.cf327c74.js"><link rel="prefetch" href="/assets/js/158.210a9cca.js"><link rel="prefetch" href="/assets/js/159.32b74298.js"><link rel="prefetch" href="/assets/js/16.409ed5f3.js"><link rel="prefetch" href="/assets/js/160.ec6b3124.js"><link rel="prefetch" href="/assets/js/161.1b267176.js"><link rel="prefetch" href="/assets/js/162.e00fd93b.js"><link rel="prefetch" href="/assets/js/163.4dd6e620.js"><link rel="prefetch" href="/assets/js/165.740b7c4f.js"><link rel="prefetch" href="/assets/js/166.131cbd7d.js"><link rel="prefetch" href="/assets/js/167.04b2121f.js"><link rel="prefetch" href="/assets/js/168.31146975.js"><link rel="prefetch" href="/assets/js/169.08fdfc29.js"><link rel="prefetch" href="/assets/js/17.b6aedfdd.js"><link rel="prefetch" href="/assets/js/170.82328c57.js"><link rel="prefetch" href="/assets/js/171.74b34226.js"><link rel="prefetch" href="/assets/js/172.10b14fbf.js"><link rel="prefetch" href="/assets/js/173.3e4f56b2.js"><link rel="prefetch" href="/assets/js/174.0fa094ba.js"><link rel="prefetch" href="/assets/js/175.236aeaf3.js"><link rel="prefetch" href="/assets/js/176.6b9ce35c.js"><link rel="prefetch" href="/assets/js/177.623fe6cc.js"><link rel="prefetch" href="/assets/js/178.299cf06f.js"><link rel="prefetch" href="/assets/js/179.b60ab300.js"><link rel="prefetch" href="/assets/js/18.ba04e9d3.js"><link rel="prefetch" href="/assets/js/180.12f7daf7.js"><link rel="prefetch" href="/assets/js/181.8f05d309.js"><link rel="prefetch" href="/assets/js/182.5c64b0d7.js"><link rel="prefetch" href="/assets/js/183.0e1fea8d.js"><link rel="prefetch" href="/assets/js/184.2489c6d8.js"><link rel="prefetch" href="/assets/js/185.b99ae67e.js"><link rel="prefetch" href="/assets/js/186.d589acbe.js"><link rel="prefetch" href="/assets/js/187.ac3e2d0e.js"><link rel="prefetch" href="/assets/js/188.eb67a6c7.js"><link rel="prefetch" href="/assets/js/189.79d75b8a.js"><link rel="prefetch" href="/assets/js/19.bcfdab44.js"><link rel="prefetch" href="/assets/js/190.cf1e5763.js"><link rel="prefetch" href="/assets/js/191.f93996d6.js"><link rel="prefetch" href="/assets/js/192.dc21a242.js"><link rel="prefetch" href="/assets/js/193.8cc048a1.js"><link rel="prefetch" href="/assets/js/194.d3643c5e.js"><link rel="prefetch" href="/assets/js/195.f9d7446e.js"><link rel="prefetch" href="/assets/js/196.2ff876ae.js"><link rel="prefetch" href="/assets/js/197.1397c973.js"><link rel="prefetch" href="/assets/js/198.4356baeb.js"><link rel="prefetch" href="/assets/js/199.3eac151b.js"><link rel="prefetch" href="/assets/js/20.d5f827eb.js"><link rel="prefetch" href="/assets/js/200.7f0ddd42.js"><link rel="prefetch" href="/assets/js/201.510ea695.js"><link rel="prefetch" href="/assets/js/202.d113a971.js"><link rel="prefetch" href="/assets/js/203.29741160.js"><link rel="prefetch" href="/assets/js/204.1059841c.js"><link rel="prefetch" href="/assets/js/205.5b2e5377.js"><link rel="prefetch" href="/assets/js/206.d87651a4.js"><link rel="prefetch" href="/assets/js/207.dc2e28ac.js"><link rel="prefetch" href="/assets/js/208.18d3a1b1.js"><link rel="prefetch" href="/assets/js/209.c9f875b7.js"><link rel="prefetch" href="/assets/js/21.69a260fc.js"><link rel="prefetch" href="/assets/js/210.2b8e8130.js"><link rel="prefetch" href="/assets/js/211.a970c9a6.js"><link rel="prefetch" href="/assets/js/212.736c2e49.js"><link rel="prefetch" href="/assets/js/213.8ad372bd.js"><link rel="prefetch" href="/assets/js/214.c468d55a.js"><link rel="prefetch" href="/assets/js/215.b72d0dd4.js"><link rel="prefetch" href="/assets/js/216.28a57b3e.js"><link rel="prefetch" href="/assets/js/217.6822f0d8.js"><link rel="prefetch" href="/assets/js/218.a17b40a9.js"><link rel="prefetch" href="/assets/js/219.f344c074.js"><link rel="prefetch" href="/assets/js/22.5eb358fe.js"><link rel="prefetch" href="/assets/js/220.a1510150.js"><link rel="prefetch" href="/assets/js/221.00297f7f.js"><link rel="prefetch" href="/assets/js/222.9aecbf9b.js"><link rel="prefetch" href="/assets/js/223.ff336f34.js"><link rel="prefetch" href="/assets/js/224.dbd6f828.js"><link rel="prefetch" href="/assets/js/225.e689354f.js"><link rel="prefetch" href="/assets/js/226.154983dd.js"><link rel="prefetch" href="/assets/js/227.cad443ce.js"><link rel="prefetch" href="/assets/js/228.00ac80c2.js"><link rel="prefetch" href="/assets/js/229.deda95f4.js"><link rel="prefetch" href="/assets/js/23.15e094ee.js"><link rel="prefetch" href="/assets/js/230.5f85ab0e.js"><link rel="prefetch" href="/assets/js/231.41a293ce.js"><link rel="prefetch" href="/assets/js/232.a157d6b2.js"><link rel="prefetch" href="/assets/js/233.fe0a1dac.js"><link rel="prefetch" href="/assets/js/234.970cf828.js"><link rel="prefetch" href="/assets/js/235.58dfb772.js"><link rel="prefetch" href="/assets/js/236.8188a532.js"><link rel="prefetch" href="/assets/js/237.8ed4d3be.js"><link rel="prefetch" href="/assets/js/238.19d140ca.js"><link rel="prefetch" href="/assets/js/239.fe0b7b93.js"><link rel="prefetch" href="/assets/js/24.96de54ab.js"><link rel="prefetch" href="/assets/js/240.fc64713a.js"><link rel="prefetch" href="/assets/js/241.775ebe73.js"><link rel="prefetch" href="/assets/js/242.58707471.js"><link rel="prefetch" href="/assets/js/25.bf89dca8.js"><link rel="prefetch" href="/assets/js/26.51d66794.js"><link rel="prefetch" href="/assets/js/27.231b5004.js"><link rel="prefetch" href="/assets/js/28.ecb054eb.js"><link rel="prefetch" href="/assets/js/29.4191803c.js"><link rel="prefetch" href="/assets/js/3.758fedb6.js"><link rel="prefetch" href="/assets/js/30.44a0d112.js"><link rel="prefetch" href="/assets/js/31.5a1b07cb.js"><link rel="prefetch" href="/assets/js/32.3ab79776.js"><link rel="prefetch" href="/assets/js/33.299f307d.js"><link rel="prefetch" href="/assets/js/34.a07579b9.js"><link rel="prefetch" href="/assets/js/35.10362335.js"><link rel="prefetch" href="/assets/js/36.72ec5be9.js"><link rel="prefetch" href="/assets/js/37.3f37cd4c.js"><link rel="prefetch" href="/assets/js/38.26bce069.js"><link rel="prefetch" href="/assets/js/39.bfe4c65b.js"><link rel="prefetch" href="/assets/js/40.f904297f.js"><link rel="prefetch" href="/assets/js/41.13701534.js"><link rel="prefetch" href="/assets/js/42.d383eaac.js"><link rel="prefetch" href="/assets/js/43.c4b378e5.js"><link rel="prefetch" href="/assets/js/44.421316a0.js"><link rel="prefetch" href="/assets/js/45.36e98afa.js"><link rel="prefetch" href="/assets/js/46.5d8c4faf.js"><link rel="prefetch" href="/assets/js/47.79dd9393.js"><link rel="prefetch" href="/assets/js/48.079870a4.js"><link rel="prefetch" href="/assets/js/49.4f624fdd.js"><link rel="prefetch" href="/assets/js/5.092181b8.js"><link rel="prefetch" href="/assets/js/50.37cd92f5.js"><link rel="prefetch" href="/assets/js/51.2d45ee1b.js"><link rel="prefetch" href="/assets/js/52.64dabb93.js"><link rel="prefetch" href="/assets/js/53.9f940c86.js"><link rel="prefetch" href="/assets/js/54.a37290c6.js"><link rel="prefetch" href="/assets/js/55.7d7d47dd.js"><link rel="prefetch" href="/assets/js/56.966ac6f2.js"><link rel="prefetch" href="/assets/js/57.0578b5ed.js"><link rel="prefetch" href="/assets/js/58.60be9838.js"><link rel="prefetch" href="/assets/js/59.2bce6ade.js"><link rel="prefetch" href="/assets/js/6.25f78890.js"><link rel="prefetch" href="/assets/js/60.ca242899.js"><link rel="prefetch" href="/assets/js/61.2990ed70.js"><link rel="prefetch" href="/assets/js/62.80f1f72f.js"><link rel="prefetch" href="/assets/js/63.ad2a2f92.js"><link rel="prefetch" href="/assets/js/64.c186e445.js"><link rel="prefetch" href="/assets/js/65.a3afc5e1.js"><link rel="prefetch" href="/assets/js/66.4daa7b2b.js"><link rel="prefetch" href="/assets/js/67.dbc2013b.js"><link rel="prefetch" href="/assets/js/68.6c2ed76e.js"><link rel="prefetch" href="/assets/js/69.06989d31.js"><link rel="prefetch" href="/assets/js/7.4dffbb2e.js"><link rel="prefetch" href="/assets/js/70.2a2214df.js"><link rel="prefetch" href="/assets/js/71.6d588f80.js"><link rel="prefetch" href="/assets/js/72.6d3834a7.js"><link rel="prefetch" href="/assets/js/73.ff96c22f.js"><link rel="prefetch" href="/assets/js/74.0c5dd683.js"><link rel="prefetch" href="/assets/js/75.a3939d65.js"><link rel="prefetch" href="/assets/js/76.595ed9e0.js"><link rel="prefetch" href="/assets/js/77.ff3d5f3b.js"><link rel="prefetch" href="/assets/js/78.6044475f.js"><link rel="prefetch" href="/assets/js/79.8a10c208.js"><link rel="prefetch" href="/assets/js/8.5bf92f9d.js"><link rel="prefetch" href="/assets/js/80.eccd5d13.js"><link rel="prefetch" href="/assets/js/81.880f8d70.js"><link rel="prefetch" href="/assets/js/82.3014a2f9.js"><link rel="prefetch" href="/assets/js/83.2f6acd1c.js"><link rel="prefetch" href="/assets/js/84.00643bc4.js"><link rel="prefetch" href="/assets/js/85.d7759bcb.js"><link rel="prefetch" href="/assets/js/86.3aa4aa63.js"><link rel="prefetch" href="/assets/js/87.7bf577d9.js"><link rel="prefetch" href="/assets/js/88.90a97233.js"><link rel="prefetch" href="/assets/js/89.7e70f19b.js"><link rel="prefetch" href="/assets/js/9.e1822b4a.js"><link rel="prefetch" href="/assets/js/90.6811dc82.js"><link rel="prefetch" href="/assets/js/91.2824f39e.js"><link rel="prefetch" href="/assets/js/92.c795ccdb.js"><link rel="prefetch" href="/assets/js/93.619d33f3.js"><link rel="prefetch" href="/assets/js/94.69337a7b.js"><link rel="prefetch" href="/assets/js/95.2fdc4cbf.js"><link rel="prefetch" href="/assets/js/96.a251f6b8.js"><link rel="prefetch" href="/assets/js/97.e0db6da3.js"><link rel="prefetch" href="/assets/js/98.6ae792a5.js"><link rel="prefetch" href="/assets/js/99.bbe18d4c.js"><link rel="prefetch" href="/assets/js/vuejs-paginate.92caeb0c.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ba65f1a6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>Docker 像是一个容器一样，能够让应用运行在隔离的环境中。其实很像一个虚拟机，但是其本质和虚拟机是不同的，结构较虚拟机简单的多，因此速度也远快于虚拟机。<br>
+Docker 还是跨平台的，可以在 Linux/Windows/MacOS 上运行。<br>
+对于 Windows 的 Docker（准确的说是 Docker Desktop），它还提供了 Linux 和 Windows 两种子系统。（也就是说，在 Linux 下能运行的 Docker 容器，完全能够在 Windows 上运行）</p> <p>而 Docker Compose 可以根据配置文件自动下载镜像、配置、运行 Docker 容器，一气呵成。<br>
+下载网上写好的配置文件，然后一行代码 <code>docker-compose</code> 即可完成配置，搭建好自己的云服务。它同样是跨平台的。这也是 Docker 方便的原因之一。</p> <blockquote><p>Docker 文档：https://docs.docker.com/install/linux/docker-ce/centos/
+Docker Compose 文档：https://docs.docker.com/compose/install/</p></blockquote> <p>我收集的基于 Docker 的好用的云服务可以见<a href="#docker-%E9%95%9C%E5%83%8F">后面小节</a>。</p> <h2 id="在-wsl-1-中使用-docker-cli"><a href="#在-wsl-1-中使用-docker-cli" class="header-anchor">#</a> 在 WSL 1 中使用 docker-cli</h2> <p>WSL 2 中集成了 docker-cli，可以直接管理 Windows 的 Docker。在 WSL 1 中输入 <code>docker</code>，可以看到 Docker 推荐你转换为 WSL 2。</p> <div class="language- extra-class"><pre class="language-text"><code>The command 'docker' could not be found in this WSL 1 distro.
 We recommend to convert this distro to WSL 2 and activate
 the WSL integration in Docker Desktop settings.
  
 See https://docs.docker.com/docker-for-windows/wsl/ for details.
-</code></pre>
-<p>然而我并不想转换，可参考 <a href="https://blog.csdn.net/esinzhong/article/details/107617284" target="_blank" rel="noopener">Windows 10 WSL1 的子系统下完美解决docker的命令问题_累积技术 沉淀经验-CSDN博客</a> 在 WSL1 下安装 <code>docker-cli</code>。</p>
-<h2 id="安装-Docker-Compose"><a href="#安装-Docker-Compose" class="headerlink" title="安装 Docker Compose"></a>安装 Docker Compose</h2><p>Docker Compose，就可以使用配置文件，一行代码配置 Docker 了。</p>
-<p>Docker Desktop 自带 Docker Compose，Linux 需要自行下载。</p>
-<p>下载 Docker Compose 最新版，并给予可执行权限：</p>
-<pre><code>sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+</code></pre></div><p>然而我并不想转换，可参考 <a href="https://blog.csdn.net/esinzhong/article/details/107617284" target="_blank" rel="noopener noreferrer">Windows 10 WSL1 的子系统下完美解决docker的命令问题_累积技术 沉淀经验-CSDN博客<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 在 WSL1 下安装 <code>docker-cli</code>。</p> <h2 id="linux-安装-docker-compose"><a href="#linux-安装-docker-compose" class="header-anchor">#</a> Linux 安装 Docker Compose</h2> <p>Docker Compose，就可以使用配置文件，一行代码配置 Docker 了。</p> <p>Docker Desktop 自带 Docker Compose，Linux 需要自行下载。</p> <p>下载 Docker Compose 最新版，并给予可执行权限：</p> <div class="language- extra-class"><pre class="language-text"><code>sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-</code></pre>
-<p>最后检查一下是否成功安装：</p>
-<pre><code>$ docker-compose --version
+</code></pre></div><p>最后检查一下是否成功安装：</p> <div class="language- extra-class"><pre class="language-text"><code>$ docker-compose --version
 docker-compose version 1.25.4, build 8d51620a
-</code></pre>
-<h2 id="Docker-更换国内源"><a href="#Docker-更换国内源" class="headerlink" title="Docker 更换国内源"></a>Docker 更换国内源</h2><blockquote>
-<p>参考链接：<a href="https://www.cnblogs.com/wushuaishuai/p/9984228.html#_label0" target="_blank" rel="noopener">https://www.cnblogs.com/wushuaishuai/p/9984228.html#_label0</a></p>
-</blockquote>
-<p>和很多东西一样，Docker 镜像也有国内仓库。</p>
-<p>国内的 Docker 镜像仓库有：</p>
-<pre><code>http://hub-mirror.c.163.com
+</code></pre></div><h2 id="docker-更换国内源"><a href="#docker-更换国内源" class="header-anchor">#</a> Docker 更换国内源</h2> <blockquote><p>参考链接：https://www.cnblogs.com/wushuaishuai/p/9984228.html#_label0</p></blockquote> <p>和很多东西一样，Docker 镜像也有国内仓库。</p> <p>国内的 Docker 镜像仓库有：</p> <div class="language- extra-class"><pre class="language-text"><code>http://hub-mirror.c.163.com
 https://3laho3y3.mirror.aliyuncs.com
 http://f1361db2.m.daocloud.io
 https://mirror.ccs.tencentyun.com
 https://docker.mirrors.ustc.edu.cn
 https://registry.docker-cn.com
-</code></pre>
-<p>这里选 aliyun 的做示范。</p>
-<p>创建一个 <code>daemon.json</code>：</p>
-<pre><code class="bash">sudo vim /etc/docker/daemon.json
-</code></pre>
-<p>按 <code>i</code> 进入编辑模式，写入以下内容：</p>
-<pre><code class="json">{
-  &quot;registry-mirrors&quot;: [&quot;https://3laho3y3.mirror.aliyuncs.com&quot;]
-}
-</code></pre>
-<p>按 <code>esc</code> 退出编辑模式，按 <code>:wq</code> 保存。</p>
-<p>然后重启 Docker 服务。</p>
-<pre><code>sudo systemctl restart docker
-</code></pre>
-<p>Windows 应到 Docker Desktop 的 Settings 中的 Docker Engine 栏中修改。下面是我修改后的内容。</p>
-<pre><code class="json">{
-  &quot;registry-mirrors&quot;: [&quot;https://3laho3y3.mirror.aliyuncs.com&quot;],
-  &quot;insecure-registries&quot;: [],
-  &quot;debug&quot;: true,
-  &quot;experimental&quot;: false
-}
-</code></pre>
-<p>验证镜像源可以使用命令 <code>docker info</code>，如果看到有两行：</p>
-<pre><code> Registry Mirrors:
+</code></pre></div><p>这里选 aliyun 的做示范。</p> <p>创建一个 <code>daemon.json</code>：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">sudo</span> <span class="token function">vim</span> /etc/docker/daemon.json
+</code></pre></div><p>按 <code>i</code> 进入编辑模式，写入以下内容：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;registry-mirrors&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;https://3laho3y3.mirror.aliyuncs.com&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>按 <code>esc</code> 退出编辑模式，按 <code>:wq</code> 保存。</p> <p>然后重启 Docker 服务。</p> <div class="language- extra-class"><pre class="language-text"><code>sudo systemctl restart docker
+</code></pre></div><p>Windows 应到 Docker Desktop 的 Settings 中的 Docker Engine 栏中修改。下面是我修改后的内容。</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;registry-mirrors&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;https://3laho3y3.mirror.aliyuncs.com&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;insecure-registries&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;debug&quot;</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;experimental&quot;</span><span class="token operator">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>验证镜像源可以使用命令 <code>docker info</code>，如果看到有两行：</p> <div class="language- extra-class"><pre class="language-text"><code> Registry Mirrors:
   https://3laho3y3.mirror.aliyuncs.com/
-</code></pre>
-<p>就表示成功。</p>
-<p>下次拉取镜像的时候就快得多了。</p>
-<h2 id="常用-Docker-镜像"><a href="#常用-Docker-镜像" class="headerlink" title="常用 Docker 镜像"></a>常用 Docker 镜像</h2><p>个人收集的一些基于 Docker 的云服务。</p>
-<table>
-<thead>
-<tr>
-<th>镜像</th>
-<th>创建命令或 <code>docker-compose.yml</code> 链接</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Docker Web 管理</td>
-<td><code>docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</code></td>
-</tr>
-<tr>
-<td>私人云 NextCloud</td>
-<td><a href="/linux/build-owncloud-on-server/nextcloud-docker-compose.tar">nextcloud-docker-compose.tar</a></td>
-</tr>
-<tr>
-<td>私人云 <a href="https://github.com/HumanBrainProject/seafile-compose/" target="_blank" rel="noopener">Seafile</a></td>
-<td><a href="https://github.com/HumanBrainProject/seafile-compose/blob/master/docker-compose.yaml" target="_blank" rel="noopener">docker-compse.yaml</a></td>
-</tr>
-<tr>
-<td><a href="https://blog.devzeng.com/blog/build-webdav-server-in-docker.html" target="_blank" rel="noopener">morrisjobke/webdav</a></td>
-<td><code>docker run -d --name webdav -v D:/:/var/webdav -e USERNAME=test -e PASSWORD=test -p 8888:80 --restart always morrisjobke/webdav</code></td>
-</tr>
-<tr>
-<td>在线 Markdown 编辑器 <a href="https://github.com/hackmdio/codimd" target="_blank" rel="noopener">CodiMD</a></td>
-<td><a href="https://hackmd.io/c/codimd-documentation/%2Fs%2Fcodimd-docker-deployment#Using-docker-compose-to-setup-CodiMD" target="_blank" rel="noopener">docker-compse.yml</a></td>
-</tr>
-<tr>
-<td>在线 LaTeX 编辑器 <a href="https://github.com/overleaf/overleaf/wiki/Quick-Start-Guide" target="_blank" rel="noopener">Overleaf</a></td>
-<td><a href="https://github.com/overleaf/overleaf/blob/master/docker-compose.yml" target="_blank" rel="noopener">docker-compose.yml</a></td>
-</tr>
-<tr>
-<td>Qbittorrent Enhanced Edition</td>
-<td><code>docker run -d --name qbittorrentee -e WEBUIPORT=8081 -e PUID=1026 -e PGID=100 -e TZ=Asia/Shanghai -p 6881:6881 6881:6881/udp -p 8081:8081 -v /media/Downloads:/downloads --restart always superng6/qbittorrentee</code></td>
-</tr>
-<tr>
-<td>云 SSH <a href="https://hub.docker.com/r/oldiy/docker-webssh2" target="_blank" rel="noopener">WebSSH2</a></td>
-<td>无</td>
-</tr>
-<tr>
-<td>远程 Firefox <a href="https://hub.docker.com/r/oldiy/firefox-enpass-novnc" target="_blank" rel="noopener">firefox-enpass-novnc</a></td>
-<td>无</td>
-</tr>
-<tr>
-<td><a href="https://hub.docker.com/r/oddrationale/docker-shadowsocks" target="_blank" rel="noopener">shadowsocks</a></td>
-<td><code>docker run --name shadowsocks -d -p 54285:54285 --restart always oddrationale/docker-shadowsocks -s 0.0.0.0 -p 54285 -k yourpasswd -m aes-256-cfb</code></td>
-</tr>
-<tr>
-<td><a href="https://github.com/pengchujin/v2rayDocker" target="_blank" rel="noopener">v2ray+自定义dns</a></td>
-<td><code>docker run -d --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy  pengchujin/v2ray_ws:0.10 YOURDOMAIN.COM V2RAY_WS &amp;&amp; sleep 3s &amp;&amp; sudo docker logs v2ray</code></td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td><code>docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --restart always mysql</code></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td><code>docker run -d --name redis -p 6379:6379 -e REDIS_PASSWORD=redis --restart always redis /bin/sh -c &#39;redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}&#39;</code></td>
-</tr>
-<tr>
-<td>Memcached</td>
-<td><code>docker run -d --name memcached -p 11211:11211 --restart always memcached</code></td>
-</tr>
-</tbody></table>
-<h2 id="Docker-基础命令"><a href="#Docker-基础命令" class="headerlink" title="Docker 基础命令"></a>Docker 基础命令</h2><p>初次接触 Docker，要记得两个概念：images（镜像） 和 containers（容器）。从网上获取一个镜像，然后每次可以由这个镜像创造一个容器（像是每次由一个系统镜像安装一个系统一样）。</p>
-<p>下面是我最先接触到的几条命令，可能比较适合和我一样的新人。</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>用途</th>
-<th>常用参数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>docker run -dit ubuntu</code></td>
-<td>从 Ubuntu 镜像创造一个容器并运行</td>
-<td>可用 <code>--name</code> 对容器命名，默认名是随机生成的；在最后可加 <code>&lt;command&gt;</code></td>
-</tr>
-<tr>
-<td><code>docker start -i &lt;name&gt;</code></td>
-<td>运行名为 <code>&lt;name&gt;</code>（也可以是容器的 container ID 值的前几位）的容器</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker images</code></td>
-<td>查看本地的镜像</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker image prune -af</code></td>
-<td>删除所有没有使用的镜像（如果有容器使用了某镜像，无论这个容器正在运行/已停止，这个镜像不会被删除）</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker ps</code></td>
-<td>查看正在运行的容器</td>
-<td>加 <code>--all</code> 或 <code>-a</code> 查看所有的（包括已停止的镜像）</td>
-</tr>
-<tr>
-<td><code>docker container rm &lt;name&gt;</code></td>
-<td>删除名为 <code>&lt;name&gt;</code>（也可以是容器的 container ID 值的前几位）的容器</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker container prune -af</code></td>
-<td>删除所有已停止的容器</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker container rename &lt;old_name&gt; &lt;new_name&gt;</code></td>
-<td>给容器改名</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker exec -it &lt;name&gt; /bin/bash</code></td>
-<td>在正在运行的 <code>&lt;name&gt;</code> 容器中运行 bash 命令行</td>
-<td></td>
-</tr>
-<tr>
-<td><code>docker update --restart=always &lt;name&gt;</code></td>
-<td>让 <code>&lt;name&gt;</code> 容器开机自启、自动重启</td>
-<td></td>
-</tr>
-<tr>
-<td><code>-v ~/downloads:/var/webdav</code></td>
-<td>将容器外的 <code>~/downloads</code> 映射到容器内的 <code>/var/webdav</code></td>
-<td>Windows 下将路径中 <code>\</code> 改为 <code>/</code> 即可，如 <code>d:/Downloads</code></td>
-</tr>
-</tbody></table>
-<h2 id="Docker-Compose-基础命令"><a href="#Docker-Compose-基础命令" class="headerlink" title="Docker Compose 基础命令"></a>Docker Compose 基础命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>用途</th>
-<th>常用参数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>docker-compose up</code></td>
-<td>以当前文件夹下的 <code>docker-compose.yml</code> 作为配置文件，<code>run</code> 一个容器</td>
-<td><code>-d</code>可在后台运行</td>
-</tr>
-<tr>
-<td><code>docker-compose down -v</code></td>
-<td>删除当前文件夹下的 <code>docker-compose.yml</code> 所指的容器</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="Docker-Compose-文件语法"><a href="#Docker-Compose-文件语法" class="headerlink" title="Docker Compose 文件语法"></a>Docker Compose 文件语法</h2><p>本人不会写 <code>docker-compose.yml</code>，只会做一些简单的修改，因此只记录自己用过的语法。</p>
-<pre><code class="yml">    ports:
-      - 7070:80
-      # 将 Docker 内的 80 端口映射到宿主机的 7070 端口
-      # 即可以通过访问 Docker 外部的 7070 端口访问到内部的 80 端口
-</code></pre>
-<h2 id="常见错误及解决办法"><a href="#常见错误及解决办法" class="headerlink" title="常见错误及解决办法"></a>常见错误及解决办法</h2><h3 id="在-Docker-容器中如何安装软件"><a href="#在-Docker-容器中如何安装软件" class="headerlink" title="在 Docker 容器中如何安装软件"></a>在 Docker 容器中如何安装软件</h3><p>不少 Docker 容器都是采用的 Alpine Linux，这个 linux 发行版没有 <code>sudo</code>，没有 <code>bash</code>，我猜是为了简洁吧，毕竟要做成镜像，所以把没用的功能尽量都砍了。</p>
-<p>Alpine Linux 下安装软件的命令为：</p>
-<pre><code class="sh">apk add &lt;package name&gt;
-</code></pre>
-<p>顺便中科大镜像源也有 Alpine Linux 的软件源，觉得国内网速慢的可以去更换，镜像站也有更换教程。</p>
-<h3 id="Read-only-file-system"><a href="#Read-only-file-system" class="headerlink" title="Read-only file system"></a>Read-only file system</h3><p>可能是 <code>docker-compose.yml</code> 中指定了目录为只读。这些可能出现在：</p>
-<pre><code class="yml">version: &#39;3.3&#39;
+</code></pre></div><p>就表示成功。</p> <p>下次拉取镜像的时候就快得多了。</p> <h2 id="常用-docker-镜像"><a href="#常用-docker-镜像" class="header-anchor">#</a> 常用 Docker 镜像</h2> <p>个人收集的一些基于 Docker 的云服务。</p> <table><thead><tr><th>镜像</th> <th>创建命令或 <code>docker-compose.yml</code> 链接</th></tr></thead> <tbody><tr><td>Docker Web 管理</td> <td><code>docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</code></td></tr> <tr><td>私人云 NextCloud</td> <td><a href="/linux/build-owncloud-on-server/nextcloud-docker-compose.tar">nextcloud-docker-compose.tar</a></td></tr> <tr><td>私人云 <a href="https://github.com/HumanBrainProject/seafile-compose/" target="_blank" rel="noopener noreferrer">Seafile<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><a href="https://github.com/HumanBrainProject/seafile-compose/blob/master/docker-compose.yaml" target="_blank" rel="noopener noreferrer">docker-compse.yaml<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td></tr> <tr><td><a href="https://blog.devzeng.com/blog/build-webdav-server-in-docker.html" target="_blank" rel="noopener noreferrer">morrisjobke/webdav<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><code>docker run -d --name webdav -v D:/:/var/webdav -e USERNAME=test -e PASSWORD=test -p 8888:80 --restart always morrisjobke/webdav</code></td></tr> <tr><td>在线 Markdown 编辑器 <a href="https://github.com/hackmdio/codimd" target="_blank" rel="noopener noreferrer">CodiMD<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><a href="https://hackmd.io/c/codimd-documentation/%2Fs%2Fcodimd-docker-deployment#Using-docker-compose-to-setup-CodiMD" target="_blank" rel="noopener noreferrer">docker-compse.yml<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td></tr> <tr><td>在线 LaTeX 编辑器 <a href="https://github.com/overleaf/overleaf/wiki/Quick-Start-Guide" target="_blank" rel="noopener noreferrer">Overleaf<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><a href="https://github.com/overleaf/overleaf/blob/master/docker-compose.yml" target="_blank" rel="noopener noreferrer">docker-compose.yml<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td></tr> <tr><td>Qbittorrent Enhanced Edition</td> <td><code>docker run -d --name qbittorrentee -e WEBUIPORT=8081 -e PUID=1026 -e PGID=100 -e TZ=Asia/Shanghai -p 6881:6881 -p 6881:6881/udp -p 8081:8081 -v /media/Downloads:/downloads --restart always superng6/qbittorrentee</code></td></tr> <tr><td>云 SSH <a href="https://hub.docker.com/r/oldiy/docker-webssh2" target="_blank" rel="noopener noreferrer">WebSSH2<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td>无</td></tr> <tr><td>远程 Firefox <a href="https://hub.docker.com/r/oldiy/firefox-enpass-novnc" target="_blank" rel="noopener noreferrer">firefox-enpass-novnc<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td>无</td></tr> <tr><td><a href="https://hub.docker.com/r/oddrationale/docker-shadowsocks" target="_blank" rel="noopener noreferrer">shadowsocks<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><code>docker run --name shadowsocks -d -p 54285:54285 --restart always oddrationale/docker-shadowsocks -s 0.0.0.0 -p 54285 -k yourpasswd -m aes-256-cfb</code></td></tr> <tr><td><a href="https://github.com/pengchujin/v2rayDocker" target="_blank" rel="noopener noreferrer">v2ray+自定义dns<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><code>docker run -d --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy pengchujin/v2ray_ws:0.10 YOURDOMAIN.COM V2RAY_WS &amp;&amp; sleep 3s &amp;&amp; sudo docker logs v2ray</code></td></tr> <tr><td><a href="https://hub.docker.com/r/mzz2017/v2raya" target="_blank" rel="noopener noreferrer">V2RayA 客户端 (Linux)<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><code>docker run -d --restart=always --privileged --network=host --name v2raya -v /etc/v2raya:/etc/v2raya mzz2017/v2raya</code></td></tr> <tr><td><a href="https://hub.docker.com/r/mzz2017/v2raya" target="_blank" rel="noopener noreferrer">V2RayA 客户端 (MacOS)<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td> <td><code>docker run -d -p 2017:2017 -p 20170-20172:20170-20172 --restart=always --name v2raya -v /etc/v2raya:/etc/v2raya mzz2017/v2raya</code></td></tr> <tr><td>MySQL</td> <td><code>docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 --restart always mysql</code></td></tr> <tr><td>Redis</td> <td><code>docker run -d --name redis -p 6379:6379 -e REDIS_PASSWORD=redis --restart always redis /bin/sh -c 'redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}'</code></td></tr> <tr><td>Memcached</td> <td><code>docker run -d --name memcached -p 11211:11211 --restart always memcached</code></td></tr> <tr><td>Hive</td> <td><a href="https://github.com/big-data-europe/docker-hive" target="_blank" rel="noopener noreferrer">docker-compose.yml<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></td></tr></tbody></table> <h2 id="docker-基础命令"><a href="#docker-基础命令" class="header-anchor">#</a> Docker 基础命令</h2> <p>初次接触 Docker，要记得两个概念：images（镜像） 和 containers（容器）。从网上获取一个镜像，然后每次可以由这个镜像创造一个容器（像是每次由一个系统镜像安装一个系统一样）。</p> <p>下面是我最先接触到的几条命令，可能比较适合和我一样的新人。</p> <table><thead><tr><th>命令</th> <th>用途</th> <th>常用参数</th></tr></thead> <tbody><tr><td><code>docker run -dit ubuntu</code></td> <td>从 Ubuntu 镜像创造一个容器并运行</td> <td>可用 <code>--name</code> 对容器命名，默认名是随机生成的；在最后可加 <code>&lt;command&gt;</code></td></tr> <tr><td><code>docker start -i &lt;name&gt;</code></td> <td>运行名为 <code>&lt;name&gt;</code>（也可以是容器的 container ID 值的前几位）的容器</td> <td></td></tr> <tr><td><code>docker images</code></td> <td>查看本地的镜像</td> <td></td></tr> <tr><td><code>docker image prune -af</code></td> <td>删除所有没有使用的镜像（如果有容器使用了某镜像，无论这个容器正在运行/已停止，这个镜像不会被删除）</td> <td></td></tr> <tr><td><code>docker ps</code></td> <td>查看正在运行的容器</td> <td>加 <code>--all</code> 或 <code>-a</code> 查看所有的（包括已停止的镜像）</td></tr> <tr><td><code>docker container rm &lt;name&gt;</code></td> <td>删除名为 <code>&lt;name&gt;</code>（也可以是容器的 container ID 值的前几位）的容器</td> <td></td></tr> <tr><td><code>docker container prune -af</code></td> <td>删除所有已停止的容器</td> <td></td></tr> <tr><td><code>docker container rename &lt;old_name&gt; &lt;new_name&gt;</code></td> <td>给容器改名</td> <td></td></tr> <tr><td><code>docker exec -it &lt;name&gt; /bin/bash</code></td> <td>在正在运行的 <code>&lt;name&gt;</code> 容器中运行 bash 命令行</td> <td></td></tr> <tr><td><code>docker update --restart=always &lt;name&gt;</code></td> <td>让 <code>&lt;name&gt;</code> 容器开机自启、自动重启</td> <td></td></tr> <tr><td><code>-v ~/downloads:/var/webdav</code></td> <td>将容器外的 <code>~/downloads</code> 映射到容器内的 <code>/var/webdav</code></td> <td>Windows 下将路径中 <code>\</code> 改为 <code>/</code> 即可，如 <code>d:/Downloads</code></td></tr></tbody></table> <h2 id="docker-compose-基础命令"><a href="#docker-compose-基础命令" class="header-anchor">#</a> Docker Compose 基础命令</h2> <table><thead><tr><th>命令</th> <th>用途</th> <th>常用参数</th></tr></thead> <tbody><tr><td><code>docker-compose up</code></td> <td>以当前文件夹下的 <code>docker-compose.yml</code> 作为配置文件，<code>run</code> 一个容器</td> <td><code>-d</code>可在后台运行</td></tr> <tr><td><code>docker-compose down -v</code></td> <td>删除当前文件夹下的 <code>docker-compose.yml</code> 所指的容器</td> <td></td></tr></tbody></table> <h2 id="docker-空间清理"><a href="#docker-空间清理" class="header-anchor">#</a> Docker 空间清理</h2> <blockquote><p>参考：https://blog.fundebug.com/2018/01/10/how-to-clean-docker-disk/</p></blockquote> <p>使用 <code>docker system df</code> 查看 Docker 占了多少空间：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>$ docker system <span class="token function">df</span>
+TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
+Images              <span class="token number">147</span>                 <span class="token number">36</span>                  <span class="token number">7</span>.204GB             <span class="token number">3</span>.887GB <span class="token punctuation">(</span><span class="token number">53</span>%<span class="token punctuation">)</span>
+Containers          <span class="token number">37</span>                  <span class="token number">10</span>                  <span class="token number">104</span>.8MB             <span class="token number">102</span>.6MB <span class="token punctuation">(</span><span class="token number">97</span>%<span class="token punctuation">)</span>
+Local Volumes       <span class="token number">3</span>                   <span class="token number">3</span>                   <span class="token number">1</span>.421GB             0B <span class="token punctuation">(</span><span class="token number">0</span>%<span class="token punctuation">)</span>
+Build Cache                                                 0B                  0B
+</code></pre></div><ul><li><code>docker system prune</code> 命令可以用于清理磁盘，删除关闭的容器、无用的数据卷和网络，以及 dangling 镜像(即无 tag 的镜像)。</li> <li><code>docker system prune -a</code> 命令清理得更加彻底，可以将没有容器使用 Docker 镜像（包括暂时未用到的容器和镜像）都删掉。</li></ul> <p>如果你使用的是基于 Windows WSL 2 的 Docker，上面的操作只会释放 WSL 2 中的空间，WSL 2 占用 Windows 的空间并不会自动缩小。需要在管理员 PowerShell 下手动缩小 <code>%LOCALAPPDATA%\Docker\wsl\data\ext4.vhdx</code>：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># 关闭 Docker</span>
+net stop com<span class="token punctuation">.</span>docker<span class="token punctuation">.</span>service
+<span class="token function">kill</span> <span class="token operator">-</span>Force <span class="token operator">-</span>Name <span class="token string">&quot;docker&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Docker Desktop&quot;</span>
+wsl <span class="token operator">--</span>shutdown
+<span class="token comment"># 缩小磁盘</span>
+<span class="token function">Optimize-VHD</span> <span class="token operator">-</span>Mode Full <span class="token operator">-</span>Path <span class="token variable">$Env</span>:LOCALAPPDATA\Docker\wsl\<span class="token keyword">data</span>\ext4<span class="token punctuation">.</span>vhdx
+</code></pre></div><h2 id="常见错误及解决办法"><a href="#常见错误及解决办法" class="header-anchor">#</a> 常见错误及解决办法</h2> <h3 id="在-docker-容器中如何安装软件"><a href="#在-docker-容器中如何安装软件" class="header-anchor">#</a> 在 Docker 容器中如何安装软件</h3> <p>不少 Docker 容器都是采用的 Alpine Linux，这个 linux 发行版没有 <code>sudo</code>，没有 <code>bash</code>，我猜是为了简洁吧，毕竟要做成镜像，所以把没用的功能尽量都砍了。</p> <p>Alpine Linux 下安装软件的命令为：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>apk <span class="token function">add</span> <span class="token operator">&lt;</span>package name<span class="token operator">&gt;</span>
+</code></pre></div><p>顺便中科大镜像源也有 Alpine Linux 的软件源，觉得国内网速慢的可以去更换，镜像站也有更换教程。</p> <h3 id="read-only-file-system"><a href="#read-only-file-system" class="header-anchor">#</a> Read-only file system</h3> <p>可能是 <code>docker-compose.yml</code> 中指定了目录为只读。这些可能出现在：</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.3'</span>
  
-services:
-  redis:
-    image: redis:4.0.1-alpine
-    networks:
-      - myoverlay
-    read_only: true # 指定为只读
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span>4.0.1<span class="token punctuation">-</span>alpine
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> myoverlay
+    <span class="token key atrule">read_only</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># 指定为只读</span>
     
-networks:
-  myoverlay:
-</code></pre>
-<pre><code class="yml">  web:
-    build: ./web
-    restart: always
-    ports:
-      - 7070:80
-    volumes:
-      # - nextcloud:/var/www/html:ro   # ro 为只读 (read-only)
-      - nextcloud:/var/www/html        # 可读写的版本
-    depends_on:
-      - app
-</code></pre>
-<h3 id="Container-is-unhealty"><a href="#Container-is-unhealty" class="headerlink" title="Container is unhealty"></a>Container is unhealty</h3><p>我在 Windows 下安装 overleaf 时，出现过下面的情况。</p>
-<pre><code class="sh">&gt; docker-compose up
-Creating network &quot;overleaf_default&quot; with the default driver
-Creating overleaf_redis ... done
-Creating overleaf_mongo ... done
+<span class="token key atrule">networks</span><span class="token punctuation">:</span>
+  <span class="token key atrule">myoverlay</span><span class="token punctuation">:</span>
+</code></pre></div><div class="language-yml extra-class"><pre class="language-yml"><code>  <span class="token key atrule">web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">build</span><span class="token punctuation">:</span> ./web
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 7070<span class="token punctuation">:</span><span class="token number">80</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token comment"># - nextcloud:/var/www/html:ro   # ro 为只读 (read-only)</span>
+      <span class="token punctuation">-</span> nextcloud<span class="token punctuation">:</span>/var/www/html        <span class="token comment"># 可读写的版本</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> app
+</code></pre></div><h3 id="container-is-unhealty"><a href="#container-is-unhealty" class="header-anchor">#</a> Container is unhealty</h3> <p>我在 Windows 下安装 overleaf 时，出现过下面的情况。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token operator">&gt;</span> docker-compose up
+Creating network <span class="token string">&quot;overleaf_default&quot;</span> with the default driver
+Creating overleaf_redis <span class="token punctuation">..</span>. <span class="token keyword">done</span>
+Creating overleaf_mongo <span class="token punctuation">..</span>. <span class="token keyword">done</span>
 
-ERROR: for sharelatex  Container &quot;233abaae4ea7&quot; is unhealthy.
-ERROR: Encountered errors while bringing up the project.
-</code></pre>
-<p>在配置文件 <code>docker-compose.yml</code> 中写到，<code>sharelatex</code> 基于 <code>overleaf_redis</code> 和 <code>overleaf_mongo</code>，并且要求 <code>mongo</code> 是 healthy 的。<br><code>233abaae4ea7</code> 正是我电脑上的 <code>mongo</code> 的 Container ID。</p>
-<pre><code class="yml">sharelatex:
-    depends_on:
-        mongo:
-            condition: service_healthy
-        redis:
-            condition: service_started
-mongo:
-    healthcheck:
-        test: echo &#39;db.stats().ok&#39; | mongo localhost:27017/test --quiet
-        interval: 10s
-        timeout: 10s
-        retries: 5
-</code></pre>
-<p>healthy 可以理解为是正常运行。</p>
-<p>这里出错就有两种情况了，一是 <code>mongo</code> 本身不正常了，另一种是 <code>mongo</code> 检查的太频繁了，导致还没完成启动，就被诊断为 unhealthy 了。</p>
-<p>我们检查一下 mongo 的 log。</p>
-<pre><code class="bash">&gt; docker ps | find &quot;233a&quot;
-233abaae4ea7        mongo                                   &quot;docker-entrypoint.s鈥?   About a minute ago   Restarting (14) 47 seconds ago                            overleaf_mongo
-</code></pre>
-<p>显示 <code>mongo</code> 正在重启，我估计是在反复不正常-重启，因此就考虑在这方面进行 debug。<br>最后的问题出在由于我是在 Windows 上运行，文件映射可能不正确，我把配置文件的 <code>volumes</code> 部分删掉就可以了。</p>
-<p>当然，如果是正确的情况，上一行会显示：</p>
-<pre><code class="bash">&gt; docker ps --all | find &quot;mongo&quot;
-194bafd8158f        mongo                                   &quot;docker-entrypoint.s鈥?   13 minutes ago      Up 12 minutes (healthy)   27017/tcp                overleaf_mongo
-</code></pre>
-<p>这种情况下，可以考虑把 <code>mongo</code> 的 <code>healthcheck</code> 部分的 <code>inteval</code> 和 <code>timeout</code> 调大。</p>
+ERROR: <span class="token keyword">for</span> sharelatex  Container <span class="token string">&quot;233abaae4ea7&quot;</span> is unhealthy.
+ERROR: Encountered errors <span class="token keyword">while</span> bringing up the project.
+</code></pre></div><p>在配置文件 <code>docker-compose.yml</code> 中写到，<code>sharelatex</code> 基于 <code>overleaf_redis</code> 和 <code>overleaf_mongo</code>，并且要求 <code>mongo</code> 是 healthy 的。<br> <code>233abaae4ea7</code> 正是我电脑上的 <code>mongo</code> 的 Container ID。</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">sharelatex</span><span class="token punctuation">:</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+        <span class="token key atrule">mongo</span><span class="token punctuation">:</span>
+            <span class="token key atrule">condition</span><span class="token punctuation">:</span> service_healthy
+        <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+            <span class="token key atrule">condition</span><span class="token punctuation">:</span> service_started
+<span class="token key atrule">mongo</span><span class="token punctuation">:</span>
+    <span class="token key atrule">healthcheck</span><span class="token punctuation">:</span>
+        <span class="token key atrule">test</span><span class="token punctuation">:</span> echo 'db.stats().ok' <span class="token punctuation">|</span> mongo localhost<span class="token punctuation">:</span>27017/test <span class="token punctuation">-</span><span class="token punctuation">-</span>quiet
+        <span class="token key atrule">interval</span><span class="token punctuation">:</span> 10s
+        <span class="token key atrule">timeout</span><span class="token punctuation">:</span> 10s
+        <span class="token key atrule">retries</span><span class="token punctuation">:</span> <span class="token number">5</span>
+</code></pre></div><p>healthy 可以理解为是正常运行。</p> <p>这里出错就有两种情况了，一是 <code>mongo</code> 本身不正常了，另一种是 <code>mongo</code> 检查的太频繁了，导致还没完成启动，就被诊断为 unhealthy 了。</p> <p>我们检查一下 mongo 的 log。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&gt;</span> docker <span class="token function">ps</span> <span class="token operator">|</span> <span class="token function">find</span> <span class="token string">&quot;233a&quot;</span>
+233abaae4ea7        mongo                                   &quot;docker-entrypoint.s鈥?   About a minute ago   Restarting <span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">)</span> <span class="token number">47</span> seconds ago                            overleaf_mongo
+</code></pre></div><p>显示 <code>mongo</code> 正在重启，我估计是在反复不正常-重启，因此就考虑在这方面进行 debug。<br>
+最后的问题出在由于我是在 Windows 上运行，文件映射可能不正确，我把配置文件的 <code>volumes</code> 部分删掉就可以了。</p> <p>当然，如果是正确的情况，上一行会显示：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token operator">&gt;</span> docker <span class="token function">ps</span> --all <span class="token operator">|</span> <span class="token function">find</span> <span class="token string">&quot;mongo&quot;</span>
+194bafd8158f        mongo                                   &quot;docker-entrypoint.s鈥?   <span class="token number">13</span> minutes ago      Up <span class="token number">12</span> minutes <span class="token punctuation">(</span>healthy<span class="token punctuation">)</span>   <span class="token number">27017</span>/tcp                overleaf_mongo
+</code></pre></div><p>这种情况下，可以考虑把 <code>mongo</code> 的 <code>healthcheck</code> 部分的 <code>inteval</code> 和 <code>timeout</code> 调大。</p></div></div></div> <footer><!----></footer></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.44a1f09f.js" defer></script><script src="/assets/js/164.23ecbdd3.js" defer></script><script src="/assets/js/4.04f0a28b.js" defer></script>
+  </body>
+</html>
