@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2021-10-15T09:12:06.440Z</updated>
+    <updated>2021-10-17T13:51:45.632Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
@@ -197,21 +197,6 @@ markdownlint_intro
 转眼间，Hexo 博客用了两年多了，主题也用过两个：hexo-theme-material 和 [he ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[用 GitHub Actions 自动化发布 Hexo 网站到 GitHub Pages（转载）]]></title>
-        <id>https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html</id>
-        <link href="https://blog.lyh543.cn/blog/use-github-actions-to-deploy-hexo.html">
-        </link>
-        <updated>2020-09-28T21:03:29.000Z</updated>
-        <summary type="html"><![CDATA[转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金
-
-之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：
-
-#!/bin/bash
-
-echo
-echo pus ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[大城市的互联网公司]]></title>
         <id>https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html</id>
         <link href="https://blog.lyh543.cn/carrers/internet-enterprise-in-cities.html">
@@ -299,5 +284,21 @@ multimap 和 map 的区别
 
 略。
  ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《编程珠玑》笔记]]></title>
+        <id>https://blog.lyh543.cn/computer-science/Programming-Pearls.html</id>
+        <link href="https://blog.lyh543.cn/computer-science/Programming-Pearls.html">
+        </link>
+        <updated>2019-08-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[编程珠玑每一章讲了编程、开发的不同的方面。
+第一章讲如何准确、正确的定义问题。
+第二章讲算法设计（灵光一现，啊哈！算法）。
+第三章提到数据结构和编程的关系（欸有点面向对象的感觉）。
+第四章运用循环不变式来证明程序的正确性。
+第五章运用脚手架、断言调试程序。
+第六章概述了加速程序的几个方向，并在第八至x章分别阐述。
+第七章书如其名：粗略估算。
+第八章重新设计算法来 ...]]></summary>
     </entry>
 </feed>
