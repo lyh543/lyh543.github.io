@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hexo 建站 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="先放一个Hexo官方文档的链接。
+
+初始化 hexo 博客
+
+npm install hexo-cli -g
+hexo init lyh543.github.io
+
+这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。
+
+`` ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/26.d9aeab20.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>先放一个<a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener noreferrer">Hexo官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>的链接。</p> <h2 id="初始化-hexo-博客"><a href="#初始化-hexo-博客" class="header-anchor">#</a> 初始化 hexo 博客</h2> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> hexo-cli -g
+hexo init lyh543.github.io
+</code></pre></div><p>这步会创建一个 <code>lyh543.github.io</code> 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 <code>npm</code> 包。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token builtin class-name">cd</span> lyh543.github.io
+<span class="token function">npm</span> <span class="token function">install</span>
+</code></pre></div><p>然后接<a href="#%E5%B8%B8%E8%A7%84%E4%BA%8C%E8%BF%9E">常规二连</a>就可以了</p> <h2 id="常规二连"><a href="#常规二连" class="header-anchor">#</a> 常规二连</h2> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># hexo clean</span>
+<span class="token comment"># 如果后面突然报bug，可以试下clean（虽然我也不知道有什么用）</span>
+hexo g
+hexo d <span class="token comment">#可以替换为git add, commit, push三连</span>
+</code></pre></div><p>貌似调用<code>hexo</code>的任何命令的前 20 秒内命令行会没有回显，用<s>Windows下的</s>任务管理器查看是 <code>node</code> 占用了高 CPU。不知道是不是通病。</p> <p>甚至可以简写为（以下二选一）：</p> <div class="language-bash extra-class"><pre class="language-bash"><code>hexo d -g
+hexo g -d
+</code></pre></div><h2 id="配置-hexo-server"><a href="#配置-hexo-server" class="header-anchor">#</a> 配置 hexo-server</h2> <p>Hexo 提供了本地即时预览网页的功能，需要安装 hexo-server:</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> hexo-server --save
+</code></pre></div><p>安装以后，<code>hexo s</code>以后即可在<code>http://127.0.0.1:4000/</code>预览自己的博客了。本地更新文件以后，hexo 会即时更新，刷新网站即可预览更改。</p> <h2 id="配置-deploy"><a href="#配置-deploy" class="header-anchor">#</a> 配置 deploy</h2> <p>配置deploy就不用再到 git 里 push 了。</p> <p>deploy 之前配置博客根目录下<code>_config.yml</code>最后三行为（冒号后一定要有空格！！！！）</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> git
+  <span class="token key atrule">repo</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//github.com/lyh543/lyh543.github.io
+  <span class="token key atrule">branch</span><span class="token punctuation">:</span> master
+</code></pre></div><p>还要安装<code>hexo-deployer-git</code>：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git --save 
+</code></pre></div><h2 id="给-hexo-换主题"><a href="#给-hexo-换主题" class="header-anchor">#</a> 给 hexo 换主题</h2> <p>先区分两个概念：<code>主题配置文件</code>和<code>站点配置文件</code>。</p> <p><code>站点配置文件</code>用于配置站点，在<code>/_config.yml</code>；<br> <code>主题配置文件</code>用于配置主题，在 <code>/theme/&lt;theme name&gt;/_config.yml</code>。
+二者同名，故用概念区分，下同。</p> <p>理论上，只要在<code>/theme</code>文件夹下配置好以后，修改站点配置文件的<code>theme</code>一项，即可方便的切换主题。</p> <p>本文以<a href="https://github.com/viosey/hexo-theme-material/" target="_blank" rel="noopener noreferrer">material<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>主题做示范，演示如何下载、配置主题。</p> <ol><li>在github把上面的库<code>clone</code>到本地；</li> <li>在 Hexo 博客中的<code>/theme/</code>文件夹下创一个<code>material</code>文件夹；</li> <li>接下来把刚才<code>clone</code>的整个库复制到<code>material</code>文件夹里；</li> <li>最后改一下站点配置文件：</li></ol> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">theme</span><span class="token punctuation">:</span> material
+
+<span class="token key atrule">language</span><span class="token punctuation">:</span> zh<span class="token punctuation">-</span>CN
+</code></pre></div><p>即可。</p> <p>Material主题配置具体需要注意的点见另一篇<a href="../hexo-material">博客</a>。</p></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/26.d9aeab20.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>

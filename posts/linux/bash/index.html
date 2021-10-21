@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>bash 笔记 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="入坑 Linux 以后，命令行也是一个非常重要的工具。本文简单总结一下常用的 bash 语法。
+
+这里只讲纯语法，文件操作、系统工具等可以看 Linux 日常。
+
+cheatsheet
+
+变量赋值 = 左右不能有空格
+if = 左右都要有空格
+var=$s 等价于 var=${s}
+`var=$(ec ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/158.fe8660ce.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>入坑 Linux 以后，命令行也是一个非常重要的工具。本文简单总结一下常用的 bash 语法。</p> <p>这里只讲纯语法，文件操作、系统工具等可以看 <a href="../linux-daily-command">Linux 日常</a>。</p> <h2 id="cheatsheet"><a href="#cheatsheet" class="header-anchor">#</a> cheatsheet</h2> <ul><li>变量赋值 <code>=</code> 左右不能有空格</li> <li><code>if</code> <code>=</code> 左右都要有空格</li> <li><code>var=$s</code> 等价于 <code>var=${s}</code></li> <li><code>var=$(echo 123)</code> 等价于 <code>var=$`echo 123`</code></li> <li>多条语句串行执行：<code>echo 1; sleep 1; echo 2</code></li> <li>多条语句并行执行：<code>echo 1 &amp; echo 2</code></li> <li>多条语句等待前一句正确执行后执行：<code>echo 1 &amp;&amp; echo 2</code></li> <li>命令行末加 <code>\</code> 可使得命令跨行</li> <li>for：<code>for ((i=1; i&lt;=10; i ++)); do echo $i; done</code></li> <li>或者：<code>for i in {1..10}; do echo $i; done</code></li></ul> <h2 id="变量"><a href="#变量" class="header-anchor">#</a> 变量</h2> <p>对变量名的要求和 C/C++ 相同。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token assign-left variable">var</span><span class="token operator">=</span><span class="token number">123</span>
+</code></pre></div><p>注意等号左右都不能有空格。左边有空格，<code>var</code> 会被视为命令；右边有空格，<code>123</code> 会被视为命令。<br>
+（而 bash 的 <code>if</code> 则强制要求等号左右必须有空格）</p> <p>若赋值有空格，可以使用引号括起来，赋值的结果没有引号。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token assign-left variable">var</span><span class="token operator">=</span><span class="token string">&quot;123 456&quot;</span>
+$ <span class="token builtin class-name">echo</span> <span class="token variable">$var</span>
+<span class="token number">123</span> <span class="token number">456</span>
+</code></pre></div><p>在变量名前加 <code>$</code> 即可。也可以把变量名用大括号括起来。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token builtin class-name">echo</span> <span class="token variable">$var</span>
+<span class="token builtin class-name">echo</span> <span class="token variable">${var}</span>
+</code></pre></div><p>值得注意的是，也可以把命令执行的结果看作是一个取值的过程，如下：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token assign-left variable">var</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">command</span><span class="token variable">`</span></span>
+
+<span class="token assign-left variable">var</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">command</span><span class="token variable">)</span></span>
+<span class="token builtin class-name">echo</span> the current <span class="token function">time</span> is <span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%c<span class="token variable">)</span></span>
+</code></pre></div><p>后者支持嵌套。</p> <h2 id="输出"><a href="#输出" class="header-anchor">#</a> 输出</h2> <p><code>echo</code> 使用较简单。</p> <p>需要看 <code>echo</code> 的帮助请使用 <code>man echo</code> 而不是一般的 <code>echo --help</code>。</p> <h2 id="一行一语句"><a href="#一行一语句" class="header-anchor">#</a> 一行一语句？</h2> <p>bash 默认是一行一条命令。但是某些特殊符号可以打破这个规定：</p> <ol><li><code>;</code> 使得一行多个命令。和一般情况相同的是，命令是串行执行：</li></ol> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">echo</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token function">sleep</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token builtin class-name">echo</span> <span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre></div><p>输出 1，停顿一秒，然后输出 2。</p> <hr> <ol start="2"><li><code>&amp;</code> 使得一行多个命令。和一般情况相同的是，命令是并行执行：</li></ol> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">echo</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token function">sleep</span> <span class="token number">1</span> <span class="token operator">&amp;</span> <span class="token builtin class-name">echo</span> <span class="token number">2</span>
+</code></pre></div><p>这里的 <code>echo 2</code> 和 <code>sleep 1</code> 同时执行，所以用户并不会感觉输出 <code>1</code> 和 <code>2</code> 间出现了停顿。</p> <p>bash 的具体实现是，会创建一个新进程执行 <code>&amp;</code> 前的代码（同时会将新进程的 <code>pid</code> 显示在屏幕上如 <code>[1] 174</code>），然后主进程继续执行这行之后的代码。</p> <p>顺便，这里的 <code>&amp;</code> 配合 <code>for</code> 可以实现并行 for 语句。nb！</p> <hr> <ol start="3"><li><code>&amp;&amp;</code> 使得一行多个命令。但是，只有前面的命令没有出错，才会执行后面的命令。（显然命令需要串行执行）：</li></ol> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">ping</span> localhost -c <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">echo</span> <span class="token number">2</span>
+<span class="token comment"># ping 成功执行，然后输出 2</span>
+
+<span class="token function">ping</span> whatthefuck -c <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">echo</span> <span class="token number">2</span>
+<span class="token comment"># ping 失败，不输出 2</span>
+</code></pre></div><ol start="4"><li><code>\</code> 使得多行一个命令。常用于参数较多时，将命令参数分行写。</li></ol> <div class="language-sh extra-class"><pre class="language-sh"><code>ffmpeg <span class="token punctuation">\</span>
+    -allowed_extensions ALL <span class="token punctuation">\</span>
+    -hwaccel cuda -i <span class="token punctuation">\</span>
+    <span class="token number">117652</span>-8.m3u8 <span class="token punctuation">\</span>
+    -c:v h264_nvenc <span class="token punctuation">\</span>
+    <span class="token number">8</span>.mp4
+</code></pre></div><h2 id="流程控制"><a href="#流程控制" class="header-anchor">#</a> 流程控制</h2> <h3 id="条件判断"><a href="#条件判断" class="header-anchor">#</a> 条件判断</h3> <h3 id="循环"><a href="#循环" class="header-anchor">#</a> 循环</h3> <p>有个 C 语言风格的：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">for</span> <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span><span class="token number">10</span><span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">))</span></span>
+<span class="token keyword">do</span>
+	<span class="token builtin class-name">echo</span> <span class="token variable">$i</span>
+<span class="token keyword">done</span>
+</code></pre></div><p>写成一行的版本：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">for</span> <span class="token variable"><span class="token punctuation">((</span>i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span><span class="token number">10</span><span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">))</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token builtin class-name">echo</span> <span class="token variable">$i</span><span class="token punctuation">;</span> <span class="token keyword">done</span>
+</code></pre></div><hr> <p>除此之外，还有：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">10</span><span class="token punctuation">}</span>
+<span class="token keyword">do</span>
+    <span class="token builtin class-name">echo</span> <span class="token variable">$i</span> <span class="token comment"># 显示 1 至 10</span>
+<span class="token keyword">done</span>
+</code></pre></div><p>同样可以写为单行的版本：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token keyword">for</span> <span class="token for-or-select variable">i</span> <span class="token keyword">in</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">..</span><span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token keyword">do</span> <span class="token builtin class-name">echo</span> <span class="token variable">$i</span><span class="token punctuation">;</span> <span class="token keyword">done</span>
+</code></pre></div></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/158.fe8660ce.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>

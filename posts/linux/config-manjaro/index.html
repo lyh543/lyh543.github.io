@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>配置 Manjaro | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="
+
+sudo pacman-mirrors -i -c China -m rank
+
+在弹出来的框里选择一个即可。
+
+然后添加 ArchlinuxCN 源。
+
+sudo nano /etc/pacman.conf
+
+在最后加上三行，然后保存。
+
+[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/166.02ce7887.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><h2 id="换源、更新"><a href="#换源、更新" class="header-anchor">#</a> 换源、更新</h2> <div class="language- extra-class"><pre class="language-text"><code>sudo pacman-mirrors -i -c China -m rank
+</code></pre></div><p>在弹出来的框里选择一个即可。</p> <p>然后添加 ArchlinuxCN 源。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> <span class="token function">nano</span> /etc/pacman.conf
+</code></pre></div><p>在最后加上三行，然后保存。</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token header"><span class="token punctuation">[</span><span class="token section-name selector">archlinuxcn</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">Server</span> <span class="token punctuation">=</span> <span class="token value attr-value">https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch</span>
+<span class="token key attr-name">SigLevel</span> <span class="token punctuation">=</span> <span class="token value attr-value">Optional TrustAll</span>
+</code></pre></div><p>然后拉取完整的数据库，顺便更新现有的包。</p> <div class="language- extra-class"><pre class="language-text"><code>sudo pacman -Syyu
+</code></pre></div><h2 id="安装软件"><a href="#安装软件" class="header-anchor">#</a> 安装软件</h2> <h3 id="安装基础软件"><a href="#安装基础软件" class="header-anchor">#</a> 安装基础软件</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> pacman -S --needed <span class="token punctuation">\</span>
+    base-devel <span class="token punctuation">\</span>
+    gnome-keyring <span class="token punctuation">\</span>
+    binutils <span class="token punctuation">\</span>
+    archlinuxcn-keyring <span class="token punctuation">\</span>
+    <span class="token function">vim</span> <span class="token punctuation">\</span>
+    <span class="token function">zip</span> <span class="token punctuation">\</span>
+    <span class="token function">unzip</span> <span class="token punctuation">\</span>
+    yay
+</code></pre></div><p>安装 <code>base-devel</code> 时可能需要选择，直接回车，全选就 ok。</p> <h3 id="安装-docker"><a href="#安装-docker" class="header-anchor">#</a> 安装 docker</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> pacman -S docker
+</code></pre></div><p>为 <code>docker</code> 加入阿里源：</p> <div class="language- extra-class"><pre class="language-text"><code>sudo wget -o /etc/docker/daemon.json https://blog.lyh543.cn/mirrors/docker.json
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+</code></pre></div><p>配置 <code>docker</code> 不需要 <code>sudo</code>：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> <span class="token function">groupadd</span> docker
+<span class="token function">sudo</span> <span class="token function">usermod</span> -aG docker <span class="token environment constant">$USER</span>
+newgrp docker   <span class="token comment"># log in to docker group</span>
+docker <span class="token function">ps</span>       <span class="token comment"># 验证更改成功</span>
+</code></pre></div><h3 id="安装常用软件"><a href="#安装常用软件" class="header-anchor">#</a> 安装常用软件</h3> <p>接下来使用 <code>yay</code> 代替 <code>pacman</code>。<code>yay</code> 完全兼容 <code>pacman</code> 的语法和仓库，且额外支持 <a href="https://wiki.archlinux.org/title/Arch_User_Repository_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener noreferrer"><code>AUR</code><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 库，这个仓库有常用、但非官方的软件（如 QQ、网易云、Chrome 等）。</p> <p>为 <code>yay</code> 的 AUR 换清华源：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay --aururl <span class="token string">&quot;https://aur.tuna.tsinghua.edu.cn&quot;</span> --save
+</code></pre></div><p>安装常用应用（注意，yay 不推荐使用 <code>sudo</code>，而是会在命令执行时申请管理员密码）：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay -S --needed <span class="token punctuation">\</span>
+    mailspring <span class="token punctuation">\</span>
+    netease-cloud-music <span class="token punctuation">\</span>
+    com.qq.tim.spark <span class="token punctuation">\</span>
+    google-chrome
+</code></pre></div><p>这里用 <code>mailspring</code> 替代自带的 <code>thunderbird</code>，用 <code>google-chrome</code> 替代自带的 <code>firefox</code>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay -Rs thunderbird firefox
+</code></pre></div><h3 id="安装常见字体和搜狗拼音输入法"><a href="#安装常见字体和搜狗拼音输入法" class="header-anchor">#</a> 安装常见字体和搜狗拼音输入法</h3> <div class="language- extra-class"><pre class="language-text"><code>yay -S --needed \
+    adobe-source-han-sans-otc-fonts \
+    adobe-source-han-serif-otc-fonts \
+    consolas-font
+yay -S --needed \
+    fcitx \
+    fcitx-sougoupinyin \
+    fcitx-im \
+    fcitx-configtool \
+    fcitx-qt5 \
+    kcm-fcitx
+</code></pre></div><p>然后在 <code>/etc/profile</code> 追加：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">BROWSER</span><span class="token operator">=</span>/opt/google/chrome/chrome
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">GTK_IM_MODULE</span><span class="token operator">=</span>fcitx
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">QT_IM_MODULE</span><span class="token operator">=</span>fcitx
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">XMODIFIERS</span></span><span class="token operator">=</span>@im<span class="token operator">=</span>fcitx
+</code></pre></div><p>然后注销、登录。</p> <p>在程序启动器搜索并打开“fcitx 配置”，设置“搜狗输入法个人版”为仅有的输入法，如下：</p> <p><img src="/images/fdd06510813fb8f223b997e3f0bdfd7b69aafdc67f56eb70c91e548aef67490e.png" alt="fcitx 配置"></p> <p>然后就可以获得和 Ubuntu 下相同的搜狗拼音输入法的体验。</p> <h3 id="安装-v2ray"><a href="#安装-v2ray" class="header-anchor">#</a> 安装 v2ray</h3> <p>关于 V2Ray GUI 客户端，可以选择基于 Qt 的 <code>Qv2ray</code>，或是基于 Web UI 的 <code>V2RayA</code>。个人目前使用 <code>Qv2ray</code>。</p> <p>安装 <code>Qv2ray</code>：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> pacman -S v2ray qv2ray --needed
+</code></pre></div><p>关闭自启 v2ray：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> systemctl stop v2ray
+<span class="token function">sudo</span> systemctl disable v2ray
+</code></pre></div><p>然后配置 <code>qv2ray</code>。配置好以后记得修改系统设置代理端口，然后在 <code>.zshrc</code> 追加（端口看你的配置）：</p> <div class="language- extra-class"><pre class="language-text"><code>export HTTP_PROXY=&quot;http://localhost:17296&quot;
+export HTTPS_PROXY=&quot;http://localhost:17296&quot;
+</code></pre></div><hr> <p>或者安装 V2RayA（透明代理，管理页面在 <code>localhost:2017</code>）：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>docker run -d <span class="token punctuation">\</span>
+    --restart<span class="token operator">=</span>always <span class="token punctuation">\</span>
+    --privileged <span class="token punctuation">\</span>
+    --network<span class="token operator">=</span>host <span class="token punctuation">\</span>
+    --name v2raya <span class="token punctuation">\</span>
+    -v /etc/resolv.conf:/etc/resolv.conf <span class="token punctuation">\</span>
+    -v /etc/v2raya:/etc/v2raya <span class="token punctuation">\</span>
+    mzz2017/v2raya
+</code></pre></div><h3 id="安装开发工具"><a href="#安装开发工具" class="header-anchor">#</a> 安装开发工具</h3> <p>配置开发环境：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> pacman -S --needed <span class="token punctuation">\</span>
+    <span class="token function">make</span> <span class="token punctuation">\</span>
+    cmake <span class="token punctuation">\</span>
+    clang <span class="token punctuation">\</span>
+    jdk-openjdk <span class="token punctuation">\</span>
+    maven <span class="token punctuation">\</span>
+    go <span class="token punctuation">\</span>
+    <span class="token function">npm</span> <span class="token punctuation">\</span>
+    adb <span class="token punctuation">\</span>
+    git-lfs <span class="token punctuation">\</span>
+    gnome-keyring <span class="token punctuation">\</span>
+    texlive-most <span class="token punctuation">\</span>
+    texstudio
+</code></pre></div><p>安装 VS Code 和 JetBrains 全家桶：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay -S --needed <span class="token punctuation">\</span>
+    jetbrains-toolbox
+    visual-studio-code-bin
+
+jetbrains-toolbox <span class="token operator">&amp;</span>
+</code></pre></div><p>配置 <code>pip</code>、<code>npm</code> 和 <code>maven</code> 的镜像源：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>pip3 config <span class="token builtin class-name">set</span> global.index-url http://pypi.doubanio.com/simple
+pip3 config <span class="token builtin class-name">set</span> global.trusted-host pypi.doubanio.com
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">mkdir</span> ~/.m2 <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> -O ~/.m2/settings.xml https://blog.lyh543.cn/mirrors/maven.xml
+</code></pre></div><h3 id="个人用-开发工具"><a href="#个人用-开发工具" class="header-anchor">#</a> （个人用）开发工具</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkdir</span> ~/git
+<span class="token builtin class-name">cd</span> ~/git
+<span class="token function">git</span> clone git@github.com:lyh543/dev-tools.git
+<span class="token function">chmod</span> a+x -R dev-tools
+</code></pre></div><p>追加环境变量到 <code>~/.zshrc</code>：</p> <div class="language- extra-class"><pre class="language-text"><code>if [ -d &quot;/home/liu/git/dev-tools&quot; ] ; then
+  PATH=&quot;$PATH:/home/liu/git/dev-tools&quot;
+fi
+</code></pre></div><h3 id="修复-windows-和-linux-双系统时间不同步"><a href="#修复-windows-和-linux-双系统时间不同步" class="header-anchor">#</a> 修复 Windows 和 Linux 双系统时间不同步</h3> <blockquote><p>参考：<a href="https://www.zhihu.com/question/46525639/answer/157272414" target="_blank" rel="noopener noreferrer">怎样解决Windows10时间快和Ubuntu时间差问题？ - 滑稽的回答 - 知乎<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <p>这里采用修改 Linux 的方案：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">sudo</span> timedatectl set-local-rtc <span class="token number">1</span> --adjust-system-clock
+</code></pre></div><h2 id="日常记录"><a href="#日常记录" class="header-anchor">#</a> 日常记录</h2> <h3 id="安装-cascadia-code"><a href="#安装-cascadia-code" class="header-anchor">#</a> 安装 Cascadia Code</h3> <div class="language- extra-class"><pre class="language-text"><code>curl -o CascadiaCode.zip https://github.com/microsoft/cascadia-code/releases/download/v2108.26/CascadiaCode-2108.26.zip
+unzip CascadiaCode.zip -d CascadiaCode
+sudo cp CascadiaCode/ttf/*.ttf /usr/share/fonts/TTF
+fc-cache -fv
+</code></pre></div><h3 id="安装-vnc"><a href="#安装-vnc" class="header-anchor">#</a> 安装 VNC</h3> <p>服务端：</p> <div class="language- extra-class"><pre class="language-text"><code>yay -S realvnc-vnc-server
+sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA
+systemctl enable vncserver-x11-serviced.service
+systemctl start vncserver-x11-serviced.service
+</code></pre></div><p>客户端：</p> <div class="language- extra-class"><pre class="language-text"><code>yay -S realvnc-vnc-viewer
+vncviewer &amp;
+</code></pre></div></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/166.02ce7887.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>

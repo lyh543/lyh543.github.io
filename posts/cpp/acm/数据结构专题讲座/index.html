@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>数据结构专题 讲座 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="程序=数据结构+算法数据
+
+结构分为两类：物理结构【数组、链表】，逻辑结构【树的结点关系、并查集】
+一般用数组不用指针
+
+栈 Stack
+
+//STL Standard Template Library
+//Windows Stack: 8M
+//Unix Stack: 8M
+
+stack s;
+int x = 1;
+s.push(1);
+x = s.top(); s ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/62.db7765e7.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>程序=数据结构+算法数据</p> <p>结构分为两类：物理结构【数组、链表】，逻辑结构【树的结点关系、并查集】
+一般用数组不用指针</p> <h2 id="栈-stack"><a href="#栈-stack" class="header-anchor">#</a> 栈 Stack</h2> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">//STL Standard Template Library</span>
+<span class="token comment">//Windows Stack: 8M</span>
+<span class="token comment">//Unix Stack: 8M</span>
+
+stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> s<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+x <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> s<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> s<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="队列-queue"><a href="#队列-queue" class="header-anchor">#</a> 队列 Queue</h2> <div class="language-cpp extra-class"><pre class="language-cpp"><code>stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> s<span class="token punctuation">;</span>
+<span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+x <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> s<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> s<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>实现一个栈：入栈、出栈、取最小元素的时间复杂度为O(1)
+运用两个栈，第二个栈存小于栈首的元素的下标
+//这是个栈，只会出最顶层的值（逃
+</code></pre></div><h2 id="vector"><a href="#vector" class="header-anchor">#</a> vector</h2> <p>方便但不高效
+开一片内存，不够用就开更大的一片，然后复制过去</p> <h2 id="priority-queue"><a href="#priority-queue" class="header-anchor">#</a> priority_queue</h2> <p>实现：堆排序
+堆：ki&lt;=k2i &amp;&amp; k1&lt;=k2i+1
+//二叉搜索树：k2i&lt;=ki&lt;=k2i+1
+入队、出队：log(2n)</p> <h2 id="树-tree"><a href="#树-tree" class="header-anchor">#</a> 树 Tree</h2> <p>一种重要的非线性数据结构
+数据按分支关系组织起来
+没有环</p> <p>二叉树是最简单的树结构
+二叉树链表
+二叉搜索树</p> <p>红黑树是一种自平衡的二叉查找树</p> <p>更多特性：</p> <ul><li>结点：红色、黑色</li> <li>根结点：黑色</li> <li>红色子结点是黑色，黑色非空子结点是红色</li> <li>空结点是黑色，在黑色的子结点</li></ul> <h2 id="字典树-trie-ac自动机"><a href="#字典树-trie-ac自动机" class="header-anchor">#</a> 字典树 Trie （AC自动机）</h2> <p>插入一个字符串</p> <ul><li>从根结点出发，判断字母对应边是否存在</li> <li>存在：访问；不存在：新建</li> <li>对终点做特殊标记</li></ul> <p>查询字符串</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">struct</span> <span class="token class-name">Trie</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> next<span class="token punctuation">[</span>MAX<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> v<span class="token punctuation">;</span> <span class="token comment">//结束标志</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">createTrie</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Trie <span class="token operator">*</span>p <span class="token operator">=</span> root<span class="token punctuation">,</span> <span class="token operator">*</span>q<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> id <span class="token operator">=</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token string">'0'</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            q <span class="token operator">=</span> <span class="token punctuation">(</span>Trie <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Trie<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            q<span class="token operator">-&gt;</span>v <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">//初始v==1</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">&lt;</span>MAX<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>
+                q<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+            p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span> <span class="token operator">=</span> q<span class="token punctuation">;</span>
+            p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token operator">-&gt;</span>v<span class="token operator">++</span><span class="token punctuation">;</span>
+            p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    p<span class="token operator">-&gt;</span>v <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">//若为结尾，则将v改成-1表示</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">findTrie</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Trie <span class="token operator">*</span>p <span class="token operator">=</span> root<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> id <span class="token operator">=</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token string">'0'</span><span class="token punctuation">;</span>
+    p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">[</span>id<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>   <span class="token comment">//若为空集，表示不存以此为前缀的串</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>v <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>   <span class="token comment">//字符集中已有串是此串的前缀</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">//此串是字符集中某串的前缀</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="并查集"><a href="#并查集" class="header-anchor">#</a> 并查集</h2> <p>小巧高效有用<br>
+压缩路径以后，没有必要启发式合并
+可以用递归压缩路径(logn也没有什么问题，gcd递归也是logn)
+Kruskal 无向图最小生成树</p> <h2 id="线段树-interval-tree"><a href="#线段树-interval-tree" class="header-anchor">#</a> 线段树 Interval Tree</h2> <p>三个小时肯定讲不完</p> <p>n次查询某一区间的和（最大值）——n*O(logn)</p> <ul><li>区间查询（极值、求和、etc）</li> <li>区间更新（同一加一个值）</li> <li>分为三类（更新点，查询区间；更新区间，查询点；更新区间，查询区间</li> <li>线段树空间应开为原数组长度的四倍</li></ul> <p>但是线段树可没这么简单。。。“懒操作”在更更新区间的有关问题上⾄至关重要。（然而我不会啊wsl）</p> <p>经典问题：
+a[1]~a[n]
+操作：修改一个值；求区间最大值；求区间和</p> <p>线段树的结点是区间结构图？</p> <h2 id="树状数组"><a href="#树状数组" class="header-anchor">#</a> <a href="../%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84">树状数组</a></h2> <p>树状数组已在其他文章进行拓展讲解。</p></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/62.db7765e7.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>

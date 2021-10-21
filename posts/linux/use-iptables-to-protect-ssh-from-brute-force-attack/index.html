@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>面对SSH暴力破解，给你支个招|九州云（转载） | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="转载自 面对SSH暴力破解，给你支个招|九州云。为防链接挂掉，转载一手。
+
+在最近一次云上线的过程中，频繁遇到绑定公网浮动 IP 的云主机遭受外界 SSH 暴力破解攻击及用户设置弱密码的问题，由此引发的安全问题引起了针对防御 SSH 暴力破解的思考。
+
+SSH 暴力破解
+
+hydra 和 `m ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/177.5f6751a5.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><blockquote><p>转载自 <a href="http://www.99cloud.net/10774.html%EF%BC%8F" target="_blank" rel="noopener noreferrer">面对SSH暴力破解，给你支个招|九州云<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。为防链接挂掉，转载一手。</p></blockquote> <p>在最近一次云上线的过程中，频繁遇到绑定公网浮动 IP 的云主机遭受外界 SSH 暴力破解攻击及用户设置弱密码的问题，由此引发的安全问题引起了针对防御 SSH 暴力破解的思考。</p> <h2 id="ssh-暴力破解"><a href="#ssh-暴力破解" class="header-anchor">#</a> SSH 暴力破解</h2> <p><code>hydra</code> 和 <code>medusa</code> 是世界顶级密码暴力破解工具，支持几乎所有协议的在线密码破解，功能强大，密码能否被破解关键取决于破解字典是否足够强大。在网络安全渗透过程中，<code>hydra</code> 和 <code>medusa</code> 是必备的测试工具，配合社工库进行社会工程学攻击，有时会获得意想不到的效果。图示两款工具使用密码字典穷举 <code>SSH</code> 密码的过程。</p> <p><img src="/images/c75250d317f8b7b9972a59185c9eb23690e7cc1055075bdf82cda1a9b8321806.png" alt="穷举 SSH 密码"></p> <h2 id="iptables-限制-ssh-访问频率"><a href="#iptables-限制-ssh-访问频率" class="header-anchor">#</a> iptables 限制 ssh 访问频率</h2> <p>面对暴力破解，根据其工作原理可知：降低其试错频率，提高其试错次数，从而将破解时间提高到不可容忍的程度，是一条有效的防范手段。</p> <p>提高攻击方试错次数，无非是提升密码长度，扩展密码复杂度，定期更换密码这些手段。而降低攻击方的试错频率其实也是一条值得一试的防御手段。</p> <p>通过调用 <code>iptables</code> 的 <code>state</code> 模块与 <code>recent</code> 模块，实现对 SSH 访问的频率限制。这里重点解释下不常用的 <code>recent</code> 扩展模块。</p> <h3 id="recent-模块"><a href="#recent-模块" class="header-anchor">#</a> recent 模块</h3> <p>Recent，该扩展能够动态的创建 IP 地址列表，用于后期以多种不同形式做出匹配。该扩展支持以下多种选项：</p> <p><img src="/images/7c6612c60aa138422f8ee03bfc1047954d17c0541bbb77f06d44f8364ac30473.png" alt="Recent 选项"></p> <h3 id="iptables-规则内容"><a href="#iptables-规则内容" class="header-anchor">#</a> iptables 规则内容</h3> <p>要实现对 SSH 访问频率的控制，<code>iptables</code> 规则如下两条：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 若是SSH访问，源IP在最近访问列表中，且60秒内访问次数大于等于3次，则丢弃。</span>
+iptables -I INPUT -p tcp –dport <span class="token number">22</span> -m state –state NEW -m recent –name SSH_RECENT –rcheck –seconds <span class="token number">60</span> –hitcount <span class="token number">3</span> -j DROP
+<span class="token comment">#若是SSH访问，则将源IP加入最近访问列表中。</span>
+iptables -I INPUT -p tcp –dport <span class="token number">22</span> -m state –state NEW -m recent –name SSH_RECENT –set
+</code></pre></div><h3 id="实现效果"><a href="#实现效果" class="header-anchor">#</a> 实现效果</h3> <p>实现效果如下图所示。高频率的密码试错将被终结，直至一分钟超时后才可重新开始。</p> <p><img src="/images/31ed234cf6d6e9cc82ed3d6d6ecb5713e9f75df0226c7199286e6f6b05cd0cc5.png" alt="实现效果"></p> <p>在 <code>/proc/net/xt_recent</code> 目录中，存在名为 <code>SSH_RECENT</code> 的一个日志文件。文件中记录了上面输入的 <code>iptables</code> 规则记录的最近访问 SSH 服务的源 IP 信息以及访问时间。其中默认记录的 <code>oldest_pkt</code> 是 20 个，可以通过 <code>modprobe ipt_recent ip_pkt_list_tot=50</code> 调大。默认记录的源 IP 是 100 个，可以通过 <code>modprobe ipt_recent ip_list_tot=1024</code> 扩大记录数量。</p> <p><img src="/images/046f38cba1d2a6ecd2449878780f4988ee1b8f2376830edd54c92c8c57270d98.png" alt=""></p> <h2 id="iptables-实现远程开启-ssh-功能"><a href="#iptables-实现远程开启-ssh-功能" class="header-anchor">#</a> iptables 实现远程开启 ssh 功能</h2> <p>任何一次靠谱的网络攻击都起步于网络侦查。如果攻击者在网络侦查阶段未发现目标开启 SSH 登录服务，这也将挫败其针对 SSH 发起攻击的计划。这里常用的操作都是更改 SSH 的默认 22 端口至其他端口号上以迷惑端口扫描软件。实际通过 <code>nmap</code> 等工具还是可以扫描到端口上捆绑的具体服务，如下图所示。这里通过一个取巧的办法，利用指定报文长度的 ICMP 作为钥匙，开启主机上的 SSH 服务。通过这种方式隐藏 SSH 服务端口。</p> <p><img src="/images/e6a6716baf09e6164e94741ecd650a4025c01d210cabcdc6399b774ec18ffe12.png" alt="picture 5"></p> <h3 id="iptables-规则内容-2"><a href="#iptables-规则内容-2" class="header-anchor">#</a> iptables 规则内容</h3> <p>以指定包长的 ICMP 报文，作为钥匙，开启对端的 SSH 服务。具体 iptables 规则如下所示。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 用 78 字节的 icmp 数据包作为钥匙(包含 IP 头部 20 字节，ICMP 头部 8 字节)，将源 IP 加入 SSH 白名单</span>
+iptables -A INPUT -p icmp –icmp-type <span class="token number">8</span> -m length –length <span class="token number">78</span> -m recent –name SSH_ALLOW –set -j ACCEPT
+
+<span class="token comment"># 检查访问 SSH 服务的源 IP 是否在白名单中，且白名单中的IP有效期为15秒。若在白名单中则放行通讯。</span>
+iptables -A INPUT -p tcp –dport <span class="token number">22</span> -m state –state NEW -m recent –name SSH_ALLOW  –rcheck –seconds <span class="token number">15</span> -j ACCEPT
+
+<span class="token comment">#对于已建立的SSH连接放行</span>
+iptables -A INPUT -p tcp –dport <span class="token number">22</span> -m state –state ESTABLISHED -j ACCEPT
+
+<span class="token comment">#其他SSH无关匹配全部拒止</span>
+iptables -A INPUT -p tcp –dport <span class="token number">22</span> -j DROP
+</code></pre></div><h3 id="实现效果-2"><a href="#实现效果-2" class="header-anchor">#</a> 实现效果</h3> <p>最终可以实现下图所示效果。在未使用指定包长ICMP之前，SSH服务无法通行（步骤1）。在使用指定包长ping之后（步骤2），使用SSH可以正常连接（步骤3）。以此实现了指定包长ICMP作为钥匙开启SSH通信服务的效果。其原理与上节限制SSH通信频率的原理一致。</p> <p><img src="/images/08857c5aa8a168ec6446a21e794b0bb6bc9afd6de960f99d7df2c5b535d76bbd.png" alt="picture 6"></p> <h2 id="fail2ban防止ssh暴力破解"><a href="#fail2ban防止ssh暴力破解" class="header-anchor">#</a> Fail2ban防止SSH暴力破解</h2> <h3 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h3> <p>Centos上可以直接通过yum install fail2ban –y安装。安装完成后，可在/etc/fail2ban路径下找到程序运行的相应文件。在filter.d目录下存放有fail2ban支持的所有过滤器，action.d目录下存放有fail2ban支持的所有动作。通过在jail配置文件中组合多种过滤器与动作，可以实现各种自定义的防御功能（不仅限于SSH防护）。</p> <h3 id="配置及运行"><a href="#配置及运行" class="header-anchor">#</a> 配置及运行</h3> <p>对于fail2ban而言，每个.conf配置文件都可以被同名的.local文件重写。程序先读取.conf文件，然后读取.local文件。.local中的配置优先级更高。通过新建jail.local，增加下述配置，运行fail2ban-client start来实现对SSH暴力破解的防御。</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token header"><span class="token punctuation">[</span><span class="token section-name selector">DEFAULT</span><span class="token punctuation">]</span></span>
+<span class="token comment">#白名单</span>
+<span class="token key attr-name">ignoreip</span> <span class="token punctuation">=</span> <span class="token value attr-value">127.0.0.1/8</span>
+
+<span class="token comment">#解封禁时间</span>
+<span class="token key attr-name">bantime</span>  <span class="token punctuation">=</span> <span class="token value attr-value">600</span>
+
+<span class="token comment">#试错窗口时间</span>
+<span class="token key attr-name">findtime</span>  <span class="token punctuation">=</span> <span class="token value attr-value">600</span>
+
+<span class="token comment">#容许试错次数</span>
+<span class="token key attr-name">maxretry</span> <span class="token punctuation">=</span> <span class="token value attr-value">3</span>
+
+<span class="token header"><span class="token punctuation">[</span><span class="token section-name selector">ssh-iptables</span><span class="token punctuation">]</span></span>
+
+<span class="token comment">#使能</span>
+<span class="token key attr-name">enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span>
+
+<span class="token comment">#选择过滤器</span>
+<span class="token key attr-name">filter</span> <span class="token punctuation">=</span> <span class="token value attr-value">sshd</span>
+
+<span class="token comment">#选择防御动作</span>
+<span class="token key attr-name">action</span> <span class="token punctuation">=</span> <span class="token value attr-value">iptables[name=SSH, port=ssh, protocol=tcp]</span>
+
+<span class="token comment">#邮件通知</span>
+<span class="token key attr-name">sendmail-whois[name</span><span class="token punctuation">=</span><span class="token value attr-value">SSH,dest=yang.hongyu@99cloud.net, sender=test@email.com]</span>
+
+<span class="token comment">#SSH日志路径</span>
+<span class="token key attr-name">logpath</span> <span class="token punctuation">=</span> <span class="token value attr-value">/var/log/secure</span>
+
+<span class="token comment">#容许试错次数（优先级比default高）</span>
+<span class="token key attr-name">maxretry</span> <span class="token punctuation">=</span> <span class="token value attr-value">1</span>
+</code></pre></div><h3 id="运行效果"><a href="#运行效果" class="header-anchor">#</a> 运行效果</h3> <p>通过对目标主机的SSH试错，/var/log/secure日志中记录了SSH登录的错误信息。fail2ban通过对该文件的分析，识别出当前正在遭遇到SSH的暴力破解，继而触发防御功能。fail2ban-client status命令可以查看当前fail2ban的运行状态，遭遇SSH暴力破解后，识别到的攻击IP被添加至Banned IP list中，实际阻断功能则是fail2ban通过在iptables中下发针对攻击IP的阻断规则来实现。</p> <p><img src="/images/aaeab33bd666e9bf50b774646c0ebcb42e36c8de47dc1d8ea86740c8138e0706.png" alt=""></p> <h2 id="denyhost防止ssh暴力破解"><a href="#denyhost防止ssh暴力破解" class="header-anchor">#</a> Denyhost防止SSH暴力破解</h2> <p>Denyhost工作原理与Fail2ban基本一致，同样是分析SSH的日志文件，定位重复的暴力破解IP。与Fail2ban通过写iptables规则阻断攻击IP的访问不同，Denyhost通过将攻击IP记录到hosts.deny文件来实现屏蔽攻击IP对SSH的访问。</p> <h3 id="denyhost安装"><a href="#denyhost安装" class="header-anchor">#</a> Denyhost安装：</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">wget</span> <span class="token string">&quot;downloads.sourceforge.net/project/denyhosts/denyhosts/2.6/DenyHosts-2.6.tar.gz&quot;</span>
+<span class="token function">tar</span> -xzf DenyHosts-2.6.tar.gz
+<span class="token builtin class-name">cd</span> DenyHosts-2.6
+python setup.py <span class="token function">install</span>
+</code></pre></div><h3 id="denyhost配置及运行"><a href="#denyhost配置及运行" class="header-anchor">#</a> Denyhost配置及运行</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment">#生成配置文件副本</span>
+<span class="token builtin class-name">cd</span> /usr/share/denyhosts/
+<span class="token comment">#生成配置文件副本</span>
+<span class="token function">cp</span> denyhosts.cfg-dist denyhosts.cfg
+<span class="token comment">#生成执行文件副本</span>
+<span class="token function">cp</span> daemon-control-dist daemon-control
+<span class="token function">chmod</span> <span class="token number">700</span> daemon-control
+<span class="token comment">#自定义配置文件denyhosts.cfg</span>
+<span class="token comment">#SSH log路径</span>
+SECURE_LOG <span class="token operator">=</span> /var/log/secure
+<span class="token comment">#存储SSH拒止host信息的配置文件路径</span>
+HOSTS_DENY <span class="token operator">=</span> /etc/hosts.deny
+<span class="token comment">#拒止时间,此处配置为10分钟</span>
+PURGE_DENY <span class="token operator">=</span> 10m
+<span class="token comment">#无效用户登录重试次数限制</span>
+DENY_THRESHOLD_INVALID <span class="token operator">=</span> <span class="token number">5</span>
+<span class="token comment">#有效用户登录重试次数限制</span>
+DENY_THRESHOLD_VALID <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token comment">#ROOT用户登录重试次数限制</span>
+DENY_THRESHOLD_ROOT <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token comment">#启动运行</span>
+./daemon-control start
+</code></pre></div><h2 id="denyhost效果"><a href="#denyhost效果" class="header-anchor">#</a> Denyhost效果：</h2> <p>从Denyhost的运行日志中看出，对目标主机的多次SSH密码试错触发了Denyhost的防御功能。攻击者的IP被添加至hosts.deny文件，该IP下的SSH访问也被拒止。</p> <p><img src="/images/018d00ead6697ca7c9cf5c532cc863be747ad0e8680d3e9e88ab1bac24733959.png" alt=""></p> <p><img src="/images/afaab44468761d85c88d0ad3aa136599e711923ff931d966d76fd9cbb03bbbfa.png" alt=""></p> <h2 id="网络安全-何来一招鲜"><a href="#网络安全-何来一招鲜" class="header-anchor">#</a> 网络安全，何来一招鲜</h2> <p>可能有些人要说使用密钥登录就能完美解决SSH暴力破解的问题。这里要说一段历史。2006年Debian Linux发行版中发生了一件有意思的事，软件自动分析工具发现了一行被开发人员注释掉的代码。这行被注释掉的代码用来确保创建SSH秘密钥的信息量足够大。该代码被注释后，密钥空间大小的熵值降低到215。这意味着不论哪种算法和密钥长度，最终生成的密钥一共只有32767个，复杂度比一个纯6位数字的密码的复杂度更差。该错误在两年之后才被发现，无疑相当多的服务器上都利用这这种存在缺陷的弱密钥。（引用自：Violent Python：A Cookbook for Hackers）</p> <p>网络安全没有一招鲜。前文中列举的四种安全加固方式也无法抵御运维人员设置的弱密码，及攻击者的社工密码库。运维人员，唯有提高自身安全意识，合理利用安全工具，才能保障网络安全。</p></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/177.5f6751a5.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>

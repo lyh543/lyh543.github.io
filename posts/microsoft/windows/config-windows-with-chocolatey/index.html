@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用 Chocolatey 配置 Windows | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <meta name="description" content="
+安装软件
+
+安装常用软件
+
+choco install tim netease-cloudmusic steam-client google-chrome bandizip
+
+安装开发工具
+
+配置开发环境：
+
+choco install wsl wsl-ubuntu-2004 \
+    docker-desktop git pytho ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.e3714cfc.js" as="script"><link rel="preload" href="/assets/js/213.b00ef537.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><h2 id="下载-chocolatey"><a href="#下载-chocolatey" class="header-anchor">#</a> 下载 Chocolatey</h2> <h2 id="安装软件"><a href="#安装软件" class="header-anchor">#</a> 安装软件</h2> <h3 id="安装常用软件"><a href="#安装常用软件" class="header-anchor">#</a> 安装常用软件</h3> <div class="language-sh extra-class"><pre class="language-sh"><code>choco <span class="token function">install</span> tim netease-cloudmusic steam-client google-chrome bandizip
+</code></pre></div><h3 id="安装开发工具"><a href="#安装开发工具" class="header-anchor">#</a> 安装开发工具</h3> <p>配置开发环境：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>choco <span class="token function">install</span> wsl wsl-ubuntu-2004 <span class="token punctuation">\</span>
+    docker-desktop <span class="token function">git</span> python openjdk17 llvm nodejs golang powershell-core texlive <span class="token punctuation">\</span>
+    visualstudio-installer microsoft-windows-terminal  texstudio vscode jetbrainstoolbox
+</code></pre></div><p>配置 <code>pip</code>、<code>npm</code> 和 <code>maven</code> 的镜像源：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>pip3 config <span class="token builtin class-name">set</span> global.index-url http://pypi.doubanio.com/simple
+pip3 config <span class="token builtin class-name">set</span> global.trusted-host pypi.doubanio.com
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">mkdir</span> ~/.m2 <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> -O ~/.m2/settings.xml https://blog.lyh543.cn/mirrors/maven.xml
+</code></pre></div><h3 id="个人用-开发工具"><a href="#个人用-开发工具" class="header-anchor">#</a> （个人用）开发工具</h3> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkdir</span> C:<span class="token punctuation">\</span>Tools<span class="token punctuation">\</span>git
+<span class="token builtin class-name">cd</span> C:<span class="token punctuation">\</span>Tools<span class="token punctuation">\</span>git
+<span class="token function">git</span> clone git@github.com:lyh543/dev-tools.git
+</code></pre></div><p>记得添加环境变量。</p></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.e3714cfc.js" defer></script><script src="/assets/js/213.b00ef537.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+  </body>
+</html>
