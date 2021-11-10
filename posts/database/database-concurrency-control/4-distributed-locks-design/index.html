@@ -18,8 +18,8 @@
 系列目录
  ...">
     
-    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.12012285.js" as="script"><link rel="preload" href="/assets/js/120.7da6858d.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/120.5e3ebacf.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>前面聊到的是数据库自带的那些并发控制机制。最后我们来聊聊在数据库自带的事务、锁、多版本并发控制等的基础上，自己写的锁。</p> <ul><li>乐观锁，又称乐观并发控制（Optimistic CC, OCC）</li> <li>悲观锁，又称悲观并发控制（Pessimistic CC, PCC）</li></ul> <p>乐观锁和悲观锁不是具体的并发控制方法，而是两种并发控制的思想，由这两种思想会产生基于这两种思想的很多种方法。</p> <h2 id="系列目录"><a href="#系列目录" class="header-anchor">#</a> 系列目录</h2> <ul><li><a href="./1-transactions">数据库并发控制 (1) -- 事务</a></li> <li><a href="./2-innodb-mvcc">数据库并发控制 (2) -- InnoDB 并发控制</a></li> <li><a href="./3-innodb-locks">数据库并发控制 (3) -- InnoDB 锁</a></li> <li><a href="./4-distributed-locks-design">数据库并发控制 (4) -- 分布式锁的设计</a></li></ul> <h2 id="悲观并发控制"><a href="#悲观并发控制" class="header-anchor">#</a> 悲观并发控制</h2> <p>悲观并发控制（又称悲观锁）是悲观地假设，事务间的读写冲突/写写冲突很多。因此，在并发控制设计的方法上，就会倾向于在冲突很多的场景下提升性能。</p> <p>悲观并发控制的一种实现就是利用数据库锁，在数据库层对数据进行上锁，别的进程就不能读写上了锁的数据，非常简洁地保证了一致性。其缺点是并发度会降低，在写多读少的情形下为了保证一致性，降低并发度是必要的，但在读多写少的情形下性能损失就会很大了。且可能发生死锁。</p> <p>一个简单的实现如下：</p> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token comment">-- 加锁</span>
@@ -51,6 +51,6 @@
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.12012285.js" defer></script><script src="/assets/js/120.7da6858d.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/120.5e3ebacf.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
   </body>
 </html>

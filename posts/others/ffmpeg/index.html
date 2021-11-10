@@ -12,8 +12,8 @@
 
 ffmpeg -i input.mp4 -s ...">
     
-    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.12012285.js" as="script"><link rel="preload" href="/assets/js/222.6eccd024.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/222.f617bf18.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><h2 id="急速裁剪视频-不重新编码"><a href="#急速裁剪视频-不重新编码" class="header-anchor">#</a> 急速裁剪视频（不重新编码）</h2> <p>开始接触 <code>ffmpeg</code> 就是在裁剪视频长度的时候。Premier、格式工厂、Windows 照片自带的裁剪等软件都需要对视频进行重新编码。而 <code>ffmpeg</code> 则可以通过设置参数 <code>-c copy</code>，在创建视频的时候不重新编码，这样的好处是<strong>裁剪的过程基本就是文件复制的过程</strong>，CPU 不再成为性能瓶颈，SSD 上速度是真滴快。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>ffmpeg -i input.mp4 -ss 00:01:00 -t 01:00:00 -c copy output.mp4
@@ -58,6 +58,6 @@ ffmpeg -allowed_extensions ALL -hwaccel cuda -i <span class="token string">&quot
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.12012285.js" defer></script><script src="/assets/js/222.6eccd024.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/222.f617bf18.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
   </body>
 </html>

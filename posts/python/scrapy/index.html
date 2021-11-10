@@ -18,8 +18,8 @@
 调度器从队列里取出链接，告诉下载器开始下载
 下载完毕 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.12012285.js" as="script"><link rel="preload" href="/assets/js/245.add79eff.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/245.4816e797.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><h2 id="原理"><a href="#原理" class="header-anchor">#</a> 原理</h2> <p><img src="/images/28cf998153f11ab7a5b1579d5eccc122deb0ea3f8b1bf12c6fd177594f264039.png" alt="爬虫原理"></p> <p>流程如下：</p> <ul><li><strong>爬虫</strong>告诉<strong>引擎</strong>，需要爬取哪些链接 <code>urls</code></li> <li>引擎把链接发给<strong>调度器</strong></li> <li>调度器收到链接后，进入<strong>队列</strong></li> <li>调度器从队列里取出链接，告诉<strong>下载器</strong>开始下载</li> <li>下载完毕后，把结果交给爬虫</li> <li>爬虫把结果中取回数据，交给<strong>管道</strong></li> <li>管道将数据存储到 MySQL/文本文件等</li></ul> <h2 id="准备工作"><a href="#准备工作" class="header-anchor">#</a> 准备工作</h2> <p>安装 Python 3 后，</p> <div class="language- extra-class"><pre class="language-text"><code>pip3 install scrapy
@@ -146,6 +146,6 @@ execute<span class="token punctuation">(</span><span class="token string">'scrap
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.12012285.js" defer></script><script src="/assets/js/245.add79eff.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/245.4816e797.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
   </body>
 </html>

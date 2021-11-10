@@ -20,8 +20,8 @@ long double|%llf %Lf|%Lf
 
 \* 在 Codeforces 使用 %lld 输出可能会炸，在 Ligh ...">
     
-    <link rel="preload" href="/assets/css/0.styles.60b80ac7.css" as="style"><link rel="preload" href="/assets/js/app.12012285.js" as="script"><link rel="preload" href="/assets/js/80.430b24c0.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.60b80ac7.css">
+    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/80.430b24c0.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>C++ I/O 请见<a href="/posts/cpp/cpp-io/">C++ I/O</a>。</p> <h2 id="c输入输出标识符"><a href="#c输入输出标识符" class="header-anchor">#</a> C输入输出标识符</h2> <table><thead><tr><th>类型</th> <th>输入</th> <th>输出</th></tr></thead> <tbody><tr><td>long</td> <td>%ld</td> <td>%ld</td></tr> <tr><td>long long</td> <td>%lld %I64d</td> <td>%lld %I64d *</td></tr> <tr><td>float</td> <td>%f</td> <td>%f</td></tr> <tr><td>double</td> <td>%lf</td> <td>%f</td></tr> <tr><td>long double</td> <td>%llf %Lf</td> <td>%Lf</td></tr></tbody></table> <p>* 在 Codeforces 使用 <code>%lld</code> 输出可能会炸，在 Light OJ 上使用 <code>%I64d</code> 会炸，所以我选择 <code>cout</code>🙄</p> <h2 id="为什么要-scanf-s"><a href="#为什么要-scanf-s" class="header-anchor">#</a> 为什么要 scanf_s</h2> <p><code>scanf</code> 在读入字符串的时候中<a href="(https://www.zhihu.com/question/43933571/answer/238686480)">存在安全漏洞</a>，简单的来说就是读字符串时没有指定长度上限，导致可能把字符串（恶意代码）写入其他内存部分。因此使用 Visual Studio 进行工程开发时建议使用 <code>scanf_s</code> 或者 <code>cout</code>。（貌似 <code>scanf_s</code> 也加入了 C++ 20 的标准中，是微软提议的）。<br>
@@ -69,6 +69,6 @@ fp2<span class="token operator">=</span><span class="token function">fopen</span
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.12012285.js" defer></script><script src="/assets/js/80.430b24c0.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/80.430b24c0.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
   </body>
 </html>
