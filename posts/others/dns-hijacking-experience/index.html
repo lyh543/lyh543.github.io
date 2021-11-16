@@ -15,8 +15,8 @@
 https://blog.csdn.net/watercatmiao/article/details/85957864
 https://www.b ...">
     
-    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/221.6e513053.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
+    <link rel="preload" href="/assets/css/0.styles.11427f6f.css" as="style"><link rel="preload" href="/assets/js/app.7873a4b5.js" as="script"><link rel="preload" href="/assets/js/223.13148e20.js" as="script"><link rel="preload" href="/assets/js/4.075e9f96.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.11427f6f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>今天访问 https://twitter.com/ 时，显示 SSL Error 了。</p> <p>第一反应是它 SSL 证书挂掉了（因为自己经常把服务器证书搞挂）。看了一眼证书，发现是 VMWare 的。</p> <p>简单搜了一下，发现不少人也遇到了这个问题：</p> <ul><li>https://blog.csdn.net/watercatmiao/article/details/85957864</li> <li>https://www.bilibili.com/read/cv6490694/</li></ul> <p>但是我检查了 Hosts，把 DNS 改为了 <code>8.8.8.8</code>，问题依然存在，<code>ping twitter.com</code> 依然是 <code>127.0.0.1</code>。</p> <p>我尝试 <code>nslookup</code> 查 DNS：</p> <div class="language- extra-class"><pre class="language-text"><code>&gt; nslookup twitter.com
@@ -37,11 +37,11 @@ Addresses:  2001::a2dc:ce2
         Theme
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
-        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
     博客已更新！
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/221.6e513053.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.7873a4b5.js" defer></script><script src="/assets/js/223.13148e20.js" defer></script><script src="/assets/js/4.075e9f96.js" defer></script>
   </body>
 </html>

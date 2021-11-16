@@ -8,8 +8,8 @@
     <link rel="icon" href="/theme/favicon.png">
     <meta name="description" content="写算法、写后端开发的时候，在 IDE 打断点、条件断点、检测变量用的飞起，但是在 JS 以及 Vue 的前端开发中，这一套就有一些变化了。一是因为调试工具从各家 IDE 变为了浏览器，二是因为 Vue 的每个组件的变量不能在浏览器中直接访问，三是因为 Vue 代码需要转化为原生 JS 执行，所以看报错总会有一堆 vue.runtime.esm.js 之类的、来自 Vue 框架本身代码的报错，而 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/133.3c230eb0.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
+    <link rel="preload" href="/assets/css/0.styles.11427f6f.css" as="style"><link rel="preload" href="/assets/js/app.7873a4b5.js" as="script"><link rel="preload" href="/assets/js/134.b67aeb83.js" as="script"><link rel="preload" href="/assets/js/4.075e9f96.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.11427f6f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>写算法、写后端开发的时候，在 IDE 打断点、条件断点、检测变量用的飞起，但是在 JS 以及 Vue 的前端开发中，这一套就有一些变化了。一是因为调试工具从各家 IDE 变为了浏览器，二是因为 Vue 的每个组件的变量不能在浏览器中直接访问，三是因为 Vue 代码需要转化为原生 JS 执行，所以看报错总会有一堆 <code>vue.runtime.esm.js</code> 之类的、来自 Vue 框架本身代码的报错，而不是指向具体某一行的报错。</p> <p><img src="/images/ea0f5a0813cb055d312148b3390f029813f897b8d2fa8ea530aeaac8db9781a1.png" alt="vue.runtime.esm.js 报错"></p> <p>经过一段时间的摸索，博主发现了几种调试的方法。</p> <h2 id="输出变量调试法"><a href="#输出变量调试法" class="header-anchor">#</a> 输出变量调试法</h2> <p>在刚学 C 语言、还不会用 IDE 的时候，我很喜欢使用 <code>printf</code> 输出变量进行调试。在 JavaScript 里，可以使用 <code>console.log()</code> 输出变量。</p> <p>能不能在浏览器里的 Console 进行调试呢？答案也是可以的，只要在调试的时候，在代码里把 Vue 组件绑在 window 上。</p> <p>在 Vue 组件的 <code>activated</code> 或 <code>onload</code> 函数开头加上一行：</p> <div class="language-js extra-class"><pre class="language-js"><code>window<span class="token punctuation">.</span>my_component <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
@@ -23,11 +23,11 @@
         Theme
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
-        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
     博客已更新！
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/133.3c230eb0.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.7873a4b5.js" defer></script><script src="/assets/js/134.b67aeb83.js" defer></script><script src="/assets/js/4.075e9f96.js" defer></script>
   </body>
 </html>

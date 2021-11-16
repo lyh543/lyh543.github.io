@@ -13,8 +13,8 @@
 Manjaro 分区在 /dev/nvme0n1p5
 1. ...">
     
-    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/170.828185d0.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
+    <link rel="preload" href="/assets/css/0.styles.11427f6f.css" as="style"><link rel="preload" href="/assets/js/app.7873a4b5.js" as="script"><link rel="preload" href="/assets/js/171.d49769d1.js" as="script"><link rel="preload" href="/assets/js/4.075e9f96.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.11427f6f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。</p> <p>博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。</p> <p>本文假定：</p> <ul><li>使用 EFI 进行引导，EFI 分区在 <code>/dev/nvme0n1p1</code></li> <li>Manjaro 分区在 <code>/dev/nvme0n1p5</code></li></ul> <h2 id="_1-从-manjaro-live-cd-启动到硬盘里的-manjaro"><a href="#_1-从-manjaro-live-cd-启动到硬盘里的-manjaro" class="header-anchor">#</a> 1. 从 Manjaro Live CD 启动到硬盘里的 Manjaro</h2> <p>进入 Manjaro Live CD 后，需要挂载硬盘里的 Manjaro，就可以 <code>chroot</code> 到硬盘里的 Manjaro。</p> <p>查看分区情况，确认分区号：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token punctuation">[</span>manjaro@manjaro ~<span class="token punctuation">]</span>$ <span class="token function">sudo</span> <span class="token function">fdisk</span> -l
@@ -56,11 +56,11 @@ Installation finished. No error reported.
         Theme
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
-        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
     博客已更新！
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/170.828185d0.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.7873a4b5.js" defer></script><script src="/assets/js/171.d49769d1.js" defer></script><script src="/assets/js/4.075e9f96.js" defer></script>
   </body>
 </html>

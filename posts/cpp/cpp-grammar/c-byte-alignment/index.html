@@ -14,8 +14,8 @@
 
 需要字节对齐的根 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.4c01a182.css" as="style"><link rel="preload" href="/assets/js/app.1e4c68a5.js" as="script"><link rel="preload" href="/assets/js/78.1eb83e6b.js" as="script"><link rel="preload" href="/assets/js/4.c36cbde9.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.4c01a182.css">
+    <link rel="preload" href="/assets/css/0.styles.11427f6f.css" as="style"><link rel="preload" href="/assets/js/app.7873a4b5.js" as="script"><link rel="preload" href="/assets/js/79.8771b793.js" as="script"><link rel="preload" href="/assets/js/4.075e9f96.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.11427f6f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="content__default"><p>C/C++ 的结构，就像是一个将几种数据结构打包的功能。在使用的时候，可能会注意到，结构体的大小不等于结构体所有成员的大小之和,原因是编译器进行了字节对齐。</p> <h2 id="字节对齐的目的"><a href="#字节对齐的目的" class="header-anchor">#</a> 字节对齐的目的</h2> <p>如果一个变量的内存地址正好位于它长度的整数倍，他就被称做自然对齐。比如在 32 位 CPU 下，假设一个整型变量的地址为 <code>0x00000004</code>（下面简写为 <code>0x04</code>），那它就是自然对齐的。</p> <p>需要字节对齐的根本原因在于 CPU 访问数据的效率问题。32 位 CPU 把内存的每 4 个字节分为一组，一次可以同时访问一组。比如，可以同时访问 <code>0x00 - 0x03</code>，也可以同时访问 <code>0x04 - 0x07</code>，但不能同时访问 <code>0x03 - 0x06</code>。</p> <p>若不进行字节对齐，假如一个 int 存储在了 <code>0x03 - 0x06</code>，那么读取这个 int 需要 CPU 读取两次内存，降低了效率。而进行了字节对齐，效率会有一定的提升。</p> <p>这段话也解释了，64 位系统相比 32 位系统更大（由于字节对齐，需要更多的空位），但是运行速度会快一些（对于 8 字节的数据类型，如 <code>long long</code> 和 <code>double</code> 的读取会快一些）。</p> <h2 id="c-语言编译器对字节对齐的要求"><a href="#c-语言编译器对字节对齐的要求" class="header-anchor">#</a> C 语言编译器对字节对齐的要求</h2> <ol><li>标准数据类型：只要地址是它的长度的整数倍就行了；</li> <li>数组：按照基本数据类型对齐，第一个对齐了后面的自然也就对齐了。</li> <li>联合：按其包含的长度最大的数据类型对齐。</li> <li>结构体：结构体中每个数据类型都要按其包含的长度最大的数据类型对齐。</li></ol> <p>如</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">struct</span> <span class="token class-name">foo</span>
@@ -64,11 +64,11 @@
         Theme
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
-        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" style="padding-bottom:0px;padding-top:0px;" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
     博客已更新！
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.1e4c68a5.js" defer></script><script src="/assets/js/78.1eb83e6b.js" defer></script><script src="/assets/js/4.c36cbde9.js" defer></script>
+    <script src="/assets/js/app.7873a4b5.js" defer></script><script src="/assets/js/79.8771b793.js" defer></script><script src="/assets/js/4.075e9f96.js" defer></script>
   </body>
 </html>
