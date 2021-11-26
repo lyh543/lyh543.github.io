@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Verilog HDL 速成手册 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="数字逻辑要学这个，于是整理了一篇笔记。顺便说一下，如果打算写代码，我们使用的是 Xilinx ISE Design Suite 14.7。（安装下来占了 20G，我只是想入个 Verilog 的门。。。。）
+
+先说一句，Verilog 是一门把电路板和程序结合在一起的语言，因此，学 Verilog，一定要把语法和实际电路联系起来！！！！这会很帮助理解的。
+
+另外，和学习其他编程语言一 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/234.d9f4df15.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>数字逻辑要学这个，于是整理了一篇笔记。顺便说一下，如果打算写代码，我们使用的是 <code>Xilinx ISE Design Suite 14.7</code>。（安装下来占了 20G，我只是想入个 Verilog 的门。。。。）</p> <p>先说一句，Verilog 是一门把电路板和程序结合在一起的语言，因此，学 Verilog，**一定要把语法和实际电路联系起来！！！！**这会很帮助理解的。</p> <p>另外，和学习其他编程语言一样，如果在 Xilinx 写代码时出了问题，同样可以利用搜索引擎找到不少的答案。好用的网站有 Stack Overflow（被墙），Xilinx 论坛、知乎、CSDN（虽然很不想提他，但是在某些问题上确实还行）等。</p> <h2 id="xilinx-ise-design-suite-14-7-安装"><a href="#xilinx-ise-design-suite-14-7-安装" class="header-anchor">#</a> Xilinx ISE Design Suite 14.7 安装</h2> <p>这里是针对 Xilinx ISE 的安装过程。当然也可以使用更先进的 Vivado 进行开发，这里为了保持和学校机房统一，故安装 Xilinx ISE Design Suite 14.7。</p> <ol><li>到 <a href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/archive-ise.html" target="_blank" rel="noopener noreferrer">Xilinx ISE 下载页面<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>下载 14.7 的四个安装包，每个各 2 GB（注意不用下载 Windows 10 版的，我没有测试过能否成功破解）。官网可能需要注册账号，完善信息等。</li> <li>（Windows 7 及以下电脑可忽略这一步）安装完成后，复制文件 <code>X:\Xilinx\14.7\ISE_DS\ISE\lib\nt64\libPortabilityNOSH.dll</code> 并分别替换 <code>X:\Xilinx\14.7\ISE_DS\ISE\lib\nt64\libPortability.dll</code> 和 <code>X:\Xilinx\14.7\ISE_DS\common\lib\nt64\libPortabilityNOSH.dll</code>（参考<a href="https://zhidao.baidu.com/question/1638806936623851900" target="_blank" rel="noopener noreferrer">百度知道<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>）</li> <li>在开始菜单启动 <code>Manage Xilinx Lisenses</code>，然后在 <code>Manage Lisense</code> 选项卡中点击 <code>Load Lisense...</code>，选择 <a href="license12x.lic">license12x.lic</a>，完成激活。（参考<a href="https://www.jb51.net/softs/554912.html" target="_blank" rel="noopener noreferrer">脚本之家<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>）</li></ol> <h2 id="概述"><a href="#概述" class="header-anchor">#</a> 概述</h2> <p>（以下抄 PPT）</p> <blockquote><p>Verilog HDL（以下简称 Verilog）是一种硬件描述语言，用于从算法级、门级到开关级的多种抽象设计层次的数字系统建模。</p></blockquote> <p>Verilog硬件描述语言的主要功能包括：</p> <ol><li><strong>基本逻辑门</strong>，例如 <code>and</code>、<code>or</code> 和 <code>nand</code> 等都内在语言中。</li> <li><strong>用户定义原语</strong>（UDP）创建的灵活性。用户定义的原语既可以是组合逻辑原语，也可以是时序逻辑原语。（UDP太难，应该不考）</li> <li>提供显式语言结构指定设计中的端口到端口的<strong>时延</strong>及路径时延和设计的时序检查。</li> <li>可采用三种不同方式或混合方式对设计建模。这些方式包括：
+<ul><li><strong>行为描述方式</strong>——使用过程化结构建模；</li> <li><strong>数据流方式</strong>——使用连续赋值语句方式建模；</li> <li><strong>结构化方式</strong>——使用门和模块实例语句描述建模。</li></ul></li> <li>Verilog HDL 中有两类数据类型：<strong>网络数据类型和寄存器数据类型</strong>。网络类型表示构件间的物理连线，而寄存器类型表示抽象的数据存储元件。</li></ol> <p>等我学完这一章以后再来看看哪些不重要，可以删。</p> <blockquote><p>2019.12.4 更新：从八点删到四点（不算 UDP），不愧是我。</p></blockquote> <h2 id="程序基础"><a href="#程序基础" class="header-anchor">#</a> 程序基础</h2> <h3 id="verilog-由模块构成"><a href="#verilog-由模块构成" class="header-anchor">#</a> Verilog 由模块构成</h3> <blockquote><p>一个复杂电路系统的完整 Verilog HDL 模型是由若干个 <strong>Verilog HDL 模块</strong>构成的，每一个模块又可以由若干个子模块构成。</p></blockquote> <p>（划重点，模块 <code>module</code> 思想）</p> <p>模块是什么？</p> <blockquote><p>用 Verilog HDL 描述的电路设计就是该电路的 Verilog HDL 模型，也称为模块，是 Verilog 的基本描述单位。<br>
+一般来说一个模块可以是<strong>一个元件</strong>或者是<strong>一个更低层设计模块的集合</strong>。<br>
+模块是<strong>并行运行</strong>的，通常需要一个高层模块通过调用其他模块的实例来定义一个封闭的系统，包括测试数据和硬件描述。</p></blockquote> <p>老师连 PPT 都不分行的吗，还得我手动分行。。。</p> <h3 id="代码结构"><a href="#代码结构" class="header-anchor">#</a> 代码结构</h3> <p>Verilog 程序结构：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token comment">// 模块声明</span>
+<span class="token keyword">module</span> 模块名（端口列表）
+
+    <span class="token comment">// 端口定义</span>
+    input 输入端口
+    output 输出端口
+    inout 输入<span class="token operator">/</span>输出端口
+
+    <span class="token comment">// 数据类型说明</span>
+    wire
+    reg
+    parameter
+
+    <span class="token comment">// 逻辑功能定义</span>
+    assign
+    always
+    function
+    task
+    <span class="token comment">// ....</span>
+
+endmodule
+</code></pre></div><p>以上各部分解释：</p> <ul><li>&lt;模块名&gt; 是模块唯一的标识符；</li> <li>&lt;端口列表&gt; 是由模块各个<strong>输入</strong>、输出和双向端口组成的一张端口列表，这些端口用来与其他模块进行通信；</li> <li>数据类型说明部分：用来指定模块内用到的数据对象为<strong>寄存器型</strong>、<strong>存储器型</strong>还是<strong>连线</strong>型；</li> <li>逻辑功能定义部分：通过使用<strong>逻辑功能语句</strong>来实现具体的逻辑功能。</li></ul> <h2 id="语言要素"><a href="#语言要素" class="header-anchor">#</a> 语言要素</h2> <ul><li>每个 Verilog HDL 程序源文件都以 <code>.v</code> 作为文件扩展名。</li> <li>Verilog HDL 区分大小写。</li> <li>Verilog HDL 程序的书写与 C 语言类似
+<ul><li>一行可以写多条语句，也可以一条语句分成多行书写</li> <li><strong>每条语句以分号结束</strong>（注意是语句，<code>begin</code> <code>end</code> <code>initial</code> <code>endmodule</code> 语句后不加分号,<code>module</code> <strong>要加分号！！！</strong>）</li> <li>新行、制表符和空格没有特殊意义</li> <li>间隔符包括空格字符 <code>\b</code>、制表符 <code>\t</code>、换行符 <code>\n</code> 以及换页符。</li> <li>注释和 C 语言完全相同，有两种风格：</li></ul></li></ul> <div class="language-v extra-class"><pre class="language-v"><code> <span class="token comment">/*第一种形式：可以扩展至多行* /
+ //第二种形式：在本行结束。
+</span></code></pre></div><p>关于标识符：</p> <blockquote><p>Verilog HDL 中的标识符 <code>identifier</code>可以是任意一组字母、数字、<code>$</code> 符号和 <code>_</code> (下划线)符号的组合，是赋予一个对象唯一的名字。<br>
+标识符的第一个字符必须是字母或者下划线。<br>
+标识符是区分大小写的。</p></blockquote> <p>关于关键字，类似于 C 语言的关键字概念，如 <code>if</code> <code>int</code> 等：</p> <blockquote><p>Verilog HDL 语言内部使用的词称为关键字或保留字，保留字不能随便使用。所有的关键字都使用小写字母。</p></blockquote> <p>运算符部分<a href="#%E6%93%8D%E4%BD%9C%E7%AC%A6">见后</a>。</p> <h2 id="程序结构"><a href="#程序结构" class="header-anchor">#</a> 程序结构</h2> <h3 id="模块声明"><a href="#模块声明" class="header-anchor">#</a> 模块声明</h3> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token operator">&lt;</span>module_name<span class="token operator">&gt;</span><span class="token punctuation">(</span>port_name1<span class="token punctuation">,</span>…<span class="token punctuation">,</span>port_namen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ...</span>
+<span class="token comment">// ...</span>
+
+endmodule<span class="token punctuation">;</span>
+</code></pre></div><ul><li><code>module_name</code> 为模块名（类似于 C 语言的函数名）。</li> <li><code>port_name</code> 为端口名（类似于函数的输入输出），</li></ul> <h3 id="端口定义"><a href="#端口定义" class="header-anchor">#</a> 端口定义</h3> <div class="language-v extra-class"><pre class="language-v"><code>input <span class="token operator">&lt;</span>input_port_name<span class="token operator">&gt;</span><span class="token punctuation">,</span> <span class="token operator">...</span><span class="token operator">&lt;</span>other_inputs<span class="token operator">&gt;</span><span class="token operator">...</span><span class="token punctuation">;</span>   <span class="token comment">//输入</span>
+output <span class="token operator">&lt;</span>output_port_name<span class="token operator">&gt;</span><span class="token punctuation">,</span><span class="token operator">...</span><span class="token operator">&lt;</span>other_outputs<span class="token operator">&gt;</span><span class="token operator">...</span><span class="token punctuation">;</span> <span class="token comment">//输出</span>
+inout <span class="token operator">&lt;</span>inout_port_name<span class="token operator">&gt;</span><span class="token punctuation">,</span><span class="token operator">...</span><span class="token operator">&lt;</span>other_inouts<span class="token operator">&gt;</span><span class="token operator">...</span><span class="token punctuation">;</span>    <span class="token comment">//双向端口</span>
+</code></pre></div><p>双向端口类似于输入以后被修改了，然后输出？</p> <p>注意：</p> <ol><li>在声明输入/输出时，要声明其数据类型是 <code>net</code> （网络）型还是 <code>reg</code> （寄存器）型；<strong>如果省略，默认为 <code>net</code> 类型中的 <code>wire</code> 类型。</strong></li> <li>无论是在网络说明还是寄存器说明中，网络或寄存器必须与端口说明中指定的宽度相同。</li> <li><strong>输入和双向端口只能为网络型。</strong></li></ol> <p>也可以使用 C 语言风格的端口声明。</p> <p>如果看不懂网络和寄存器的概念，请跳转到<a href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">数据类型</a>部分，看一眼概念，然后再回到这里来。</p> <p>两种风格的声明示例：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">addr</span><span class="token punctuation">(</span>cout<span class="token punctuation">,</span>sum<span class="token punctuation">,</span>ina<span class="token punctuation">,</span>inb<span class="token punctuation">,</span>cin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input cin<span class="token punctuation">;</span>
+    input<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ina<span class="token punctuation">,</span>inb<span class="token punctuation">;</span>
+    output<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sum<span class="token punctuation">;</span>
+    output cout<span class="token punctuation">;</span>
+    <span class="token comment">//...</span>
+endmodule
+</code></pre></div><div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">fulladd4</span><span class="token punctuation">(</span>output reg <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sum<span class="token punctuation">,</span> output reg c_out<span class="token punctuation">,</span>
+    input <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>input c_in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     
+    <span class="token comment">//...</span>
+
+endmodule 
+</code></pre></div><p><code>[7:0]</code> 是什么，请看<a href="#%E5%90%91%E9%87%8F">向量</a>。</p> <h3 id="变量声明"><a href="#变量声明" class="header-anchor">#</a> 变量声明</h3> <p>见数据类型部分的<a href="#%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E-1">变量声明</a>。</p> <h2 id="数值和数据类型"><a href="#数值和数据类型" class="header-anchor">#</a> 数值和数据类型</h2> <h3 id="逻辑值"><a href="#逻辑值" class="header-anchor">#</a> 逻辑值</h3> <p><s>为什么他 PPT 不写这个啊啊啊，很重要的啊</s></p> <p>逻辑值有四种：</p> <table><thead><tr><th>逻辑值</th> <th>硬件电路中的条件</th></tr></thead> <tbody><tr><td><code>0</code></td> <td>逻辑 0，条件为假</td></tr> <tr><td><code>1</code></td> <td>逻辑 1，条件为真</td></tr> <tr><td><code>x</code></td> <td>逻辑值不确定</td></tr> <tr><td><code>z</code></td> <td>高阻，浮动状态</td></tr></tbody></table> <p>注意 <code>x</code> 和 <code>z</code> 不分大小写。</p> <h3 id="常量"><a href="#常量" class="header-anchor">#</a> 常量</h3> <blockquote><p>在程序运行过程中，不能改变的量称为常量 <code>constants</code>。<br>
+Verilog HDL中有三类常量：</p> <ol><li>整型；</li> <li>实数型；（不重要）</li> <li>字符串型。（不重要）</li></ol></blockquote> <h4 id="整数常量"><a href="#整数常量" class="header-anchor">#</a> 整数常量</h4> <p>整数型常量可以按如下两种方式描述：</p> <p>1．简单的十进制格式（不重要）</p> <p>这种形式的整数定义为带有一个 <code>+</code> （可省略）或 <code>-</code> 的数字序列。如：</p> <table><thead><tr><th>描述</th> <th>值</th></tr></thead> <tbody><tr><td><code>32</code></td> <td>十进制数 32</td></tr> <tr><td><code>-15</code></td> <td>十进制数 -15</td></tr></tbody></table> <p>注意这样描述的整数是 32bit 的，在函数传参时如果将整数 <code>0</code> 传给了一个 1bit 的位会报错。因此我们更喜欢使用 <code>1'b0</code>。</p> <p>2．基数表示法（重要）</p> <blockquote><p>预警：这部分可能会有一点点无聊。</p></blockquote> <p>这种形式的整数格式为：<code>&lt;size&gt;&lt;'base_format&gt;&lt;number&gt;</code>；</p> <ul><li><code>&lt;size&gt;</code>：常量的位的长度。</li> <li><code>&lt;'base_format&gt;</code>：<code>'</code> 加字母指明基数，如十进制 <code>d</code>、二进制 <code>b</code>、八进制 <code>o</code>、十六进制 <code>h</code>。</li> <li><code>&lt;number&gt;</code>：是基于基数的值的数字序列，可以出现 <code>0123456789abcdefxz</code>。</li></ul> <p>注意：三个部分都不区分大小写。</p> <p>示例：</p> <table><thead><tr><th>描述</th> <th>值</th></tr></thead> <tbody><tr><td><code>5'O37</code></td> <td>用 5 位二进制存储的 八进制数 37（即十进制的 31）</td></tr> <tr><td><code>4'D2</code></td> <td>用 4 位二进制存储的 十进制数 2</td></tr> <tr><td></td> <td></td></tr> <tr><td><code>4'd-4</code></td> <td>非法，数值不能为负</td></tr> <tr><td><code>-4'd4</code></td> <td>合法</td></tr> <tr><td></td> <td></td></tr> <tr><td><code>8 'h 2A</code></td> <td>合法，在位长和 <code>'</code> 之间、基数和数值之间允许出现空格</td></tr> <tr><td><code>3' b001</code></td> <td>非法，<code>'</code> 和基数之间不允许出现空格</td></tr> <tr><td><code>(2+3)'b10</code></td> <td>非法，位长不能够为表达式</td></tr> <tr><td></td> <td></td></tr> <tr><td><code>9'o721</code></td> <td>9位二进制显示的八进制数</td></tr> <tr><td><code>8'hAF</code></td> <td>8位二进制显示的十六进制数</td></tr></tbody></table> <p>对于一个 <code>x</code> 和 <code>z</code>，在不同基数的长度也不同：在二进制中长度为 1，八进制中长度为 3，十六进制中长度为 4。</p> <table><thead><tr><th>描述</th> <th>值</th></tr></thead> <tbody><tr><td><code>4'b100x</code></td> <td>即二进制的 <code>100x</code></td></tr> <tr><td><code>8'h1x</code></td> <td>即二进制的 <code>0001xxxx</code></td></tr></tbody></table> <p>当数字序列 <code>&lt;number&gt;</code> 的长度小于 <code>&lt;size&gt;</code> 时，就会用 <code>0</code>、<code>x</code>、或<code>z</code> 来填充。具体用谁填充，取决于最高位是 <code>x</code>、<code>z</code>、还是其他。</p> <table><thead><tr><th>描述</th> <th>值</th></tr></thead> <tbody><tr><td><code>7'Hx</code></td> <td>7位 <code>x</code>，即 <code>xxxxxxx</code></td></tr> <tr><td><code>4'hZ</code></td> <td>4位 <code>z</code>，即 <code>zzzz</code></td></tr> <tr><td><code>10'b10</code></td> <td>左边添 <code>0</code> 占位，即<code>0000000010</code></td></tr> <tr><td><code>10'bx0x1</code></td> <td>左边添 <code>x</code> 占位，即 <code>xxxxxxx0x1</code></td></tr></tbody></table> <p>当数字序列 <code>&lt;number&gt;</code> 的长度大于 <code>&lt;size&gt;</code> 时，就会取 <code>&lt;size&gt;</code> 的位宽而把 <code>&lt;number&gt;</code> 的高位截断。</p> <p><code>3'b10010011</code> == <code>3'b011</code><br> <code>5'H0FFF</code> == <code>5'H1F</code></p> <blockquote><p>无聊的部分结束。</p></blockquote> <p>还有实数、字符串类型，但是不考，故删掉了。</p> <h3 id="数据类型"><a href="#数据类型" class="header-anchor">#</a> 数据类型</h3> <p>**理解 Verilog 数据类型非常重要！！！**因为这是它和 C 等编程语言的区别中最大的一点。</p> <p>数据类型上，分为 <code>net</code>（线网型）和 <code>reg</code>（寄存器型）。</p> <p><code>reg</code> 类型，是使用寄存器实现，用于存储数据，类似于电脑 CPU 的寄存器、内存等等。</p> <blockquote><p>寄存器型变量与网络型数据的区别主要在于：寄存器型变量保持最后一次的赋值，而 <code>wire</code> 型数据需要有连续的驱动。<br>
+寄存器型变量只能在 <code>initial</code> 或 <code>always</code> 内部被赋值。</p></blockquote> <p>而 <code>net</code> 分为 <code>wire</code>、<code>wand</code>、<code>wor</code> 等等，由于 <code>wire</code> 类型的线网声明最常用，所以 <code>net</code> 和 <code>wire</code> 概念经常互换使用。<s>就是说 <code>wand</code> 和 <code>wor</code> 都不重要</s></p> <p>而 <code>wire</code> 是什么呢？翻译成 <code>连线</code> 非常抽象，让人难以理解。其实呢，<code>wire</code> 是个很常见的东西：</p> <p>想象一个“与门”，它有两个输入 <code>A</code> 和 <code>B</code>，输出 <code>F</code>。<br>
+在这里 <code>A</code>、<code>B</code>、<code>F</code> 都是电线，他们也就是所谓的 <code>线网</code> 或 <code>wire</code>。</p> <p>合理猜测，对于线网型和寄存器型，将是两种风格的编程；前者是描述各种“门”，后者是类似于 C 语言的赋值、赋值、再赋值的编程。</p> <p>确实如此。<a href="#%E6%A6%82%E8%BF%B0">概述</a>的第 5 点提到，</p> <blockquote><p><strong>行为描述方式</strong>——使用过程化结构建模；
+<strong>数据流方式</strong>——使用连续赋值语句方式建模；<br> <strong>结构化方式</strong>——使用门和模块实例语句描述建模。</p></blockquote> <ul><li><code>行为描述方式</code>即是使用赋值、寄存器、<code>if</code>、<code>for</code> 等流程的 C 语言风格。（面向过程编程）</li> <li><code>结构化</code>即是描述各个门，使用线网类型的结构化风格（面向门结构编程）。</li> <li>至于<code>数据流</code>，是使用 <code>out=~(A&amp;B)</code> 这种赋值形式替代了门结构的描述（面向数据编程），也是使用线网类型编程</li></ul> <p>当然也可以混合编程。</p> <p>等我学完这一章以后再来看看是不是这样。</p> <blockquote><p>2019.12.4 更新：改掉了不对的地方。。。顺便总结了面向xx编程。</p></blockquote> <p>最后稍微提一下整数 <code>integer</code> 类型。</p> <blockquote><p>在算术运算中被视为二进制补码形式的有符号数。整型数据与 32 位的寄存器型数据在实际意义上相同，只是寄存器型数据被当做无符号数来处理。<br>
+需要注意的是虽然 <code>interger</code> 有位宽度的声明，但是 <code>integer</code> 型变量不能作为位向量访问。<code>D[6]</code> 和 <code>D[16:0]</code> 的声明都是非法的。<br>
+在综合时，<code>integer</code> 型变量的初始值是 <code>x</code></p></blockquote> <p>其实用的不多，毕竟只是很简略的讲一下 Verilog，寄存器已经够入门使用了。</p> <p>另外还有实数型、时间型变量，用的不多，就这么提一笔就了了。</p> <h3 id="变量声明-2"><a href="#变量声明-2" class="header-anchor">#</a> 变量声明</h3> <p>用到变量前需要声明。</p> <p>顺便再提一遍，要是没有写类型，默认为 <code>wire</code>。</p> <p>示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>integer i<span class="token punctuation">,</span>j<span class="token punctuation">;</span>
+integer<span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> D<span class="token punctuation">;</span>
+
+reg cout<span class="token punctuation">;</span> <span class="token comment">//定义信号 cout 的数据类型为 reg</span>
+reg<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> out<span class="token punctuation">;</span> <span class="token comment">//定义信号 out 的数据类型为8位 reg</span>
+
+wire A<span class="token punctuation">,</span>B<span class="token punctuation">,</span>C<span class="token punctuation">,</span>D<span class="token punctuation">,</span>F<span class="token punctuation">;</span> <span class="token comment">//定义信号 A,B,C,D,F 为 wire（连线）型</span>
+wire <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> data<span class="token punctuation">;</span> <span class="token comment">//声明一个 8bit 宽的网络型</span>
+</code></pre></div><p>示例：寄存器变量的声明及使用</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">mult</span><span class="token punctuation">(</span>clk<span class="token punctuation">,</span> rst<span class="token punctuation">,</span> A_IN<span class="token punctuation">,</span> B_OUT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+input clk<span class="token punctuation">,</span>rst<span class="token punctuation">,</span>A_IN<span class="token punctuation">;</span>	
+output B_OUT<span class="token punctuation">;</span>
+reg arb_onebit <span class="token operator">=</span> <span class="token number">1</span>'b0<span class="token punctuation">;</span>
+
+always @<span class="token punctuation">(</span>posedge clk <span class="token keyword">or</span> posedge rst<span class="token punctuation">)</span>
+begin
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rst<span class="token punctuation">)</span>
+        arb_onebit <span class="token operator">&lt;=</span> <span class="token number">1</span>'b1<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        arb_onebit <span class="token operator">&lt;=</span> A_IN<span class="token punctuation">;</span>
+end
+    B_OUT <span class="token operator">&lt;=</span> arb_onebit<span class="token punctuation">;</span>
+endmodule
+</code></pre></div><p>看不懂代码的更多细节，可以暂时放一下。</p> <h3 id="参数"><a href="#参数" class="header-anchor">#</a> 参数</h3> <p>类似于 C 语言的 <code>#define</code> 宏定义。</p> <blockquote><p>参数不是变量，而是常量。用参数声明一个可变常量，常用于定义延时及宽度等参数。</p></blockquote> <p>参数定义的例子：</p> <div class="language-v extra-class"><pre class="language-v"><code>parameter BUS_WIDTH<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">;</span>
+reg <span class="token punctuation">[</span>BUS_WIDTH<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> my_reg<span class="token punctuation">;</span>
+</code></pre></div><p>示例：参数的声明及使用</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> lpm_reg <span class="token punctuation">(</span>out<span class="token punctuation">,</span> <span class="token keyword">in</span><span class="token punctuation">,</span> en<span class="token punctuation">,</span> reset<span class="token punctuation">,</span> clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    parameter SIZE<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    input <span class="token keyword">in</span><span class="token punctuation">,</span> en<span class="token punctuation">,</span> reset<span class="token punctuation">,</span> clk<span class="token punctuation">;</span>
+    output out<span class="token punctuation">;</span>
+    wire <span class="token punctuation">[</span>SIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">in</span><span class="token punctuation">;</span>
+    reg <span class="token punctuation">[</span>SIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> out<span class="token punctuation">;</span>
+
+    always @<span class="token punctuation">(</span>posedge clk <span class="token keyword">or</span> negedge reset<span class="token punctuation">)</span>
+    begin
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>reset<span class="token punctuation">)</span>  out<span class="token operator">&lt;=</span><span class="token number">1</span>'b0<span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>en<span class="token punctuation">)</span>  out<span class="token operator">&lt;=</span><span class="token keyword">in</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span>  out <span class="token operator">&lt;=</span> out<span class="token punctuation">;</span>
+    end
+endmodule
+</code></pre></div><h3 id="向量"><a href="#向量" class="header-anchor">#</a> 向量</h3> <p>向量 (vector) 就是数组。</p> <p>向量的声明示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>wire <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> data<span class="token punctuation">;</span>
+</code></pre></div><blockquote><p>该声明表示一个位宽为 8 的 <code>wire</code> 型数据，名为 <code>data</code>。</p></blockquote> <div class="language-v extra-class"><pre class="language-v"><code>reg <span class="token punctuation">[</span><span class="token number">63</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> array1 <span class="token punctuation">[</span><span class="token number">255</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>
+</code></pre></div><blockquote><p>该声明表示一个 256*8 的 <code>reg</code> 型数组，其中的每个数据是 64 位宽度。</p></blockquote> <div class="language-v extra-class"><pre class="language-v"><code>wire <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> array2 <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">255</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">15</span><span class="token punctuation">]</span>
+</code></pre></div><blockquote><p>该声明表示一个三维的数组，表示 16 个 256*16 的 <code>wire</code> 型数据，每个数据 8 位宽度。</p></blockquote> <div class="language-v extra-class"><pre class="language-v"><code>wire <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> b<span class="token punctuation">;</span>
+</code></pre></div><blockquote><p>声明的 <code>a</code> <code>b</code> 都是 3bit 的。不过对于入门，建议分行写 <code>wire [2:0] a; wire [2:0] b;</code>，而不用一些易混淆的语法。</p></blockquote> <p>看了几个例子，应该比较懂了。数组用的不多，倒是变量的位数用的比较多。</p> <p><strong>声明变量位数是从高到0！！！</strong></p> <p>向量的赋值的两个示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>data<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> input<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+data<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre></div><p>注意一定要指明对应位。</p> <h2 id="verilog-表达式"><a href="#verilog-表达式" class="header-anchor">#</a> Verilog 表达式</h2> <h3 id="操作符"><a href="#操作符" class="header-anchor">#</a> 操作符</h3> <blockquote><p>Verilog HDL 中的操作符按功能可以分为下述类型：算术操作符、关系操作符、相等操作符、逻辑操作符、按位操作符、归约操作符、移位操作符、条件操作符、连接和复制操作符；<br>
+按运算符所带操作数的个数可分为三类：单目操作符、双目操作符和三目操作符。</p></blockquote> <p>太长不看。</p> <p>操作符从高到低的优先级（太长不看）：</p> <table><thead><tr><th>操作符</th> <th>名字</th></tr></thead> <tbody><tr><td><code>+</code>、<code>-</code></td> <td>一元加、减</td></tr> <tr><td><code>!</code></td> <td>一元逻辑非</td></tr> <tr><td><code>~</code></td> <td>一元按位求反</td></tr> <tr><td><code>*</code>、<code>/</code>、<code>%</code></td> <td>乘、除、取模</td></tr> <tr><td><code>+</code>、<code>-</code></td> <td>二元加、二元减</td></tr> <tr><td><code>&lt;&lt;</code>、<code>&gt;&gt;</code></td> <td>左移、右移</td></tr> <tr><td><code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code></td> <td>小于、小于等于、大于、大于等于</td></tr> <tr><td><code>==</code>、<code>!=</code></td> <td>逻辑相等、逻辑不等</td></tr> <tr><td><code>===</code>、<code>!==</code></td> <td>全等、非全等</td></tr> <tr><td><code>&amp;</code>、<code>^</code>、<code>^~</code> (或<code>~^</code>)、<code>\|</code></td> <td>按位与、异或、异或非、或</td></tr> <tr><td><code>&amp;&amp;</code>、<code>\|\|</code></td> <td>逻辑与、逻辑或</td></tr> <tr><td><code>? :</code></td> <td>条件操作符</td></tr></tbody></table> <p>注意，<code>wire</code> 和 <code>reg</code> 之间不能做任何操作（加减、逻辑运算、相等……）。如果需要进行操作，可以新建一个 <code>always</code> 语句，将 <code>wire</code> 赋给另一个 <code>reg</code>。如下：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token comment">//尝试比较 reg1 和 wire1</span>
+reg reg1<span class="token punctuation">,</span> reg2<span class="token punctuation">,</span> T<span class="token punctuation">;</span>
+wire wire1<span class="token punctuation">;</span>
+
+always @<span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+    reg2 <span class="token operator">=</span> wire1<span class="token punctuation">;</span>
+
+initial
+    T<span class="token operator">=</span> <span class="token punctuation">(</span>reg1 <span class="token operator">==</span> reg2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//需要比较的地方</span>
+</code></pre></div><h3 id="延迟表达式"><a href="#延迟表达式" class="header-anchor">#</a> 延迟表达式</h3> <blockquote><p>Verilog HDL 中，延迟表达式的格式为用圆括号括起来的三个表达式，这三个表达式之间用冒号分隔开。<br>
+三个表达式一次代表最小、典型、最大延迟时间值。如<br> <code>(a:b:c)+(d:e:f)</code><br>
+表示最小延迟值为 <code>a+d</code> 的和，典型延迟值为 <code>b+e</code> 的和，最大延迟值为 <code>c+f</code> 的和。</p></blockquote> <p>讲完了。有什么用？不知道。</p> <h2 id="verilog-语言模块描述方式"><a href="#verilog-语言模块描述方式" class="header-anchor">#</a> Verilog 语言模块描述方式</h2> <p>前面是一堆非常无聊的基础。下面开始重点。</p> <p><strong>Verilog 分为三大流派：行为级建模、结构级建模，数据流级建模。</strong></p> <blockquote><p>模块大致可以按以下三类抽象级别来进行描述。</p> <ol><li>行为级或算法级的描述方式（行为级建模）；</li> <li>数据流描述方式（数据流级建模）；</li> <li>门级描述方式（门级建模）；</li></ol></blockquote> <p>怎么又回到<a href="#%E6%A6%82%E8%BF%B0">概述</a>第五点了。。。</p> <blockquote><p><strong>行为描述方式</strong>——使用过程化结构建模；
+<strong>数据流方式</strong>——使用连续赋值语句方式建模；<br> <strong>结构化方式</strong>——使用门和模块实例语句描述建模。</p></blockquote> <ul><li><code>行为描述方式</code>即是使用<code>过程语句</code>、<code>赋值</code>、<code>寄存器</code>、<code>if</code>、<code>for</code> 等流程的 C 语言风格。（<strong>面向过程编程</strong>）</li> <li><code>结构化</code>即是描述各个<code>门</code>，使用<code>线网</code>类型的结构化风格（<strong>面向（门）结构编程</strong>）。</li> <li>至于<code>数据流</code>，是使用 <code>out=~(A&amp;B)</code> 这种<code>连续赋值</code>形式替代了门结构的描述（<strong>面向数据编程</strong>），也是使用线网类型编程</li></ul> <p>这便是 Verilog 三种不同流派的语法。下面，我们就用三个大标题，分别来聊这三种不同的模块。</p> <h2 id="模块的结构级描述"><a href="#模块的结构级描述" class="header-anchor">#</a> 模块的结构级描述</h2> <p>结构级就相当于把每个<code>元件</code>描述好，具体仿真以后会发生什么，得看元件的搭配。如下面的直接以<code>逻辑门</code>为单位描述。</p> <h3 id="门级赋值语句"><a href="#门级赋值语句" class="header-anchor">#</a> 门级赋值语句</h3> <p>门单元赋值的 Verilog HDL 描述像下面这样：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token function">nand</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>该语句实现了与非门 <code>y=(a·b·c·d)'</code>。</p> <p><strong>注意Verilog 门级赋值语句的输出在前面，输入在后面</strong></p> <p>Verilog HDL中提供下列内置基本门：</p> <ul><li>多输入门：<code>and</code>,<code>nand</code>,<code>or</code>,<code>nor</code>,<code>xor</code>,<code>xnor</code></li> <li>多输出门：<code>buf</code>,<code>not</code>（略）</li> <li>三态门：<code>bufif0</code>,<code>bufif1</code>,<code>notif0</code>,<code>notif1</code>（略）</li> <li>上拉、下拉电阻：<code>pullup</code>,<code>pulldown</code>（略）</li></ul> <p>语法格式如下：</p> <div class="language-v extra-class"><pre class="language-v"><code>gate_type <span class="token punctuation">[</span>instance_name1<span class="token punctuation">]</span> <span class="token punctuation">(</span>term11<span class="token punctuation">,</span>term12<span class="token punctuation">,</span><span class="token operator">...</span><span class="token punctuation">,</span>term1N<span class="token punctuation">)</span>
+
+类型 <span class="token punctuation">[</span>命名<span class="token punctuation">]</span><span class="token punctuation">(</span>参数<span class="token punctuation">)</span>
+</code></pre></div><p>其中 <code>命名</code> 是可省的。</p> <h4 id="多输入门"><a href="#多输入门" class="header-anchor">#</a> 多输入门</h4> <p>顾名思义，多输入、一个输出的门。</p> <p>有 <code>and</code>,<code>nand</code>,<code>or</code>,<code>nor</code>,<code>xor</code>,<code>xnor</code>。</p> <p>注意，参数的<strong>输出在前，输入在后！！！</strong></p> <p>一堆示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>and RBX <span class="token punctuation">(</span>Sty<span class="token punctuation">,</span>Rib<span class="token punctuation">,</span>Bro<span class="token punctuation">,</span>Qit<span class="token punctuation">,</span>Fi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>该门实例语句是四输入与门，单元名为 <code>RBX</code>（可省），输出为 <code>Sty</code>，4 个输入为 <code>Rib</code>、<code>Bro</code>、<code>Qit</code> 和 <code>Fix</code>。</p> <div class="language-v extra-class"><pre class="language-v"><code>xor <span class="token punctuation">(</span>Bar<span class="token punctuation">,</span>Bud<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Bud<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Bud<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>该门实例语句是异或门的具体实例，没有单元名。它的输出是 <code>Bar</code>，三个输入分别为 <code>Bud[0]</code>、<code>Bud[1]</code> 和 <code>Bud[2]</code>。</p> <h4 id="多输出门"><a href="#多输出门" class="header-anchor">#</a> 多输出门</h4> <p>一堆示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>buf B1 <span class="token punctuation">(</span>Fan<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Fan<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Fan<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Fan<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>该门实例语句中，Clk是缓冲门的输入，门B1有4个输出：Fan[0]到Fan[3]。</p> <div class="language- extra-class"><pre class="language-text"><code>not N1 (PhA,PhB,Ready);
+</code></pre></div><p>该门实例语句中，Ready是非门的唯一输入端口。门N1有两个输出：PhA和PhB。</p> <h3 id="示例"><a href="#示例" class="header-anchor">#</a> 示例</h3> <div class="language-v extra-class"><pre class="language-v"><code>`include <span class="token string quoted-string">&quot;full_add_1.v&quot;</span>
+<span class="token keyword">module</span> <span class="token function">add4_1</span><span class="token punctuation">(</span>sum<span class="token punctuation">,</span>cout<span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>cin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input cin<span class="token punctuation">;</span>
+    input<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span>b<span class="token punctuation">;</span>
+    output<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sum<span class="token punctuation">;</span>
+    output cout<span class="token punctuation">;</span>
+
+    full_add1 <span class="token function">f0</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin<span class="token punctuation">,</span>sum<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    full_add2 <span class="token function">f1</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin1<span class="token punctuation">,</span>sum<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    full_add3 <span class="token function">f2</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin2<span class="token punctuation">,</span>sum<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    full_add4 <span class="token function">f3</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cin3<span class="token punctuation">,</span>sum<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>cout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+endmodule
+</code></pre></div><p>示例：一位半加器：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> halfadd <span class="token punctuation">(</span>X<span class="token punctuation">,</span> Y<span class="token punctuation">,</span> C<span class="token punctuation">,</span> S<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input X<span class="token punctuation">,</span> Y<span class="token punctuation">;</span>
+    output C<span class="token punctuation">,</span> S<span class="token punctuation">;</span>
+    wire S1<span class="token punctuation">,</span> S2<span class="token punctuation">,</span> S3<span class="token punctuation">;</span>
+
+    nand <span class="token function">NANDA</span><span class="token punctuation">(</span>S3<span class="token punctuation">,</span>X<span class="token punctuation">,</span>Y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nand <span class="token function">NANDB</span><span class="token punctuation">(</span>S1<span class="token punctuation">,</span>X<span class="token punctuation">,</span>S3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nand <span class="token function">NANDC</span><span class="token punctuation">(</span>S2<span class="token punctuation">,</span>S3<span class="token punctuation">,</span>Y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nand <span class="token function">NANDD</span><span class="token punctuation">(</span>S<span class="token punctuation">,</span>S1<span class="token punctuation">,</span>S2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    assign C<span class="token operator">=</span>S3<span class="token punctuation">;</span>
+endmodule
+</code></pre></div><h2 id="模块的数据流级描述"><a href="#模块的数据流级描述" class="header-anchor">#</a> 模块的数据流级描述</h2> <blockquote><p>数据流描述方式，也称为RTL（寄存器传输级）描述方式。<br>
+数据流描述方式<strong>类似于布尔方程</strong>，它能够比较直观地表达低层逻辑行为。<br>
+用数据流描述方式对一个设计建模的最基本的机制就是使用<strong>连续赋值语句</strong>。在连续赋值语句中，某个值<strong>被指派给网络变量</strong>。</p></blockquote> <h3 id="连续赋值语句"><a href="#连续赋值语句" class="header-anchor">#</a> 连续赋值语句</h3> <p>也可以使用连续赋值语句实现相同的与非功能：</p> <div class="language-v extra-class"><pre class="language-v"><code>assign <span class="token punctuation">[</span>delay<span class="token punctuation">]</span> LHS_net<span class="token operator">=</span>RHS_expression<span class="token punctuation">;</span>
+
+assign y <span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span>a<span class="token operator">&amp;</span>b<span class="token operator">&amp;</span>c<span class="token operator">&amp;</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// y 必须是 wire 型变量</span>
+</code></pre></div><p>为什么叫连续赋值语句？</p> <blockquote><p>该连续赋值语句表示，输出 <code>y</code> 的变化跟随输入 <code>a</code>、<code>b</code>、<code>c</code>、<code>d</code> 的变化而变化，反映了信号变化的连续性。<br>
+右边表达式使用的操作数无论何时发生变化, <strong>左边表达式都重新计算</strong>, 并且在指定的<strong>时延后被赋予左边的网络变量</strong>。<br>
+时延定义了右边表达式操作数变化与赋值给左边表达式之间的持续时间。如果没有定义时延值, 默认时延为 0。</p></blockquote> <p>不要手滑把 <code>assign</code> 放在 <code>initial</code> 或 <code>always</code> 里。<code>assign</code> 是门级描述的等价形式。</p> <p>示例： 2-4 解码器的 Verilog HDL 数据流描述</p> <div class="language-v extra-class"><pre class="language-v"><code>`timescale 1ns<span class="token operator">/</span>1ns
+<span class="token keyword">module</span> <span class="token function">Decoder2x4</span><span class="token punctuation">(</span>A<span class="token punctuation">,</span>B<span class="token punctuation">,</span>EN<span class="token punctuation">,</span>Z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input A<span class="token punctuation">,</span>B<span class="token punctuation">,</span>EN<span class="token punctuation">;</span>
+    output <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">]</span> Z<span class="token punctuation">;</span>
+    wire Abar<span class="token punctuation">,</span>Bbar<span class="token punctuation">;</span>
+
+    assign #<span class="token number">1</span> Abar <span class="token operator">=</span><span class="token operator">~</span>A<span class="token punctuation">;</span>
+    assign #<span class="token number">1</span> Bbar <span class="token operator">=</span><span class="token operator">~</span>B<span class="token punctuation">;</span>
+    assign #<span class="token number">2</span> Z<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span>Abar <span class="token operator">&amp;</span> Bbar <span class="token operator">&amp;</span> EN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    assign #<span class="token number">2</span> Z<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span>Abar <span class="token operator">&amp;</span> B <span class="token operator">&amp;</span> EN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    assign #<span class="token number">2</span> Z<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span>A <span class="token operator">&amp;</span> Bbar <span class="token operator">&amp;</span> EN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    assign #<span class="token number">2</span> Z<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token operator">~</span><span class="token punctuation">(</span>A <span class="token operator">&amp;</span> B <span class="token operator">&amp;</span> EN<span class="token punctuation">)</span><span class="token punctuation">;</span>
+endmodule
+</code></pre></div><blockquote><p>以反引号 <code>`</code> 开始的第一条语句是编译器指令。<br>
+编译器指令<code>`timescale</code>将模块中所有时延的单位设置为 1ns，时间精度为 1ns。<br>
+例如，在连续赋值语句中时延值 <code>#1</code> 和 <code>#2</code> 分别对应时延 1ns 和 2ns。</p> <p>模块 <code>Decoder2x4</code> 有 3 个输入端口和 1 个 4 位输出端口。<br>
+网络类型说明了两个连线型变量 <code>Abar</code> 和 <code>Bbar</code> 。
+此外，模块包含 6 个连续赋值语句。</p></blockquote> <p>示例的详细说明（太长不看）：</p> <blockquote><p>当EN在第5ns变化时,语句3、4、5和6执行。这是因为EN是这些连续赋值语句中右边表达式的操作数。<br>
+Z[0]在第7ns时被赋予新值0。<br>
+当A在第15ns变化时, 语句1、5和6执行。<br>
+执行语句5和6不影响Z[0]和Z[1]的取值。<br>
+执行语句5导致Z[2]值在第17ns变为0。<br>
+执行语句1导致Abar在第16ns被重新赋值。<br>
+由于Abar的改变，反过来又导致Z[0]值在第18ns变为1。</p></blockquote> <p>更多的关于 <code>#t</code> 的解释，请看<a href="#initial-%E8%AF%AD%E5%8F%A5">initial 语句</a>的时延控制部分。</p> <h2 id="模块的行为级描述"><a href="#模块的行为级描述" class="header-anchor">#</a> 模块的行为级描述</h2> <p>先给一个示例：8 位计数器的 Verilog HDL 行为级描述</p> <div class="language- extra-class"><pre class="language-text"><code>module counter8(clk,clr,out);
+    input clk,clr;
+    output reg[7:0] out;
+    always @(posedge clk or posedge clr)
+    begin 
+        if(clr) out&lt;=0;
+        else out&lt;=out+1; 
+    end
+endmodule
+</code></pre></div><h3 id="语句块"><a href="#语句块" class="header-anchor">#</a> 语句块</h3> <blockquote><p>语句块提供将两条或更多条语句组合成语法结构上相当于一条语句的机制。在 Verilog HDL 中有两类语句块，即：</p> <ol><li>顺序语句块 <code>begin</code>...<code>end</code>：语句块中的语句按给定次序顺序执行。</li> <li>并行语句块 <code>fork</code>...<code>join</code>：语句块中的语句并行执行。（不常用）</li></ol></blockquote> <p>注意，<code>begin</code>...<code>end</code> 或 <code>fork</code>...<code>join</code> 相当于 C 语言的 <code>{</code>...<code>}</code>（毕竟都是叫代码块），他们俩一个是顺序、一个是并行。</p> <p>示例：顺序语句块的 Verilog HDL 描述</p> <div class="language-v extra-class"><pre class="language-v"><code>begin
+#<span class="token number">2</span> Stream<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+#<span class="token number">5</span> Stream<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+#<span class="token number">3</span> Stream<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+#<span class="token number">4</span> Stream<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+#<span class="token number">2</span> Stream<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+#<span class="token number">5</span> Stream<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+end
+</code></pre></div><blockquote><p>假定顺序语句块在第 10 个时间单位开始执行。两个时间单位后第 1 条语句执行，即第 12 个时间单位。<br>
+此执行完成后，下 1 条语句在第 17 个时间单位执行（延迟 5 个时间单位）。然后下 1 条语句在第 20 个时间单位执行，以此类推。</p></blockquote> <p>示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>begin
+    Pat<span class="token operator">=</span>Mask<span class="token operator">|</span>Mat<span class="token punctuation">;</span>
+    @ <span class="token punctuation">(</span>negedge Clk<span class="token punctuation">)</span>
+        FF<span class="token operator">=</span><span class="token operator">&amp;</span> Pat<span class="token punctuation">;</span>
+end
+</code></pre></div><blockquote><p>在该例中，第 1 条语句首先执行，然后执行第 2 条语句。<br>
+当然，第 2 条语句中的赋值只有在 Clk 上出现负沿时才执行。</p></blockquote> <p>这么说来 <code>negedge Clk</code> 就是在 <code>Clk</code> 上出现负沿时才执行。相对应的 <code>posedge Clk</code> 就是在 <code>Clk</code> 上出现正沿时才执行。</p> <h3 id="过程语句"><a href="#过程语句" class="header-anchor">#</a> 过程语句</h3> <blockquote><p>Verilog HDL 中的多数过程模块都从属于以下两种过程语句：</p> <ul><li><code>initial</code> 语句</li> <li><code>always</code> 语句
+一个模块中可以包含任意多个 <code>initial</code>或 <code>always</code> 语句。<br>
+这些语句相互并行执行，即这些语句的执行顺序与其在模块中的顺序无关。<br>
+一个 <code>initial</code> 语句或 <code>always</code> 语句的执行产生一个单独的控制流，所有的 <code>initial</code> 和 <code>always</code> 语句在 0 时刻开始并行执行。</li></ul></blockquote> <p>所有语句（除一开始的声明）都必须包含在 <code>initial</code> 或 <code>always</code> 里。</p> <h4 id="initial-语句"><a href="#initial-语句" class="header-anchor">#</a> initial 语句</h4> <p>从英文上看也知道，<code>initial</code>（初始化）语句只在最开始执行一次，即在0时刻开始执行。</p> <p><code>initial</code> 语句的语法如下：</p> <div class="language-v extra-class"><pre class="language-v"><code>initial 
+begin
+    statement1<span class="token punctuation">;</span>  <span class="token comment">//描述语句1</span>
+    statement2<span class="token punctuation">;</span>  <span class="token comment">//描述语句2</span>
+    <span class="token comment">//...</span>
+end
+</code></pre></div><p>即使像下面这么写， <code>a</code> 在 0 时刻会被赋值为 2。</p> <div class="language-v extra-class"><pre class="language-v"><code>a<span class="token punctuation">;</span>
+<span class="token comment">//...</span>
+initial
+    a<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre></div><p>当然，<code>initial</code> 语句也可以带有时延控制：</p> <div class="language-v extra-class"><pre class="language-v"><code>reg Curt<span class="token punctuation">;</span>
+<span class="token operator">...</span>
+initial
+    #<span class="token number">2</span> a <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre></div><p>寄存器变量 <code>a</code> 在时刻 2 被赋值为 1。<code>initial</code> 语句在 0 时刻开始执行，在时刻 2 完成执行。</p> <p>顺便提一句，这里的 <code>2</code> 可以用变量替代，还可以用<a href="#%E5%BB%B6%E8%BF%9F%E8%A1%A8%E8%BE%BE%E5%BC%8F">延迟表达式</a>。</p> <p><code>#t</code> 的含义应为：等待 <code>t</code> 个单位时间以后执行（而不是在 <code>t</code> 时刻执行）。<br>
+也就是说，如果有两个 <code>#</code> 叠加，后者语句的执行时间应是二者时间的叠加。在<a href="#%E8%AF%AD%E5%8F%A5%E5%9D%97">语句块</a>里会有一个例子说明。在<a href="#%E8%BF%9E%E7%BB%AD%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5">连续赋值语句</a>有一个更详细的例子说明。</p> <blockquote><p><code>initial</code> 语句通常用于仿真模块对激励向量的描述，或用于给寄存器变量赋初值，它是面向模拟仿真过程的语句，不能被综合。</p></blockquote> <p>顺便一提，顺序过程 <code>begin</code>、<code>end</code> 最常使用在进程语句中。</p> <p>下面是更复杂的、带有顺序过程的 <code>initial</code> 语句：</p> <div class="language-v extra-class"><pre class="language-v"><code>parameter SIZE <span class="token operator">=</span> <span class="token number">1024</span><span class="token punctuation">;</span>
+
+reg <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RAM <span class="token punctuation">[</span> <span class="token number">0</span><span class="token punctuation">:</span>SIZE<span class="token operator">-</span> <span class="token number">1</span> <span class="token punctuation">]</span><span class="token punctuation">;</span>
+reg RibReg<span class="token punctuation">;</span>
+
+initial
+begin<span class="token punctuation">:</span> SEQ_BLK_A
+    integer Index<span class="token punctuation">;</span>
+    RibReg <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>Index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> Index <span class="token operator">&lt;</span> SIZE<span class="token punctuation">;</span> Index <span class="token operator">=</span> Index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        RAM <span class="token punctuation">[</span>Index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+end
+</code></pre></div><p>这一 <code>initial</code>语句在执行时将所有的内存初始化为 0。</p> <p><code>SEQ_BLK_A</code> 是顺序过程的标记；如果过程中没有局部说明部分，不要求这一标记。</p> <h4 id="always-语句"><a href="#always-语句" class="header-anchor">#</a> always 语句</h4> <blockquote><p>与 <code>initial</code> 语句相反，<code>always</code> 语句重复执行。</p></blockquote> <p>与 <code>initial</code> 语句类似，<code>always</code> 语句语法如下：</p> <div class="language-v extra-class"><pre class="language-v"><code>always @<span class="token punctuation">(</span>敏感信号表达式<span class="token punctuation">)</span>
+begin
+    <span class="token comment">//过程赋值</span>
+    <span class="token comment">//if-else,case语句</span>
+    <span class="token comment">//while,repeat,for循环语句</span>
+    <span class="token comment">//task,function调用</span>
+end
+</code></pre></div><p><code>always@(*)</code> 在功能上类似于无条件的 <code>while(true)</code>，而 <code>always @()</code> ；类似于有条件的 <code>while</code>。</p> <blockquote><p>注意，在 testbench （仿真）的过程中，<code>always(*)</code> 是错误的写法，只能写 <code>always</code>；<br>
+而在编程文件中，只能写 <code>always(*)</code>，<code>always</code> 这样是错误的</p></blockquote> <p><code>always</code> 本身只影响到下面的一句话，配合 <code>begin</code>...<code>end</code> （即代码块）才能够实现装很多句话。</p> <p>示例：<code>always</code> 过程实现计数器的过程</p> <div class="language-v extra-class"><pre class="language-v"><code>always @<span class="token punctuation">(</span>posedge clk<span class="token punctuation">)</span>
+begin
+    <span class="token keyword">if</span><span class="token punctuation">(</span>reset<span class="token punctuation">)</span> out<span class="token operator">&lt;=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> out<span class="token operator">&lt;=</span>out<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+end
+</code></pre></div><p>示例：<code>always</code> 实现时钟信号（<a href="https://blog.csdn.net/qq_33929689/article/details/51842606" target="_blank" rel="noopener noreferrer">源代码链接<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>）</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">clock</span><span class="token punctuation">(</span>output reg clock<span class="token punctuation">)</span>
+<span class="token comment">//在零时刻把clock变量初始化</span>
+initial
+    clock <span class="token operator">=</span> <span class="token number">1</span>'b0<span class="token punctuation">;</span>
+<span class="token comment">//每半个周期把clock信号翻转一次</span>
+always
+    #<span class="token number">10</span> clock<span class="token operator">=</span><span class="token operator">~</span>clock<span class="token punctuation">;</span>
+initial 
+    #<span class="token number">1000</span> $finish<span class="token punctuation">;</span>
+    <span class="token comment">//1000个时间单位后，停止仿真</span>
+
+endmodule
+</code></pre></div><blockquote><p><code>always</code> 语句有一个过程性赋值。因为 <code>always</code> 语句重复执行，并且在此例中没有时延控制，过程语句将在 0 时刻无限循环。因此，<code>always</code> 语句的执行必须带有某种时序控制。</p></blockquote> <p>示例：<code>always</code> 语句用于 4 选 1 开关</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> mux4 <span class="token punctuation">(</span>sel<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> outmux<span class="token punctuation">)</span><span class="token punctuation">;</span>
+input <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sel<span class="token punctuation">;</span>
+input <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">;</span>
+output <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> outmux<span class="token punctuation">;</span>
+reg <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> outmux<span class="token punctuation">;</span>
+always @<span class="token punctuation">(</span>sel <span class="token keyword">or</span> a <span class="token keyword">or</span> b <span class="token keyword">or</span> c <span class="token keyword">or</span> d<span class="token punctuation">)</span>
+begin
+    case <span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+        <span class="token number">2</span>'b00<span class="token punctuation">:</span> outmux <span class="token operator">=</span> a<span class="token punctuation">;</span>
+        <span class="token number">2</span>'b01<span class="token punctuation">:</span> outmux <span class="token operator">=</span> b<span class="token punctuation">;</span>
+        <span class="token number">2</span>'b10<span class="token punctuation">:</span> outmux <span class="token operator">=</span> c<span class="token punctuation">;</span>
+        default<span class="token punctuation">:</span> outmux <span class="token operator">=</span> d<span class="token punctuation">;</span>
+    endcase
+end
+endmodule
+</code></pre></div><p>这里涉及到了 <a href="#case">case</a> 语句。也是和 C 语言比较类似。</p> <p>示例：敏感信号为时钟沿的 <code>always</code> 语句的 Verilog HDL 描述</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> EXAMPLE <span class="token punctuation">(</span>DI<span class="token punctuation">,</span> CLK<span class="token punctuation">,</span> RST<span class="token punctuation">,</span> DO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+input <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> DI<span class="token punctuation">;</span>
+input CLK<span class="token punctuation">,</span> RST<span class="token punctuation">;</span>
+output <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> DO<span class="token punctuation">;</span>
+reg <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> DO<span class="token punctuation">;</span>
+always @<span class="token punctuation">(</span>posedge CLK <span class="token keyword">or</span> posedge RST<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>RST<span class="token operator">==</span><span class="token number">1</span>'b1<span class="token punctuation">)</span>
+        DO<span class="token operator">&lt;=</span><span class="token number">8</span>'b00000000<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        DO<span class="token operator">&lt;=</span>DI<span class="token punctuation">;</span>
+endmodule
+</code></pre></div><h3 id="过程赋值语句-行为级"><a href="#过程赋值语句-行为级" class="header-anchor">#</a> 过程赋值语句（行为级）</h3> <p>一段话分了五页 ppt 预警</p> <blockquote><p>过程赋值语句的硬件实现是：从赋值语句右边提取出的逻辑，用于驱动赋值语句左边的变量（必须是 <code>reg</code>型）。有两种类型的过程赋值语句：</p> <ul><li>阻塞赋值语句（Blocking Assignment Statement）</li> <li>非阻塞赋值语句（Non-blocking Assignment Statement）</li></ul></blockquote> <h4 id="阻塞赋值语句"><a href="#阻塞赋值语句" class="header-anchor">#</a> 阻塞赋值语句</h4> <blockquote><p>以赋值操作符 <code>=</code> 来标识的赋值的操作称为阻塞型过程赋值语句，阻塞赋值语句可以简述为：在一个 <code>always</code> 块中，语句是按从上到下顺序执行的。它具有如下特点：</p> <ol><li>顺序块内的各条阻塞语句以它们在顺序块中的排列先后次序依次得到执行；而并行块中的各条阻塞赋值语句则是同时得到执行。</li> <li>阻塞赋值语句的执行过程是：首先计算右端赋值表达式的取值，然后立即将计算结果赋值给 <code>=</code> 左端的被赋值变量。 这种语句更多的用在行为仿真和时序仿真的过程中。</li></ol></blockquote> <h4 id="非阻塞赋值语句"><a href="#非阻塞赋值语句" class="header-anchor">#</a> 非阻塞赋值语句</h4> <blockquote><p>以赋值操作符 <code>&lt;=</code> 来标识的赋值操作的也是出现在 <code>initial</code> 和 <code>always</code> 块语句中，在非阻塞赋值语句中，赋值号 <code>&lt;=</code> 左边的赋值变量也必须是 <code>reg</code> 型变量，其值不像在过程赋值语句那样，语句结束时即刻得到，而在该块语句结束才可得到。</p> <p>非阻塞赋值语句的特点如下：</p> <ol><li>在 <code>begin-end</code> 顺序语句块中，一条非阻塞赋值语句块的执行不会阻塞下一条语句的执行，即在本条非阻塞赋值语句对应的赋值操作执行完毕之前，下一条语句才可以开始执行。</li> <li>仿真过程在遇到非阻塞型赋值语句后，首先计算其右端赋值表达式的值，然后要等到当前仿真时间结束时再将该计算结果赋值给被赋值变量，即非阻塞赋值操作时在同一仿真时刻上的其他普通操作结束之后才得到执行的。<br>
+因此非阻塞赋值语句的这个特点是不同于阻塞型赋值语句的执行时序特点的。</li></ol></blockquote> <p>这写的什么玩意。看不懂看不懂。</p> <p>例子：非阻塞赋值的 Verilog HDL 描述</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">block</span><span class="token punctuation">(</span>a3<span class="token punctuation">,</span>a2<span class="token punctuation">,</span>a1<span class="token punctuation">,</span>clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+input clk<span class="token punctuation">,</span>a1<span class="token punctuation">;</span> output reg a3<span class="token punctuation">,</span>a2<span class="token punctuation">;</span>
+always @<span class="token punctuation">(</span>posedge clk<span class="token punctuation">)</span>
+begin
+  a2<span class="token operator">&lt;=</span>a1<span class="token punctuation">;</span>
+  a3<span class="token operator">&lt;=</span>a2<span class="token punctuation">;</span>
+end 
+endmodule
+</code></pre></div><p>例子：阻塞赋值的 Verilog HDL 描述</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> <span class="token function">block</span><span class="token punctuation">(</span>a3<span class="token punctuation">,</span>a2<span class="token punctuation">,</span>a1<span class="token punctuation">,</span>clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+input clk<span class="token punctuation">,</span>a1<span class="token punctuation">;</span> output reg a3<span class="token punctuation">,</span>a2<span class="token punctuation">;</span>
+always @<span class="token punctuation">(</span>posedge clk<span class="token punctuation">)</span>
+begin
+  a2<span class="token operator">=</span>a1<span class="token punctuation">;</span>
+  a3<span class="token operator">=</span>a2<span class="token punctuation">;</span>
+end 
+endmodule
+</code></pre></div><p>只有赋值符号不同。</p> <p><s>在这里第一次使用了 Xilinx 编程测试</s></p> <p>将上面两段代码分别进行仿真测试，测试代码如下：</p> <div class="language-v extra-class"><pre class="language-v"><code>initial begin
+    a1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    clk <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    #<span class="token number">100</span><span class="token punctuation">;</span>
+    clk <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+end
+</code></pre></div><p>测试的结果显示：</p> <blockquote><p>对于非阻塞型的 <code>&lt;=</code>，100ns 后 <code>a2</code> 变为 1，而 <code>a3</code> 仍为 <code>x</code>。<br>
+阻塞型的 <code>=</code>，100ns 后 <code>a2</code> 和  <code>a3</code> 都变为 1。</p></blockquote> <p>这很好的解释了二者的区别，简单的来说就是：</p> <blockquote><p><code>&lt;=</code> 是并行执行的，<code>=</code> 是顺序执行的。</p></blockquote> <p>并行的那个是非阻塞，顺序执行的是阻塞。记一下就行。</p> <p>顺便，<code>&lt;=</code> 和 <code>=</code> 这些赋值都是 <code>reg</code> 的玩意。<code>wire</code> 没有赋值的概念，只能把他接到某一个门的输出。 <code>wire</code> 可以使用门，或者数据流 <code>assign a = 1'b0;</code>。</p> <h3 id="流程控制"><a href="#流程控制" class="header-anchor">#</a> 流程控制</h3> <h4 id="if-else"><a href="#if-else" class="header-anchor">#</a> if-else</h4> <p>写法和 C++ 一样，只是判断执行标准时，如果是 <code>0zx</code> 之一，就不执行。</p> <p>注意，<code>reg</code> 和 <code>wire</code> 不能直接作比较。解决方案参考 <a href="#%E6%93%8D%E4%BD%9C%E7%AC%A6">操作符</a>。</p> <p>示例：使用 <code>if-else</code> 实现 D 触发器</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> v_registers_2 <span class="token punctuation">(</span>C<span class="token punctuation">,</span>D<span class="token punctuation">,</span>CLR<span class="token punctuation">,</span>Q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input C<span class="token punctuation">,</span> D<span class="token punctuation">,</span> CLR<span class="token punctuation">;</span>
+    output Q<span class="token punctuation">;</span>
+    reg Q<span class="token punctuation">;</span>
+    always @<span class="token punctuation">(</span>negedge C <span class="token keyword">or</span> posedge CLR<span class="token punctuation">)</span>
+    begin
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>CLR<span class="token punctuation">)</span>  Q<span class="token operator">&lt;=</span><span class="token number">1</span>'b0<span class="token punctuation">;</span>
+        <span class="token keyword">else</span>      Q<span class="token operator">&lt;=</span>D<span class="token punctuation">;</span>
+    end
+endmodule
+</code></pre></div><h4 id="case"><a href="#case" class="header-anchor">#</a> case</h4> <p>和 C 语言的写法稍微有点不同，用法一样。不需要 <code>break</code>，有 <code>default</code>。</p> <p>示例：<code>case</code> 语句实现多路选择器的 Verilog HDL 语句</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> mux4 <span class="token punctuation">(</span>sel<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> outmux<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	input <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sel<span class="token punctuation">,</span>a<span class="token punctuation">,</span>b<span class="token punctuation">.</span>c<span class="token punctuation">,</span>d<span class="token punctuation">;</span>
+	output reg <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> outmux<span class="token punctuation">;</span>
+	always @<span class="token punctuation">(</span>sel <span class="token keyword">or</span> a <span class="token keyword">or</span> b <span class="token keyword">or</span> c <span class="token keyword">or</span> d<span class="token punctuation">)</span>
+	begin
+        case <span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+            <span class="token number">2</span>'b00<span class="token punctuation">:</span> outmux<span class="token operator">=</span>a<span class="token punctuation">;</span>
+            <span class="token number">2</span>'b01<span class="token punctuation">:</span> outmux<span class="token operator">=</span>b<span class="token punctuation">;</span>
+            <span class="token number">2</span>'b10<span class="token punctuation">:</span> outmux<span class="token operator">=</span>c<span class="token punctuation">;</span>
+            default<span class="token punctuation">:</span> outmux<span class="token operator">=</span>d<span class="token punctuation">;</span>
+        endcase
+	end
+endmodule
+</code></pre></div><p>示例：<code>case</code> 语句实现 3-8 译码器的 Verilog HDL 语句</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> v_decoders_1 <span class="token punctuation">(</span>sel<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> sel<span class="token punctuation">;</span>
+    output <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> res<span class="token punctuation">;</span>
+    reg <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> res<span class="token punctuation">;</span>
+
+    always @<span class="token punctuation">(</span>sel <span class="token keyword">or</span> res<span class="token punctuation">)</span>
+    begin
+        case <span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b000 : res=8'</span>b00000001<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b001 : res=8'</span>b00000010<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b010 : res=8'</span>b00000100<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b011 : res=8'</span>b00001000<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b100 : res=8'</span>b00010000<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b101 : res=8'</span>b00100000<span class="token punctuation">;</span>
+            <span class="token number">3</span><span class="token string quoted-string">'b110 : res=8'</span>b01000000<span class="token punctuation">;</span>
+            default <span class="token punctuation">:</span> res<span class="token operator">=</span><span class="token number">8</span>'b10000000<span class="token punctuation">;</span>
+        endcase
+    end
+endmodule
+</code></pre></div><p><s>居然是枚举。。。</s></p> <blockquote><p>单篇笔记 1000 行纪念。</p></blockquote> <p>对于 <code>z</code> 和 <code>x</code>，还有 <code>casex</code> 和 <code>casez</code>。用法和上面一样。示例：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token function">casez</span><span class="token punctuation">(</span>Mask<span class="token punctuation">)</span>
+    <span class="token number">4</span>'b1<span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span> <span class="token punctuation">:</span> Dbus<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token number">4</span>'b01<span class="token operator">?</span><span class="token operator">?</span> <span class="token punctuation">:</span> Dbus<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token number">4</span>'b001<span class="token operator">?</span> <span class="token punctuation">:</span> Dbus<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token number">4</span>'b0001 <span class="token punctuation">:</span> Dbus<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+endcase
+</code></pre></div><p><code>casez</code> 语句表示：</p> <ul><li>如果 <code>Mask</code> 的第 1 位是 1（忽略其它位），那么将 <code>Dbus[4]</code> 赋值为0；</li> <li>如果 <code>Mask</code> 的第 1 位是 0 ，并且第 2 位是 1（忽略其它位），那么 <code>Dbus[3]</code> 被赋值为 0；</li> <li>依此类推。</li></ul> <p><code>casex</code> 和 <code>casez</code>的区别在于：</p> <blockquote><p><code>casez</code> treats all the z values in the case expression as don't cares while <code>casex</code> treats all the x and z values in the case expression as don't cares.</p></blockquote> <h4 id="forever"><a href="#forever" class="header-anchor">#</a> forever</h4> <p>字如其人。</p> <p>示例：<code>forever</code> 实现时钟</p> <div class="language-v extra-class"><pre class="language-v"><code>initial begin
+    Clock<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    #<span class="token number">5</span> forever
+        #<span class="token number">10</span> Clock <span class="token operator">=</span> <span class="token operator">~</span>Clock<span class="token punctuation">;</span>
+end
+</code></pre></div><blockquote><p>这一实例产生时钟波形：时钟首先初始化为 0 ，并一直保持到第 5 个时间单位。<br>
+此后每隔 10 个时间单位，<code>Clock</code> 反相一次。</p></blockquote> <blockquote><p>注意，在过程语句中必须使用某种形式的时序控制（如 <code>#10</code>），否则， <code>forever</code> 循环将在 0 时后永远死循环下去。</p></blockquote> <p>它和 <code>always</code> 的区别是，<code>always</code> 的级别更高，但功能上貌似可以互相替代。</p> <h4 id="repeat"><a href="#repeat" class="header-anchor">#</a> repeat</h4> <p>循环的时候直接指定了重复次数。<code>xz</code> 被视为 0。</p> <p>示例：</p> <div class="language-v extra-class"><pre class="language-v"><code>repeat <span class="token punctuation">(</span>Count<span class="token punctuation">)</span>
+    Sum<span class="token operator">=</span>Sum<span class="token operator">+</span><span class="token number">10</span><span class="token punctuation">;</span>
+repeat <span class="token punctuation">(</span>Shift By<span class="token punctuation">)</span>
+    P_Reg<span class="token operator">=</span>P_Reg <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre></div><p><code>forever</code> 相当于 <code>repeat(infinity)</code>（当然，是没有这种写法的）</p> <h4 id="while"><a href="#while" class="header-anchor">#</a> while</h4> <p>和 C 语言一样。另外，<code>xz</code> 被视为 0。</p> <p>示例：（顺序查找 <code>0</code>？）</p> <div class="language-v extra-class"><pre class="language-v"><code>parameter P <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+always @<span class="token punctuation">(</span>ID_complete<span class="token punctuation">)</span>
+begin <span class="token punctuation">:</span> UNIDENTIFIED
+    integer i<span class="token punctuation">;</span>
+    reg found<span class="token punctuation">;</span>
+    unidentified<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    found <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    while <span class="token punctuation">(</span><span class="token operator">!</span>found <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> P<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    begin
+        found <span class="token operator">=</span> <span class="token operator">!</span>ID_complete<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        unidentified<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">!</span>ID_complete<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        i<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+    end
+end
+</code></pre></div><h4 id="for"><a href="#for" class="header-anchor">#</a> for</h4> <p>和 C 语言一样。</p> <p>示例：</p> <div class="language-v extra-class"><pre class="language-v"><code><span class="token keyword">module</span> countzeros <span class="token punctuation">(</span>a<span class="token punctuation">,</span> Count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    input <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> a<span class="token punctuation">;</span>
+    output reg<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> Count<span class="token punctuation">;</span>
+    reg <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> Count_Aux<span class="token punctuation">;</span>
+    integer i<span class="token punctuation">;</span>
+
+    always @<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+    begin
+        Count_Aux <span class="token operator">=</span> <span class="token number">3</span>'b0<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> i <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        begin
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> Count_Aux <span class="token operator">=</span> Count_Aux<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        end
+        Count <span class="token operator">=</span> Count_Aux<span class="token punctuation">;</span>
+    end
+endmodule
+</code></pre></div><p>示例：输入 8bit <code>wire</code> 类型数据，判断其是否为质数</p> <div class="language-v extra-class"><pre class="language-v"><code>`timescale 1ns <span class="token operator">/</span> 1ps
+
+<span class="token keyword">module</span> <span class="token function">hw36</span><span class="token punctuation">(</span>N<span class="token punctuation">,</span> F<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+input <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> N<span class="token punctuation">;</span>
+output reg F<span class="token punctuation">;</span>
+reg <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>N_reg<span class="token punctuation">;</span>
+reg <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>i<span class="token punctuation">;</span>
+
+	always @<span class="token punctuation">(</span>N<span class="token punctuation">)</span>
+	begin
+		N_reg<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> N<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>N_reg <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+			F <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+		begin
+			F <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N_reg <span class="token operator">&amp;&amp;</span> F <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>N_reg <span class="token operator">%</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+					F <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		end
+	end
+		
+endmodule
+</code></pre></div><h2 id="用户自定义基本元件"><a href="#用户自定义基本元件" class="header-anchor">#</a> 用户自定义基本元件</h2> <p>PPT 第 128-144 页。感觉不会考这么难。</p> <h2 id="verilog-系统任务和函数"><a href="#verilog-系统任务和函数" class="header-anchor">#</a> Verilog 系统任务和函数</h2> <p>PPT 第 145-147 页。感觉不会考这么难。</p> <h2 id="verilog-用户定义任务和函数"><a href="#verilog-用户定义任务和函数" class="header-anchor">#</a> Verilog 用户定义任务和函数</h2> <p>PPT 第 148-163 页。感觉不会考这么难。</p> <p>完结撒花。</p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/234.d9f4df15.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+  </body>
+</html>

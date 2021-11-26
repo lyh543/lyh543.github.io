@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nginx（萌新向） | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="下面记录 Nginx 在使用过程中遇到的“基本”操作。
+
+修改配置文件、测试重启
+
+Nginx 首先检查的配置文件在 /etc/nginx/nginx.conf。在这个文件中如果有如下内容：
+
+include /etc/nginx/conf.d/*.conf;
+
+那么也会检查 /etc/nginx/conf.d/ 下的所有 conf 文件。本着干净的原则 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/178.87091a81.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>下面记录 Nginx 在使用过程中遇到的“基本”操作。</p> <h2 id="修改配置文件、测试重启"><a href="#修改配置文件、测试重启" class="header-anchor">#</a> 修改配置文件、测试重启</h2> <p>Nginx 首先检查的配置文件在 <code>/etc/nginx/nginx.conf</code>。在这个文件中如果有如下内容：</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">include</span> /etc/nginx/conf.d/*.conf</span><span class="token punctuation">;</span>
+</code></pre></div><p>那么也会检查 <code>/etc/nginx/conf.d/</code> 下的所有 <code>conf</code> 文件。本着干净的原则，我们推荐在 <code>nginx.conf</code> 加入 <code>include</code> 语句，然后在 <code>conf.d</code> 下按域名创建自己的 <code>conf</code> 配置文件。</p> <p>修改配置文件以后，Nginx 并不是即时读取配置的，需要使用 reload 命令才能加载配置。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>nginx -s reload
+</code></pre></div><p>也可以直接重启 Nginx 服务。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl restart nginx
+</code></pre></div><p>如果配置有错误，Nginx 就会启动失败，宕机。为了保证 Nginx 服务器能平稳运行，不宕机，我们推荐使用以下命令而不是尝试重启的形式检查错误：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>nginx -t
+</code></pre></div><h2 id="给全站添加-ssl-证书"><a href="#给全站添加-ssl-证书" class="header-anchor">#</a> 给全站添加 SSL 证书</h2> <p>请看<a href="/posts/build-https-sites-with-nginx/">另一篇博客</a>。</p> <h2 id="网页转发"><a href="#网页转发" class="header-anchor">#</a> 网页转发</h2> <h3 id="隐性转发-反向代理"><a href="#隐性转发-反向代理" class="header-anchor">#</a> 隐性转发/反向代理</h3> <p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器将其跳转到 <code>127.0.0.1:8080</code>，地址栏仍然显示 <code>https://cloud.example.com</code>。</p> <p>首先要将域名 <code>cloud.example.com</code> 以 <code>A</code> 的形式指向你的服务器 ip（也就是 <code>example.com</code> 的服务器）。</p> <p>然后在服务器上新建文件 <code>\etc\nginx\conf.d\cloud.example.com</code>（习惯用网站命名配置文件），然后加入以下内容：</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl http2</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> cloud.example.com</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://127.0.0.1:8080</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><ol><li>这里默认你已经配置好了 <code>https</code> 以及 <code>http</code> 转发到 <code>https</code> 的操作。如果不想使用 https，将第二行修改为 <code>listen 80;</code> 即可。配置 https 请看<a href="/posts/build-https-sites-with-nginx/">另一篇博客</a>。</li> <li>第三行的 <code>server_name</code> 不限形式，可以使用通配符、正则表达式，还可以使用 <code>.example.com</code> 的形式匹配 <code>example.com</code> 及其所有子域名。更多细节可以看 <a href="(http://nginx.org/en/docs/http/server_names.html)">server_name 的官方文档</a></li> <li></li> <li>也可以转发到别的网址，但是貌似不能转发到 <code>https</code>，并且有些网站可能限制转发。</li></ol> <h3 id="显性转发"><a href="#显性转发" class="header-anchor">#</a> 显性转发</h3> <p>这里的情形是：用户访问 <code>https://cloud.example.com</code> 时，服务器服务器将其跳转到 <code>https://baidu.com/</code>，地址栏显示 <code>https://baidu.com/</code>。</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl http2</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> cloud.example.com</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://baidu.com/</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这种方法也可以转发到别的网址，无限制。（顺便一说，这也可以在对应网页放一个 html 转发实现，可以不借助 nginx）</p> <h4 id="识别路径和参数并转发"><a href="#识别路径和参数并转发" class="header-anchor">#</a> 识别路径和参数并转发</h4> <p>这里我们讨论更复杂的显性转发情况。方便起见，用表格进行说明：</p> <table><thead><tr><th>用户输入的网址</th> <th>转发后的网址</th></tr></thead> <tbody><tr><td><code>https://www.lyh543.cn/</code></td> <td><code>https://blog.lyh543.cn/</code></td></tr> <tr><td><code>https://www.lyh543.cn/git</code></td> <td><code>https://blog.lyh543.cn/Linux/Git/</code></td></tr> <tr><td><code>https://www.lyh543.cn/linux</code></td> <td><code>https://blog.lyh543.cn/Linux/linux-daily-command/</code></td></tr> <tr><td><code>https://www.lyh543.cn/&lt;其他参数&gt;</code></td> <td><code>https://blog.lyh543.cn/&lt;其他参数&gt;</code></td></tr></tbody></table> <p>我使用的配置文件如下：</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">server</span></span><span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl http2</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> www.lyh543.cn</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">location</span> = /</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://blog.lyh543.cn/</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token directive"><span class="token keyword">location</span> = /git</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://blog.lyh543.cn/Linux/Git/</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token directive"><span class="token keyword">location</span> = /linux</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://blog.lyh543.cn/Linux/linux-daily-command/</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://blog.lyh543.cn<span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>注意到最后的 <code>$request_uri</code> 是个很好用的东西。除此之外，我们可以把任意一个 <code>url</code> 拆分为 <code>$scheme://$host$request_uri</code>。</p> <p>具体地，对于访问链接 <code>https://blog.lyh543.cn/nginx/</code>，我们有：</p> <table><thead><tr><th>参数名</th> <th>实际意义</th></tr></thead> <tbody><tr><td><code>$scheme</code></td> <td><code>https</code></td></tr> <tr><td><code>$host</code></td> <td><code>blog.lyh543.cn</code></td></tr> <tr><td><code>$request_uri</code></td> <td><code>/nginx/</code></td></tr></tbody></table> <p>按这种方法，很容易写出 <code>http</code> 强制跳 <code>https</code> 的配置文件：</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span>       <span class="token number">80</span> default_server</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">listen</span>       [::]:80 default_server</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span>  _</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://<span class="token variable">$host</span><span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="显示某路径下-index-html"><a href="#显示某路径下-index-html" class="header-anchor">#</a> 显示某路径下 index.html</h2> <p>这里的情形是：用户访问 <code>https://example.com/</code> 时，服务器显示 <code>/path/to/index.html</code> 的内容。</p> <div class="language-nginx extra-class"><pre class="language-nginx"><code><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl http2</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> example.com</span><span class="token punctuation">;</span>
+
+    <span class="token directive"><span class="token keyword">location</span> /</span><span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">root</span> /path/to</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">index</span> index.html</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/178.87091a81.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+  </body>
+</html>

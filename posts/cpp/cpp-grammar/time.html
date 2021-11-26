@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>C/C++ 获取秒级、微秒级、纳秒级时间戳 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="转自：
+> https://blog.csdn.net/CAIYUNFREEDOM/article/details/75388111
+> http://sodino.com/2015/03/20/c-time-micro-nano/
+
+获取时间戳（s 级）
+
+//in
+time_t t= time(NULL);
+std::cout<<" s秒级 - ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/111.5a8f9d4c.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><blockquote><p>转自：<br>
+https://blog.csdn.net/CAIYUNFREEDOM/article/details/75388111<br>
+http://sodino.com/2015/03/20/c-time-micro-nano/</p></blockquote> <h2 id="获取时间戳-s-级"><a href="#获取时间戳-s-级" class="header-anchor">#</a> 获取时间戳（s 级）</h2> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">//in &lt;time.h&gt;</span>
+time_t t<span class="token operator">=</span> <span class="token function">time</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">&quot; s秒级 ----:&quot;</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span>t<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+</code></pre></div><h2 id="linux-下获取系统时间的时间戳-μs-ns-级"><a href="#linux-下获取系统时间的时间戳-μs-ns-级" class="header-anchor">#</a> Linux 下获取系统时间的时间戳（μs, ns 级）</h2> <p><code>unistd.h</code> 和 <code>sys/time.h</code> 存在于 GCC，但是 Visual Studio 没有这两个头文件。Dev-C++ 可以使用该方法。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span>  </span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdlib&gt;</span>  </span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ctime&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cmath&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+time_t <span class="token function">clocktime</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+<span class="token comment">//in &lt;sys/time.h&gt;</span>
+<span class="token keyword">struct</span> <span class="token class-name">timeval</span> tv<span class="token punctuation">;</span>  
+<span class="token function">gettimeofday</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tv<span class="token punctuation">,</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">&quot;10e6 微秒级s ----:&quot;</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span>tv<span class="token punctuation">.</span>tv_sec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;s,&quot;</span><span class="token operator">&lt;&lt;</span>tv<span class="token punctuation">.</span>tv_usec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;微秒&quot;</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+
+<span class="token comment">//in &lt;time.h&gt;</span>
+<span class="token keyword">struct</span> <span class="token class-name">timespec</span> tn<span class="token punctuation">;</span>
+cout<span class="token operator">&lt;&lt;</span><span class="token string">&quot;----&quot;</span><span class="token punctuation">;</span>
+<span class="token function">clock_gettime</span><span class="token punctuation">(</span>CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span><span class="token string">&quot;10e9 纳秒级s ----:&quot;</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span>tn<span class="token punctuation">.</span>tv_sec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;s,&quot;</span><span class="token operator">&lt;&lt;</span>tn<span class="token punctuation">.</span>tv_nsec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;纳秒&quot;</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+
+
+<span class="token keyword">struct</span> <span class="token class-name">timespec</span> current_time<span class="token punctuation">,</span>last_time<span class="token punctuation">;</span>
+<span class="token keyword">double</span> aa<span class="token operator">=</span><span class="token number">1.1234567891</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;double %.12f\n&quot;</span><span class="token punctuation">,</span>aa<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cout<span class="token operator">&lt;&lt;</span><span class="token string">&quot;----&quot;</span><span class="token punctuation">;</span>
+<span class="token function">clock_gettime</span><span class="token punctuation">(</span>CLOCK_REALTIME<span class="token punctuation">,</span> <span class="token operator">&amp;</span>last_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span>last_time<span class="token punctuation">.</span>tv_sec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;,&quot;</span><span class="token operator">&lt;&lt;</span>last_time<span class="token punctuation">.</span>tv_nsec<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token function">clock_gettime</span><span class="token punctuation">(</span>CLOCK_REALTIME<span class="token punctuation">,</span> ¤t_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>cout<span class="token operator">&lt;&lt;</span>current_time<span class="token punctuation">.</span>tv_sec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;,&quot;</span><span class="token operator">&lt;&lt;</span>current_time<span class="token punctuation">.</span>tv_nsec<span class="token operator">&lt;&lt;</span><span class="token string">&quot;,&quot;</span><span class="token operator">&lt;&lt;</span><span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token keyword">double</span> delta_time <span class="token operator">=</span> <span class="token punctuation">(</span>current_time<span class="token punctuation">.</span>tv_sec <span class="token operator">-</span> last_time<span class="token punctuation">.</span>tv_sec<span class="token punctuation">)</span><span class="token operator">+</span> <span class="token punctuation">(</span>current_time<span class="token punctuation">.</span>tv_nsec <span class="token operator">-</span> last_time<span class="token punctuation">.</span>tv_nsec<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">pow</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;double %.12f\n&quot;</span><span class="token punctuation">,</span>delta_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">clocktime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>测试如下：</p> <div class="language-shell extra-class"><pre class="language-shell"><code>10e6 微秒级s ----:1500448195s,315233微秒
+----10e9 纳秒级s ----:1500448195s,315235598纳秒
+double <span class="token number">1.123456789100</span>
+----1500448195,315242687
+<span class="token number">1500448196,315388886</span>,1e-09
+double <span class="token number">1.000146199000</span>
+</code></pre></div><h3 id="ms-级时间的运算"><a href="#ms-级时间的运算" class="header-anchor">#</a> ms 级时间的运算</h3> <p>由于 C 语言既没有成员函数，也没有引用，<br>
+于是，减法函数居然是在宏定义里实现的：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span>    <span class="token macro-name function">timersub</span><span class="token expression"><span class="token punctuation">(</span>tvp<span class="token punctuation">,</span> uvp<span class="token punctuation">,</span> vvp<span class="token punctuation">)</span>                        </span><span class="token punctuation">\</span>
+    <span class="token expression"><span class="token keyword">do</span> <span class="token punctuation">{</span>                                                  </span><span class="token punctuation">\</span>
+        <span class="token expression"><span class="token punctuation">(</span>vvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_sec <span class="token operator">=</span> <span class="token punctuation">(</span>tvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_sec <span class="token operator">-</span> <span class="token punctuation">(</span>uvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_sec<span class="token punctuation">;</span>    </span><span class="token punctuation">\</span>
+        <span class="token expression"><span class="token punctuation">(</span>vvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_usec <span class="token operator">=</span> <span class="token punctuation">(</span>tvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_usec <span class="token operator">-</span> <span class="token punctuation">(</span>uvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_usec<span class="token punctuation">;</span> </span><span class="token punctuation">\</span>
+        <span class="token expression"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>vvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_usec <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>                         </span><span class="token punctuation">\</span>
+            <span class="token expression"><span class="token punctuation">(</span>vvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_sec<span class="token operator">--</span><span class="token punctuation">;</span>                              </span><span class="token punctuation">\</span>
+            <span class="token expression"><span class="token punctuation">(</span>vvp<span class="token punctuation">)</span><span class="token operator">-&gt;</span>tv_usec <span class="token operator">+=</span> <span class="token number">1000000</span><span class="token punctuation">;</span>                    </span><span class="token punctuation">\</span>
+        <span class="token expression"><span class="token punctuation">}</span>                                                 </span><span class="token punctuation">\</span>
+    <span class="token expression"><span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></span></span>
+</code></pre></div><p>还行。</p> <p>可以调用的函数还有如下：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token function">timersub</span><span class="token punctuation">(</span>tvp<span class="token punctuation">,</span> uvp<span class="token punctuation">,</span> vvp<span class="token punctuation">)</span> <span class="token comment">//v = t - u</span>
+<span class="token function">timerclear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// 清除时间</span>
+<span class="token function">timerisset</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">// 结构体中是否有设置时间值</span>
+<span class="token function">timercmp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment">// 比较时间值大小</span>
+<span class="token function">timeradd</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment">// 两个时间值相加</span>
+</code></pre></div><h2 id="msvc-下获取本程序运行的时间-μs-级"><a href="#msvc-下获取本程序运行的时间-μs-级" class="header-anchor">#</a> MSVC 下获取本程序运行的时间（μs 级）</h2> <blockquote><p>参考链接：https://docs.microsoft.com/zh-cn/windows/win32/sysinfo/acquiring-high-resolution-time-stamps</p></blockquote> <p>在测时间戳上，微软使用的是它的 API: QueryPerformanceCounter（QPC，查询性能计数器？），精确度在 1μs 内。</p> <p>网站上还直接给出了可用的代码：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;profileapi.h&gt;</span></span>
+
+LARGE_INTEGER StartingTime<span class="token punctuation">,</span> EndingTime<span class="token punctuation">,</span> ElapsedMicroseconds<span class="token punctuation">;</span>
+LARGE_INTEGER Frequency<span class="token punctuation">;</span>
+
+<span class="token function">QueryPerformanceFrequency</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>Frequency<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">QueryPerformanceCounter</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>StartingTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Activity to be timed</span>
+
+<span class="token function">QueryPerformanceCounter</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>EndingTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ElapsedMicroseconds<span class="token punctuation">.</span>QuadPart <span class="token operator">=</span> EndingTime<span class="token punctuation">.</span>QuadPart <span class="token operator">-</span> StartingTime<span class="token punctuation">.</span>QuadPart<span class="token punctuation">;</span>
+
+
+<span class="token comment">//</span>
+<span class="token comment">// We now have the elapsed number of ticks, along with the</span>
+<span class="token comment">// number of ticks-per-second. We use these values</span>
+<span class="token comment">// to convert to the number of elapsed microseconds.</span>
+<span class="token comment">// To guard against loss-of-precision, we convert</span>
+<span class="token comment">// to microseconds *before* dividing by ticks-per-second.</span>
+<span class="token comment">//</span>
+
+ElapsedMicroseconds<span class="token punctuation">.</span>QuadPart <span class="token operator">*=</span> <span class="token number">1000000</span><span class="token punctuation">;</span>
+ElapsedMicroseconds<span class="token punctuation">.</span>QuadPart <span class="token operator">/=</span> Frequency<span class="token punctuation">.</span>QuadPart<span class="token punctuation">;</span>
+</code></pre></div><p>但是在 VS 2017 上直接编译会报错：<code>#error No Target Architecture</code>。</p> <p>Google 以后发现，需要在 <code>项目</code> - <code>（项目名）属性</code> - <code>配置属性</code> - <code>C/C++</code> - <code>预处理器</code> - <code>预处理器定义</code> 中加入 <code>_X86_</code>（32 位应用程序） 或 <code>_AMD64_</code> （64 位应用程序），再编译即可。</p> <p>最后 <code>ElapsedMicroseconds.QuadPart</code> 即是以微秒为单位的 <code>long long</code> 时间间隔变量。</p> <h2 id="获取本程序运行的时间-s-级"><a href="#获取本程序运行的时间-s-级" class="header-anchor">#</a> 获取本程序运行的时间（s 级）</h2> <p>就是使用 <code>clocks</code> 啦。Just use <code>clocks</code>. However, accuracy is not guaranteed, and because of CPU problems, there are errors that can only be used for rough estimation. The s level should be no problem.但是不保证精度，而且因为 CPU 问题，存在误差，只能用于粗略估计。s 级应该是没有问题的。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;time.h&gt;</span></span>
+<span class="token keyword">float</span> t <span class="token operator">=</span> <span class="token function">clock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1.0</span> <span class="token operator">/</span> CLOCKS_PER_SEC
+</code></pre></div><h2 id="linux-下获取本程序运行的时间-ns-级"><a href="#linux-下获取本程序运行的时间-ns-级" class="header-anchor">#</a> Linux 下获取本程序运行的时间（ns 级）</h2> <p>由于要获取 pid，挺麻烦的。<br>
+需要用到的函数有：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;inistd.h&gt;</span></span>
+pid_t <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;time.h&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">clock_getcpuclockid</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">,</span> clockid_t <span class="token operator">*</span>clock_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;time.h&gt;</span></span>
+<span class="token keyword">int</span> <span class="token function">clock_gettime</span><span class="token punctuation">(</span>clockid_t clk_id<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">timespec</span> <span class="token operator">*</span>tp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>写成代码就是：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code>clockid_t clock_id<span class="token punctuation">;</span>
+timespec tp<span class="token punctuation">;</span>
+<span class="token function">clock_getcpuclockid</span><span class="token punctuation">(</span><span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>clock_id<span class="token punctuation">)</span>
+<span class="token function">clock_gettime</span><span class="token punctuation">(</span>clock_id<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>貌似不是特别常用，因此不再深入。</p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/111.5a8f9d4c.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+  </body>
+</html>

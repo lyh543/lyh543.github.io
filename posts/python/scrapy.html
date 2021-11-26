@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Python 爬虫 —— Scrapy | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
+
+爬虫原理
+
+流程如下：
+
+爬虫告诉引擎，需要爬取哪些链接 urls
+引擎把链接发给调度器
+调度器收到链接后，进入队列
+调度器从队列里取出链接，告诉下载器开始下载
+下载完毕 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/248.675c9c15.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="原理"><a href="#原理" class="header-anchor">#</a> 原理</h2> <p><img src="/images/28cf998153f11ab7a5b1579d5eccc122deb0ea3f8b1bf12c6fd177594f264039.png" alt="爬虫原理"></p> <p>流程如下：</p> <ul><li><strong>爬虫</strong>告诉<strong>引擎</strong>，需要爬取哪些链接 <code>urls</code></li> <li>引擎把链接发给<strong>调度器</strong></li> <li>调度器收到链接后，进入<strong>队列</strong></li> <li>调度器从队列里取出链接，告诉<strong>下载器</strong>开始下载</li> <li>下载完毕后，把结果交给爬虫</li> <li>爬虫把结果中取回数据，交给<strong>管道</strong></li> <li>管道将数据存储到 MySQL/文本文件等</li></ul> <h2 id="准备工作"><a href="#准备工作" class="header-anchor">#</a> 准备工作</h2> <p>安装 Python 3 后，</p> <div class="language- extra-class"><pre class="language-text"><code>pip3 install scrapy
+</code></pre></div><p>（可选）在本地安装 Redis 数据库，端口 <code>5376</code>，用户名 <code>root</code>，密码 <code>123456</code>；然后安装 Python 调用 Redis 的库：</p> <div class="language- extra-class"><pre class="language-text"><code>pip3 install redis
+</code></pre></div><h2 id="简单爬虫"><a href="#简单爬虫" class="header-anchor">#</a> 简单爬虫</h2> <p>这里针对一个列表的网页爬取其列表内容，示例为 https://mobile.ithome.com/ 的新闻标题、链接等信息。</p> <h3 id="建立目录"><a href="#建立目录" class="header-anchor">#</a> 建立目录</h3> <p>第一步，建立项目。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>scrapy startproject my_spider D:<span class="token punctuation">\</span>  <span class="token comment"># 建立项目</span>
+</code></pre></div><p>会建立如下目录：</p> <div class="language- extra-class"><pre class="language-text"><code>my_spider/
+    scrapy.cfg
+    my_spider/
+        __init__.py
+        items.py
+        pipelines.py
+        settings.py
+        spiders/
+            __init__.py
+            ...
+</code></pre></div><p>然后可以在 PyCharm 中打开 <code>D:\my_spider</code>。</p> <p>其中，<code>settings.py</code> 中 <code>ROBOTSTXT_OBEY = True</code> 表示会自觉遵守页面规定，如果不让爬虫则不会进行爬虫。</p> <h3 id="生成爬虫代码"><a href="#生成爬虫代码" class="header-anchor">#</a> 生成爬虫代码</h3> <p>第二步，切换目录，然后生成一个爬虫：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> /d D:<span class="token punctuation">\</span>my_spider
+scrapy genspider ithome mobile.ithome.com <span class="token comment"># 生成爬虫</span>
+</code></pre></div><p>此时 <code>D:\my_spider\my_spider\spiders</code> 下会自动生成 <code>ithome.py</code>，内容如下：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">import</span> scrapy
+
+<span class="token keyword">class</span> <span class="token class-name">IthomeSpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">'ithome'</span>
+    allowed_domains <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'mobile.ithome.com'</span><span class="token punctuation">]</span>
+    start_urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'http://mobile.ithome.com/'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 解析 (parse) 网页的方法</span>
+        <span class="token keyword">pass</span>
+</code></pre></div><p>这里可以将 <code>start_urls</code> 链接改为 <code>https</code>。</p> <h3 id="定义数据结构"><a href="#定义数据结构" class="header-anchor">#</a> 定义数据结构</h3> <p>第三步，定义数据结构。这里没有直接使用 Python 原生的继承于 <code>object</code> 的 <code>class</code>，而是选择继承 <code>scrapy.Item</code> 的类。这样定义的数据结构，更方便 Scrapy 处理。定义放在 <code>D:\my_spider\my_spider\items.py</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">import</span> scrapy
+
+<span class="token keyword">class</span> <span class="token class-name">IthomeData</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        title <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        time <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        abstract <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        url <span class="token operator">=</span> scrapy<span class="token punctuation">.</span>Field<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="解析网站"><a href="#解析网站" class="header-anchor">#</a> 解析网站</h3> <p>第四步，定义数据结构后，开始解析爬虫获得的数据。爬虫本质获得的是 <code>start_urls</code> 对应的 html 文件， 然后解析 html，将解析到的数据进行处理。</p> <p>我们用 Chrome 打开 https://mobile.ithome.com/，右键一个标题并“检查”，可以看到该 HTML 的结构。</p> <p><img src="/images/b1309aaf05e0ad49970483f90cb77c7617a5e269fb19144b6e8f24153b75939b.png" alt="mobile.ithome.com 详情"></p> <p>同时，在命令行执行 <code>scrapy shell https://mobile.ithome.com/</code>。看到以下输出：</p> <div class="language- extra-class"><pre class="language-text"><code>2020-07-01 16:55:01 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET https://mobile.ithome.com/&gt; (referer: None)
+2020-07-01 16:55:02 [asyncio] DEBUG: Using proactor: IocpProactor
+[s] Available Scrapy objects:
+[s]   scrapy     scrapy module (contains scrapy.Request, scrapy.Selector, etc)
+[s]   crawler    &lt;scrapy.crawler.Crawler object at 0x000001AEBC19F0A0&gt;
+[s]   item       {}
+[s]   request    &lt;GET https://mobile.ithome.com/&gt;
+[s]   response   &lt;200 https://mobile.ithome.com/&gt;
+[s]   settings   &lt;scrapy.settings.Settings object at 0x000001AEBC19BC70&gt;
+[s]   spider     &lt;DefaultSpider 'default' at 0x1aebc4e6730&gt;
+[s] Useful shortcuts:
+[s]   fetch(url[, redirect=True]) Fetch URL and update local objects (by default, redirects are followed)
+[s]   fetch(req)                  Fetch a scrapy.Request and update local objects
+[s]   shelp()           Shell help (print this help)
+[s]   view(response)    View response in a browser
+2020-07-01 16:55:02 [asyncio] DEBUG: Using proactor: IocpProactor
+In [1]:
+</code></pre></div><p><code>200</code> 表示正常。输入 <code>response</code> 并回车：</p> <div class="language-py extra-class"><pre class="language-py"><code>In <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response
+Out<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token operator">&lt;</span><span class="token number">200</span> https<span class="token punctuation">:</span><span class="token operator">//</span>mobile<span class="token punctuation">.</span>ithome<span class="token punctuation">.</span>com<span class="token operator">/</span><span class="token operator">&gt;</span>
+</code></pre></div><p>接下来解析 <code>response</code>。解析的方法是使用 <code>xpath</code>。</p> <blockquote><p><code>XPath</code> 即为 XML 路径语言，它是一种用来确定 XML 文档中某部分位置的计算机语言。XPath 基于 XML 的树状结构，提供在数据结构树中找寻节点的能力。</p></blockquote> <p>在 Chrome 中右键想要爬取的第一个标题，然后 Copy Xpath，如下图：</p> <p><img src="/images/31a4adde7ff3bd0d994afb68289034839baecd7b1b62ea959f5a33c4ecdccd0c.png" alt="获取 Xpath"></p> <p>然后作为 <code>response</code> 的 <code>xpath</code> 成员函数的参数，执行，结果如下，如果输出不是 <code>[]</code> 则正确。使用 <code>extract_first</code> 看到其内容。</p> <div class="language-py extra-class"><pre class="language-py"><code>In <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a'</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token operator">&lt;</span>Selector xpath<span class="token operator">=</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a'</span> data<span class="token operator">=</span><span class="token string">'&lt;a href=&quot;https://www.ithome.com/0/491...'</span><span class="token operator">&gt;</span><span class="token punctuation">]</span>
+
+In <span class="token punctuation">[</span><span class="token number">14</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li[1]/div/h2/a'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">14</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'&lt;a href=&quot;https://www.ithome.com/0/491/113.htm&quot; target=&quot;_blank&quot;&gt;小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做&lt;/a&gt;'</span>
+</code></pre></div><p>可以看到，标题已经出来了，并且和前面的图是一致的。</p> <p>然后尝试找到遍历的方法。html 里，<code>ul</code> 是列表（<code>unordered list</code>），下面的每一个元素为 <code>li</code>（<code>list item</code>）。将上面的 Xpath 从 <code>li</code> 分开，因为我们需要在 Python 中遍历每个元素。注意在 Xpath 中下标从 1 开始，而在 Python 中下标从 0 开始。</p> <div class="language-py extra-class"><pre class="language-py"><code>In <span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 注意第二个 Xpath 的开头有个 .</span>
+Out<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'&lt;a href=&quot;https://www.ithome.com/0/491/113.htm&quot; target=&quot;_blank&quot;&gt;小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做&lt;/a&gt;'</span>
+In <span class="token punctuation">[</span><span class="token number">17</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 测试下一篇文章是否也是对应的</span>
+Out<span class="token punctuation">[</span><span class="token number">17</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'&lt;a href=&quot;https://www.ithome.com/0/491/111.htm&quot; target=&quot;_blank&quot;&gt;荣耀30系列强势霸榜618，蝉联多日销量冠军，立减300仅要2699起&lt;/a&gt;'</span>
+</code></pre></div><p>再进一步获取其文本和链接，使用 <code>text()</code> 函数和 <code>@href</code>：</p> <div class="language-py extra-class"><pre class="language-py"><code>In <span class="token punctuation">[</span><span class="token number">18</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a/text()'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">18</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'小米NFC碰碰贴要回来了？小米高管：大家喜欢的话我们就做'</span>
+In <span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a/@href'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'https://www.ithome.com/0/491/113.htm'</span>
+</code></pre></div><p>用同样的方法可以获取其时间、摘要：</p> <div class="language-py extra-class"><pre class="language-py"><code>In <span class="token punctuation">[</span><span class="token number">41</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/div/p'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">41</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'&lt;p&gt;小米早前曾发布了一款名为“小米NFC碰碰贴”的产品。今日小米集团智能硬件部总经理刘新宇表示，当时碰碰贴概念太超前，如今大家喜欢，“那我们就做新版碰碰贴”。似乎也在暗示小米NFC碰碰贴产品即将回归&lt;/p&gt;'</span>
+In <span class="token punctuation">[</span><span class="token number">48</span><span class="token punctuation">]</span><span class="token punctuation">:</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/span/text()'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">48</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token string">'今日 17:35'</span>
+</code></pre></div><p>到这里就已经成功一半了。</p> <h3 id="编写解析函数"><a href="#编写解析函数" class="header-anchor">#</a> 编写解析函数</h3> <blockquote><p><code>parse()</code> 是 <code>spider</code> 的一个方法。 被调用时，每个初始 URL 完成下载后生成的 <code>Response</code> 对象将会作为唯一的参数传递给该函数。 该方法负责解析返回的数据(<code>response data</code>)，提取数据(生成<code>item</code>)以及生成需要进一步处理的 URL 的 <code>Request</code> 对象。</p></blockquote> <p>回到 <code>D:\my_spider\my_spider\spiders\ithome.py</code>，编写 <code>parse</code> 成员函数。<code>parse</code> 函数的思想就是，遍历 <code>ul</code> 的 <code>li</code>，取出我们需要的信息存进 <code>item</code>，然后返回 <code>item</code>。这里直接上代码。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># ithome.py</span>
+
+<span class="token keyword">import</span> scrapy
+<span class="token keyword">from</span> my_spider<span class="token punctuation">.</span>items <span class="token keyword">import</span> IthomeData
+
+<span class="token keyword">class</span> <span class="token class-name">IthomeSpider</span><span class="token punctuation">(</span>scrapy<span class="token punctuation">.</span>Spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    name <span class="token operator">=</span> <span class="token string">'ithome'</span>
+    allowed_domains <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'mobile.ithome.com'</span><span class="token punctuation">]</span>
+    start_urls <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'https://mobile.ithome.com/'</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">parse</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        li_list <span class="token operator">=</span> response<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'//*[@id=&quot;wrapper&quot;]/div[1]/div[3]/ul[1]/li'</span><span class="token punctuation">)</span>
+        item_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> li <span class="token keyword">in</span> li_list<span class="token punctuation">:</span>
+            item <span class="token operator">=</span> IthomeData<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            item<span class="token punctuation">[</span><span class="token string">&quot;title&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a/text()'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            item<span class="token punctuation">[</span><span class="token string">&quot;url&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/a/@href'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            item<span class="token punctuation">[</span><span class="token string">&quot;abstract&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/div/p'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            item<span class="token punctuation">[</span><span class="token string">&quot;time&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> li<span class="token punctuation">.</span>xpath<span class="token punctuation">(</span><span class="token string">'./div/h2/span/text()'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>extract_first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            item_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> item_list
+</code></pre></div><p>注意，<code>import</code> 引入 <code>item</code> 的方式有点不一样，这里是 <code>from my_spider.items import IthomeData</code>。</p> <h3 id="编写管道"><a href="#编写管道" class="header-anchor">#</a> 编写管道</h3> <p>管道则是将上面 <code>parse</code> 函数的解析出来的 <code>item_list</code> 进行处理、存储。这里为简化代码，直接输出；当然也可以写入文本文件、存储到数据库等。代码如下：</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># pipelines.py</span>
+<span class="token keyword">class</span> <span class="token class-name">MySpiderPipeline</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">process_item</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> spider<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+</code></pre></div><h3 id="运行爬虫"><a href="#运行爬虫" class="header-anchor">#</a> 运行爬虫</h3> <p>最后的最后，运行爬虫。可以直接在 <code>D:\my_spider\my_spider</code> 目录下运行 <code>scrapy crawl ithome</code>，也可以在该目录下编写以下 <code>python</code> 代码并运行。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> scrapy<span class="token punctuation">.</span>cmdline <span class="token keyword">import</span> execute
+
+execute<span class="token punctuation">(</span><span class="token string">'scrapy crawl ithome'</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><p>如果部分输出如下则正常（IT 之家貌似爬虫和直接访问得到的 HTML 不一样？可能做了防爬虫。至少方法是对的）。</p> <div class="language- extra-class"><pre class="language-text"><code>{'abstract': '&lt;p&gt;今天小米10 Pro手机正式推送MIUI 12.0.1稳定版更新，并且不是稳定版内测，这意味着小米10 '
+             'Pro手机普通用户也可以方便升级MIUI 12.0.1稳定版系统了。&lt;/p&gt;',
+ 'time': '今日 23:09',
+ 'title': '小米 10 Pro 正式推送 MIUI 12 稳定版',
+ 'url': 'https://www.ithome.com/0/493/559.htm'}
+2020-07-01 18:20:38 [scrapy.core.scraper] DEBUG: Scraped from &lt;200 https://mobile.ithome.com/&gt;
+{'abstract': '&lt;p&gt;今日消息人士Jon_Prosser也曝光了代号为C68的苹果AirPower充电板原型机的真机照：此次曝光的AirPower充电板似乎解决了
+过热问题，其已可满足AirPods '
+             'Pro和一块Apple Watch同时充电&lt;/p&gt;',
+ 'time': '今日 22:37',
+ 'title': '苹果AirPower充电板原型机曝光！Apple Watch/AirPods可一起充电',
+ 'url': 'https://www.ithome.com/0/493/555.htm'}
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/248.675c9c15.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+  </body>
+</html>

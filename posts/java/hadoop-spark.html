@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>数据挖掘之 Hadoop Spark | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="这里只用到了 Hadoop 的 Hadoop Distributed File System (HDFS)，即分布式文件系统。而数据处理是交给 Spark 了。
+
+安装
+
+[Hadoop] 和 [Spark] 在 Linux 下的安装方法
+
+[Hadoop]:https://wangchangchung.github.io/2017/09/28/Ubuntu-16-04%E4%B8%8A%E ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/139.e07bdf23.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>这里只用到了 Hadoop 的 Hadoop Distributed File System (HDFS)，即分布式文件系统。而数据处理是交给 Spark 了。</p> <h2 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h2> <p><a href="https://wangchangchung.github.io/2017/09/28/Ubuntu-16-04%E4%B8%8A%E5%AE%89%E8%A3%85Hadoop%E5%B9%B6%E6%88%90%E5%8A%9F%E8%BF%90%E8%A1%8C/" target="_blank" rel="noopener noreferrer">Hadoop<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 和 <a href="https://blog.csdn.net/lengconglin/article/details/77847623" target="_blank" rel="noopener noreferrer">Spark<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 在 Linux 下的安装方法</p> <p>注意 Hadoop 的 namenode 默认管理 Web 页面是 <code>http://localhost:9870/</code>，而从 hdfs 协议访问 namenode 是从 9000 端口。</p> <h2 id="hadoop-分布式文件管理"><a href="#hadoop-分布式文件管理" class="header-anchor">#</a> Hadoop 分布式文件管理</h2> <p>管理 HDFS 的命令和 Linux 的命令很像。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>
+./sbin/start-dfs.cmd        <span class="token comment"># 启动</span>
+hdfs dfs -mkdir /mydata     <span class="token comment"># 创建目录</span>
+hdfs dfs -put /path/to/file /mydata <span class="token comment"># 上传</span>
+hdfs dfs -cat /mydata/file　<span class="token comment"># 读取</span>
+hdfs dfs -rm -r /mydata     <span class="token comment"># 删除</span>
+</code></pre></div><p>为配合后面的测试，将<a href="/python/scrapy">爬虫</a>爬取的<a href="ershoufang_price.txt">二手价格数据</a>下载后，上传到 HDFS：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>
+./sbin/start-dfs.cmd
+hdfs dfs -mkdir /mydata
+hdfs dfs -put ershoufang_price.txt /mydata
+</code></pre></div><p><img src="/images/0016b9a25fdf18799477d80859dbeb74991e2a96a678680e2bea517deeab73f8.png" alt="文件上传成功"></p> <h2 id="spark"><a href="#spark" class="header-anchor">#</a> Spark</h2> <p>还需要安装 <code>pyspark</code>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>pip3 <span class="token function">install</span> pyspark
+</code></pre></div><p>然后将环境变量写入 <code>/etc/profile</code>：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable">PYSPARK_PYTHON</span><span class="token operator">=</span>python3
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">PYSPARK_DRIVER_PYTHON</span><span class="token operator">=</span>python3
+</code></pre></div><p>需要注销才能生效。</p> <p>顺便一提，安装过程中还会自动安装 <code>py4j</code>，因为 Spark 是运行于 Java 之上，需要用 Python 读取 JVM 中的对象。</p> <h3 id="读取文本文件"><a href="#读取文本文件" class="header-anchor">#</a> 读取文本文件</h3> <p>尝试读取上面上传的 <code>ershoufang_price.txt</code>。这里的 <code>localhost:9000</code> 可以在 Web 端看到。然后编写一下的 Python 代码，尝试从 HDFS 读取文本文件的内容。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql <span class="token keyword">import</span> SparkSession
+
+<span class="token comment"># SparkSession 操作 SparkSQL DataFrame，读取结构化数组</span>
+spark <span class="token operator">=</span> SparkSession \
+    <span class="token punctuation">.</span>builder \
+    <span class="token punctuation">.</span>appName<span class="token punctuation">(</span><span class="token string">&quot;Spark SQL basic example&quot;</span><span class="token punctuation">)</span> \
+    <span class="token comment">#.config(&quot;spark.some.config.option&quot;, &quot;some-value&quot;) \</span>
+      <span class="token punctuation">.</span>getOrCreate<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># SparkContext 用于读取文本文件，读取分结构化数据</span>
+sc <span class="token operator">=</span> spark<span class="token punctuation">.</span>sparkContext
+
+filePath <span class="token operator">=</span> <span class="token string">&quot;hdfs://localhost:9000/mydata/ershoufang_price.txt&quot;</span>
+textFile <span class="token operator">=</span> sc<span class="token punctuation">.</span>textFile<span class="token punctuation">(</span>filePath<span class="token punctuation">)</span>
+<span class="token comment"># 返回的 textFile 是 RDD (resilient distributed dataset)，是文件在 Spark 中的表示方法</span>
+
+data <span class="token operator">=</span> textFile<span class="token punctuation">.</span>collect<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># collect 是将所有 datanode 的数据收集整合到 namenode</span>
+<span class="token comment"># 返回的 data 是一个 list，其中每个元素对应 txt 的每一行</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+</code></pre></div><p>如果输出了 <code>44', '杭州,下沙,77,17382,44', '杭州,下沙,77,17382,44', '杭州,下沙,77,17382,44', '杭州,下沙,77,17382,44', '杭州,下沙,92,20924,43']</code> 等，则正常。</p> <p>如果报错：<code>Python in worker has different version 2.7 than that in driver 3.7, PySpark cannot run with different minor versions.Please check environment variables PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON are correctly set.</code>，则检查一下是否把环境变量加入 <code>/etc/profile</code>。</p> <h3 id="统计城市房源数并存入临时数据库"><a href="#统计城市房源数并存入临时数据库" class="header-anchor">#</a> 统计城市房源数并存入临时数据库</h3> <p>接下来尝试将数据存到数据库。为测试语法，这里直接输出到 Spark SQL 的全局临时表中，然后做一个简单的查询。</p> <p>这里的代码是紧接着上面的 <code>textFile = sc.textFile(filePath)</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> pyspark<span class="token punctuation">.</span>sql <span class="token keyword">import</span> SparkSession<span class="token punctuation">,</span> Row
+
+filePath <span class="token operator">=</span> <span class="token string">&quot;hdfs://localhost:9000/mydata/ershoufang_price.txt&quot;</span>
+textFile <span class="token operator">=</span> sc<span class="token punctuation">.</span>textFile<span class="token punctuation">(</span>filePath<span class="token punctuation">)</span>
+<span class="token comment"># 返回的 textFile 是 RDD (resilient distributed dataset)，是文件在 Spark 中的一个表示</span>
+
+<span class="token comment"># data = textFile.collect() # collect 是将所有 datanode 的数据收集整合到 namenode</span>
+<span class="token comment"># # 返回的 data 是一个 list，其中每个元素对应 txt 的每一行</span>
+<span class="token comment"># print(data)</span>
+
+<span class="token comment"># 将 item 变为 (北京,1)</span>
+<span class="token keyword">def</span> <span class="token function">to_pair</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    item_list <span class="token operator">=</span> item<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> item_list<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span>
+
+<span class="token comment"># 将 (北京,1)(北京,1)(成都,1) 整合为 (北京,2)(成都,1)</span>
+rdd <span class="token operator">=</span> textFile<span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span>to_pair<span class="token punctuation">)</span><span class="token punctuation">.</span>reduceByKey<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">,</span> y<span class="token punctuation">:</span> x <span class="token operator">+</span> y<span class="token punctuation">)</span>
+<span class="token comment"># 将上述 rdd 转为 DataFrame，放进临时表</span>
+rowRdd <span class="token operator">=</span> rdd<span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span> Row<span class="token punctuation">(</span>city<span class="token operator">=</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> count<span class="token operator">=</span>x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+dataFrame <span class="token operator">=</span> spark<span class="token punctuation">.</span>createDataFrame<span class="token punctuation">(</span>rowRdd<span class="token punctuation">)</span>
+
+dataFrame<span class="token punctuation">.</span>createGlobalTempView<span class="token punctuation">(</span><span class="token string">'city'</span><span class="token punctuation">)</span>
+spark<span class="token punctuation">.</span>sql<span class="token punctuation">(</span><span class="token string">'SELECT * FROM global_temp.city ORDER BY count desc LIMIT 5'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><p>输出结果如下：</p> <div class="language- extra-class"><pre class="language-text"><code>+----+-----+
+|city|count|
++----+-----+
+|高新| 5717|
+|江北| 5100|
+|渝中| 4920|
+|和平| 4770|
+|南岸| 4710|
++----+-----+
+</code></pre></div><p>重新运行代码，并在 <code>dataFrame.createGlobalTempView('city')</code> 一行打断点暂停。暂停以后可进入 <code>localhost:4040</code>，即 Spark 的管理页面。</p> <p><img src="/images/87f78df095c9155ebc6112ac7041df2337d02a44ab980b7b52fb5d7078ac927f.png" alt="Spark 管理页面"></p> <h3 id="将数据存入-mysql-数据库"><a href="#将数据存入-mysql-数据库" class="header-anchor">#</a> 将数据存入 MySQL 数据库</h3> <p>这里首先需要提前配好 MySQL 数据库。</p> <p>然后为 Spark 下载额外的 jar 包，用以操作 MySQL 数据库。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">wget</span> https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.20/mysql-connector-java-8.0.20.jar <span class="token comment"># 根据数据库版本而定</span>
+<span class="token function">mv</span> mysql-connector-java-8.0.20.jar /usr/local/spark/jars
+</code></pre></div><p>接着上文的 <code>dataFrame = spark.createDataFrame(rowRdd)</code> 写：</p> <div class="language-py extra-class"><pre class="language-py"><code>dataFrame <span class="token operator">=</span> spark<span class="token punctuation">.</span>createDataFrame<span class="token punctuation">(</span>rowRdd<span class="token punctuation">)</span>
+
+<span class="token comment"># dataFrame.createGlobalTempView('city')</span>
+<span class="token comment"># spark.sql('SELECT * FROM global_temp.city ORDER BY count desc LIMIT 5').show()</span>
+
+MySQL_Conn <span class="token operator">=</span> <span class="token string">'jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC'</span>
+conn_param <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'user'</span><span class="token punctuation">:</span> <span class="token string">'root'</span><span class="token punctuation">,</span>
+              <span class="token string">'password'</span><span class="token punctuation">:</span> <span class="token string">'lyh54333'</span><span class="token punctuation">,</span>
+              <span class="token string">'driver'</span><span class="token punctuation">:</span> <span class="token string">'com.mysql.cj.jdbc.Driver'</span><span class="token punctuation">}</span>
+dataFrame<span class="token punctuation">.</span>write<span class="token punctuation">.</span>jdbc<span class="token punctuation">(</span>MySQL_Conn<span class="token punctuation">,</span> <span class="token string">'city_count'</span><span class="token punctuation">,</span> <span class="token string">'overwrite'</span><span class="token punctuation">,</span> conn_param<span class="token punctuation">)</span>
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2021</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"><div id="pwa-snackbar" class="v-snack v-snack--bottom v-snack--has-background v-snack--right v-snack--vertical" data-v-fec8b358><div class="v-snack__wrapper v-sheet theme--dark" style="display:none;"><div role="status" aria-live="polite" class="v-snack__content">
+    博客已更新！
+    </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
+        刷新
+      </span></button></div></div></div></div></div>
+    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/139.e07bdf23.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+  </body>
+</html>
