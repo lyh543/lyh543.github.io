@@ -23,7 +23,7 @@
 
 为数不 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.b90cccd3.js" as="script"><link rel="preload" href="/assets/js/137.33105677.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.f2b6fcf2.js" as="script"><link rel="preload" href="/assets/js/137.1d209be0.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
@@ -126,7 +126,7 @@
         englishname<span class="token operator">:</span> <span class="token string">&quot;The Shawshank Redemption&quot;</span><span class="token punctuation">,</span>
         country<span class="token operator">:</span> <span class="token string">&quot;美国&quot;</span><span class="token punctuation">,</span>
         year<span class="token operator">:</span> <span class="token number">1994</span><span class="token punctuation">,</span>
-        img<span class="token operator">:</span> <span class="token string">&quot;https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.webp&quot;</span><span class="token punctuation">,</span>
+        image<span class="token operator">:</span> <span class="token string">&quot;https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.webp&quot;</span><span class="token punctuation">,</span>
         desc<span class="token operator">:</span> <span class="token string">&quot;有的人的羽翼是如此光辉，即使世界上最黑暗的牢狱，也无法长久地将他围困！&quot;</span><span class="token punctuation">,</span>
         actor<span class="token operator">:</span> <span class="token punctuation">[</span>
           <span class="token punctuation">{</span>
@@ -334,7 +334,7 @@
 <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </code></pre></div><p>显示 <code>{id: &quot;lesson&quot;, uid: &quot;tcb&quot;, key: &quot;tap&quot;, ENV: &quot;weapp&quot;, frompage: &quot;lifecycle&quot;}</code>。即，参数被解析为了一个 JS 对象，就可以用 <code>options.id</code> 访问数据。</p> <h3 id="跨页面数据渲染"><a href="#跨页面数据渲染" class="header-anchor">#</a> 跨页面数据渲染</h3> <p>讲到这里，其实就已经可以实现了。流程如下：</p> <ol><li>在 <code>detail.js</code> 中的 <code>data</code> 添加一个 <code>detail</code> 对象，如下：</li></ol> <div class="language-js extra-class"><pre class="language-js"><code>    detail<span class="token operator">:</span><span class="token punctuation">{</span>
       name<span class="token operator">:</span><span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
-      img<span class="token operator">:</span><span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+      image<span class="token operator">:</span><span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
       desc<span class="token operator">:</span><span class="token string">&quot;&quot;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </code></pre></div><div><ol start="2"><li>在 <code>detail.js</code> 的 <code>onload</code> 函数中，将参数值赋给 <code>detail</code>。</li> <li>在 <code>detail.wxml</code> 中使用 <code>{{detail.img}}</code> 等进行渲染。</li></ol></div><h3 id="小程序和页面的生命周期"><a href="#小程序和页面的生命周期" class="header-anchor">#</a> 小程序和页面的生命周期</h3> <blockquote><p><code>App()</code> 函数注册小程序，<code>Page()</code> 函数注册小程序中的一个页面，他们都接受的是对象 <code>Object</code> 类型的参数，包含一些生命周期函数和事件处理函数。<code>App()</code> 必须在 <code>app.js</code> 中调用，必须调用且只能调用一次。开发者可以添加任意的函数或数据变量到 <code>Object</code> 参数中，用 <code>this</code> 可以访问。</p></blockquote> <p>App.js 中的函数及触发时刻如下：</p> <div class="language-js extra-class"><pre class="language-js"><code>  <span class="token function">onLaunch</span><span class="token punctuation">(</span><span class="token parameter">opts</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -577,6 +577,6 @@ exports<span class="token punctuation">.</span><span class="token function-varia
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.b90cccd3.js" defer></script><script src="/assets/js/137.33105677.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+    <script src="/assets/js/app.f2b6fcf2.js" defer></script><script src="/assets/js/137.1d209be0.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
   </body>
 </html>
