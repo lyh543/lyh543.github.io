@@ -11,12 +11,12 @@
     <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
     <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.f2b6fcf2.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.75bc5dbd.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div id="base-list-layout"><div class="container ui-posts itemscope itemtype"><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/posts/linux/docker-snippets.html"> <a href="/posts/linux/docker-snippets.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
-              常用 Docker 代码片段
+              常用 Dockerfile + docker-compose 片段
             </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-09-28T21:15:25.000Z">2021-09-29</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
           
 Maven + Spring Boot
@@ -24,8 +24,7 @@ Maven + Spring Boot
 FROM maven:3-openjdk-16
 WORKDIR /code
 RUN mkdir -p /root/.m2 &amp;&amp; curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml
-COPY pom.xml .
-RUN ...
+COPY pom.xml pom.xm ...
         </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Docker/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default indigo white--text"><span class="v-chip__content">
   Docker
 </span></a><a href="/tags/服务器/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
@@ -102,6 +101,6 @@ headers = {
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.f2b6fcf2.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+    <script src="/assets/js/app.75bc5dbd.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
   </body>
 </html>
