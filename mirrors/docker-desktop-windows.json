@@ -1,0 +1,17 @@
+{
+    "builder": {
+        "gc": {
+            "defaultKeepStorage": "20GB",
+            "enabled": true
+        }
+    },
+    "debug": false,
+    "experimental": false,
+    "features": {
+        "buildkit": true
+    },
+    "insecure-registries": [],
+    "registry-mirrors": [
+        "https://registry.cn-hangzhou.aliyuncs.com"
+    ]
+}
