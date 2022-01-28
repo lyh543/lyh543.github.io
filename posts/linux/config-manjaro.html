@@ -24,7 +24,7 @@ sudo nano /etc/pacman.conf
 [archlinuxcn]
 Server = https://mirrors.tuna.tsinghua ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.3845be53.js" as="script"><link rel="preload" href="/assets/js/168.8e389c95.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.097db991.js" as="script"><link rel="preload" href="/assets/js/168.e16bb10f.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
@@ -106,9 +106,8 @@ jetbrains-toolbox <span class="token operator">&amp;</span>
 </code></pre></div><p>配置 <code>pip</code>、<code>npm</code> 和 <code>maven</code> 的镜像源：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>pip3 config <span class="token builtin class-name">set</span> global.index-url http://pypi.doubanio.com/simple
 pip3 config <span class="token builtin class-name">set</span> global.trusted-host pypi.doubanio.com
 
-<span class="token function">npm</span> <span class="token function">install</span> -g <span class="token function">yarn</span> <span class="token function">pnpm</span> --registry<span class="token operator">=</span>https://registry.npm.taobao.org
-<span class="token comment"># 配置镜像源：https://www.npmjs.com/package/mirror-config-china</span>
-<span class="token function">npm</span> <span class="token function">install</span> -g mirror-config-china --registry<span class="token operator">=</span>https://registry.npm.taobao.org
+<span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> -g <span class="token function">yarn</span> <span class="token function">pnpm</span> mirror-config-china --registry<span class="token operator">=</span>https://registry.npm.taobao.org
+<span class="token builtin class-name">cd</span> ~ <span class="token operator">&amp;&amp;</span> mirror-config-china --registry<span class="token operator">=</span>https://registry.npm.taobao.org
 
 <span class="token function">mkdir</span> ~/.m2 <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> -O ~/.m2/settings.xml https://blog.lyh543.cn/mirrors/maven.xml
 </code></pre></div><p>添加 <code>yarn</code> 环境变量：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable"><span class="token variable">$(</span><span class="token function">yarn</span> global bin<span class="token variable">)</span></span>:<span class="token environment constant">$PATH</span>&quot;</span>
@@ -165,6 +164,6 @@ vncviewer
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.3845be53.js" defer></script><script src="/assets/js/168.8e389c95.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+    <script src="/assets/js/app.097db991.js" defer></script><script src="/assets/js/168.e16bb10f.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
   </body>
 </html>
