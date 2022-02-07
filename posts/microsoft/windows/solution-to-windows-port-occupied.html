@@ -9,26 +9,24 @@
     <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
     <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
     <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
-    <meta name="description" content="
+    <meta name="description" content="和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。
+
+方法一：查询是否被其他应用占用
 
 在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：
-
-管理员不是必需，但不用管理员可能看不到其他用户的进程？
-netstat -ano | Select-String "8080"
-
-![查询结果](/images/923159eedbc4e88c0b0ea00f3dff42e8fc276a44deff0e34e ...">
+ ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.ced5fdf4.js" as="script"><link rel="preload" href="/assets/js/220.1963db0c.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.1ee35450.js" as="script"><link rel="preload" href="/assets/js/221.d8b5d139.js" as="script"><link rel="preload" href="/assets/js/4.b9754506.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="查询是否被其他应用占用"><a href="#查询是否被其他应用占用" class="header-anchor">#</a> 查询是否被其他应用占用</h2> <p>在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># 管理员不是必需，但不用管理员可能看不到其他用户的进程？</span>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。</p> <h2 id="方法一-查询是否被其他应用占用"><a href="#方法一-查询是否被其他应用占用" class="header-anchor">#</a> 方法一：查询是否被其他应用占用</h2> <p>在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># 管理员不是必需，但不用管理员可能看不到其他用户的进程？</span>
 netstat <span class="token operator">-</span>ano <span class="token punctuation">|</span> <span class="token function">Select-String</span> <span class="token string">&quot;8080&quot;</span>
 </code></pre></div><p><img src="/images/923159eedbc4e88c0b0ea00f3dff42e8fc276a44deff0e34eb31c65763757614.png" alt="查询结果"></p> <p>11284 是 Process ID，可以直接 kill 掉，也可以看看是什么。</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token function">ps</span> <span class="token operator">-</span>PID 11284
 <span class="token function">kill</span> 11284
-</code></pre></div><p><img src="/images/270900e581c26de91ceb751eb13786d759ed1f074b1880dad7a25b8817c49607.png" alt="查询结果"></p> <h2 id="查询是否被-hyper-v-占用"><a href="#查询是否被-hyper-v-占用" class="header-anchor">#</a> 查询是否被 Hyper-V 占用</h2> <p>以前的 Windows 在上面一步基本就能结束了，但现在是 2202 年，Docker 和 WSL 2 大行其道，干开发的应该都用着 Hyper-V。</p> <p>而 Hyper-V 会保留一些端口，其他应用就不能占用了。</p> <p>使用下面这行命令查询 Hyper-V 占用的端口：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code>netsh interface ipv4 show excludedportrange protocol=tcp
+</code></pre></div><p><img src="/images/270900e581c26de91ceb751eb13786d759ed1f074b1880dad7a25b8817c49607.png" alt="查询结果"></p> <h2 id="方法二-查询是否被-hyper-v-占用"><a href="#方法二-查询是否被-hyper-v-占用" class="header-anchor">#</a> 方法二：查询是否被 Hyper-V 占用</h2> <p>以前的 Windows 在上面一步基本就能结束了，但现在是 2202 年，Docker 和 WSL 2 大行其道，干开发的应该都用着 Hyper-V。</p> <p>而 Hyper-V 会保留一些端口，其他应用就不能占用了。</p> <p>使用下面这行命令查询 Hyper-V 占用的端口：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code>netsh interface ipv4 show excludedportrange protocol=tcp
 </code></pre></div><p><img src="/images/c78255c7d83cf302f4b3e12423dfd909c9905273faab77fb0cebf59c5f4435a6.png" alt="查询 Hyper-V 占用的端口"></p> <p>图上没有 <code>*</code> 的就是 Hyper-V 占用的端口。而加了 <code>*</code> 的 <code>Administered port exclusions</code> 就是我们保留的端口， Hyper-V 不会再占用。</p> <p>如何保留端口呢？在管理员下的 powershell 使用下面这行命令：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># 保留 7962 开始的 100 个端口（即 7962-8061）</span>
-netsh int ipv4 delete excludedportrange protocol=tcp startport=7962 numberofports=100
+netsh int ipv4 add excludedportrange protocol=tcp startport=7962 numberofports=100
 </code></pre></div><p><img src="/images/2a17482e2c835c9e3ef8fde3db60c6476f3f10a9dcc75ca76f3e23efe4cb7f3a.png" alt="7962-8061 已为我们保留"></p> <p>如果执行的时候遇到 <code>netsh error: The process cannot access the file because it is being used by another process</code>，可以尝试重启电脑，或者关掉 Hyper-V、重启、保留完端口再打开 Hyper-V、重启。</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># 关掉 Hyper-V</span>
 dism<span class="token punctuation">.</span>exe <span class="token operator">/</span>Online <span class="token operator">/</span><span class="token function">Disable-Feature</span>:Microsoft<span class="token operator">-</span>Hyper<span class="token operator">-</span>V
 <span class="token comment"># 开启 Hyper-V</span>
@@ -48,6 +46,6 @@ dism<span class="token punctuation">.</span>exe <span class="token operator">/</
     </div><div class="v-snack__action "><button type="button" id="pwa-button" class="v-btn v-btn--has-bg theme--dark v-size--default v-snack__btn"><span class="v-btn__content">
         刷新
       </span></button></div></div></div></div></div>
-    <script src="/assets/js/app.ced5fdf4.js" defer></script><script src="/assets/js/220.1963db0c.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
+    <script src="/assets/js/app.1ee35450.js" defer></script><script src="/assets/js/221.d8b5d139.js" defer></script><script src="/assets/js/4.b9754506.js" defer></script>
   </body>
 </html>
