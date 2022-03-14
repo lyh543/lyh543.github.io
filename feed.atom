@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-03-04T13:12:24.108Z</updated>
+    <updated>2022-03-14T08:59:08.272Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
@@ -42,6 +42,18 @@ CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不
 浏览器、前端和后端的关系大概是：前端  浏览器  后端。前端告诉浏览器它需要访问什么，浏览 ...]]></summary>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Gravatar 镜像]]></title>
+        <id>https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html</id>
+        <link href="https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html">
+        </link>
+        <updated>2021-04-28T19:55:40.000Z</updated>
+        <summary type="html"><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
+
+网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
+
+测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></summary>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[HTTP 状态码]]></title>
         <id>https://blog.lyh543.cn/posts/back-end/http-status-code.html</id>
         <link href="https://blog.lyh543.cn/posts/back-end/http-status-code.html">
@@ -69,18 +81,6 @@ CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不
 注册应用、用户登录授权
 
 > 参考博客：[zhangguanzhang's Blog](https://zhangguanzhang.github.io/2020/ ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Gravatar 镜像]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html">
-        </link>
-        <updated>2021-04-28T19:55:40.000Z</updated>
-        <summary type="html"><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
-
-网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
-
-测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[RESTful API 标准]]></title>
