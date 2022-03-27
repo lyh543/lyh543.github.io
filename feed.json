@@ -79,19 +79,19 @@
             "date_modified": "2019-09-16T16:00:00.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/blog/hexo-indigo.html",
-            "url": "https://blog.lyh543.cn/posts/blog/hexo-indigo.html",
-            "title": "Hexo Indigo主题配置",
-            "summary": "额，在用了两个月的 Material 主题以后，有点喜新厌旧了（逃\n\n其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...",
-            "date_modified": "2019-09-16T16:00:00.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/blog/hexo-material.html",
             "url": "https://blog.lyh543.cn/posts/blog/hexo-material.html",
             "title": "Hexo Material 主题配置",
             "summary": "Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。\n\nHexo 更换主题的方法参见另一篇博客。\n\n在网上找到了一个配置过程非常详实的[博客](https://z ...",
             "image": "https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png",
             "date_modified": "2019-08-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/blog/hexo-indigo.html",
+            "url": "https://blog.lyh543.cn/posts/blog/hexo-indigo.html",
+            "title": "Hexo Indigo主题配置",
+            "summary": "额，在用了两个月的 Material 主题以后，有点喜新厌旧了（逃\n\n其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/blog/hexo-writing.html",
