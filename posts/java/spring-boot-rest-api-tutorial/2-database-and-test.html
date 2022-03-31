@@ -20,7 +20,7 @@ create table users
 	password varchar(100) not null,
 	name varchar(100) not null, ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.330544a5.js" as="script"><link rel="preload" href="/assets/js/144.7df7a7ab.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.17c93462.js" as="script"><link rel="preload" href="/assets/js/144.2dd7c307.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
@@ -311,7 +311,7 @@ $ http http://localhost:8080/api/user/1
     <span class="token annotation punctuation">@Autowired</span>
     <span class="token keyword">private</span> <span class="token class-name">UserMapper</span> userMapper<span class="token punctuation">;</span>
 
-    <span class="token annotation punctuation">@AfterEach</span>
+    <span class="token annotation punctuation">@BeforeEach</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">clearDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">deleteFromTables</span><span class="token punctuation">(</span>jdbcTemplate<span class="token punctuation">,</span> <span class="token string">&quot;users&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
@@ -377,7 +377,7 @@ $ http http://localhost:8080/api/user/1
                 <span class="token punctuation">.</span><span class="token function">getStatusCodeValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token annotation punctuation">@AfterEach</span>
+    <span class="token annotation punctuation">@BeforeEach</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">clearDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token function">deleteFromTables</span><span class="token punctuation">(</span>jdbcTemplate<span class="token punctuation">,</span> <span class="token string">&quot;users&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
@@ -432,6 +432,55 @@ $ http http://localhost:8080/api/user/1
         <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">countRowsInTable</span><span class="token punctuation">(</span>jdbcTemplate<span class="token punctuation">,</span> <span class="token string">&quot;users&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
+</code></pre></div><h2 id="mock"><a href="#mock" class="header-anchor">#</a> mock</h2> <p>最近遇到了需要 mock 测试对象用到的 bean 的场景，这里先贴代码记录一下当时是怎么 mock 的，之后再补成新教程。</p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>ruoyi<span class="token punctuation">.</span>ddars<span class="token punctuation">.</span>service<span class="token punctuation">.</span>impl</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">com<span class="token punctuation">.</span>fasterxml<span class="token punctuation">.</span>jackson<span class="token punctuation">.</span>databind<span class="token punctuation">.</span></span><span class="token class-name">JsonNode</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>jupiter<span class="token punctuation">.</span>api<span class="token punctuation">.</span></span><span class="token class-name">BeforeEach</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>jupiter<span class="token punctuation">.</span>api<span class="token punctuation">.</span></span><span class="token class-name">Test</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>mockito<span class="token punctuation">.</span></span><span class="token class-name">InjectMocks</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>mockito<span class="token punctuation">.</span></span><span class="token class-name">Mock</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>mockito<span class="token punctuation">.</span></span><span class="token class-name">MockitoAnnotations</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Autowired</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>test<span class="token punctuation">.</span>context<span class="token punctuation">.</span></span><span class="token class-name">SpringBootTest</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token namespace">org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>jupiter<span class="token punctuation">.</span>api<span class="token punctuation">.</span></span><span class="token class-name">Assertions</span><span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token keyword">static</span> <span class="token namespace">org<span class="token punctuation">.</span>mockito<span class="token punctuation">.</span></span><span class="token class-name">Mockito</span><span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@SpringBootTest</span>
+<span class="token keyword">class</span> <span class="token class-name">CommonRightsServiceImplTest</span> <span class="token keyword">extends</span> <span class="token class-name">TestTemplate</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 测试对象，将 mock 对象注入到其中</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token annotation punctuation">@InjectMocks</span>
+    <span class="token class-name">CommonRightsServiceImpl</span> commonRightsService<span class="token punctuation">;</span>
+    <span class="token comment">// 被 mocked 的 services</span>
+    <span class="token annotation punctuation">@Mock</span>
+    <span class="token class-name">ISysUserProjectService</span> userProjectService<span class="token punctuation">;</span>
+
+    <span class="token class-name">SysProject</span> project<span class="token punctuation">;</span>
+
+
+
+    <span class="token annotation punctuation">@BeforeEach</span>
+    <span class="token keyword">void</span> <span class="token function">setUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">clearDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        project <span class="token operator">=</span> <span class="token function">newTestProject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        projectMapper<span class="token punctuation">.</span><span class="token function">insertSysProject</span><span class="token punctuation">(</span>project<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertNotNull</span><span class="token punctuation">(</span>project<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 正常情况这个 service 无法正常运行</span>
+        <span class="token function">assertThrows</span><span class="token punctuation">(</span><span class="token class-name">Exception</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> commonRightsService<span class="token punctuation">.</span>sysUserProjectService<span class="token punctuation">.</span><span class="token function">getCurrentProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 初始化 mocks</span>
+        <span class="token class-name">MockitoAnnotations</span><span class="token punctuation">.</span><span class="token function">initMocks</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">when</span><span class="token punctuation">(</span>userProjectService<span class="token punctuation">.</span><span class="token function">getCurrentProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">thenReturn</span><span class="token punctuation">(</span>project<span class="token punctuation">.</span><span class="token function">getProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// service 已经被我们 mock</span>
+        <span class="token function">assertEquals</span><span class="token punctuation">(</span>commonRightsService<span class="token punctuation">.</span>sysUserProjectService<span class="token punctuation">.</span><span class="token function">getCurrentProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> project<span class="token punctuation">.</span><span class="token function">getProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 测试对象的其他 service 正确地被 autowired 了</span>
+        <span class="token function">assertNotNull</span><span class="token punctuation">(</span>commonRightsService<span class="token punctuation">.</span>commonRightsMapper<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">void</span> <span class="token function">selectRightsStatsWithNoData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <!----></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
         |
       <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
@@ -443,6 +492,6 @@ $ http http://localhost:8080/api/user/1
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.330544a5.js" defer></script><script src="/assets/js/144.7df7a7ab.js" defer></script>
+    <script src="/assets/js/app.17c93462.js" defer></script><script src="/assets/js/144.2dd7c307.js" defer></script>
   </body>
 </html>
