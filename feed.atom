@@ -2,11 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-04-09T04:31:48.818Z</updated>
+    <updated>2022-04-09T04:52:49.778Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[安卓刷机记录]]></title>
+        <id>https://blog.lyh543.cn/posts/android/android-flashing-notes.html</id>
+        <link href="https://blog.lyh543.cn/posts/android/android-flashing-notes.html">
+        </link>
+        <updated>2021-03-12T09:37:36.000Z</updated>
+        <summary type="html"><![CDATA[手机选择
+
+如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
+
+一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
+
+ROM 选择
+
+有条件还是搞个梯子，不然 ROM 很难下的。
+
+[ ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
         <id>https://blog.lyh543.cn/posts/android/qq-wechat-call-system-webview.html</id>
@@ -54,36 +72,6 @@ visit: https://cdkworkshop.com/15-prerequisites/100-awscli.html
  ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Gravatar 镜像]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html">
-        </link>
-        <updated>2021-04-28T19:55:40.000Z</updated>
-        <summary type="html"><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
-
-网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
-
-测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[安卓刷机记录]]></title>
-        <id>https://blog.lyh543.cn/posts/android/android-flashing-notes.html</id>
-        <link href="https://blog.lyh543.cn/posts/android/android-flashing-notes.html">
-        </link>
-        <updated>2021-03-12T09:37:36.000Z</updated>
-        <summary type="html"><![CDATA[手机选择
-
-如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
-
-一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
-
-ROM 选择
-
-有条件还是搞个梯子，不然 ROM 很难下的。
-
-[ ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[和 CSRF 与 CORS 斗智斗勇]]></title>
         <id>https://blog.lyh543.cn/posts/back-end/handle-cors-and-csrf.html</id>
         <link href="https://blog.lyh543.cn/posts/back-end/handle-cors-and-csrf.html">
@@ -96,6 +84,18 @@ ROM 选择
 CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不是很清楚二者的区别，于是就再搜了一下，顺便把另外两个概念也聊一聊。
 
 浏览器、前端和后端的关系大概是：前端  浏览器  后端。前端告诉浏览器它需要访问什么，浏览 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Gravatar 镜像]]></title>
+        <id>https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html</id>
+        <link href="https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html">
+        </link>
+        <updated>2021-04-28T19:55:40.000Z</updated>
+        <summary type="html"><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
+
+网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
+
+测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[HTTP 状态码]]></title>
@@ -150,14 +150,6 @@ REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 
 > 2019.11.6 更新：由于 GitHub OAuth ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hello Hexo]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hello-hexo.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hello-hexo.html">
-        </link>
-        <updated>2019-06-23T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in [trou ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Hexo 备份（及一次翻车的经历）]]></title>
         <id>https://blog.lyh543.cn/posts/blog/hexo-backup.html</id>
         <link href="https://blog.lyh543.cn/posts/blog/hexo-backup.html">
@@ -168,6 +160,14 @@ REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 
 另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。
 
 于是就 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Hexo]]></title>
+        <id>https://blog.lyh543.cn/posts/blog/hello-hexo.html</id>
+        <link href="https://blog.lyh543.cn/posts/blog/hello-hexo.html">
+        </link>
+        <updated>2019-06-23T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in [trou ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hexo 建站]]></title>
@@ -197,18 +197,6 @@ hexo init lyh543.github.io
 其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hexo Material 主题配置]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-material.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-material.html">
-        </link>
-        <updated>2019-08-16T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
-
-Hexo 更换主题的方法参见另一篇博客。
-
-在网上找到了一个配置过程非常详实的[博客](https://z ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Hexo 写作]]></title>
         <id>https://blog.lyh543.cn/posts/blog/hexo-writing.html</id>
         <link href="https://blog.lyh543.cn/posts/blog/hexo-writing.html">
@@ -224,16 +212,16 @@ Hexo 更换主题的方法参见另一篇博客。
  ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Markdownlint 使用]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/markdownlint.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/markdownlint.html">
+        <title type="html"><![CDATA[Hexo Material 主题配置]]></title>
+        <id>https://blog.lyh543.cn/posts/blog/hexo-material.html</id>
+        <link href="https://blog.lyh543.cn/posts/blog/hexo-material.html">
         </link>
-        <updated>2019-08-30T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。
+        <updated>2019-08-16T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
 
-markdownlint_intro
+Hexo 更换主题的方法参见另一篇博客。
 
-[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...]]></summary>
+在网上找到了一个配置过程非常详实的[博客](https://z ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Markdown 语法]]></title>
@@ -249,6 +237,18 @@ markdownlint_intro
 标题中出现了井号
 
 标题出现了 # 号， ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Markdownlint 使用]]></title>
+        <id>https://blog.lyh543.cn/posts/blog/markdownlint.html</id>
+        <link href="https://blog.lyh543.cn/posts/blog/markdownlint.html">
+        </link>
+        <updated>2019-08-30T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。
+
+markdownlint_intro
+
+[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[博客迁移 ing...]]></title>
