@@ -6,11 +6,41 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/android/qq-wechat-call-system-webview.html",
+            "url": "https://blog.lyh543.cn/posts/android/qq-wechat-call-system-webview.html",
+            "title": "QQ，微信实现调用系统WebView教程",
+            "summary": "实在受不了垃圾X5内核，打开网页总慢半秒\n\n把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/\n点左下角强制使用系统内核，确定。\n不放心的打开这个网址查看当前内核 https://ie.icoa.cn/\n\n这下顺滑多了，网页秒开 ...",
+            "date_modified": "2019-06-25T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/android/setup-flutter-develop-environment.html",
+            "url": "https://blog.lyh543.cn/posts/android/setup-flutter-develop-environment.html",
+            "title": "配置 Flutter 开发环境",
+            "summary": "最近想学 Flutter，但是配环境的时候踩了一路坑。\n\n下载 Flutter\n\n可以在官网或者国内镜像下载，也可以走包管理器。Windows 如果安装了 Chocolatey 可以直接 `choco ins ...",
+            "image": "https://blog.lyh543.cn/images/7479eeeed828d9be4beb497e795084b6a49fc2b18ef89df6ccde1bac829dfe28.png",
+            "date_modified": "2022-04-08T16:06:02.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html",
+            "url": "https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html",
+            "title": "使用 AWS CDK 开发",
+            "summary": "安装 Docker （略）\n\n安装 aws-cli：\n\nManjaro - yay\nyay -S aws-cli-v2-bin\n\nWindows - Choco\nchoco install awscli\n\nOthers\nvisit: https://cdkworkshop.com/15-prerequisites/100-awscli.html\n ...",
+            "image": "https://cdkworkshop.com/images/cdk-logo.png",
+            "date_modified": "2021-11-11T11:35:17.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html",
             "url": "https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html",
             "title": "Gravatar 镜像",
             "summary": "最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。\n\n网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。\n\n测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...",
             "date_modified": "2021-04-28T19:55:40.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/android/android-flashing-notes.html",
+            "url": "https://blog.lyh543.cn/posts/android/android-flashing-notes.html",
+            "title": "安卓刷机记录",
+            "summary": "手机选择\n\n如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。\n\n一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。\n\nROM 选择\n\n有条件还是搞个梯子，不然 ROM 很难下的。\n\n[ ...",
+            "date_modified": "2021-03-12T09:37:36.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/back-end/handle-cors-and-csrf.html",
@@ -57,14 +87,6 @@
             "date_modified": "2019-06-23T16:00:00.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html",
-            "url": "https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html",
-            "title": "使用 AWS CDK 开发",
-            "summary": "安装 Docker （略）\n\n安装 aws-cli：\n\nManjaro - yay\nyay -S aws-cli-v2-bin\n\nWindows - Choco\nchoco install awscli\n\nOthers\nvisit: https://cdkworkshop.com/15-prerequisites/100-awscli.html\n ...",
-            "image": "https://cdkworkshop.com/images/cdk-logo.png",
-            "date_modified": "2021-11-11T11:35:17.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/blog/hexo-backup.html",
             "url": "https://blog.lyh543.cn/posts/blog/hexo-backup.html",
             "title": "Hexo 备份（及一次翻车的经历）",
@@ -102,20 +124,20 @@
             "date_modified": "2019-06-23T16:33:03.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/blog/markdown.html",
-            "url": "https://blog.lyh543.cn/posts/blog/markdown.html",
-            "title": "Markdown 语法",
-            "summary": "入门 Markdown 推荐：http://younghz.github.io/Markdown/\n> Markdown Cheatsheet: https://bit.ly/mdcheat\n\n本文主要记录 Markdown（如有必要，也会提到 HTML）中不常见的语法，如文字的下标、代码中含有反引号   ` 的处理方法等。\n\n标题中出现了井号\n\n标题出现了 # 号， ...",
-            "image": "https://gitee.com/uploads/images/2019/0424/194736_1331e2af_551056.jpeg",
-            "date_modified": "2019-06-16T16:00:00.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/blog/markdownlint.html",
             "url": "https://blog.lyh543.cn/posts/blog/markdownlint.html",
             "title": "Markdownlint 使用",
             "summary": "Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。\n\nmarkdownlint_intro\n\n[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...",
             "image": "https://blog.lyh543.cn/./markdownlint/markdownlint_intro.jpg",
             "date_modified": "2019-08-30T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/blog/markdown.html",
+            "url": "https://blog.lyh543.cn/posts/blog/markdown.html",
+            "title": "Markdown 语法",
+            "summary": "入门 Markdown 推荐：http://younghz.github.io/Markdown/\n> Markdown Cheatsheet: https://bit.ly/mdcheat\n\n本文主要记录 Markdown（如有必要，也会提到 HTML）中不常见的语法，如文字的下标、代码中含有反引号   ` 的处理方法等。\n\n标题中出现了井号\n\n标题出现了 # 号， ...",
+            "image": "https://gitee.com/uploads/images/2019/0424/194736_1331e2af_551056.jpeg",
+            "date_modified": "2019-06-16T16:00:00.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/blog/migrating-from-hexo-to-vuepress.html",
@@ -131,28 +153,6 @@
             "summary": "转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金\n\n之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：\n\n#!/bin/bash\n\necho\necho pus ...",
             "image": "https://blog.lyh543.cn/images/04d0daf452702bd99d8efc0a193d0b21aef1c6b8a8a5207752429e5fb1d65e01.png",
             "date_modified": "2020-09-28T21:03:29.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/carrers/internet-enterprise-in-cities.html",
-            "url": "https://blog.lyh543.cn/posts/carrers/internet-enterprise-in-cities.html",
-            "title": "大城市的互联网公司",
-            "summary": "[Microsoft]\n\n上海\n\n[Microsoft]\n[PayPal]\n\n深圳\n\n[TP-LINK]\n\n成都\n\n有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。\n\n[腾讯]\n[字节跳动]\n[阿里]\n[美团]\n[百度]\n[京东]，但基本不招 ...",
-            "date_modified": "2020-12-17T16:06:49.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/carrers/interview-experience/2020.html",
-            "url": "https://blog.lyh543.cn/posts/carrers/interview-experience/2020.html",
-            "title": "面经集合 - 2020",
-            "summary": "推荐搭配 面试相关知识 食用。\n\n2020冬 字节跳动北京 电商后端 日常实习\n\n职位链接\n\n第一面\n\n面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...",
-            "date_modified": "2020-10-30T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/carrers/interview-experience/2021.html",
-            "url": "https://blog.lyh543.cn/posts/carrers/interview-experience/2021.html",
-            "title": "面经集合 - 2021",
-            "summary": "推荐搭配 面试相关知识 食用。\n\n2021春 腾讯成都 CSIG 后台开发 暑期实习\n\n这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。\n\n一面\n\n自我介绍\n自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。\n会 Ja ...",
-            "image": "https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png",
-            "date_modified": "2021-03-07T16:00:00.000Z"
         }
     ]
 }

@@ -17,7 +17,7 @@ WORKDIR /code
 RUN mkdir -p /root/.m2 && curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml
 COPY pom.xml pom.xm ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.490cc360.js" as="script"><link rel="preload" href="/assets/js/168.225f97c9.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.be32bd53.js" as="script"><link rel="preload" href="/assets/js/171.d56590eb.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
@@ -96,6 +96,18 @@ COPY pom.xml pom.xm ...">
     <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> secret1234
   <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> <span class="token string">&quot;~/git/project/data/db:/var/lib/mysql&quot;</span>
+</code></pre></div><h3 id="postgresql-持久化"><a href="#postgresql-持久化" class="header-anchor">#</a> postgresql + 持久化</h3> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">db</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> postgres<span class="token punctuation">:</span><span class="token number">14</span>
+  <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">&quot;5432:5432&quot;</span>
+  <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+    <span class="token key atrule">TZ</span><span class="token punctuation">:</span> <span class="token string">'Asia/Shanghai'</span>
+    <span class="token key atrule">POSTGRES_USER</span><span class="token punctuation">:</span> myuser
+    <span class="token key atrule">POSTGRES_PASSWORD</span><span class="token punctuation">:</span> mypassword
+    <span class="token key atrule">POSTGRES_DB</span><span class="token punctuation">:</span> mydb
+  <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./data<span class="token punctuation">:</span>/var/lib/postgresql/data
 </code></pre></div><h3 id="redis-持久化"><a href="#redis-持久化" class="header-anchor">#</a> redis + 持久化</h3> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">redis</span><span class="token punctuation">:</span>
   <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span><span class="token number">6</span>
   <span class="token key atrule">command</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>server <span class="token punctuation">-</span><span class="token punctuation">-</span>appendonly yes <span class="token punctuation">-</span><span class="token punctuation">-</span>requirepass secret1234
@@ -116,6 +128,6 @@ COPY pom.xml pom.xm ...">
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.490cc360.js" defer></script><script src="/assets/js/168.225f97c9.js" defer></script>
+    <script src="/assets/js/app.be32bd53.js" defer></script><script src="/assets/js/171.d56590eb.js" defer></script>
   </body>
 </html>

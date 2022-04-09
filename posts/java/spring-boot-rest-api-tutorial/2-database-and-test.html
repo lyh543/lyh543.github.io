@@ -20,7 +20,7 @@ create table users
 	password varchar(100) not null,
 	name varchar(100) not null, ...">
     
-    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.490cc360.js" as="script"><link rel="preload" href="/assets/js/144.d7ee03c6.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.05080bcb.css" as="style"><link rel="preload" href="/assets/js/app.be32bd53.js" as="script"><link rel="preload" href="/assets/js/147.18dcf16c.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.05080bcb.css">
   </head>
   <body>
@@ -469,6 +469,7 @@ $ http http://localhost:8080/api/user/1
         <span class="token comment">// 正常情况这个 service 无法正常运行</span>
         <span class="token function">assertThrows</span><span class="token punctuation">(</span><span class="token class-name">Exception</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-&gt;</span> commonRightsService<span class="token punctuation">.</span>sysUserProjectService<span class="token punctuation">.</span><span class="token function">getCurrentProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token comment">// 初始化 mocks</span>
+        <span class="token comment">// deprecated</span>
         <span class="token class-name">MockitoAnnotations</span><span class="token punctuation">.</span><span class="token function">initMocks</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token function">when</span><span class="token punctuation">(</span>userProjectService<span class="token punctuation">.</span><span class="token function">getCurrentProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">thenReturn</span><span class="token punctuation">(</span>project<span class="token punctuation">.</span><span class="token function">getProjectId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token comment">// service 已经被我们 mock</span>
@@ -492,6 +493,6 @@ $ http http://localhost:8080/api/user/1
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.490cc360.js" defer></script><script src="/assets/js/144.d7ee03c6.js" defer></script>
+    <script src="/assets/js/app.be32bd53.js" defer></script><script src="/assets/js/147.18dcf16c.js" defer></script>
   </body>
 </html>
