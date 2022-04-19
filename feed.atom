@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-04-19T16:03:32.690Z</updated>
+    <updated>2022-04-19T16:23:38.881Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
+        <id>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</id>
+        <link href="https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html">
+        </link>
+        <updated>2019-06-25T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
+
+把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
+点左下角强制使用系统内核，确定。
+不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
+
+这下顺滑多了，网页秒开 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[安卓刷机记录]]></title>
         <id>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</id>
@@ -24,20 +38,6 @@ ROM 选择
 有条件还是搞个梯子，不然 ROM 很难下的。
 
 [ ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
-        <id>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</id>
-        <link href="https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html">
-        </link>
-        <updated>2019-06-25T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
-
-把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
-点左下角强制使用系统内核，确定。
-不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
-
-这下顺滑多了，网页秒开 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hexo 使用 Gitalk 评论]]></title>
