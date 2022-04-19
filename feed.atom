@@ -2,15 +2,15 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-04-12T07:56:13.849Z</updated>
+    <updated>2022-04-19T16:03:32.690Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
     <entry>
         <title type="html"><![CDATA[安卓刷机记录]]></title>
-        <id>https://blog.lyh543.cn/posts/android/android-flashing-notes.html</id>
-        <link href="https://blog.lyh543.cn/posts/android/android-flashing-notes.html">
+        <id>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</id>
+        <link href="https://blog.lyh543.cn/notes/android/android-flashing-notes.html">
         </link>
         <updated>2021-03-12T09:37:36.000Z</updated>
         <summary type="html"><![CDATA[手机选择
@@ -27,8 +27,8 @@ ROM 选择
     </entry>
     <entry>
         <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
-        <id>https://blog.lyh543.cn/posts/android/qq-wechat-call-system-webview.html</id>
-        <link href="https://blog.lyh543.cn/posts/android/qq-wechat-call-system-webview.html">
+        <id>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</id>
+        <link href="https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html">
         </link>
         <updated>2019-06-25T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
@@ -40,108 +40,9 @@ ROM 选择
 这下顺滑多了，网页秒开 ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[配置 Flutter 开发环境的踩坑记录]]></title>
-        <id>https://blog.lyh543.cn/posts/android/setup-flutter-develop-environment.html</id>
-        <link href="https://blog.lyh543.cn/posts/android/setup-flutter-develop-environment.html">
-        </link>
-        <updated>2022-04-08T16:06:02.000Z</updated>
-        <summary type="html"><![CDATA[最近想学 Flutter，但是配环境的时候踩了一路坑。
-
-下载 Flutter
-
-可以在官网或者国内镜像下载，也可以走包管理器。Windows 如果安装了 Chocolatey 可以直接 `choco ins ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用 AWS CDK 开发]]></title>
-        <id>https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html</id>
-        <link href="https://blog.lyh543.cn/posts/aws/develop-with-aws-cdk.html">
-        </link>
-        <updated>2021-11-11T11:35:17.000Z</updated>
-        <summary type="html"><![CDATA[安装 Docker （略）
-
-安装 aws-cli：
-
-Manjaro - yay
-yay -S aws-cli-v2-bin
-
-Windows - Choco
-choco install awscli
-
-Others
-visit: https://cdkworkshop.com/15-prerequisites/100-awscli.html
- ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Gravatar 镜像]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/gravatar-mirror.html">
-        </link>
-        <updated>2021-04-28T19:55:40.000Z</updated>
-        <summary type="html"><![CDATA[最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。
-
-网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。
-
-测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[和 CSRF 与 CORS 斗智斗勇]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/handle-cors-and-csrf.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/handle-cors-and-csrf.html">
-        </link>
-        <updated>2021-02-23T12:28:15.000Z</updated>
-        <summary type="html"><![CDATA[写前后端的时候遇到了这个问题，花了三天时间解决，就还是简单地写一写。写到最后才发现，这里面涉及的知识量也太大了，也请各位读者耐心阅读。
-
-前言
-
-CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不是很清楚二者的区别，于是就再搜了一下，顺便把另外两个概念也聊一聊。
-
-浏览器、前端和后端的关系大概是：前端  浏览器  后端。前端告诉浏览器它需要访问什么，浏览 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[HTTP 状态码]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/http-status-code.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/http-status-code.html">
-        </link>
-        <updated>2021-01-30T23:08:30.000Z</updated>
-        <summary type="html"><![CDATA[MDN Web Docs
-维基百科
-
-1xx 请求已被接受，需要继续处理
-
-1 打头的其实不是很常用。
-
-不过有一个 102 Processing (WebDAV) 挺有意思，用于表明 W ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[后端利用 REST API 对接 Onedrive]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/onedrive-rest-api.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/onedrive-rest-api.html">
-        </link>
-        <updated>2021-02-25T16:41:13.000Z</updated>
-        <summary type="html"><![CDATA[最近写的后端项目需要云盘，由于各种原因，最终选择了 Onedrive。Onedrive 的一个优点是文档是中文的，但缺点是中文也看不懂。。。。
-
-于是借助文档、博客、示例代码等等，慢慢摸索过来，并把摸索的这个过程形成一篇博文。
-
-注册应用、用户登录授权
-
-> 参考博客：[zhangguanzhang's Blog](https://zhangguanzhang.github.io/2020/ ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[RESTful API 标准]]></title>
-        <id>https://blog.lyh543.cn/posts/back-end/restful-api-standard.html</id>
-        <link href="https://blog.lyh543.cn/posts/back-end/restful-api-standard.html">
-        </link>
-        <updated>2020-09-15T21:33:43.000Z</updated>
-        <summary type="html"><![CDATA[文章部分内容转自：https://www.colabug.com/2017/0627/228298/
-
-REST 是一种软件架构风格，如果你们的接口是 REST 接口，那么就可被认为你们的的接口是 RESTful 的，英文名词和形容词的区别。
-
-REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 本也可以和 HTTP 无关，但是现在大家普遍的使用 REST 都是依托于H ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Hexo 使用 Gitalk 评论]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/gitalk.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/gitalk.html">
+        <id>https://blog.lyh543.cn/notes/blog/gitalk.html</id>
+        <link href="https://blog.lyh543.cn/notes/blog/gitalk.html">
         </link>
         <updated>2019-09-16T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。
@@ -150,17 +51,9 @@ REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 
 > 2019.11.6 更新：由于 GitHub OAuth ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hello Hexo]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hello-hexo.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hello-hexo.html">
-        </link>
-        <updated>2019-06-23T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in [trou ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Hexo 备份（及一次翻车的经历）]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-backup.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-backup.html">
+        <id>https://blog.lyh543.cn/notes/blog/hexo-backup.html</id>
+        <link href="https://blog.lyh543.cn/notes/blog/hexo-backup.html">
         </link>
         <updated>2019-09-16T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[由于 Hexo 的本地文件是没有上传到 Github 的，某天突发奇想，想把 Hexo 文件夹直接移至 Onedrive 自动备份。
@@ -171,8 +64,8 @@ REST 接口是围绕“资源”展开的，利用 HTTP 的协议。其实 REST 
     </entry>
     <entry>
         <title type="html"><![CDATA[Hexo 建站]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-building-blog.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-building-blog.html">
+        <id>https://blog.lyh543.cn/notes/blog/hexo-building-blog.html</id>
+        <link href="https://blog.lyh543.cn/notes/blog/hexo-building-blog.html">
         </link>
         <updated>2019-09-16T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[先放一个Hexo官方文档的链接。
@@ -187,19 +80,9 @@ hexo init lyh543.github.io
 `` ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hexo Indigo主题配置]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-indigo.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-indigo.html">
-        </link>
-        <updated>2019-09-16T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[额，在用了两个月的 Material 主题以后，有点喜新厌旧了（逃
-
-其实是有些地方不大方便：在读长文章的时候没有一个 Table of Content（toc，或者有但是我不会开）；另一个就是博客的分类和标签太弱了，再加上宽大的卡片式设计，遍历文章标题的效率非常低，跳转非常不方便，基本只能靠搜索；最后是每篇博客的那张图就是在那几张 Material Design 的壁纸里面随机，看久了确实没什么 ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Hexo Material 主题配置]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-material.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-material.html">
+        <id>https://blog.lyh543.cn/notes/blog/hexo-material.html</id>
+        <link href="https://blog.lyh543.cn/notes/blog/hexo-material.html">
         </link>
         <updated>2019-08-16T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
@@ -210,8 +93,8 @@ Hexo 更换主题的方法参见另一篇博客。
     </entry>
     <entry>
         <title type="html"><![CDATA[Hexo 写作]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/hexo-writing.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/hexo-writing.html">
+        <id>https://blog.lyh543.cn/notes/blog/hexo-writing.html</id>
+        <link href="https://blog.lyh543.cn/notes/blog/hexo-writing.html">
         </link>
         <updated>2019-06-23T16:33:03.000Z</updated>
         <summary type="html"><![CDATA[Hexo写作支持Markdown。
@@ -224,55 +107,267 @@ Hexo 更换主题的方法参见另一篇博客。
  ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Markdown 语法]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/markdown.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/markdown.html">
+        <title type="html"><![CDATA[大城市的互联网公司]]></title>
+        <id>https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html</id>
+        <link href="https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html">
         </link>
-        <updated>2019-06-16T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[入门 Markdown 推荐：http://younghz.github.io/Markdown/
-> Markdown Cheatsheet: https://bit.ly/mdcheat
+        <updated>2020-12-17T16:06:49.000Z</updated>
+        <summary type="html"><![CDATA[[Microsoft]
 
-本文主要记录 Markdown（如有必要，也会提到 HTML）中不常见的语法，如文字的下标、代码中含有反引号   ` 的处理方法等。
+上海
 
-标题中出现了井号
+[Microsoft]
+[PayPal]
 
-标题出现了 # 号， ...]]></summary>
+深圳
+
+[TP-LINK]
+
+成都
+
+有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。
+
+[腾讯]
+[字节跳动]
+[阿里]
+[美团]
+[百度]
+[京东]，但基本不招 ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Markdownlint 使用]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/markdownlint.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/markdownlint.html">
+        <title type="html"><![CDATA[面经集合 - 2020]]></title>
+        <id>https://blog.lyh543.cn/notes/carrers/interview-experience/2020.html</id>
+        <link href="https://blog.lyh543.cn/notes/carrers/interview-experience/2020.html">
         </link>
-        <updated>2019-08-30T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Markdownlint 是 Visual Studio Code 的一个 Markdown 插件。
+        <updated>2020-10-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[推荐搭配 面试相关知识 食用。
 
-markdownlint_intro
+2020冬 字节跳动北京 电商后端 日常实习
 
-[下载链接](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownl ...]]></summary>
+职位链接
+
+第一面
+
+面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[博客迁移 ing...]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/migrating-from-hexo-to-vuepress.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/migrating-from-hexo-to-vuepress.html">
+        <title type="html"><![CDATA[面经集合 - 2021]]></title>
+        <id>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</id>
+        <link href="https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html">
         </link>
-        <updated>2021-07-29T14:49:41.000Z</updated>
-        <summary type="html"><![CDATA[我的第一篇博客 Hello Hexo 是在 2019-6-24 创建的。还记得当时还在大一下的期末考试周，但我就是不想复习电路分析等等，就是要搭博客哈哈哈。
+        <updated>2021-03-07T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[推荐搭配 面试相关知识 食用。
 
-转眼间，Hexo 博客用了两年多了，主题也用过两个：hexo-theme-material 和 [he ...]]></summary>
+2021春 腾讯成都 CSIG 后台开发 暑期实习
+
+这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。
+
+一面
+
+自我介绍
+自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。
+会 Ja ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[用 GitHub Actions 自动化发布 Hexo 网站到 GitHub Pages（转载）]]></title>
-        <id>https://blog.lyh543.cn/posts/blog/use-github-actions-to-deploy-hexo.html</id>
-        <link href="https://blog.lyh543.cn/posts/blog/use-github-actions-to-deploy-hexo.html">
+        <title type="html"><![CDATA[面试相关知识]]></title>
+        <id>https://blog.lyh543.cn/notes/carrers/interview-notes.html</id>
+        <link href="https://blog.lyh543.cn/notes/carrers/interview-notes.html">
         </link>
-        <updated>2020-09-28T21:03:29.000Z</updated>
-        <summary type="html"><![CDATA[转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金
+        <updated>2021-03-26T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[以下知识均在后台开发面试中实际出现过、总结而来。
 
-之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：
+C++
 
-#!/bin/bash
+多态的实现
 
-echo
-echo pus ...]]></summary>
+即虚函数表。
+
+STL 容器库
+
+容器库 - cppreference.com
+
+unordered_map 和 map 的区别
+
+略。
+
+multimap 和 map 的区别
+
+略。
+ ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《编程珠玑》笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html">
+        </link>
+        <updated>2019-08-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[编程珠玑每一章讲了编程、开发的不同的方面。
+第一章讲如何准确、正确的定义问题。
+第二章讲算法设计（灵光一现，啊哈！算法）。
+第三章提到数据结构和编程的关系（欸有点面向对象的感觉）。
+第四章运用循环不变式来证明程序的正确性。
+第五章运用脚手架、断言调试程序。
+第六章概述了加速程序的几个方向，并在第八至x章分别阐述。
+第七章书如其名：粗略估算。
+第八章重新设计算法来 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[字符编码（转载）]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/character-encoding.html">
+        </link>
+        <updated>2019-08-22T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[转自：https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896
+
+因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html">
+        </link>
+        <updated>2020-09-08T14:52:38.000Z</updated>
+        <summary type="html"><![CDATA[授课老师：廖建明老师
+教材：《微机原理与接口技术》(第4版). 吴宁,乔亚男主编. 清华大学出版社
+参考教材:《汇编语言程序设计》. 廖建明主编.清华大学出版社
+
+第一章 微型计算机基础概论
+
+计算机的工作原理
+
+计算机中的指令执行过程：取指令 -> 指令译码 -> 读取操作数 -> 执行命令 -> 存放结果
+
+![计算机基本组成结构](/images/2b125ce68 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[华迪大数据专业实习日记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html">
+        </link>
+        <updated>2020-07-01T23:24:32.000Z</updated>
+        <summary type="html"><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
+
+6.30
+
+上午：Python 基础，可参考廖雪峰博客。
+
+下午：Python 的语法糖；Sracpy 爬虫
+
+7.1
+
+上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（用爬到的链接再进行爬虫 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[编译原理 课程笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html">
+        </link>
+        <updated>2021-03-02T10:51:02.000Z</updated>
+        <summary type="html"><![CDATA[一到四章的概念也就图一乐，真学习还得看第五章
+
+引言
+
+语言
+
+语言：一组规则的组合
+
+字母表的定义
+词法规则：单词符号的形成规则
+语法规则：（短语、从句、句子、段落、文章）语法单位的形成规则
+语义规则：单词符号和语法单位的含义规则
+语用规则：语义规则的发展和 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[计算机系统结构 复习笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html">
+        </link>
+        <updated>2021-03-01T14:40:25.000Z</updated>
+        <summary type="html"><![CDATA[引言
+
+处理器惊人的性能改进
+
+处理器惊人的性能改进
+
+分析：
+每年 25%（1978-1986）: 性能增长主要依赖实现技术的进步
+每年 52%（1986-2003）: 性能增长依赖两方面：
+  系统结 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[计算机网络安全 课程笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html">
+        </link>
+        <updated>2020-09-08T10:20:09.000Z</updated>
+        <summary type="html"><![CDATA[什么是信息
+什么是信息安全
+
+信息是对事物不确定性的度量，并进而采用信息量来描述信息。
+
+信息安全是保证信息的基本属性所需的全面的管理
+规程和控制。
+
+信息安全的基本属性
+
+完整性
+可用性
+机密性
+可靠性
+不可抵赖性
+
+信息安全服务
+
+认证
+访问控制
+数据保密
+数据完整性
+非否认
+
+安全机制
+
+加密
+数字签名 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[数据结构与算法]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html">
+        </link>
+        <updated>2020-02-04T12:59:19.000Z</updated>
+        <summary type="html"><![CDATA[这是我大二上修的《数据结构与算法》的笔记。
+
+数据结构绪论
+
+数据相关术语
+
+数据：所有能被计算机识别的符号集合
+数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）
+数据项：是数据结构中讨论的最小单位（一个人的出生日期）
+数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）
+
+数据结构相关术语
+
+数据结构：带结构的数据元素的集合。全面的来说，$DS ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[算法设计]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html">
+        </link>
+        <updated>2019-10-27T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。
+
+绪论
+
+算法解决的三种问题
+
+Desicion Problem（判断是否）
+Optimal（最优化的结果/解）
+Numeric Calculation（数字计算、解方程）
+
+问题的分类（按复杂度）
+
+P: a solutuon can be ...]]></summary>
     </entry>
 </feed>

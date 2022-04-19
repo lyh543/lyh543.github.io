@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>从网易云音乐获得 lrc 格式歌词 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="最近喜欢听各种冷门歌手的翻唱曲，经常遇到没有歌词的情况。由于是翻唱，理论上把原曲的 lrc 文件搬运过去提交就行了，但是，网易云貌似不提供 lrc 歌词的下载。
+
+实际上，网易云音乐的歌词存储格式是类似于 lrc 的，只需要一定转换。
+
+需要网易云音乐 PC / Android / UWP 客户端。
+
+这里我们用[《别看我只是一只羊》](http://music.163.com/song?id=5 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.82c151b0.js" as="script"><link rel="preload" href="/assets/js/144.1d9ea8da.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近喜欢听各种冷门歌手的翻唱曲，经常遇到没有歌词的情况。由于是翻唱，理论上把原曲的 lrc 文件搬运过去提交就行了，但是，网易云貌似不提供 lrc 歌词的下载。</p> <p>实际上，网易云音乐的歌词存储格式是类似于 lrc 的，只需要一定转换。</p> <p>需要网易云音乐 PC / Android / UWP 客户端。</p> <p>这里我们用<a href="http://music.163.com/song?id=5242612" target="_blank" rel="noopener noreferrer">《别看我只是一只羊》<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>作为示范。（你问我为什么用这首？看我头像）</p> <blockquote><p>测试版本：
+网易云音乐 PC 版本 2.7.1
+网易云音乐安卓版 7.0.10
+网易云音乐 UWP 版早期是支持的，最近没有使用，应该也是支持的
+iOS 可能是不支持的，Mac OS X 可能支持，但由于没有设备，没有进行测试</p></blockquote> <h2 id="找到歌曲-id"><a href="#找到歌曲-id" class="header-anchor">#</a> 找到歌曲 id</h2> <p>我们要从歌曲的分享链接找到歌曲的 id。客户端通过分享链接/直接从网页复制音乐链接均可。</p> <div class="language- extra-class"><pre class="language-text"><code>http://music.163.com/song?id=5242612&amp;userid=xxxxxxxxx
+</code></pre></div><p>不同客户端、不同版本获取的链接可能不同，但 <code>songid</code> 都是比较明显的。（这里我把个人的 userid 略去了）</p> <p>于是我们得到这首歌的 <code>songid</code> 为 <code>5242612</code>。</p> <h2 id="得到原始歌词文件"><a href="#得到原始歌词文件" class="header-anchor">#</a> 得到原始歌词文件</h2> <blockquote><p>注意：网易云 PC 7.2.1 必须要下载歌曲才可以获得歌词文件。可采用 Android 或 UWP 客户端。
+UWP 版本因很久没有使用过了，文件夹可能变化。</p></blockquote> <p>接下来，我们需要得到原始歌曲文件。我们在客户端播放这首歌，等其加载完歌词。（有的客户端可能需要下载歌曲才能获得歌词）</p> <p>然后，我们找到网易云缓存歌词的文件夹：</p> <p>PC 7.2.1 版为：<code>%USERPROFILE%\AppData\Local\Netease\CloudMusic\webdata\lyric</code>，直接复制到地址栏即可。<br>
+UWP 版（可能）为：<code>%USERPROFILE%\AppData\Local\Packages\1F8B0F94.122165AE053F_j2p0p5q0044a6</code>。<br>
+Android 版（缓存歌词文件夹）为：<code>内部存储器/netease/cloudmusic/Cache/Lyric</code>。<br>
+Android 版（已下载歌曲的歌词文件夹）为：<code>内部存储器/netease/cloudmusic/Download/Lyric</code>。</p> <p>文件夹里为以 songid （无后缀） 命名的歌词文件。以 songid <code>5242612</code> 搜索到该歌词文件（也可以在 cloudmusic 文件夹就直接搜索了）。</p> <h2 id="处理为-lrc-文件"><a href="#处理为-lrc-文件" class="header-anchor">#</a> 处理为 lrc 文件</h2> <p>用文本编辑器打开该文件，即可看到类似于 lrc 格式的歌词。但是 lrc 歌词的换行全部被替换为了 <code>\n</code>，需要替换回来。</p> <p>可以进行手动替换，或者使用别的文本编辑器。这里我们使用 Windows 下的 notepad++。原文件如下：</p> <div class="language- extra-class"><pre class="language-text"><code>{&quot;briefDesc&quot;:&quot;&quot;,&quot;kalaokLyric&quot;:&quot;&quot;,&quot;kalaokVersion&quot;:0,&quot;lyric&quot;:&quot;[by:RisingTank]\n[by:E-Lyric]\n[offset:-100]\n[00:10.28][01:25.09][02:28.25]喜羊羊\n[00:11.34][01:26.29][02:29.12]美羊羊\n[00:12.38][01:27.10][02:30.11]懒羊羊\n[00:13.26][01:28.01][02:30.99]沸羊羊\n[00:14.37][01:29.22][02:32.09]慢羊羊\n[00:15.40][01:30.13][02:33.10]软绵绵\n[00:16.42][01:31.17][02:34.12]红太狼\n[00:17.15][01:31.79][02:34.98]灰太狼\n[00:18.43][00:50.75][01:24.10][01:33.28]\n[00:20.36][00:35.91][01:35.16]别看我只是一只羊\n[00:24.16][01:39.10]绿草因为我变的更香\n[00:27.62][01:42.91]天空因为我变的更蓝\n[00:32.05][01:46.72]白云因为我变的柔软\n[00:39.76]羊儿的聪明难以想像\n[00:43.74]天再高心情一样奔放\n[00:47.75]每天都追赶太阳\n[00:51.36][01:50.29]有什么难题去牵绊我都不会去心伤\n[00:55.21][01:54.28]有什么危险在我面前也不会去慌乱\n[00:59.11][01:58.18]就算有狼群把我追捕也当做游戏一场\n[01:06.85][02:05.88]在什么时间都爱开心笑容都会飞翔\n[01:11.02][02:09.94]就算会摔倒站得起来永远不会沮丧\n[01:14.87][02:13.80]在所有天气拥有叫人大笑的力量\n[01:21.27][02:20.55]虽然我只是羊\n[02:36.31]wu da da\n[02:38.25]wu lu lu\n[02:38.86]wu wu lu lu\n[02:40.08]de li de\n[02:41.03]de da da\n[02:42.30]de de de de de de de\n&quot;,&quot;lyricInfoType&quot;:&quot;Lyric_Loaded_Or_Update&quot;,&quot;lyricUserId&quot;:5242612,&quot;lyricUserName&quot;:&quot;RisingTank&quot;,&quot;lyricUserOffset&quot;:-1,&quot;lyricUserTime&quot;:0,&quot;lyricVersion&quot;:22,&quot;musicId&quot;:5242612,&quot;qfy&quot;:false,&quot;transUserId&quot;:0,&quot;transUserTime&quot;:0,&quot;translateLyric&quot;:&quot;&quot;,&quot;translateVersion&quot;:0}
+</code></pre></div><p>在工具栏上找到替换按钮并单击，打开替换窗口，查找目标设为 <code>\\n</code>，替换为设为：<code>\n</code>，下面的查找模式设为 <code>扩展(\n, \r, \t, \0, \x...)</code>，然后点击 <code>全部替换</code>。歌词变为如下：</p> <div class="language- extra-class"><pre class="language-text"><code>{&quot;briefDesc&quot;:&quot;&quot;,&quot;kalaokLyric&quot;:&quot;&quot;,&quot;kalaokVersion&quot;:0,&quot;lyric&quot;:&quot;[by:RisingTank]
+[by:E-Lyric]
+[offset:-100]
+[00:10.28][01:25.09][02:28.25]喜羊羊
+[00:11.34][01:26.29][02:29.12]美羊羊
+[00:12.38][01:27.10][02:30.11]懒羊羊
+[00:13.26][01:28.01][02:30.99]沸羊羊
+[00:14.37][01:29.22][02:32.09]慢羊羊
+[00:15.40][01:30.13][02:33.10]软绵绵
+[00:16.42][01:31.17][02:34.12]红太狼
+[00:17.15][01:31.79][02:34.98]灰太狼
+[00:18.43][00:50.75][01:24.10][01:33.28]
+[00:20.36][00:35.91][01:35.16]别看我只是一只羊
+[00:24.16][01:39.10]绿草因为我变的更香
+[00:27.62][01:42.91]天空因为我变的更蓝
+[00:32.05][01:46.72]白云因为我变的柔软
+[00:39.76]羊儿的聪明难以想像
+[00:43.74]天再高心情一样奔放
+[00:47.75]每天都追赶太阳
+[00:51.36][01:50.29]有什么难题去牵绊我都不会去心伤
+[00:55.21][01:54.28]有什么危险在我面前也不会去慌乱
+[00:59.11][01:58.18]就算有狼群把我追捕也当做游戏一场
+[01:06.85][02:05.88]在什么时间都爱开心笑容都会飞翔
+[01:11.02][02:09.94]就算会摔倒站得起来永远不会沮丧
+[01:14.87][02:13.80]在所有天气拥有叫人大笑的力量
+[01:21.27][02:20.55]虽然我只是羊
+[02:36.31]wu da da
+[02:38.25]wu lu lu
+[02:38.86]wu wu lu lu
+[02:40.08]de li de
+[02:41.03]de da da
+[02:42.30]de de de de de de de
+&quot;,&quot;lyricInfoType&quot;:&quot;Lyric_Loaded_Or_Update&quot;,&quot;lyricUserId&quot;:5242612,&quot;lyricUserName&quot;:&quot;RisingTank&quot;,&quot;lyricUserOffset&quot;:-1,&quot;lyricUserTime&quot;:0,&quot;lyricVersion&quot;:22,&quot;musicId&quot;:5242612,&quot;qfy&quot;:false,&quot;transUserId&quot;:0,&quot;transUserTime&quot;:0,&quot;translateLyric&quot;:&quot;&quot;,&quot;translateVersion&quot;:0}
+</code></pre></div><p>然后我们把lrc 格式的部分（中括号开头的部分）复制，粘贴到另一个文档并另存为 lrc 格式即可。</p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-43fd1027><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-43fd1027></script></div></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.82c151b0.js" defer></script><script src="/assets/js/144.1d9ea8da.js" defer></script>
+  </body>
+</html>

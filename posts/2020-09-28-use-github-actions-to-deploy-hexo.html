@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>用 GitHub Actions 自动化发布 Hexo 网站到 GitHub Pages（转载） | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="转载自：用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金
+
+之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：
+
+#!/bin/bash
+
+echo
+echo pus ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.82c151b0.js" as="script"><link rel="preload" href="/assets/js/161.28e8d0d1.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><blockquote><p>转载自：<a href="https://juejin.im/post/6844903961435045902" target="_blank" rel="noopener noreferrer">用GitHub Actions 自动化发布Hexo网站到GitHub Pages - 掘金<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <p>之前我已经习惯了自己在本地部署 Hexo 并 push，也写过一个一键 push 到博客部署仓库和博客仓库的 shell 脚本，如下：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token builtin class-name">echo</span>
+<span class="token builtin class-name">echo</span> pushing to lyh543/lyh543.github.io.backup
+<span class="token builtin class-name">echo</span>
+
+<span class="token function">git</span> <span class="token function">add</span> --all
+<span class="token function">git</span> commit -m <span class="token string">&quot;update on <span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%c<span class="token variable">)</span></span>&quot;</span>
+<span class="token function">git</span> push origin
+
+<span class="token comment"># 当存在任意参数，如调用时使用 `./hexop 1` 时，则不会 push 到博客部署仓库</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> -z <span class="token variable">$1</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span>
+    <span class="token builtin class-name">echo</span> pushing to lyh543/lyh543.github.io
+    <span class="token builtin class-name">echo</span>
+
+    hexo d -g
+<span class="token keyword">fi</span>
+</code></pre></div><p>一直这么用着，也没有觉得比 GitHub Actions 麻烦很多，直到当我有同时在笔记本和台式上写博客的需求。deploy 到 GitHub 过程中，如果此次部署的电脑和上次不同，会导致博客部署仓库的 Git 提交记录冲突，必须使用 <code>forced update</code>，导致每次都需要把所有文件重新传一份。</p> <p>于是开始学习了 GitHub Actions。发现还不错。而且网上也有现有的部署 Hexo 的中文教程可用。下面转载这篇文章，并加入自己的理解。</p> <h2 id="准备-hexo-网站"><a href="#准备-hexo-网站" class="header-anchor">#</a> 准备 Hexo 网站</h2> <p>在本地建立一个 Hexo 站点，可以参考官方快速开始文档。</p> <p>建立两个 GitHub 仓库，分别叫 <code>blog</code>（私有的，名字可自取）和 <code>your_github_username.github.io</code>（公有的）。前者用来存储博客源文件，后者用于存储博客部署文件。这里我选择 <code>lyh543.github.io.backup</code> 存储博客源文件，<code>lyh543.github.io</code> 存放博客部署文件。</p> <p><img src="/images/04d0daf452702bd99d8efc0a193d0b21aef1c6b8a8a5207752429e5fb1d65e01.png" alt="两个仓库最终的效果"></p> <p>然后将本地的博客源文件推送到 <code>lyh543.github.io.backup</code> 仓库。</p> <h2 id="准备-ssh-秘钥"><a href="#准备-ssh-秘钥" class="header-anchor">#</a> 准备 SSH 秘钥</h2> <p>为了方便运行 GitHub Actions 时登录 GitHub 账号，我们使用 SSH 方式登录。</p> <p>在本地使用 <code>ssh-keygen</code> 生成一组公私秘钥对：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>ssh-keygen -t rsa -b <span class="token number">4096</span> -f ~/.ssh/github-actions-deploy
+</code></pre></div><p>生成了公钥 <code>~/.ssh/github-actions-deploy.pub</code> 和私钥 <code>~/.ssh/github-actions-deploy</code>。</p> <p>在 GitHub 的 <code>Settings-&gt;SSH and GPG keys</code> 添加刚刚生成的公钥，名称随意。</p> <p>在 <code>lyh543.github.io</code> 仓库的 <code>Settings-&gt;Secrets</code> 里添加刚刚生成的私钥，名称为 <code>ACTION_DEPLOY_KEY</code>。</p> <p>如果在 Hexo deploy 过程中还需要 <code>sftp</code> 部署到服务器，则还需要在服务器添加私钥：在本地执行 <code>ssh-copy-id -i ~/.ssh/github-actions-deploy.pub root@you-server-ip.com</code>。</p> <h2 id="设置-hexo-的部署配置"><a href="#设置-hexo-的部署配置" class="header-anchor">#</a> 设置 Hexo 的部署配置</h2> <p>在 <code>_config.yml</code> 添加部署配置：</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token comment"># Deployment</span>
+<span class="token comment">## Docs: https://hexo.io/docs/deployment.html</span>
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> git
+  <span class="token key atrule">repo</span><span class="token punctuation">:</span>
+    <span class="token key atrule">github</span><span class="token punctuation">:</span> git@github.com<span class="token punctuation">:</span>lyh543/lyh543.github.io.git
+  <span class="token key atrule">branch</span><span class="token punctuation">:</span> master
+<span class="token comment"># 如果有 sftp 部署到服务器的需求，则可将下面的部分取消注释</span>
+<span class="token comment"># - type: sftp</span>
+<span class="token comment">#   host: your-server-ip.com</span>
+<span class="token comment">#   user: root</span>
+<span class="token comment">#   # pass: &lt;password&gt;</span>
+<span class="token comment">#   remotePath: /var/www/html/blog</span>
+<span class="token comment">#   port: 22</span>
+<span class="token comment">#   privateKey: /home/runner/.ssh/id_rsa # runner 是 GitHub Actions 的 username（这里不能使用 ~ 代替 /home/runner）</span>
+<span class="token comment">#   # passphrase: [passphrase]</span>
+<span class="token comment">#   # agent: [path/to/agent/socket]</span>
+</code></pre></div><h2 id="配置-github-actions"><a href="#配置-github-actions" class="header-anchor">#</a> 配置 GitHub Actions</h2> <p>在 <code>lyh543.github.io.backup</code> 仓库的 Actions 选项卡下点击新建 workflow，编写如下配置。</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy Blog
+
+<span class="token key atrule">on</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>push<span class="token punctuation">]</span> <span class="token comment"># 当有新push时运行</span>
+
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">build</span><span class="token punctuation">:</span> <span class="token comment"># 一项叫做build的任务</span>
+
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest <span class="token comment"># 在最新版的Ubuntu系统下运行</span>
+    
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Checkout <span class="token comment"># 将仓库内master分支的内容下载到工作目录</span>
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v1 <span class="token comment"># 脚本来自 https://github.com/actions/checkout</span>
+      
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Use Node.js 10.x <span class="token comment"># 配置Node环境</span>
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v1 <span class="token comment"># 配置脚本来自 https://github.com/actions/setup-node</span>
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token string">&quot;10.x&quot;</span>
+    
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup Hexo env
+      <span class="token key atrule">env</span><span class="token punctuation">:</span>
+        <span class="token key atrule">ACTION_DEPLOY_KEY</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span><span class="token punctuation">{</span> secrets.ACTION_DEPLOY_KEY <span class="token punctuation">}</span><span class="token punctuation">}</span>
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        # set up private key for deploy
+        mkdir -p ~/.ssh/
+        echo &quot;$ACTION_DEPLOY_KEY&quot; | tr -d '\r' &gt; ~/.ssh/id_rsa # 配置秘钥
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+        # ssh-keyscan your-server-ip.com &gt;&gt; ~/.ssh/known_hosts # 如果需要 sftp，则还需要注释掉一行
+        # set git infomation
+        git config --global user.name 'lyh543' # 换成你自己的邮箱和名字
+        git config --global user.email 'lxl361429916@live.com'
+        # install dependencies
+        npm i -g hexo-cli # 安装hexo
+        npm i</span>
+  
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        # publish
+        hexo generate &amp;&amp; hexo deploy # 执行部署程序</span>
+</code></pre></div><p><img src="/images/6424e531366228e82d00d0579d0db7129d60cc576eada70972de6847e4d55e3d.png" alt="新建 Workflow"></p> <p>直接将配置复制覆盖左边的编辑框的内容即可。名称可自取。然后在本地 <code>git pull</code>。</p> <p>之后就可以在 GitHub Actions 看到这次部署了。</p> <p><img src="/images/a03c6f1d0b431474f800176df0ee416408687edf4c524b3c459f8888494fce10.png" alt="GitHub Actions"></p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-43fd1027><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-43fd1027></script></div></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.82c151b0.js" defer></script><script src="/assets/js/161.28e8d0d1.js" defer></script>
+  </body>
+</html>

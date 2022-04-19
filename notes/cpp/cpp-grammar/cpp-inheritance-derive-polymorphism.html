@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>C++ 面向对象——继承、派生和多态 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
+
+派生，就是从原来的大类，通过增加新的东西、特性、条件，变成了新的小类。如，从哺乳动物通过增加特性（汪汪叫、喵喵叫），派生到狗、猫。
+
+狗和猫，都继承了哺乳动物的特点（胎生等），派生的时候，狗、猫都会自动继承哺乳动物有的特点，无需重复声明。
+
+名称上，被派生的（哺乳动物）叫基类（父类），派生出来的猫、狗叫做派生类（子类）。他们间的继承关系，是由派生类到大类。
+
+（貌似继承和派生是反义词）
+
+在 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.82c151b0.js" as="script"><link rel="preload" href="/assets/js/55.aed28d88.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="继承和派生"><a href="#继承和派生" class="header-anchor">#</a> 继承和派生</h2> <p>派生，就是从原来的大类，通过增加新的东西、特性、条件，变成了新的小类。如，从哺乳动物通过增加特性（汪汪叫、喵喵叫），派生到狗、猫。</p> <p>狗和猫，都继承了哺乳动物的特点（胎生等），派生的时候，狗、猫都会自动继承哺乳动物有的特点，无需重复声明。</p> <p>名称上，被派生的（哺乳动物）叫基类（父类），派生出来的猫、狗叫做派生类（子类）。他们间的继承关系，是由派生类到大类。</p> <p>（貌似继承和派生是反义词）</p> <p>在 C++ 中，除了单继承，还可以多继承（狗同时继承了哺乳动物和岸生动物的特点）。</p> <p>派生类的功能：</p> <ol><li>继承了基类的所有成员；</li> <li>可以改造基类的成员；</li> <li>添加新的成员。</li></ol> <h3 id="继承类的定义"><a href="#继承类的定义" class="header-anchor">#</a> 继承类的定义</h3> <p>定义继承类的语法格式如下：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">Dog</span><span class="token operator">:</span> <span class="token base-clause"><span class="token operator">&lt;</span>继承方式<span class="token operator">&gt;</span> <span class="token class-name">Terrestrial</span><span class="token punctuation">,</span> <span class="token operator">&lt;</span>继承方式<span class="token operator">&gt;</span> <span class="token class-name">Mammalia</span></span>
+<span class="token punctuation">{</span>
+    <span class="token comment">//定义派生新增加的成员</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>继承方式分为：公有继承（public）、私有继承（private，默认）、保护继承（private），后面有详细解释。</p> <h3 id="保护成员-和-继承方式-公有继承、私有继承、保护继承"><a href="#保护成员-和-继承方式-公有继承、私有继承、保护继承" class="header-anchor">#</a> 保护成员 和 继承方式：公有继承、私有继承、保护继承</h3> <p>无论使用那种继承，基类的对象及其成员都会成为派生类的一部分，但是成员的属性可能发生变化。
+<strong>但是，无论使用哪种继承，基类的私有成员在派生类不能直接访问</strong>，必须通过基类提供的公有函数、保护函数访问。</p> <p>于是产生了保护成员：</p> <p><code>公有成员</code> 对于 派生类 和 类外部 都是可见的；
+<code>私有成员</code> 对于 派生类 和 类外部 都是不可见的；
+<code>保护成员</code> 是二者的一个中和，他对于 派生类 是可见的，对于 类外部 是不可见的。</p> <p>说完保护成员，三种继承的区别就很简短了：</p> <ul><li>公有继承（public）：公有继承是 <code>is a</code> 的关系，基类的 <code>public</code> 和 <code>protected</code> 成员属性都不会改变。这是最常用的。</li> <li>私有继承（private）：他是一个 <code>has a</code> 的关系。基类的 <code>public</code> 和 <code>protected</code> 成员都会变为 <code>private</code>。</li> <li>保护继承（protected）：是私有继承的变体。基类的 <code>public</code> 和 <code>protected</code> 成员都会变为 <code>protected</code>。</li></ul> <p>也可以用下面的表格来说明：</p> <table><thead><tr><th>基类</th> <th>public 成员</th> <th>protected 成员</th> <th>private 成员</th></tr></thead> <tbody><tr><td>public 继承</td> <td>public</td> <td>protected</td> <td>不可见</td></tr> <tr><td>protected 继承</td> <td>protected</td> <td>protected</td> <td>不可见</td></tr> <tr><td>private 继承</td> <td>private</td> <td>private</td> <td>不可见</td></tr></tbody></table> <p>另外，<code>struct</code> 也是可以继承的：</p> <blockquote><p>In C++, a structure's inheritance is the same as a class except the following differences: When deriving a struct from a class/struct, the default access-specifier for a base class/struct is public. And when deriving a class, the default access specifier is private.
+-- Struct inheritance in C++ - Stack Overflow</p></blockquote> <p>实际开发中，私有继承和保护继承有多少应用场景呢？</p> <p><a href="https://www.zhihu.com/question/36133278/answer/66070708" target="_blank" rel="noopener noreferrer">知乎<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>上有这么一个问题，可见其实用的真的很少，很多私有继承可以用类的组合来代替，而 Java 直接就把私有和保护两种继承给砍掉了。</p> <h4 id="私有继承和类的组合"><a href="#私有继承和类的组合" class="header-anchor">#</a> 私有继承和类的组合</h4> <p>私有继承和<a href="../class-and-object#%E7%B1%BB%E7%9A%84%E7%BB%84%E5%90%88">类的组合</a>都有一个类（下称 Y 类）能用到另一个类（下称 X 类）的 <code>public</code> 成员和函数，而不能使用 <code>private</code> 成员的特性，开发时，具体选择哪个使用呢？</p> <p>一般来说，C++ 程序员更喜欢类的组合，一是理解起来容易，二是 Y 类可以使用 X 类的多个对象（继承不能）。</p> <p>但是，如果有使用 X 类的 <code>private</code> 成员，或者需要2使用 <a href="#%E8%99%9A%E5%87%BD%E6%95%B0">虚函数</a>，就需要使用私有继承。</p> <p>个人感觉，如果有继承的层次感（如哺乳动物 -&gt; 狗）的结构，建议使用继承；否则使用类的组合（线段有两个点 <code>class Point</code>）。</p> <h3 id="派生类的构造和析构"><a href="#派生类的构造和析构" class="header-anchor">#</a> 派生类的构造和析构</h3> <p>派生类的构造函数理论上只需要给新的成员提供初始化顺序，而父类的成员只需要用父类的构造函数即可（如果是私有成员，是必须使用构造函数）。具体语法如下：</p> <blockquote><p>简要介绍背景：一个 <code>ShoppingCard</code> 类，存了用户的钱钱数；<br>
+有一个 <code>MemberCard</code> 类继承了 <code>ShoppingCard</code>，并增加了一个 <code>cardid</code> 成员。</p></blockquote> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">MemberCard</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ShoppingCard</span></span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">char</span><span class="token operator">*</span> cardid<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> score<span class="token punctuation">;</span>
+    <span class="token function">MemberCard</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> _cardid<span class="token punctuation">,</span> <span class="token keyword">float</span> _money<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ShoppingCard</span><span class="token punctuation">(</span>_money<span class="token punctuation">)</span> <span class="token comment">//, &lt;更多的父类&gt;(&lt;参数&gt;)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">strcpy</span><span class="token punctuation">(</span>cardid<span class="token punctuation">,</span>_cardid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>在 <code>&lt;更多的父类&gt;</code> 处，除了写更多的父类，还可以写：</p> <ol><li>对象成员（即成员是另一个类的对象），这样就可以也把对象成员初始化了；</li> <li>甚至，可以写基本数据类型的变量（如 <code>score(0)</code>），因为 C++ 可以使用类似的方法对他们赋初值。</li></ol> <p>调用构造函数的时候，成员初始化列表 <code>ShoppingCard(_money)</code> 先被执行，再执行派生类的构造函数 <code>strcpy(cardid,_cardid);</code>。相反地，调用析构函数时，先调用派生类的析构函数，再按<strong>构造函数中提到的父类的逆序</strong>调用父类的析构函数。也就是说，析构函数直接就是 <code>~MemberCard(){/*Some Codes*/}</code>，没有 <code>:ShoppingCard(_money)</code> 部分。</p> <p>如果省略基类构造函数，则默认调用基类的默认构造函数 <code>ShoppingCard()</code>。</p> <h3 id="派生类重载基类的成员函数"><a href="#派生类重载基类的成员函数" class="header-anchor">#</a> 派生类重载基类的成员函数</h3> <p>一句话，其实直接重定义（写一个和父类函数的名字、参数完全相同的函数），即可覆盖父类继承来的函数。<br>
+而如果又想调用基类里已经被重定义的函数，那么调用时加 <code>基类名::函数名()</code> 即可。如：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">MemberCard</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ShoppingCard</span></span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">consume</span><span class="token punctuation">(</span><span class="token keyword">int</span> money<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">.</span><span class="token number">.1</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>A<span class="token punctuation">;</span>
+
+A<span class="token punctuation">.</span><span class="token function">consume</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//调用继承类MemberCard::consume()</span>
+A<span class="token punctuation">.</span><span class="token class-name">ShoppingCard</span><span class="token double-colon punctuation">::</span><span class="token function">consume</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//调用父类ShoppingCard::consume()</span>
+</code></pre></div><h3 id="使用不同基类的同名对象"><a href="#使用不同基类的同名对象" class="header-anchor">#</a> 使用不同基类的同名对象</h3> <p><code>基类名::成员</code> 同样适用于不同类的对象的同名成员。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">Test1</span> <span class="token punctuation">{</span> <span class="token keyword">public</span><span class="token operator">:</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Test2</span> <span class="token punctuation">{</span><span class="token keyword">public</span><span class="token operator">:</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Inheri</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Test1</span><span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token class-name">Test2</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span> B<span class="token punctuation">;</span>
+
+B<span class="token punctuation">.</span>a<span class="token punctuation">;</span> <span class="token comment">//编译错误：有歧义</span>
+B<span class="token punctuation">.</span>Test1<span class="token double-colon punctuation">::</span>a<span class="token punctuation">;</span> <span class="token comment">//正确</span>
+</code></pre></div><h2 id="多继承"><a href="#多继承" class="header-anchor">#</a> 多继承</h2> <p>多继承才是混乱的开始。（逃</p> <h3 id="多继承类的定义、构造函数、析构函数"><a href="#多继承类的定义、构造函数、析构函数" class="header-anchor">#</a> 多继承类的定义、构造函数、析构函数</h3> <p>定义多继承类、构造及析构函数的语法上面已经提到过了。只是再强调一下构造和析构函数的执行顺序：</p> <ul><li>构造函数：顺序执行 <code>:</code> 后面的所有构造函数、再执行 <code>{ }</code> 里的部分（即<strong>从上往下执行</strong>）</li> <li>析构函数：先顺序执行 <code>{ }</code> 里的部分，再<strong>逆序</strong>执行 <code>:</code> 后的所有构造函数。</li></ul> <h3 id="多继承的二义性-虚基类"><a href="#多继承的二义性-虚基类" class="header-anchor">#</a> 多继承的二义性 虚基类</h3> <p>上面提到，不同基类的同名对象，可以通过 <code>基类名::函数名()</code> 准确调用。可是，如果是同一个类的同名对象呢？</p> <p>这个问题的产生，还和 C/C++ 编译有关。C/C++ 编译类的时候，实际上是把类的内容全部复制了一份到对象里面（详见另一篇<a href="/notes/cpp/C语言程序程序设计课程/#多文件编写">博客</a>）。</p> <p>因此，如果有下图的继承结构，编译以后 <code>AMCar</code> 里就会出现两份 <code>Car</code> 的成员。</p> <p><img src="AMCar.svg" alt="AMCar"></p> <p>虽然我们知道两个 <code>Car</code> 等价的，但是编译器却认为这是不等价的。（摊手）</p> <p>于是，就引入了一个新概念，叫 <code>虚基类</code>。</p> <p>虚基类要实现的效果是这样的。</p> <p><img src="AMCar_2.png" alt="虚基类 AMCar"></p> <p>实现的时候，要修改 <code>ACar</code> 和 <code>MCar</code> 的代码，将公共父类 <code>Car</code> 声明为 <code>virtual</code> 虚基类。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">MCar</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token class-name">Car</span></span> <span class="token punctuation">{</span> <span class="token comment">/* */</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">ACar</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">virtual</span> <span class="token keyword">public</span> <span class="token class-name">Car</span></span> <span class="token punctuation">{</span> <span class="token comment">/* */</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">AMCar</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ACar</span><span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token class-name">MCar</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p><code>public</code> 和 <code>virtual</code> 的顺序无关紧要。</p> <p>这样以后，就会只存在一个 <code>Car</code> 了。但是继承路径是怎样的呢（<code>Car</code> 是谁的真基类呢）？<br>
+这取决于 <code>AMCar</code> <strong>声明</strong> <code>ACar</code> 和 <code>MCar</code> 的顺序。<code>Car</code> 是<strong>第一个声明它的真基类</strong>。对于上面的情况，<code>Car</code> 是 <code>ACar</code> 的真基类，是 <code>MCar</code> 的假基类。</p> <p>对于构造函数执行时的顺序，同层次虚基类先于非虚基类。<br>
+不同层次的，遵守“先生成基类，再生成派生类”的规定。</p> <h2 id="多态"><a href="#多态" class="header-anchor">#</a> 多态</h2> <blockquote><p>在许多情况下，我们希望同一个函数的行为随调用的上下文而有所不同，这种情况称为多态。<br>
+如果“调用的上下文”是在程序编译阶段确定下来，这叫静态多态；如果“调用的上下文”在程序运行阶段才能确定，这叫动态多态。</p> <p>在编译的阶段，编译器的一个重要的工作就是解释函数调用语句，要把这句函数调用语句和某个可执行代码块绑定起来，这个过程叫做绑定（Binding）。</p></blockquote> <p>说了一堆看不懂的话。</p> <p>不过看样子，静态多态就是函数重载，这又分为根据参数不同的函数重载，和派生类中对基类的同名函数的重载。<br>
+另外提一句，由于运算符重载属于成员函数重载，于是也属于静态多态。</p> <p>运算符重载更多内容可见另一篇<a href="/notes/cpp/struct/#运算符重载">博客</a>。</p> <h3 id="赋值兼容规则"><a href="#赋值兼容规则" class="header-anchor">#</a> 赋值兼容规则</h3> <p>通常情况下，C++ 不允许不同类型的变量的指针、引用赋值给其他类型的指针、引用。</p> <p>但是，继承类是个特例。只要兼容一定规则，就可以在基类和派生类之间赋值。这种规则被称为<strong>赋值兼容规则</strong>。</p> <blockquote><ol><li>可以把派生类的对象赋给基类的对象</li> <li>可以把基类的指针、引用指向派生类</li></ol></blockquote> <p>在<s>猫猫狗狗</s>继承的意思上理解的话，可以把猫猫狗狗的信息当做普通动物的信息用，而不能反过来把普通动物的信息当做猫猫狗狗用（不然问起来这个动物一天吃多少鱼就很奇怪了啊）；<br>
+在代码实现层面上理解，是可以<strong>舍弃派生类额外的数据</strong>实现转换；而如果反过来了，派生类的<strong>新增的变量就没有定义</strong>了。</p> <p>戴波老师用一句很精炼的话来总结：</p> <blockquote><p>所有的狗都是动物，但不是所有的动物都是狗——所有的派生类对象都是基类的对象。</p></blockquote> <p>以上转化是由派生类向基类的强制转换，叫做向上强制转换 <code>Upcasting</code>。由于其合理性，可以进行<strong>隐式转换</strong>。<br>
+反过来，如果先把基类转为派生类，这叫向下强制转换 <code>Downcasting</code>。虽然不大合理，但是可以<strong>显式转换</strong>。但转换以后，应当格外小心，不要访问到一些未初始化的成员。</p> <h3 id="动态多态-虚函数"><a href="#动态多态-虚函数" class="header-anchor">#</a> 动态多态——虚函数</h3> <p>虚函数的产生，其实是因为上面提到的，指针居然可以指向不同于指针类型的类型。这就会产生一个问题，我就想用基类指针指向的派生对象的派生函数，那咋办嘛。</p> <p>于是，虚函数，就是在执行的时候，才会根据其指针指向的对象是基类还是派生类，来进行对应的重载。这也正是动态重载的定义——在执行的时候，再进行重载。</p> <p>举个栗子，现有 <code>ShoppingCard</code> 与其派生类 <code>MemberCard</code>，想对一个 <code>ShoppingCard</code> 实现虚函数，具体的代码如下：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">//1. 父类成员函数加 virtual</span>
+<span class="token keyword">class</span> <span class="token class-name">ShoppingCard</span>
+<span class="token punctuation">{</span>
+<span class="token comment">//...</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">bool</span> <span class="token function">consume</span><span class="token punctuation">(</span><span class="token keyword">float</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//2. 派生类函数名、参数、返回值完全一致</span>
+<span class="token keyword">class</span> <span class="token class-name">MemberCard</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ShoppingCard</span></span>
+<span class="token punctuation">{</span>
+<span class="token comment">//...</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">bool</span> <span class="token function">consume</span><span class="token punctuation">(</span><span class="token keyword">float</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//...</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//3. 对派生类的对象使用基类的引用/指针</span>
+ShoppingCard <span class="token operator">*</span> card <span class="token operator">=</span> <span class="token keyword">new</span> MemberCard<span class="token punctuation">;</span>
+MemberCard<span class="token punctuation">.</span><span class="token function">consume</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>注意虚函数有条件：他不能为以下函数之一：</p> <ul><li>静态成员函数</li> <li>全局函数</li> <li>友元函数</li></ul> <h4 id="虚函数的实现"><a href="#虚函数的实现" class="header-anchor">#</a> 虚函数的实现</h4> <p>该部分不难，不过仅作了解。</p> <p>简单的来说，就是两句话：</p> <ol><li>编译时，每个定义了虚函数的类会有其对应的 <strong>虚函数表</strong> VTABLE，存有该类中。（派生类的存在派生类里）</li> <li>创建对象时，每个对象会获得指向其<strong>对应的 VTABLE</strong> 的指针。</li></ol> <h4 id="虚构造函数和析构函数"><a href="#虚构造函数和析构函数" class="header-anchor">#</a> 虚构造函数和析构函数</h4> <p>虚构造函数是不存在的。该问题等价于 <code>先有鸡还是先有蛋</code>。（想想，为什么？）</p> <p>而虚析构函数就没有这个问题，其本质和其他虚函数是一样的。</p> <h3 id="纯虚函数和抽象类"><a href="#纯虚函数和抽象类" class="header-anchor">#</a> 纯虚函数和抽象类</h3> <p>此节开篇一句：</p> <blockquote><p>基类往往表示一种抽象的概念，提供一些公共的接口，而这些接口往往不需要实现。</p></blockquote> <p>醍醐灌顶。</p> <p>虚函数在定义后加 <code>=0</code> 即表示纯虚函数，不需要有实现。如上例的代码：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">ShoppingCard</span>
+<span class="token punctuation">{</span>
+<span class="token comment">//...</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">bool</span> <span class="token function">consume</span><span class="token punctuation">(</span><span class="token keyword">float</span> money<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>即可以把基类函数改为纯虚函数。</p> <p>抽象类的概念就是开篇的那句说的“只提供公共接口，不需要实现”的类。<br>
+这个概念不涉及到 C++ 语法，具体做的时候，把成员函数定义为纯虚函数即可。</p> <p>但是我在实际写代码（环境为 Visual Studio 2019）的过程中，注意到了几个点：</p> <ul><li>抽象类<strong>不能</strong>实例化；</li> <li>只要有一个虚函数没有实现，他就是一个抽象类；</li> <li>如果派生类没有实现基类的虚函数，那么这个派生类也是抽象类。</li></ul> <p>所以，如果基类有虚函数，派生类要想有实例化（即能定义该类的对象），必须实现这个函数。</p> <p>这是为了防止一个父类的指针指向了子类，调用父类虚函数时，发现该子类没有定义函数体的情况。</p> <p>而如果子类确实不需要这个函数，解决办法可以是写一个对应名字和参数的空函数 <code>void foo(){}</code> 来实现。</p> <h3 id="多态的意义"><a href="#多态的意义" class="header-anchor">#</a> 多态的意义</h3> <p>说了那么多，那动态多态有什么用嘛，还搞得好复杂，甚至还可能出现漏洞。</p> <p>于是我去知乎搜了一下：</p> <blockquote><p>首先需要明确多态性的用途，是为了<strong>接口的最大程度复用</strong>，以及其定义：</p> <p>多态性的定义，可以简单地概括为“<strong>一个接口，多种方法</strong>”，程序在运行时才决定调用的函数，它是面向对象编程领域的核心概念。多态(polymorphism)，字面意思多种形状。多态分为静态多态和动态多态。<br>
+静态多态是通过重载和模板技术实现，在编译的时候确定。<br>
+动态多态通过虚函数和继承关系来实现，执行动态绑定，在运行的时候确定。
+——https://zhuanlan.zhihu.com/p/47057750</p></blockquote> <p>静态多态能实现接口的很大程度的复用，而动态多态就可以最大化复用的程度吧。</p> <blockquote><p>2020.1.6 更新：在写了一个大实验以后，我发现了动态多态在实战中的用途。</p></blockquote> <p>简单的来说，现在有 <code>class A</code> 为基类，其有派生类 <code>A1</code>、<code>A2</code>、<code>A3</code> 等。我们定义 <code>std::vector&lt;A*&gt;</code>，里面的指针可能指向 <code>A1</code>、<code>A2</code>、<code>A3</code>。</p> <p>使用动态多态的话，可以实现：将<strong>多个不同的派生类 <code>Ai</code> 装在一个集合中</strong>，但是调用的时候却是<strong>调用 <code>Ai</code> 各自派生类的成员函数</strong>。</p> <p>静态多态则做不到，在 <code>Ai</code> 转为 <code>A</code> 的一瞬间，他就失去了他的派生成员。如下程序：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector&gt;</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">A</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">&quot;A&quot;</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">A1</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">A</span></span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">&quot;A1&quot;</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//尝试静态多态</span>
+<span class="token punctuation">{</span>
+	A a<span class="token punctuation">;</span>
+	A1 a1<span class="token punctuation">;</span>
+	vector<span class="token operator">&lt;</span>A<span class="token operator">&gt;</span> vA<span class="token punctuation">;</span>
+	vA<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	vA<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> i <span class="token operator">:</span> vA<span class="token punctuation">)</span>
+		i<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//动态多态</span>
+<span class="token punctuation">{</span>
+	A <span class="token operator">*</span> a <span class="token operator">=</span> <span class="token keyword">new</span> A<span class="token punctuation">;</span>
+	A1 <span class="token operator">*</span> a1 <span class="token operator">=</span> <span class="token keyword">new</span> A1<span class="token punctuation">;</span>
+	vector<span class="token operator">&lt;</span>A<span class="token operator">*</span><span class="token operator">&gt;</span> vA<span class="token punctuation">;</span>
+	vA<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	vA<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> i <span class="token operator">:</span> vA<span class="token punctuation">)</span>
+		i<span class="token operator">-&gt;</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	cout <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+	<span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>该程序的输出为：</p> <div class="language- extra-class"><pre class="language-text"><code>A
+A
+
+A
+A1
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-43fd1027><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-43fd1027></script></div></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.82c151b0.js" defer></script><script src="/assets/js/55.aed28d88.js" defer></script>
+  </body>
+</html>

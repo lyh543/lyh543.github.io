@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>常用 GitHub Actions 代码片段 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
+
+name: Deploy Backend
+on:
+  push:
+    branches:
+      'master'
+env:
+  TZ: Asia/Shanghai
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+如果需要 docker 镜像，可以在这里添加
+
+    steps:
+      uses: acti ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.82c151b0.js" as="script"><link rel="preload" href="/assets/js/75.5543e7a7.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="模板"><a href="#模板" class="header-anchor">#</a> 模板</h2> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy Backend
+<span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">push</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">'master'</span>
+<span class="token key atrule">env</span><span class="token punctuation">:</span>
+  <span class="token key atrule">TZ</span><span class="token punctuation">:</span> Asia/Shanghai
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">build</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+
+    <span class="token comment"># 如果需要 docker 镜像，可以在这里添加</span>
+
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v1
+
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> xxx
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        xxx
+        xxx</span>
+</code></pre></div><h2 id="编译应用"><a href="#编译应用" class="header-anchor">#</a> 编译应用</h2> <h3 id="maven"><a href="#maven" class="header-anchor">#</a> Maven</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Set up JDK
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>java@v1
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">java-version</span><span class="token punctuation">:</span> <span class="token number">16</span>
+
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> mvn clean install
+</code></pre></div><h3 id="npm"><a href="#npm" class="header-anchor">#</a> npm</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Use Node.js
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v1
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token string">&quot;16.x&quot;</span>
+        <span class="token key atrule">cache</span><span class="token punctuation">:</span> <span class="token string">&quot;npm&quot;</span>  <span class="token comment"># or &quot;yarn&quot;</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npm ci  <span class="token comment"># or yarn install --frozen-lockfile</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npm run build
+</code></pre></div><h3 id="yarn"><a href="#yarn" class="header-anchor">#</a> yarn</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Use Node.js
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v1
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token string">&quot;16.x&quot;</span>
+        <span class="token key atrule">cache</span><span class="token punctuation">:</span> <span class="token string">&quot;yarn&quot;</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> yarn install <span class="token punctuation">-</span><span class="token punctuation">-</span>frozen<span class="token punctuation">-</span>lockfile
+    <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> yarn build
+</code></pre></div><h3 id="python"><a href="#python" class="header-anchor">#</a> Python</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Set up Python 3.9
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>python@v2
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">python-version</span><span class="token punctuation">:</span> <span class="token number">3.9</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Install Dependencies
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        python3 -m pip install --upgrade pip
+        pip3 install -r requirements.txt</span>
+</code></pre></div><h2 id="测试应用"><a href="#测试应用" class="header-anchor">#</a> 测试应用</h2> <h3 id="配置测试-mysql-数据库"><a href="#配置测试-mysql-数据库" class="header-anchor">#</a> 配置测试 MySQL 数据库</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token key atrule">services</span><span class="token punctuation">:</span>
+      <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+        <span class="token comment"># docker hub image</span>
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> mysql<span class="token punctuation">:</span><span class="token number">8</span>
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+            <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> testtest
+            <span class="token key atrule">MYSQL_DATABASE</span><span class="token punctuation">:</span> uestcmsc_webapp
+        <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> 3306<span class="token punctuation">:</span><span class="token number">3306</span>
+</code></pre></div><p>顺便一提，GitHub Actions 也支持整个 workflow 直接在 docker container 中运行，如下：</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">container-job</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token comment"># Docker Hub image that `container-job` executes in</span>
+    <span class="token key atrule">container</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span>10.18<span class="token punctuation">-</span>jessie
+</code></pre></div><h3 id="python-django-测试"><a href="#python-django-测试" class="header-anchor">#</a> Python Django 测试</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token key atrule">strategy</span><span class="token punctuation">:</span>
+      <span class="token key atrule">max-parallel</span><span class="token punctuation">:</span> <span class="token number">3</span>
+      <span class="token key atrule">matrix</span><span class="token punctuation">:</span>
+        <span class="token key atrule">python-version</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">3.7</span><span class="token punctuation">,</span> <span class="token number">3.8</span><span class="token punctuation">,</span> <span class="token number">3.9</span><span class="token punctuation">]</span>
+
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Git Checkout
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v2
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Set up Python $<span class="token punctuation">{</span><span class="token punctuation">{</span> matrix.python<span class="token punctuation">-</span>version <span class="token punctuation">}</span><span class="token punctuation">}</span>
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>python@v2
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">python-version</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span><span class="token punctuation">{</span> matrix.python<span class="token punctuation">-</span>version <span class="token punctuation">}</span><span class="token punctuation">}</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Install Dependencies
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        cp config.template.py config.py
+        python3 -m pip install --upgrade pip
+        pip3 install -r requirements.txt</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Run Tests
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        python3 manage.py makemigrations accounts activities \
+                activities_files activities_photos activities_links activities_comments \
+                cloud users --noinput
+        python3 manage.py migrate --noinput
+        python3 manage.py createcachetable
+        coverage run --source=./ manage.py test --noinput</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Coverage Report
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        coverage report -m</span>
+</code></pre></div><h2 id="配置远程服务器"><a href="#配置远程服务器" class="header-anchor">#</a> 配置远程服务器</h2> <h3 id="配置-ssh"><a href="#配置-ssh" class="header-anchor">#</a> 配置 ssh</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup SSH env
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+          <span class="token key atrule">ACTION_DEPLOY_KEY</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span><span class="token punctuation">{</span> secrets.ACTION_DEPLOY_KEY <span class="token punctuation">}</span><span class="token punctuation">}</span>
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+          mkdir -p ~/.ssh/
+          echo &quot;$ACTION_DEPLOY_KEY&quot; | tr -d '\r' &gt; ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts
+          ssh-keyscan lyh543.cn &gt;&gt; ~/.ssh/known_hosts</span>
+          
+          <span class="token comment"># git config --global user.name 'lyh543' # 换成你自己的邮箱和名字</span>
+          <span class="token comment"># git config --global user.email 'lyh543@outlook.com'</span>
+</code></pre></div><h3 id="ssh-发送文件"><a href="#ssh-发送文件" class="header-anchor">#</a> ssh 发送文件</h3> <div class="language-yml extra-class"><pre class="language-yml"><code>      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Send 🚀 To Server
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+          scp \
+          target/Aurora-DriveSyncer.jar \
+          lyh543@lyh543.cn:~/Aurora-DriveSyncer.jar</span>
+</code></pre></div><h2 id="rsync-增量同步文件夹"><a href="#rsync-增量同步文件夹" class="header-anchor">#</a> rsync 增量同步文件夹</h2> <p><code>--delete</code> 参数会同步在 <code>source</code> 中已经被删除的文件。</p> <div class="language-yml extra-class"><pre class="language-yml"><code>    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy 🚀 To Server
+      <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+        rsync --archive --verbose --human-readable --delete \
+          dist/* \
+          lyh543@lyh543.cn:/etc/caddy/html/blog/</span>
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-43fd1027><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-43fd1027></script></div></div></div></article></div> <!----></div></div> <div role="dialog" class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.82c151b0.js" defer></script><script src="/assets/js/75.5543e7a7.js" defer></script>
+  </body>
+</html>
