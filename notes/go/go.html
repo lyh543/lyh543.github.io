@@ -22,7 +22,7 @@ A Tour of Go
 var x int       // x is int
 var p *i ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/82.f54fbd8b.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/82.e0934ca4.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -314,7 +314,7 @@ String() string
     <span class="token string">&quot;fmt&quot;</span>
     <span class="token string">&quot;math&quot;</span>
 <span class="token punctuation">)</span>
-</code></pre></div><p>大写开头的变量和函数会被自动导出，小写的则不能被导出。</p> <p>所以，Go 的命名方法是，需要导出的东西使用 PascalCase，而内部的东西使用 camelCase。看起来很怪异，因为这和 C++/Java 的类使用 PascalCase、对象使用 camelCase 不同。</p> <h2 id="go-语言代码风格"><a href="#go-语言代码风格" class="header-anchor">#</a> Go 语言代码风格</h2> <p><code>go fmt &lt;filename&gt;.go</code> 永远滴神！</p> <p>虽然 <code>go fmt</code> 的风格是用 tab，还是八个空格的 tab，但至少有一个官方排版方案，所以比 C++、Java、Python 各种民间规范更能让人接受。</p> <h2 id="go-的指针"><a href="#go-的指针" class="header-anchor">#</a> Go 的指针</h2> <p>指针和引用的功能是类似的，所以很多语言语言只实现了指针（如 C、Go），或只实现了引用（如 Java、Python）。如果二者都实现了，可能开发者也偏向于使用单一的一种（如 C++ STL中基本都是使用指针）。</p> <p>Go 只实现了指针。但是不同的是，它的指针结构体有点意思：<code>(*p).X</code> 可以简写为 <code>p.X</code>！</p> <p>这种写法，使得结构体指针访问成员可以写成 <code>p.X</code>，这种写法反而更像是引用。所以，Go 虽然使用的是指针，但其语法也借鉴了引用的优点。</p> <h2 id="go-并发"><a href="#go-并发" class="header-anchor">#</a> Go 并发</h2> <h3 id="go-多线程"><a href="#go-多线程" class="header-anchor">#</a> Go 多线程</h3> <p>Go 开多线程也太香了吧，直接 <code>go &lt;function&gt;</code> 就可以了。</p> <h3 id="go-线程同步-信道"><a href="#go-线程同步-信道" class="header-anchor">#</a> Go 线程同步：信道</h3> <p>Go 的线程同步使用的是信道 <code>channel</code>，类似于《操作系统——精髓与设计原理》里进程同步的 <a href="/computer-science/operating-system-classnote/#消息传递">消息传递</a> 方法。</p> <h4 id="无缓冲区信道"><a href="#无缓冲区信道" class="header-anchor">#</a> 无缓冲区信道</h4> <p>默认的信道是<strong>无缓冲区</strong>的，这种情况下采用的是“<strong>阻塞发送、阻塞接收</strong>”的方式：发送方和接收方先准备好的一方会被阻塞，直至另一方也准备好了。</p> <p>创建一个无缓冲区的 <code>int</code> 信道可以使用 <code>c := make(chan int)</code>。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// 将求数组和问题分配到两个进程完成（分别计算前 3 个和、后 3 个和）</span>
+</code></pre></div><p>大写开头的变量和函数会被自动导出，小写的则不能被导出。</p> <p>所以，Go 的命名方法是，需要导出的东西使用 PascalCase，而内部的东西使用 camelCase。看起来很怪异，因为这和 C++/Java 的类使用 PascalCase、对象使用 camelCase 不同。</p> <h2 id="go-语言代码风格"><a href="#go-语言代码风格" class="header-anchor">#</a> Go 语言代码风格</h2> <p><code>go fmt &lt;filename&gt;.go</code> 永远滴神！</p> <p>虽然 <code>go fmt</code> 的风格是用 tab，还是八个空格的 tab，但至少有一个官方排版方案，所以比 C++、Java、Python 各种民间规范更能让人接受。</p> <h2 id="go-的指针"><a href="#go-的指针" class="header-anchor">#</a> Go 的指针</h2> <p>指针和引用的功能是类似的，所以很多语言语言只实现了指针（如 C、Go），或只实现了引用（如 Java、Python）。如果二者都实现了，可能开发者也偏向于使用单一的一种（如 C++ STL中基本都是使用指针）。</p> <p>Go 只实现了指针。但是不同的是，它的指针结构体有点意思：<code>(*p).X</code> 可以简写为 <code>p.X</code>！</p> <p>这种写法，使得结构体指针访问成员可以写成 <code>p.X</code>，这种写法反而更像是引用。所以，Go 虽然使用的是指针，但其语法也借鉴了引用的优点。</p> <h2 id="go-并发"><a href="#go-并发" class="header-anchor">#</a> Go 并发</h2> <h3 id="go-多线程"><a href="#go-多线程" class="header-anchor">#</a> Go 多线程</h3> <p>Go 开多线程也太香了吧，直接 <code>go &lt;function&gt;</code> 就可以了。</p> <h3 id="go-线程同步-信道"><a href="#go-线程同步-信道" class="header-anchor">#</a> Go 线程同步：信道</h3> <p>Go 的线程同步使用的是信道 <code>channel</code>，类似于《操作系统——精髓与设计原理》里进程同步的 <a href="/notes/computer-science/classnotes/operating-system-classnote.html#消息传递">消息传递</a> 方法。</p> <h4 id="无缓冲区信道"><a href="#无缓冲区信道" class="header-anchor">#</a> 无缓冲区信道</h4> <p>默认的信道是<strong>无缓冲区</strong>的，这种情况下采用的是“<strong>阻塞发送、阻塞接收</strong>”的方式：发送方和接收方先准备好的一方会被阻塞，直至另一方也准备好了。</p> <p>创建一个无缓冲区的 <code>int</code> 信道可以使用 <code>c := make(chan int)</code>。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// 将求数组和问题分配到两个进程完成（分别计算前 3 个和、后 3 个和）</span>
 <span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">&quot;fmt&quot;</span>
@@ -451,7 +451,7 @@ tick.
     .
     .
 BOOM!
-</code></pre></div><h4 id="互斥锁"><a href="#互斥锁" class="header-anchor">#</a> 互斥锁</h4> <p>互斥方案就类似于《操作系统——精髓与设计原理》里进程同步的<a href="/computer-science/operating-system-classnote/#信号量">信号量</a>了。</p> <div class="language- extra-class"><pre class="language-text"><code>package main
+</code></pre></div><h4 id="互斥锁"><a href="#互斥锁" class="header-anchor">#</a> 互斥锁</h4> <p>互斥方案就类似于《操作系统——精髓与设计原理》里进程同步的<a href="/notes/computer-science/classnotes/operating-system-classnote.html#信号量">信号量</a>了。</p> <div class="language- extra-class"><pre class="language-text"><code>package main
 
 import (
     &quot;fmt&quot;
@@ -501,6 +501,6 @@ func main() {
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/82.f54fbd8b.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/82.e0934ca4.js" defer></script>
   </body>
 </html>

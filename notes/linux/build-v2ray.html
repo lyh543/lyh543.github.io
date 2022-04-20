@@ -21,15 +21,13 @@ Docker 一键安装法
 
 bash <(curl -s https://get.docker.com)
 
-安装 V2Ray 服务器端
-
-一行命令，但是有需要修改的 ...">
+安装 V2Ray 服务器端 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/97.6eb533ab.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/97.183c1c7b.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="前置需求"><a href="#前置需求" class="header-anchor">#</a> 前置需求</h2> <ul><li>一个域名，且已以 A 记录指向服务器</li></ul> <h2 id="docker-一键安装法"><a href="#docker-一键安装法" class="header-anchor">#</a> Docker 一键安装法</h2> <h3 id="安装-docker"><a href="#安装-docker" class="header-anchor">#</a> 安装 Docker</h3> <p>一键脚本安装。如果不行，可以尝试到 Docker 官网上找方法，或者参考<a href="../docker#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85">另一篇博文</a>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">bash</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token function">curl</span> -s https://get.docker.com<span class="token punctuation">)</span>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="前置需求"><a href="#前置需求" class="header-anchor">#</a> 前置需求</h2> <ul><li>一个域名，且已以 A 记录指向服务器</li></ul> <h2 id="docker-一键安装法"><a href="#docker-一键安装法" class="header-anchor">#</a> Docker 一键安装法</h2> <h3 id="安装-docker"><a href="#安装-docker" class="header-anchor">#</a> 安装 Docker</h3> <p>一键脚本安装。如果不行，可以尝试到 Docker 官网上找方法，或者参考<a href="/notes/linux/docker.html#手动安装">另一篇博文</a>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">bash</span> <span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token function">curl</span> -s https://get.docker.com<span class="token punctuation">)</span>
 </code></pre></div><h3 id="安装-v2ray-服务器端"><a href="#安装-v2ray-服务器端" class="header-anchor">#</a> 安装 V2Ray 服务器端</h3> <p>一行命令，但是有需要修改的参数。</p> <blockquote><p>参考：https://github.com/pengchujin/v2rayDocker</p></blockquote> <div class="language-sh extra-class"><pre class="language-sh"><code>docker run -d --name v2ray -p <span class="token number">443</span>:443 -p <span class="token number">80</span>:80 -v <span class="token environment constant">$HOME</span>/.caddy:/root/.caddy pengchujin/v2ray_ws:0.10 YOURDOMAIN.COM V2RAY_WS <span class="token operator">&amp;&amp;</span> <span class="token function">sleep</span> 3s <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> docker logs v2ray
 </code></pre></div><ul><li><code>YOURDOMAIN.COM</code>：指向你的服务器 IP 的域名</li></ul> <p>修改好上述命令后，粘贴到命令行中执行。</p> <p>三条命令监控 V2Ray：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>docker start v2ray      <span class="token comment"># 启动 v2ray 并重新申请 SSL 证书</span>
 docker stop v2ray       <span class="token comment"># 停止 v2ray</span>
@@ -69,6 +67,6 @@ tcp_bbr                <span class="token number">20480</span>  <span class="tok
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/97.6eb533ab.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/97.183c1c7b.js" defer></script>
   </body>
 </html>

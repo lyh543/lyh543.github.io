@@ -23,7 +23,7 @@ namespace CSharp
 {
     c ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/70.537e0542.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/70.71cf45fe.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -51,7 +51,7 @@ msg2 <span class="token operator">=</span> <span class="token string">&quot;213&
 </code></pre></div><p><code>var</code> 和 C++ 的 <code>auto</code> 一样，在初始化的时候，编译器根据等号右边的值的类型（在这里是 <code>string</code>），将变量名声明为相同类型。</p> <p>注意这些都是在编译阶段完成的，也就是说，不能在之后改变其数据类型，再将 <code>int</code> 值赋给 <code>msg</code>。</p> <p>另外，<code>var</code> 变量必须在使用的时候进行初始化。</p> <p><code>var</code> 变量被叫做隐式类型本地变量。</p> <p>为什么使用 <code>var</code> 类型呢？</p> <blockquote><p>var 关键字已被 C# 社区广泛采用，因此，如果你查看书籍或联机中的代码示例，很有可能会看到使用的是 var 关键字，而不是实际的数据类型名称。因此，我们想确保在此模块中将它引入。<br>
 但 var 关键字在 C# 中具有重要用途。由于在编写高级代码之前你可能不甚了解，因此在某些情况下，初始化变量时，数据类型可能不太明显。实际上，在某些情况下， C# 可能会为代码提供一种新的数据类型，并可能无法提前为其指定可预测的命名。再说一次，这是 C# 的一项高级功能，我们将在其他模块中进行介绍。<br>
 开始之际，我们建议声明变量时继续使用实际的数据类型名称。声明变量时使用数据类型有助于你有目的性地编写代码。</p></blockquote> <h2 id="基本字符串格式设置"><a href="#基本字符串格式设置" class="header-anchor">#</a> 基本字符串格式设置</h2> <p>这部分的内容很少有教程在刚开始的时候专门用一节提过，但是个人认为很有必要。</p> <h3 id="转义字符"><a href="#转义字符" class="header-anchor">#</a> 转义字符</h3> <p>和其他编程语言一样 <code>\n</code> <code>\t</code> <code>\&quot;</code> <code>\\</code> 等都是支持的。</p> <p>C# 的 <code>\u</code> 是 utf-16 编码。如下面的代码：</p> <div class="language-cs extra-class"><pre class="language-cs"><code>Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">&quot;\u4f60\u597d，世界！&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>会输出 <code>你好，世界！</code>。</p> <h3 id="逐字字符串"><a href="#逐字字符串" class="header-anchor">#</a> 逐字字符串</h3> <p>不少语言都支持 <code>跨行字符串</code> （或 <code>verbatim string literal</code> <code>raw string</code> <code>字符串字面量</code>）这一特性，即在写字符串的时候加一定的前缀、后缀，即可逐字的保留字符串中的内容，无需转义。</p> <blockquote><p>其他语言的类似情况可参考 <a href="/Computer-Science/verbatim-strings-literal-grammar/">逐字字符串在各语言中的表达式</a>。</p></blockquote> <p>如下面的代码：</p> <div class="language-cs extra-class"><pre class="language-cs"><code><span class="token class-name"><span class="token keyword">string</span></span> testString <span class="token operator">=</span> <span class="token string">@&quot;verbatim
+</code></pre></div><p>会输出 <code>你好，世界！</code>。</p> <h3 id="逐字字符串"><a href="#逐字字符串" class="header-anchor">#</a> 逐字字符串</h3> <p>不少语言都支持 <code>跨行字符串</code> （或 <code>verbatim string literal</code> <code>raw string</code> <code>字符串字面量</code>）这一特性，即在写字符串的时候加一定的前缀、后缀，即可逐字的保留字符串中的内容，无需转义。</p> <p>如下面的代码：</p> <div class="language-cs extra-class"><pre class="language-cs"><code><span class="token class-name"><span class="token keyword">string</span></span> testString <span class="token operator">=</span> <span class="token string">@&quot;verbatim
 \
 string&quot;</span><span class="token punctuation">;</span>
 </code></pre></div><p>等价于：</p> <div class="language-cs extra-class"><pre class="language-cs"><code><span class="token class-name"><span class="token keyword">string</span></span> testString <span class="token operator">=</span> <span class="token string">&quot;verbatim\n\\\nstring&quot;</span><span class="token punctuation">;</span>
@@ -106,6 +106,6 @@ Grant
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/70.537e0542.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/70.71cf45fe.js" defer></script>
   </body>
 </html>

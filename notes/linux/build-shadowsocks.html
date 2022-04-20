@@ -18,13 +18,13 @@
 为什么有些网站无法访问
 如何访问这些网站（借助一个中介，介绍 Shadowsocks 原理） ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/96.c45686e1.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/96.bf6726c6.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>本文就记流水账一般，记录一下，方便以后再配置的时候查阅。这些方法基本都是可以百度到的。</p> <blockquote><p>2019.12.1 更新：发现周围有些人在问我如何搭建代理，我直接把这篇文章分享给他们，但是发现这篇博客写的太浅薄了，对新手也不够友好。最近也挺忙，要是有空，就再把这篇文章写的更加详实吧。先挖点坑：</p></blockquote> <ul><li>为什么有些网站无法访问</li> <li>如何访问这些网站（借助一个中介，介绍 Shadowsocks 原理）</li> <li>服务器是什么？虚拟服务器是什么？如何使用？（介绍 ssh）</li></ul> <p>对于萌新，你们可能需要提前准备：</p> <ul><li>以下三选一（个人推荐 wsl）：
-<ul><li>Ubuntu 双系统或虚拟机（如果你看不懂这个选项可以直接跳过）</li> <li>wsl（百度“WSL(Windows Subsystem for Linux)的安装与使用”）</li> <li><a href="/Windows/setup-ssh-windows/">Windows 的 ssh 客户端</a>（不推荐，但是如果你电脑的硬盘实在不够用了，可以选择这个选项）</li></ul></li> <li>准备好学习 Linux 命令行的决心</li> <li>愿意在遇到问题的时候上网搜索，即使可能消耗十几分钟到一整天的时间</li></ul> <p>本文正式开始。</p> <h2 id="租服务器"><a href="#租服务器" class="header-anchor">#</a> 租服务器</h2> <p>首先，去租阿里云或腾讯云的虚拟服务器。学生的话，都是一月 10 元即可（找不到入口可以在知乎搜一下相关回答）。</p> <p>系统推荐使用 Debian 或 Ubuntu。</p> <p>租了服务器以后，会给你的服务器的 ip 地址（下面为方便叙述，设为 <code>39.1.2.3</code>）和密码。</p> <h2 id="ssh-远程登录服务器"><a href="#ssh-远程登录服务器" class="header-anchor">#</a> ssh 远程登录服务器</h2> <p>ssh 是什么，可以见前言。</p> <p>注意<strong>阿里云的服务器要开放防火墙的端口，不然连不上</strong>！！！！！！！！<br>
-作者就是被这个坑了一下午还没弄好。上面需要开放 <code>22</code> 端口，协议选 <code>tcp</code>。</p> <p>在本地 Ubuntu（或 wsl 或 <a href="/Windows/setup-ssh-windows/">Windows 的 ssh 客户端</a>）使用 <code>ssh -p22 root@39.1.2.3</code> 登录远程服务器。</p> <p>要是出现 <code>ssh: connect to host 39.1.2.3 port 22: Resource temporarily unavailable</code>，<br>
+<ul><li>Ubuntu 双系统或虚拟机（如果你看不懂这个选项可以直接跳过）</li> <li>wsl（百度“WSL(Windows Subsystem for Linux)的安装与使用”）</li> <li><a href="/notes/microsoft/windows/setup-ssh-windows.html">Windows 的 ssh 客户端</a>（不推荐，但是如果你电脑的硬盘实在不够用了，可以选择这个选项）</li></ul></li> <li>准备好学习 Linux 命令行的决心</li> <li>愿意在遇到问题的时候上网搜索，即使可能消耗十几分钟到一整天的时间</li></ul> <p>本文正式开始。</p> <h2 id="租服务器"><a href="#租服务器" class="header-anchor">#</a> 租服务器</h2> <p>首先，去租阿里云或腾讯云的虚拟服务器。学生的话，都是一月 10 元即可（找不到入口可以在知乎搜一下相关回答）。</p> <p>系统推荐使用 Debian 或 Ubuntu。</p> <p>租了服务器以后，会给你的服务器的 ip 地址（下面为方便叙述，设为 <code>39.1.2.3</code>）和密码。</p> <h2 id="ssh-远程登录服务器"><a href="#ssh-远程登录服务器" class="header-anchor">#</a> ssh 远程登录服务器</h2> <p>ssh 是什么，可以见前言。</p> <p>注意<strong>阿里云的服务器要开放防火墙的端口，不然连不上</strong>！！！！！！！！<br>
+作者就是被这个坑了一下午还没弄好。上面需要开放 <code>22</code> 端口，协议选 <code>tcp</code>。</p> <p>在本地 Ubuntu（或 wsl 或 <a href="/notes/microsoft/windows/setup-ssh-windows.html">Windows 的 ssh 客户端</a>）使用 <code>ssh -p22 root@39.1.2.3</code> 登录远程服务器。</p> <p>要是出现 <code>ssh: connect to host 39.1.2.3 port 22: Resource temporarily unavailable</code>，<br>
 再本地尝试 <code>ping 39.1.2.3</code>，要是连不上，说明 ip 被封了，需要删掉服务器，重新建一台服务器。</p> <h2 id="服务器配置-shadowsocks"><a href="#服务器配置-shadowsocks" class="header-anchor">#</a> 服务器配置 Shadowsocks</h2> <p>成功连上以后，在服务器安装 shadowsocks-libev：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">apt</span> update <span class="token comment"># debian 下是 apt，CentOS 换成 yum install 即可</span>
 <span class="token function">apt</span> <span class="token function">install</span> shadowsocks-libev
 </code></pre></div><p>修改配置文件：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">nano</span> /etc/shadowsocks-libev/config.json
@@ -51,6 +51,6 @@
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/96.c45686e1.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/96.bf6726c6.js" defer></script>
   </body>
 </html>

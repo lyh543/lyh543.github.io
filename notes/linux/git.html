@@ -17,7 +17,7 @@
 
 [GitHub 词汇表](https://help.github.com/cn/github/getting-started-with-github/github-glossar ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/103.d750fc55.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/103.6ca01e36.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -35,7 +35,7 @@
 
 <span class="token function">git</span> push
 </code></pre></div><p>上传完以后，你就可以看到 GitHub 上的代码已经更新。</p> <h4 id="一键三连"><a href="#一键三连" class="header-anchor">#</a> 一键三连</h4> <p>在很熟悉三连操作以后，就会感到有点麻烦了。于是用 <code>alias</code> 实现了一个命令缩写。</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token builtin class-name">alias</span> <span class="token assign-left variable">commit</span><span class="token operator">=</span><span class="token string">'git_commit() { git add --all &amp;&amp; git commit -m &quot;$1&quot; &amp;&amp; git push;}; git_commit'</span>`
-</code></pre></div><p>但是因为 <code>alias</code> 不是开机自启的，要想开机自启，可以看 <a href="/notes/linux-daily-command/#alias-简化命令">另一篇博客</a>，此略。</p> <h2 id="git-使用-ssh-协议"><a href="#git-使用-ssh-协议" class="header-anchor">#</a> Git 使用 SSH 协议</h2> <p>Git for Linux 如果操作 HTTPS 协议链接的仓库，是不能保存密码的，每次 push 都需要输入账号密码，很烦。（Git for Windows 貌似可以走网页认证，好像可以保存）</p> <p>一个选择是 ssh 协议，使用这个协议可以保存用户信息，很方便。
+</code></pre></div><p>但是因为 <code>alias</code> 不是开机自启的，要想开机自启，可以看 <a href="/notes/linux/linux-tips.html#alias-简化命令">另一篇博客</a>，此略。</p> <h2 id="git-使用-ssh-协议"><a href="#git-使用-ssh-协议" class="header-anchor">#</a> Git 使用 SSH 协议</h2> <p>Git for Linux 如果操作 HTTPS 协议链接的仓库，是不能保存密码的，每次 push 都需要输入账号密码，很烦。（Git for Windows 貌似可以走网页认证，好像可以保存）</p> <p>一个选择是 ssh 协议，使用这个协议可以保存用户信息，很方便。
 第二个方案是走 https，不过让 Git 明文保存密码（不推荐）</p> <p>多 ssh 秘钥部署可以看链接：https://www.awaimai.com/2200.html</p> <h3 id="在-linux-下-git-使用-ssh-密钥"><a href="#在-linux-下-git-使用-ssh-密钥" class="header-anchor">#</a> 在 Linux 下 Git 使用 ssh 密钥</h3> <p>大概分为三步走：</p> <ol><li>本地生成密钥对；</li> <li>设置 GitHub 上的公钥；</li> <li>修改 Git 的 remote url 为 <code>SSH</code> 协议。</li></ol> <h4 id="linux-下本地生成密钥对"><a href="#linux-下本地生成密钥对" class="header-anchor">#</a> Linux 下本地生成密钥对</h4> <p><code>$ ssh-keygen -t rsa -C &quot;lyh543@github.com&quot;</code></p> <p>passphrase 可留空<s>因为太懒，不然以后每次 push 都要输这个 passphrase</s></p> <p><code>The key fingerprint is: SHA256:QtXXXXXXXXXXXXXXXXXXXXXXXXXXXXlk lyh543@github.com</code></p> <h4 id="设置-github-上的公钥"><a href="#设置-github-上的公钥" class="header-anchor">#</a> 设置 github 上的公钥</h4> <ol><li>查看你的公钥</li></ol> <div class="language- extra-class"><pre class="language-text"><code>$ cat ~/.ssh/id_rsa.pub
 ssh-rsa AAAAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXmp lyh543@github.com
 </code></pre></div><ol start="2"><li>登陆你的<code>github</code>帐户。然后 <code>Account Settings</code> -&gt; 左栏点击 <code>SSH Keys</code> -&gt; 点击 <code>Add SSH key</code></li> <li>然后你复制上面的公钥内容，粘贴进“Key”文本域内。 <code>title</code>域，你随便填一个都行。</li> <li>完了，点击 <code>Add key</code>。</li> <li>测试一下这个key。</li></ol> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">ssh</span> -T git@github.com
@@ -222,6 +222,6 @@ location: https://github.com/canton7/SyncTrayzor/releases/download/v1.1.24/SyncT
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/103.d750fc55.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/103.6ca01e36.js" defer></script>
   </body>
 </html>

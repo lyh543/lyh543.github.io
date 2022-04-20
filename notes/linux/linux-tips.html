@@ -23,7 +23,7 @@
 -|-|-
 apt(ubuntu20)|腾讯|`sudo wget -O /etc/apt/sources.list http://mirrors.cloud.tencent.com/repo/ubuntu20_s ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/105.10cec728.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/105.65fcd25a.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -93,7 +93,7 @@ systemctl start xxx
 <span class="token function">sudo</span> -u <span class="token operator">&lt;</span>newuser<span class="token operator">&gt;</span>                           <span class="token comment"># 上号</span>
 <span class="token builtin class-name">echo</span> <span class="token operator">&gt;&gt;</span> ~/.ssh/authorized_keys <span class="token string">&quot;ssh-rsa xx&quot;</span> <span class="token comment"># 添加 ssh 公钥</span>
 </code></pre></div><p>然后上号 <code>sudo</code> 检查一下是不是可以了。如果不行，可以试试在 <code>/etc/sudoers</code> 里面修改 <code>%sudo</code> 一行：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>%sudo   <span class="token assign-left variable">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span>ALL:ALL<span class="token punctuation">)</span> NOPASSWD:ALL
-</code></pre></div><h2 id="ssh"><a href="#ssh" class="header-anchor">#</a> ssh</h2> <p>在使用 Git 和搭建服务器的时候都会用到 ssh，于是笔记也比较零散。</p> <p>在这里丢几个链接：</p> <ul><li><a href="/notes/git/#在-Linux-下-git-使用-ssh-密钥">创建 ssh 密钥并给 Git/服务器使用</a></li> <li><a href="/notes/build-shadowsocks/#ssh-远程登录">ssh 远程登录服务器</a></li> <li><a href="/notes/change-ssh-port/">修改 ssh 的端口</a></li> <li><a href="/microsoft/windows/setup-ssh-windows/">Windows 上使用 ssh</a></li></ul> <h2 id="log"><a href="#log" class="header-anchor">#</a> log</h2> <h3 id="查看-shell-启动过程"><a href="#查看-shell-启动过程" class="header-anchor">#</a> 查看 Shell 启动过程</h3> <p>可以用来追踪环境变量在哪里被修改。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># bash</span>
+</code></pre></div><h2 id="ssh"><a href="#ssh" class="header-anchor">#</a> ssh</h2> <p>在使用 Git 和搭建服务器的时候都会用到 ssh，于是笔记也比较零散。</p> <p>在这里丢几个链接：</p> <ul><li><a href="/notes/linux/git.html#在-Linux-下-git-使用-ssh-密钥">创建 ssh 密钥并给 Git/服务器使用</a></li> <li><a href="/notes/linux/build-shadowsocks.html#ssh-远程登录">ssh 远程登录服务器</a></li> <li><a href="/notes/linux/change-ssh-port.html">修改 ssh 的端口</a></li> <li><a href="/notes/microsoft/windows/setup-ssh-windows.html">Windows 上使用 ssh</a></li></ul> <h2 id="log"><a href="#log" class="header-anchor">#</a> log</h2> <h3 id="查看-shell-启动过程"><a href="#查看-shell-启动过程" class="header-anchor">#</a> 查看 Shell 启动过程</h3> <p>可以用来追踪环境变量在哪里被修改。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># bash</span>
 <span class="token assign-left variable"><span class="token environment constant">PS4</span></span><span class="token operator">=</span><span class="token string">'+$BASH_SOURCE&gt; '</span> <span class="token assign-left variable">BASH_XTRACEFD</span><span class="token operator">=</span><span class="token number">7</span> <span class="token function">bash</span> -xl <span class="token operator"><span class="token file-descriptor important">7</span>&gt;</span><span class="token file-descriptor important">&amp;2</span>
 
 <span class="token comment"># zsh</span>
@@ -109,6 +109,6 @@ systemctl start xxx
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/105.10cec728.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/105.65fcd25a.js" defer></script>
   </body>
 </html>

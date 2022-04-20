@@ -17,7 +17,7 @@
 
 [Hadoop]:https://wangchangchung.github.io/2017/09/28/Ubuntu-16-04%E4%B8%8A%E ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ccf6887d.js" as="script"><link rel="preload" href="/assets/js/83.b4effc8f.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.fb7170f0.js" as="script"><link rel="preload" href="/assets/js/83.fb151ee6.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -27,7 +27,7 @@ hdfs dfs -mkdir /mydata     <span class="token comment"># 创建目录</span>
 hdfs dfs -put /path/to/file /mydata <span class="token comment"># 上传</span>
 hdfs dfs -cat /mydata/file　<span class="token comment"># 读取</span>
 hdfs dfs -rm -r /mydata     <span class="token comment"># 删除</span>
-</code></pre></div><p>为配合后面的测试，将<a href="/python/scrapy">爬虫</a>爬取的<a href="ershoufang_price.txt">二手价格数据</a>下载后，上传到 HDFS：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>
+</code></pre></div><p>为配合后面的测试，将<a href="/notes/python/scrapy.html">爬虫</a>爬取的<a href="ershoufang_price.txt">二手价格数据</a>下载后，上传到 HDFS：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">cd</span> <span class="token variable">$HADOOP_HOME</span>
 ./sbin/start-dfs.cmd
 hdfs dfs -mkdir /mydata
 hdfs dfs -put ershoufang_price.txt /mydata
@@ -108,6 +108,6 @@ dataFrame<span class="token punctuation">.</span>write<span class="token punctua
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.ccf6887d.js" defer></script><script src="/assets/js/83.b4effc8f.js" defer></script>
+    <script src="/assets/js/app.fb7170f0.js" defer></script><script src="/assets/js/83.fb151ee6.js" defer></script>
   </body>
 </html>
