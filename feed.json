@@ -87,19 +87,19 @@
             "date_modified": "2021-03-26T16:00:00.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html",
-            "url": "https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html",
-            "title": "《编程珠玑》笔记",
-            "summary": "编程珠玑每一章讲了编程、开发的不同的方面。\n第一章讲如何准确、正确的定义问题。\n第二章讲算法设计（灵光一现，啊哈！算法）。\n第三章提到数据结构和编程的关系（欸有点面向对象的感觉）。\n第四章运用循环不变式来证明程序的正确性。\n第五章运用脚手架、断言调试程序。\n第六章概述了加速程序的几个方向，并在第八至x章分别阐述。\n第七章书如其名：粗略估算。\n第八章重新设计算法来 ...",
-            "date_modified": "2019-08-29T00:00:00.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/notes/computer-science/character-encoding.html",
             "url": "https://blog.lyh543.cn/notes/computer-science/character-encoding.html",
             "title": "字符编码（转载）",
             "summary": "转自：https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896\n\n因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...",
             "image": "https://www.liaoxuefeng.com/files/attachments/923930471927008/0",
             "date_modified": "2019-08-22T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html",
+            "url": "https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html",
+            "title": "《编程珠玑》笔记",
+            "summary": "编程珠玑每一章讲了编程、开发的不同的方面。\n第一章讲如何准确、正确的定义问题。\n第二章讲算法设计（灵光一现，啊哈！算法）。\n第三章提到数据结构和编程的关系（欸有点面向对象的感觉）。\n第四章运用循环不变式来证明程序的正确性。\n第五章运用脚手架、断言调试程序。\n第六章概述了加速程序的几个方向，并在第八至x章分别阐述。\n第七章书如其名：粗略估算。\n第八章重新设计算法来 ...",
+            "date_modified": "2019-08-29T00:00:00.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html",

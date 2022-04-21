@@ -4,7 +4,7 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Wed, 20 Apr 2022 04:18:54 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 21 Apr 2022 12:31:35 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
@@ -194,6 +194,17 @@ multimap 和 map 的区别
             </enclosure>
         </item>
         <item>
+            <title><![CDATA[字符编码（转载）]]></title>
+            <link>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</link>
+            <guid>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</guid>
+            <pubDate>Thu, 22 Aug 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[转自：https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896
+
+因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...]]></description>
+            <enclosure url="https://www.liaoxuefeng.com/files/attachments/923930471927008/0">
+            </enclosure>
+        </item>
+        <item>
             <title><![CDATA[《编程珠玑》笔记]]></title>
             <link>https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html</link>
             <guid>https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html</guid>
@@ -207,17 +218,6 @@ multimap 和 map 的区别
 第六章概述了加速程序的几个方向，并在第八至x章分别阐述。
 第七章书如其名：粗略估算。
 第八章重新设计算法来 ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[字符编码（转载）]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</guid>
-            <pubDate>Thu, 22 Aug 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[转自：https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896
-
-因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...]]></description>
-            <enclosure url="https://www.liaoxuefeng.com/files/attachments/923930471927008/0">
-            </enclosure>
         </item>
         <item>
             <title><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
