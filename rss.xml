@@ -4,10 +4,23 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sat, 23 Apr 2022 07:12:36 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 23 Apr 2022 08:15:20 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
+            <link>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</link>
+            <guid>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</guid>
+            <pubDate>Tue, 25 Jun 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
+
+把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
+点左下角强制使用系统内核，确定。
+不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
+
+这下顺滑多了，网页秒开 ...]]></description>
+        </item>
         <item>
             <title><![CDATA[安卓刷机记录]]></title>
             <link>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</link>
@@ -24,19 +37,6 @@ ROM 选择
 有条件还是搞个梯子，不然 ROM 很难下的。
 
 [ ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
-            <link>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</link>
-            <guid>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</guid>
-            <pubDate>Tue, 25 Jun 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
-
-把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
-点左下角强制使用系统内核，确定。
-不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
-
-这下顺滑多了，网页秒开 ...]]></description>
         </item>
         <item>
             <title><![CDATA[Hexo 使用 Gitalk 评论]]></title>
@@ -220,6 +220,23 @@ multimap 和 map 的区别
             </enclosure>
         </item>
         <item>
+            <title><![CDATA[华迪大数据专业实习日记]]></title>
+            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</link>
+            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</guid>
+            <pubDate>Wed, 01 Jul 2020 23:24:32 GMT</pubDate>
+            <description><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
+
+6.30
+
+上午：Python 基础，可参考廖雪峰博客。
+
+下午：Python 的语法糖；Sracpy 爬虫
+
+7.1
+
+上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></description>
+        </item>
+        <item>
             <title><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
             <link>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</link>
             <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</guid>
@@ -237,23 +254,6 @@ multimap 和 map 的区别
 ![计算机基本组成结构](/images/2b125ce68 ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/2b125ce6885b6eddbe43b0c1b94ea20d5b0f18a475587854d4bda793f548e73f.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[华迪大数据专业实习日记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</guid>
-            <pubDate>Wed, 01 Jul 2020 23:24:32 GMT</pubDate>
-            <description><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
-
-6.30
-
-上午：Python 基础，可参考廖雪峰博客。
-
-下午：Python 的语法糖；Sracpy 爬虫
-
-7.1
-
-上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></description>
         </item>
         <item>
             <title><![CDATA[编译原理 课程笔记]]></title>
@@ -353,24 +353,26 @@ multimap 和 map 的区别
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[算法设计]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</guid>
-            <pubDate>Sun, 27 Oct 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。
+            <title><![CDATA[操作系统 课程笔记]]></title>
+            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html</link>
+            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html</guid>
+            <pubDate>Tue, 08 Sep 2020 10:20:09 GMT</pubDate>
+            <description><![CDATA[教材：《操作系统——精髓与设计原理 第八版》-- William Stallings
 
-绪论
+一 操作系统概述
 
-算法解决的三种问题
+操作系统的目标和功能
 
-Desicion Problem（判断是否）
-Optimal（最优化的结果/解）
-Numeric Calculation（数字计算、解方程）
+操作系统：
 
-问题的分类（按复杂度）
+控制应用程序执行的程序
+应用系统和计算机硬件之间的接口
 
-P: a solutuon can be ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/P_np_np-complete_np-hard.svg">
+目标：方便、有效、扩展能力
+
+功能：
+（作为用户/计算机接口的）OS ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/e42643e9fb50aeccb097341e0dcaa3029fb8758566fc841f2ba99df89ec3da3d.png">
             </enclosure>
         </item>
     </channel>

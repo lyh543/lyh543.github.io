@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-04-23T07:12:36.846Z</updated>
+    <updated>2022-04-23T08:15:20.083Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
+        <id>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</id>
+        <link href="https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html">
+        </link>
+        <updated>2019-06-25T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
+
+把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
+点左下角强制使用系统内核，确定。
+不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
+
+这下顺滑多了，网页秒开 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[安卓刷机记录]]></title>
         <id>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</id>
@@ -24,20 +38,6 @@ ROM 选择
 有条件还是搞个梯子，不然 ROM 很难下的。
 
 [ ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
-        <id>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</id>
-        <link href="https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html">
-        </link>
-        <updated>2019-06-25T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
-
-把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
-点左下角强制使用系统内核，确定。
-不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
-
-这下顺滑多了，网页秒开 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Hexo 使用 Gitalk 评论]]></title>
@@ -222,24 +222,6 @@ multimap 和 map 的区别
 因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
-        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</id>
-        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html">
-        </link>
-        <updated>2020-09-08T14:52:38.000Z</updated>
-        <summary type="html"><![CDATA[授课老师：廖建明老师
-教材：《微机原理与接口技术》(第4版). 吴宁,乔亚男主编. 清华大学出版社
-参考教材:《汇编语言程序设计》. 廖建明主编.清华大学出版社
-
-第一章 微型计算机基础概论
-
-计算机的工作原理
-
-计算机中的指令执行过程：取指令 -> 指令译码 -> 读取操作数 -> 执行命令 -> 存放结果
-
-![计算机基本组成结构](/images/2b125ce68 ...]]></summary>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[华迪大数据专业实习日记]]></title>
         <id>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</id>
         <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html">
@@ -256,6 +238,24 @@ multimap 和 map 的区别
 7.1
 
 上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html">
+        </link>
+        <updated>2020-09-08T14:52:38.000Z</updated>
+        <summary type="html"><![CDATA[授课老师：廖建明老师
+教材：《微机原理与接口技术》(第4版). 吴宁,乔亚男主编. 清华大学出版社
+参考教材:《汇编语言程序设计》. 廖建明主编.清华大学出版社
+
+第一章 微型计算机基础概论
+
+计算机的工作原理
+
+计算机中的指令执行过程：取指令 -> 指令译码 -> 读取操作数 -> 执行命令 -> 存放结果
+
+![计算机基本组成结构](/images/2b125ce68 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[编译原理 课程笔记]]></title>
@@ -351,23 +351,25 @@ multimap 和 map 的区别
 数据结构：带结构的数据元素的集合。全面的来说，$DS ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[算法设计]]></title>
-        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</id>
-        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html">
+        <title type="html"><![CDATA[操作系统 课程笔记]]></title>
+        <id>https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html</id>
+        <link href="https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html">
         </link>
-        <updated>2019-10-27T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。
+        <updated>2020-09-08T10:20:09.000Z</updated>
+        <summary type="html"><![CDATA[教材：《操作系统——精髓与设计原理 第八版》-- William Stallings
 
-绪论
+一 操作系统概述
 
-算法解决的三种问题
+操作系统的目标和功能
 
-Desicion Problem（判断是否）
-Optimal（最优化的结果/解）
-Numeric Calculation（数字计算、解方程）
+操作系统：
 
-问题的分类（按复杂度）
+控制应用程序执行的程序
+应用系统和计算机硬件之间的接口
 
-P: a solutuon can be ...]]></summary>
+目标：方便、有效、扩展能力
+
+功能：
+（作为用户/计算机接口的）OS ...]]></summary>
     </entry>
 </feed>

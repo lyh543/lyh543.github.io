@@ -6,18 +6,18 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
-            "id": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
-            "url": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
-            "title": "安卓刷机记录",
-            "summary": "手机选择\n\n如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。\n\n一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。\n\nROM 选择\n\n有条件还是搞个梯子，不然 ROM 很难下的。\n\n[ ...",
-            "date_modified": "2021-03-12T09:37:36.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html",
             "url": "https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html",
             "title": "QQ，微信实现调用系统WebView教程",
             "summary": "实在受不了垃圾X5内核，打开网页总慢半秒\n\n把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/\n点左下角强制使用系统内核，确定。\n不放心的打开这个网址查看当前内核 https://ie.icoa.cn/\n\n这下顺滑多了，网页秒开 ...",
             "date_modified": "2019-06-25T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
+            "url": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
+            "title": "安卓刷机记录",
+            "summary": "手机选择\n\n如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。\n\n一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。\n\nROM 选择\n\n有条件还是搞个梯子，不然 ROM 很难下的。\n\n[ ...",
+            "date_modified": "2021-03-12T09:37:36.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/blog/gitalk.html",
@@ -102,19 +102,19 @@
             "date_modified": "2019-08-22T16:00:00.000Z"
         },
         {
+            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
+            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
+            "title": "华迪大数据专业实习日记",
+            "summary": "这次在华迪做专业实习，一点都不水，还特硬核。\n\n6.30\n\n上午：Python 基础，可参考廖雪峰博客。\n\n下午：Python 的语法糖；Sracpy 爬虫\n\n7.1\n\n上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...",
+            "date_modified": "2020-07-01T23:24:32.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html",
             "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html",
             "title": "汇编语言与微机接口技术 课程笔记",
             "summary": "授课老师：廖建明老师\n教材：《微机原理与接口技术》(第4版). 吴宁,乔亚男主编. 清华大学出版社\n参考教材:《汇编语言程序设计》. 廖建明主编.清华大学出版社\n\n第一章 微型计算机基础概论\n\n计算机的工作原理\n\n计算机中的指令执行过程：取指令 -> 指令译码 -> 读取操作数 -> 执行命令 -> 存放结果\n\n![计算机基本组成结构](/images/2b125ce68 ...",
             "image": "https://blog.lyh543.cn/images/2b125ce6885b6eddbe43b0c1b94ea20d5b0f18a475587854d4bda793f548e73f.png",
             "date_modified": "2020-09-08T14:52:38.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
-            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
-            "title": "华迪大数据专业实习日记",
-            "summary": "这次在华迪做专业实习，一点都不水，还特硬核。\n\n6.30\n\n上午：Python 基础，可参考廖雪峰博客。\n\n下午：Python 的语法糖；Sracpy 爬虫\n\n7.1\n\n上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...",
-            "date_modified": "2020-07-01T23:24:32.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html",
@@ -149,12 +149,12 @@
             "date_modified": "2020-02-04T12:59:19.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html",
-            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html",
-            "title": "算法设计",
-            "summary": "该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。\n\n绪论\n\n算法解决的三种问题\n\nDesicion Problem（判断是否）\nOptimal（最优化的结果/解）\nNumeric Calculation（数字计算、解方程）\n\n问题的分类（按复杂度）\n\nP: a solutuon can be ...",
-            "image": "https://blog.lyh543.cn/P_np_np-complete_np-hard.svg",
-            "date_modified": "2019-10-27T16:00:00.000Z"
+            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html",
+            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/operating-system-classnote.html",
+            "title": "操作系统 课程笔记",
+            "summary": "教材：《操作系统——精髓与设计原理 第八版》-- William Stallings\n\n一 操作系统概述\n\n操作系统的目标和功能\n\n操作系统：\n\n控制应用程序执行的程序\n应用系统和计算机硬件之间的接口\n\n目标：方便、有效、扩展能力\n\n功能：\n（作为用户/计算机接口的）OS ...",
+            "image": "https://blog.lyh543.cn/images/e42643e9fb50aeccb097341e0dcaa3029fb8758566fc841f2ba99df89ec3da3d.png",
+            "date_modified": "2020-09-08T10:20:09.000Z"
         }
     ]
 }
