@@ -6,6 +6,13 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
+            "url": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
+            "title": "安卓刷机记录",
+            "summary": "手机选择\n\n如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。\n\n一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。\n\nROM 选择\n\n有条件还是搞个梯子，不然 ROM 很难下的。\n\n[ ...",
+            "date_modified": "2021-03-12T09:37:36.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html",
             "url": "https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html",
             "title": "QQ，微信实现调用系统WebView教程",
@@ -20,17 +27,17 @@
             "date_modified": "2019-09-16T16:00:00.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
-            "url": "https://blog.lyh543.cn/notes/android/android-flashing-notes.html",
-            "title": "安卓刷机记录",
-            "summary": "手机选择\n\n如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。\n\n一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。\n\nROM 选择\n\n有条件还是搞个梯子，不然 ROM 很难下的。\n\n[ ...",
-            "date_modified": "2021-03-12T09:37:36.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/notes/blog/hexo-backup.html",
             "url": "https://blog.lyh543.cn/notes/blog/hexo-backup.html",
             "title": "Hexo 备份（及一次翻车的经历）",
             "summary": "由于 Hexo 的本地文件是没有上传到 Github 的，某天突发奇想，想把 Hexo 文件夹直接移至 Onedrive 自动备份。\n后来发现由于 Hexo 的 node_modules 文件太多了(10000+)，以至于需要同步很久。\n另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。\n\n于是就 ...",
+            "date_modified": "2019-09-16T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/blog/hexo-building-blog.html",
+            "url": "https://blog.lyh543.cn/notes/blog/hexo-building-blog.html",
+            "title": "Hexo 建站",
+            "summary": "先放一个Hexo官方文档的链接。\n\n初始化 hexo 博客\n\nnpm install hexo-cli -g\nhexo init lyh543.github.io\n\n这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。\n\n`` ...",
             "date_modified": "2019-09-16T16:00:00.000Z"
         },
         {
@@ -40,13 +47,6 @@
             "summary": "Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。\n\nHexo 更换主题的方法参见另一篇博客。\n\n在网上找到了一个配置过程非常详实的 ...",
             "image": "https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png",
             "date_modified": "2019-08-16T16:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/blog/hexo-building-blog.html",
-            "url": "https://blog.lyh543.cn/notes/blog/hexo-building-blog.html",
-            "title": "Hexo 建站",
-            "summary": "先放一个Hexo官方文档的链接。\n\n初始化 hexo 博客\n\nnpm install hexo-cli -g\nhexo init lyh543.github.io\n\n这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。\n\n`` ...",
-            "date_modified": "2019-09-16T16:00:00.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/blog/hexo-writing.html",
@@ -60,7 +60,7 @@
             "id": "https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html",
             "url": "https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html",
             "title": "大城市的互联网公司",
-            "summary": "[Microsoft]\n\n上海\n\n[Microsoft]\n[PayPal]\n\n深圳\n\n[TP-LINK]\n\n成都\n\n有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。\n\n[腾讯]\n[字节跳动]\n[阿里]\n[美团]\n[百度]\n[京东]，但基本不招 ...",
+            "summary": "[Microsoft]\n\n上海\n\n[Microsoft]\n[育碧]\n[PayPal]\n\n深圳\n\n[TP-LINK]\n\n成都\n\n有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。\n\n[腾讯]\n[字节跳动]\n[阿里]\n[美团]\n[百度]\n[京东 ...",
             "date_modified": "2020-12-17T16:06:49.000Z"
         },
         {
@@ -71,20 +71,20 @@
             "date_modified": "2020-10-30T00:00:00.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/carrers/interview-notes.html",
-            "url": "https://blog.lyh543.cn/notes/carrers/interview-notes.html",
-            "title": "面试相关知识",
-            "summary": "以下知识均在后台开发面试中实际出现过、总结而来。\n\nC++\n\n多态的实现\n\n即虚函数表。\n\nSTL 容器库\n\n容器库 - cppreference.com\n\nunordered_map 和 map 的区别\n\n略。\n\nmultimap 和 map 的区别\n\n略。\n ...",
-            "image": "https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png",
-            "date_modified": "2021-03-26T16:00:00.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html",
             "url": "https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html",
             "title": "面经集合 - 2021",
             "summary": "推荐搭配 面试相关知识 食用。\n\n2021春 腾讯成都 CSIG 后台开发 暑期实习\n\n这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。\n\n一面\n\n自我介绍\n自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。\n会 Ja ...",
             "image": "https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png",
             "date_modified": "2021-03-07T16:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/carrers/interview-notes.html",
+            "url": "https://blog.lyh543.cn/notes/carrers/interview-notes.html",
+            "title": "面试相关知识",
+            "summary": "以下知识均在后台开发面试中实际出现过、总结而来。\n\nC++\n\n多态的实现\n\n即虚函数表。\n\nSTL 容器库\n\n容器库 - cppreference.com\n\nunordered_map 和 map 的区别\n\n略。\n\nmultimap 和 map 的区别\n\n略。\n ...",
+            "image": "https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png",
+            "date_modified": "2021-03-26T16:00:00.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html",
@@ -110,19 +110,19 @@
             "date_modified": "2020-09-08T14:52:38.000Z"
         },
         {
+            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
+            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
+            "title": "华迪大数据专业实习日记",
+            "summary": "这次在华迪做专业实习，一点都不水，还特硬核。\n\n6.30\n\n上午：Python 基础，可参考廖雪峰博客。\n\n下午：Python 的语法糖；Sracpy 爬虫\n\n7.1\n\n上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...",
+            "date_modified": "2020-07-01T23:24:32.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html",
             "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html",
             "title": "编译原理 课程笔记",
             "summary": "一到四章的概念也就图一乐，真学习还得看第五章\n\n引言\n\n语言\n\n语言：一组规则的组合\n\n字母表的定义\n词法规则：单词符号的形成规则\n语法规则：（短语、从句、句子、段落、文章）语法单位的形成规则\n语义规则：单词符号和语法单位的含义规则\n语用规则：语义规则的发展和 ...",
             "image": "https://blog.lyh543.cn/images/cad0024c4ccba28d40dffcca5cafd4140554b36ff01bccc8234bbf86499d9d90.png",
             "date_modified": "2021-03-02T10:51:02.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
-            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html",
-            "title": "华迪大数据专业实习日记",
-            "summary": "这次在华迪做专业实习，一点都不水，还特硬核。\n\n6.30\n\n上午：Python 基础，可参考廖雪峰博客。\n\n下午：Python 的语法糖；Sracpy 爬虫\n\n7.1\n\n上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...",
-            "date_modified": "2020-07-01T23:24:32.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html",
@@ -133,20 +133,20 @@
             "date_modified": "2021-03-01T14:40:25.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html",
-            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html",
-            "title": "数据结构与算法",
-            "summary": "这是我大二上修的《数据结构与算法》的笔记。\n\n数据结构绪论\n\n数据相关术语\n\n数据：所有能被计算机识别的符号集合\n数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）\n数据项：是数据结构中讨论的最小单位（一个人的出生日期）\n数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）\n\n数据结构相关术语\n\n数据结构：带结构的数据元素的集合。全面的来说，$DS ...",
-            "image": "https://blog.lyh543.cn/./data-structure-and-algorithm/avl-ll.gif",
-            "date_modified": "2020-02-04T12:59:19.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html",
             "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html",
             "title": "计算机网络安全 课程笔记",
             "summary": "什么是信息\n什么是信息安全\n\n信息是对事物不确定性的度量，并进而采用信息量来描述信息。\n\n信息安全是保证信息的基本属性所需的全面的管理\n规程和控制。\n\n信息安全的基本属性\n\n完整性\n可用性\n机密性\n可靠性\n不可抵赖性\n\n信息安全服务\n\n认证\n访问控制\n数据保密\n数据完整性\n非否认\n\n安全机制\n\n加密\n数字签名 ...",
             "image": "https://blog.lyh543.cn/images/8edaa57c3948c8b3728994ab744a550f45359320c0bf30c93ee28376ab99171b.png",
             "date_modified": "2020-09-08T10:20:09.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html",
+            "url": "https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html",
+            "title": "数据结构与算法",
+            "summary": "这是我大二上修的《数据结构与算法》的笔记。\n\n数据结构绪论\n\n数据相关术语\n\n数据：所有能被计算机识别的符号集合\n数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）\n数据项：是数据结构中讨论的最小单位（一个人的出生日期）\n数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）\n\n数据结构相关术语\n\n数据结构：带结构的数据元素的集合。全面的来说，$DS ...",
+            "image": "https://blog.lyh543.cn/./data-structure-and-algorithm/avl-ll.gif",
+            "date_modified": "2020-02-04T12:59:19.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html",

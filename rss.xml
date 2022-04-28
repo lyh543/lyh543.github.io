@@ -4,10 +4,27 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sat, 23 Apr 2022 08:20:43 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 28 Apr 2022 01:30:43 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[安卓刷机记录]]></title>
+            <link>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</link>
+            <guid>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</guid>
+            <pubDate>Fri, 12 Mar 2021 09:37:36 GMT</pubDate>
+            <description><![CDATA[手机选择
+
+如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
+
+一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
+
+ROM 选择
+
+有条件还是搞个梯子，不然 ROM 很难下的。
+
+[ ...]]></description>
+        </item>
         <item>
             <title><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
             <link>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</link>
@@ -32,23 +49,6 @@
 > 2019.11.6 更新：由于 GitHub OAuth ...]]></description>
         </item>
         <item>
-            <title><![CDATA[安卓刷机记录]]></title>
-            <link>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</link>
-            <guid>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</guid>
-            <pubDate>Fri, 12 Mar 2021 09:37:36 GMT</pubDate>
-            <description><![CDATA[手机选择
-
-如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
-
-一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
-
-ROM 选择
-
-有条件还是搞个梯子，不然 ROM 很难下的。
-
-[ ...]]></description>
-        </item>
-        <item>
             <title><![CDATA[Hexo 备份（及一次翻车的经历）]]></title>
             <link>https://blog.lyh543.cn/notes/blog/hexo-backup.html</link>
             <guid>https://blog.lyh543.cn/notes/blog/hexo-backup.html</guid>
@@ -58,19 +58,6 @@ ROM 选择
 另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。
 
 于是就 ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hexo Material 主题配置]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/hexo-material.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/hexo-material.html</guid>
-            <pubDate>Fri, 16 Aug 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
-
-Hexo 更换主题的方法参见另一篇博客。
-
-在网上找到了一个配置过程非常详实的 ...]]></description>
-            <enclosure url="https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png">
-            </enclosure>
         </item>
         <item>
             <title><![CDATA[Hexo 建站]]></title>
@@ -87,6 +74,19 @@ hexo init lyh543.github.io
 这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。
 
 `` ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hexo Material 主题配置]]></title>
+            <link>https://blog.lyh543.cn/notes/blog/hexo-material.html</link>
+            <guid>https://blog.lyh543.cn/notes/blog/hexo-material.html</guid>
+            <pubDate>Fri, 16 Aug 2019 16:00:00 GMT</pubDate>
+            <description><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
+
+Hexo 更换主题的方法参见另一篇博客。
+
+在网上找到了一个配置过程非常详实的 ...]]></description>
+            <enclosure url="https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png">
+            </enclosure>
         </item>
         <item>
             <title><![CDATA[Hexo 写作]]></title>
@@ -114,6 +114,7 @@ hexo init lyh543.github.io
 上海
 
 [Microsoft]
+[育碧]
 [PayPal]
 
 深圳
@@ -129,7 +130,7 @@ hexo init lyh543.github.io
 [阿里]
 [美团]
 [百度]
-[京东]，但基本不招 ...]]></description>
+[京东 ...]]></description>
         </item>
         <item>
             <title><![CDATA[面经集合 - 2020]]></title>
@@ -145,6 +146,25 @@ hexo init lyh543.github.io
 第一面
 
 面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[面经集合 - 2021]]></title>
+            <link>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</link>
+            <guid>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</guid>
+            <pubDate>Sun, 07 Mar 2021 16:00:00 GMT</pubDate>
+            <description><![CDATA[推荐搭配 面试相关知识 食用。
+
+2021春 腾讯成都 CSIG 后台开发 暑期实习
+
+这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。
+
+一面
+
+自我介绍
+自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。
+会 Ja ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png">
+            </enclosure>
         </item>
         <item>
             <title><![CDATA[面试相关知识]]></title>
@@ -172,25 +192,6 @@ multimap 和 map 的区别
 略。
  ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[面经集合 - 2021]]></title>
-            <link>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</link>
-            <guid>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</guid>
-            <pubDate>Sun, 07 Mar 2021 16:00:00 GMT</pubDate>
-            <description><![CDATA[推荐搭配 面试相关知识 食用。
-
-2021春 腾讯成都 CSIG 后台开发 暑期实习
-
-这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。
-
-一面
-
-自我介绍
-自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。
-会 Ja ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png">
             </enclosure>
         </item>
         <item>
@@ -239,6 +240,23 @@ multimap 和 map 的区别
             </enclosure>
         </item>
         <item>
+            <title><![CDATA[华迪大数据专业实习日记]]></title>
+            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</link>
+            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</guid>
+            <pubDate>Wed, 01 Jul 2020 23:24:32 GMT</pubDate>
+            <description><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
+
+6.30
+
+上午：Python 基础，可参考廖雪峰博客。
+
+下午：Python 的语法糖；Sracpy 爬虫
+
+7.1
+
+上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></description>
+        </item>
+        <item>
             <title><![CDATA[编译原理 课程笔记]]></title>
             <link>https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html</link>
             <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html</guid>
@@ -260,23 +278,6 @@ multimap 和 map 的区别
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[华迪大数据专业实习日记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</guid>
-            <pubDate>Wed, 01 Jul 2020 23:24:32 GMT</pubDate>
-            <description><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
-
-6.30
-
-上午：Python 基础，可参考廖雪峰博客。
-
-下午：Python 的语法糖；Sracpy 爬虫
-
-7.1
-
-上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></description>
-        </item>
-        <item>
             <title><![CDATA[计算机系统结构 复习笔记]]></title>
             <link>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html</link>
             <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html</guid>
@@ -292,28 +293,6 @@ multimap 和 map 的区别
 每年 52%（1986-2003）: 性能增长依赖两方面：
   系统结 ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/c41ef765f8191573d0e90137e7fc29f14f38ff83ce79065843de8b497190bc2b.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[数据结构与算法]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</guid>
-            <pubDate>Tue, 04 Feb 2020 12:59:19 GMT</pubDate>
-            <description><![CDATA[这是我大二上修的《数据结构与算法》的笔记。
-
-数据结构绪论
-
-数据相关术语
-
-数据：所有能被计算机识别的符号集合
-数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）
-数据项：是数据结构中讨论的最小单位（一个人的出生日期）
-数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）
-
-数据结构相关术语
-
-数据结构：带结构的数据元素的集合。全面的来说，$DS ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/./data-structure-and-algorithm/avl-ll.gif">
             </enclosure>
         </item>
         <item>
@@ -350,6 +329,28 @@ multimap 和 map 的区别
 加密
 数字签名 ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/8edaa57c3948c8b3728994ab744a550f45359320c0bf30c93ee28376ab99171b.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[数据结构与算法]]></title>
+            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</link>
+            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</guid>
+            <pubDate>Tue, 04 Feb 2020 12:59:19 GMT</pubDate>
+            <description><![CDATA[这是我大二上修的《数据结构与算法》的笔记。
+
+数据结构绪论
+
+数据相关术语
+
+数据：所有能被计算机识别的符号集合
+数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）
+数据项：是数据结构中讨论的最小单位（一个人的出生日期）
+数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）
+
+数据结构相关术语
+
+数据结构：带结构的数据元素的集合。全面的来说，$DS ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/./data-structure-and-algorithm/avl-ll.gif">
             </enclosure>
         </item>
         <item>
