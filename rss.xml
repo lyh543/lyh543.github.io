@@ -4,375 +4,278 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sat, 30 Apr 2022 13:34:59 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 01 May 2022 15:16:48 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[安卓刷机记录]]></title>
-            <link>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</link>
-            <guid>https://blog.lyh543.cn/notes/android/android-flashing-notes.html</guid>
-            <pubDate>Fri, 12 Mar 2021 09:37:36 GMT</pubDate>
-            <description><![CDATA[手机选择
+            <title><![CDATA[写泥电毕设时遇到的 Word 排版问题]]></title>
+            <link>https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html</link>
+            <guid>https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html</guid>
+            <pubDate>Sat, 23 Apr 2022 14:14:34 GMT</pubDate>
+            <description><![CDATA[为了查重，毕设论文必须用 Word 写（查重系统不支持 PDF），完完全全就是开历史倒车。对于我这种 Office 半吊子来说，用 Word 排版真的是让人高血压。精通是不可能精通的，有这个时间不如多学几门编程语言。只能遇到问题谷歌一下，把论文混完，（但愿）再也接触不到 Word 了。
 
-如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
-
-一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
-
-ROM 选择
-
-有条件还是搞个梯子，不然 ROM 很难下的。
-
-[ ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[QQ，微信实现调用系统WebView教程]]></title>
-            <link>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</link>
-            <guid>https://blog.lyh543.cn/notes/android/qq-wechat-call-system-webview.html</guid>
-            <pubDate>Tue, 25 Jun 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[实在受不了垃圾X5内核，打开网页总慢半秒
-
-把这个X5内核调试链接复制到QQ打开 http://debugtbs.qq.com/
-点左下角强制使用系统内核，确定。
-不放心的打开这个网址查看当前内核 https://ie.icoa.cn/
-
-这下顺滑多了，网页秒开 ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hexo 使用 Gitalk 评论]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/gitalk.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/gitalk.html</guid>
-            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[2019.10.29 更新：由于 Gitalk 对 GitHub 之外的网站支持不好（在 github.io 以外的域名下都不能进行评论），现已迁移至 Valine。
-> Valine 的博客推送做的不是很好，不过有第三方实现方案。可查阅 官方网站。
->
-> 2019.11.6 更新：由于 GitHub OAuth ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hexo 备份（及一次翻车的经历）]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/hexo-backup.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/hexo-backup.html</guid>
-            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[由于 Hexo 的本地文件是没有上传到 Github 的，某天突发奇想，想把 Hexo 文件夹直接移至 Onedrive 自动备份。
-后来发现由于 Hexo 的 node_modules 文件太多了(10000+)，以至于需要同步很久。
-另外，每一次 generate，都会有一堆东西要删除，但是由于 Onedrive 的设定，这些文件就在 Onedrive 云端保留了，非常混乱。
-
-于是就 ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hexo 建站]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/hexo-building-blog.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/hexo-building-blog.html</guid>
-            <pubDate>Mon, 16 Sep 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[先放一个Hexo官方文档的链接。
-
-初始化 hexo 博客
-
-npm install hexo-cli -g
-hexo init lyh543.github.io
-
-这步会创建一个 lyh543.github.io 文件夹，文件夹里是一个基础的博客。接下来安装博客所需的最基础的 npm 包。
-
-`` ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Hexo Material 主题配置]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/hexo-material.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/hexo-material.html</guid>
-            <pubDate>Fri, 16 Aug 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[Material 主题是一个基于 Material Design （质感设计）的 Hexo主题。
-
-Hexo 更换主题的方法参见另一篇博客。
-
-在网上找到了一个配置过程非常详实的 ...]]></description>
-            <enclosure url="https://user-images.githubusercontent.com/15999179/34318128-78f404fe-e7fa-11e7-8d66-3d72bf7f6b88.png">
+本文中使用的 Word 是 Office 365，版本 2203。使用的论文模板可以在[这里](/blob/电 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/70beb5321c299dd82d9effa98f5ffccf4a7f30ada3d6b0c30141745dc6291ce7.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[Hexo 写作]]></title>
-            <link>https://blog.lyh543.cn/notes/blog/hexo-writing.html</link>
-            <guid>https://blog.lyh543.cn/notes/blog/hexo-writing.html</guid>
-            <pubDate>Sun, 23 Jun 2019 16:33:03 GMT</pubDate>
-            <description><![CDATA[Hexo写作支持Markdown。
-不懂就查文档
+            <title><![CDATA[逛开源社区]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html</guid>
+            <pubDate>Thu, 21 Apr 2022 10:31:21 GMT</pubDate>
+            <description><![CDATA[最近突然开始逛开源社区，看 GitHub 大佬用英文聊天也挺好玩的。
 
-即时预览
-
-由于 Hexo 博客不全是使用Markdown语法，常规Markdown编辑器无法提供效果完全相同的预览。但是 Hexo 提供了本地网页即时预览博客的功能。
-
-在命令行中输入Hexo server（简写hexo s），即可在`127.0.0. ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/./hexo-writing/blog_preview.jpg">
+是什么让我突然有这个兴趣的呢？让我想一想。第一个是 Hacker Newsletter。最初是在 B 站上看到有人在以视频的形式做每期 Hacker Newsletter 的概览，我发现这个东西讲的是一些非常前沿的一些偏开发的科技资讯（偏硬件的可以关注 Linu ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/bc5fdde35a1877a4e8b1dc0fc3ba75ccb55c7dc6200eb80abc4266c171398fcc.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[大城市的互联网公司]]></title>
-            <link>https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html</link>
-            <guid>https://blog.lyh543.cn/notes/carrers/internet-enterprise-in-cities.html</guid>
-            <pubDate>Thu, 17 Dec 2020 16:06:49 GMT</pubDate>
-            <description><![CDATA[[Microsoft]
+            <title><![CDATA[重构博客结构]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html</guid>
+            <pubDate>Tue, 19 Apr 2022 23:16:19 GMT</pubDate>
+            <description><![CDATA[从大一以来写博客，一直是把博客当做一个笔记来写。一来原生支持 Markdown 和 LaTeX 公式（印象笔记虽然支持 Markdown，但是刚支持那个时候的 Markdown 真的很难用），二来 Hexo、Jekyll 等等框架的各种主题又好看，三来把自己的笔记分享给别人也很方便，所以一直这么做，近三年来，从 Hexo 到 VuePress，灌水了 240 多篇笔记。
 
-上海
-
-[Microsoft]
-[育碧]
-[PayPal]
-
-深圳
-
-[TP-LINK]
-
-成都
-
-有篇 知乎回答讲了很多，不过大部分都是不招在读生实习的。
-
-[腾讯]
-[字节跳动]
-[阿里]
-[美团]
-[百度]
-[京东 ...]]></description>
+直到最近开始用 RSS， ...]]></description>
         </item>
         <item>
-            <title><![CDATA[面经集合 - 2020]]></title>
-            <link>https://blog.lyh543.cn/notes/carrers/interview-experience/2020.html</link>
-            <guid>https://blog.lyh543.cn/notes/carrers/interview-experience/2020.html</guid>
-            <pubDate>Fri, 30 Oct 2020 00:00:00 GMT</pubDate>
-            <description><![CDATA[推荐搭配 面试相关知识 食用。
+            <title><![CDATA[将 npm 项目迁移到 pnpm + monorepo]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-04-18-migrate-npm-multirepo-to-pnpm-monorepo.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-04-18-migrate-npm-multirepo-to-pnpm-monorepo.html</guid>
+            <pubDate>Mon, 18 Apr 2022 13:51:52 GMT</pubDate>
+            <description><![CDATA[最近学习了 monorepo 这个东西，发现非常适合我们公司的前端架构，于是跟大家讨论了以后，用周末两天的时间将原来的“每个包一个 repo” 的 multirepo 架构重构成“一个 repo 里放所有包”的 monorepo 架构。目前前端大佬还有一些顾虑，所以还没有马上将开发工作迁移过去，不过我个人在测试 monorepo 的各个包是否正常工作的时候，用着感觉是非常爽的。
 
-2020冬 字节跳动北京 电商后端 日常实习
-
-职位链接
-
-第一面
-
-面试官因为开会迟到了十分钟（没敢问是不是因为 ByteDance 会议太多了 hhhh），然后他电脑不正常， ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[面经集合 - 2021]]></title>
-            <link>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</link>
-            <guid>https://blog.lyh543.cn/notes/carrers/interview-experience/2021.html</guid>
-            <pubDate>Sun, 07 Mar 2021 16:00:00 GMT</pubDate>
-            <description><![CDATA[推荐搭配 面试相关知识 食用。
-
-2021春 腾讯成都 CSIG 后台开发 暑期实习
-
-这次是腾讯云负责数据库的组。一面的时候没咋看数据库，后面得赶紧了解和复习。
-
-一面
-
-自我介绍
-自我介绍的时候我提到了晚上八点的夜宵券，面试官说晚上九点半下班是常态，大概是 995 的作息。emmm 不是 996，而且报销打车费，还能接受。
-会 Ja ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/7e4a5d8dc7d553e32541acc53499399aab96085680613603a909958878bd7a49.png">
+当然，改架构 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/93c4cacac6cdaf060a59ccd81e44668721ea53e24c26315c37d39dd0069370c8.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[面试相关知识]]></title>
-            <link>https://blog.lyh543.cn/notes/carrers/interview-notes.html</link>
-            <guid>https://blog.lyh543.cn/notes/carrers/interview-notes.html</guid>
-            <pubDate>Fri, 26 Mar 2021 16:00:00 GMT</pubDate>
-            <description><![CDATA[以下知识均在后台开发面试中实际出现过、总结而来。
+            <title><![CDATA[配置 Flutter 开发环境的踩坑记录]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html</guid>
+            <pubDate>Fri, 08 Apr 2022 16:06:02 GMT</pubDate>
+            <description><![CDATA[最近想学 Flutter，但是配环境的时候踩了一路坑。
 
-C++
+下载 Flutter
 
-多态的实现
-
-即虚函数表。
-
-STL 容器库
-
-容器库 - cppreference.com
-
-unordered_map 和 map 的区别
-
-略。
-
-multimap 和 map 的区别
-
-略。
- ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/bfe1ee01619b2c9ccc4caed3ac55690651d628abb8b9e9956c2da7d9420c8fe4.png">
+可以在官网或者国内镜像下载，也可以走包管理器。Windows 如果安装了 Chocolatey 可以直接 `choco i ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/9b733d585a9f291fd958dce32fd600e606fbbc5f2656c1df4f30ccde5bc8fa6b.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[《编程珠玑》笔记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/Programming-Pearls.html</guid>
-            <pubDate>Thu, 29 Aug 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[编程珠玑每一章讲了编程、开发的不同的方面。
-第一章讲如何准确、正确的定义问题。
-第二章讲算法设计（灵光一现，啊哈！算法）。
-第三章提到数据结构和编程的关系（欸有点面向对象的感觉）。
-第四章运用循环不变式来证明程序的正确性。
-第五章运用脚手架、断言调试程序。
-第六章概述了加速程序的几个方向，并在第八至x章分别阐述。
-第七章书如其名：粗略估算。
-第八章重新设计算法来 ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[字符编码（转载）]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/character-encoding.html</guid>
-            <pubDate>Thu, 22 Aug 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[转自：https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896
+            <title><![CDATA[《关于我把笔记本变成服务器这件事》]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html</guid>
+            <pubDate>Wed, 23 Mar 2022 22:33:38 GMT</pubDate>
+            <description><![CDATA[大学第一年入坑了服务器，阿里云和腾讯云给学生的套餐还不错，2C 2G 40G 5M 每月只需要 10 RMB。但是脱离学生套餐，国内服务器的价格真的不要太高吗，10 元的学生套餐每个月要 100。
 
-因为计算机只能处理数字，如果要处理文本，就必须先把文本转换为数字才能处理。最早的计算机在设计时采用 8 个比特（bit）作为一个字节（byte），所以，一个字节能表示的最大的整数就是 255（二进制 11111111 = 十进制 255） ...]]></description>
-            <enclosure url="https://www.liaoxuefeng.com/files/attachments/923930471927008/0">
+阿里云轻量应用服务器
+
+当时就 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/5d49145029debe0d919bc2d47516a7708b8f88715a286ab28270ddd54e01cc8e.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[汇编语言与微机接口技术 课程笔记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/assembly-language-and-interface-technology-of-microcomputer-classnote.html</guid>
-            <pubDate>Tue, 08 Sep 2020 14:52:38 GMT</pubDate>
-            <description><![CDATA[授课老师：廖建明老师
-教材：《微机原理与接口技术》(第4版). 吴宁,乔亚男主编. 清华大学出版社
-参考教材:《汇编语言程序设计》. 廖建明主编.清华大学出版社
+            <title><![CDATA[Git 根据路径设置邮箱名]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html</guid>
+            <pubDate>Mon, 31 Jan 2022 22:02:19 GMT</pubDate>
+            <description><![CDATA[对于同时在写开源项目和公司私有项目的码农，不同的项目可能就需要选择不同的邮箱。
 
-第一章 微型计算机基础概论
+最直接的方案是给每个 repo 设置一遍，毕竟 Git 自带了 --local --global --system 三个级别的设置。我之前的办法就是 global 写个人邮箱，然后写一个脚本用于设置当前项目的邮箱为公司邮箱（大概如下），放在 PATH 下，每新建 / clone 一个 repo 的时候 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Windows 端口占用的解决方法]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html</guid>
+            <pubDate>Thu, 13 Jan 2022 18:50:19 GMT</pubDate>
+            <description><![CDATA[和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。
 
-计算机的工作原理
+查询是否被其他应用占用
 
-计算机中的指令执行过程：取指令 -> 指令译码 -> 读取操作数 -> 执行命令 -> 存放结果
+在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：
 
-![计算机基本组成结构](/images/2b125ce68 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/2b125ce6885b6eddbe43b0c1b94ea20d5b0f18a475587854d4bda793f548e73f.png">
+管理员 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/2a17482e2c835c9e3ef8fde3db60c6476f3f10a9dcc75ca76f3e23efe4cb7f3a.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[华迪大数据专业实习日记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/big-data-learning-diary.html</guid>
-            <pubDate>Wed, 01 Jul 2020 23:24:32 GMT</pubDate>
-            <description><![CDATA[这次在华迪做专业实习，一点都不水，还特硬核。
-
-6.30
-
-上午：Python 基础，可参考廖雪峰博客。
-
-下午：Python 的语法糖；Sracpy 爬虫
-
-7.1
-
-上午：爬虫和 Redis 进行结合，进行更复杂的爬虫（ ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[编译原理 课程笔记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/compile-principle.html</guid>
-            <pubDate>Tue, 02 Mar 2021 10:51:02 GMT</pubDate>
-            <description><![CDATA[一到四章的概念也就图一乐，真学习还得看第五章
-
-引言
-
-语言
-
-语言：一组规则的组合
-
-字母表的定义
-词法规则：单词符号的形成规则
-语法规则：（短语、从句、句子、段落、文章）语法单位的形成规则
-语义规则：单词符号和语法单位的含义规则
-语用规则：语义规则的发展和 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/cad0024c4ccba28d40dffcca5cafd4140554b36ff01bccc8234bbf86499d9d90.png">
+            <title><![CDATA[PowerShell 7 学习笔记]]></title>
+            <link>https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html</link>
+            <guid>https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html</guid>
+            <pubDate>Sat, 01 Jan 2022 13:14:01 GMT</pubDate>
+            <description><![CDATA[我在 Windows 使用的脚本，从 cmd 到 WSL 1 到 WSL 2，最后又回到了 PowerShell。Shell 在 Linux/Mac OS 上确实好用，但如果要用 IDE 开发，WSL 1 的开发环境不受 JetBrains 支持了，而从 JetBrains 的 Windows 版本访问 WSL 2 会巨慢。所以还是回归到 PowerShell 吧。而且，PowerShell 正如 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/5d647b6852131ec69d3fca041475f941e2188a784f33f2b73f031dfe3539410e.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[计算机系统结构 复习笔记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-architecture.html</guid>
-            <pubDate>Mon, 01 Mar 2021 14:40:25 GMT</pubDate>
-            <description><![CDATA[引言
+            <title><![CDATA[推荐 TeXStudio 配置]]></title>
+            <link>https://blog.lyh543.cn/notes/latex/recommended-texstudio-config.html</link>
+            <guid>https://blog.lyh543.cn/notes/latex/recommended-texstudio-config.html</guid>
+            <pubDate>Wed, 17 Nov 2021 17:26:31 GMT</pubDate>
+            <description><![CDATA[构建
 
-处理器惊人的性能改进
+快捷键
 
-处理器惊人的性能改进
-
-分析：
-每年 25%（1978-1986）: 性能增长主要依赖实现技术的进步
-每年 52%（1986-2003）: 性能增长依赖两方面：
-  系统结 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/c41ef765f8191573d0e90137e7fc29f14f38ff83ce79065843de8b497190bc2b.png">
+![编辑器](/images/a08acf4334 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/d7791dab69351205e63ec66f72e3c7460e7208cefdae905c1942823221657d07.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[计算机网络安全 课程笔记]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/computer-network-security-classnote.html</guid>
-            <pubDate>Tue, 08 Sep 2020 10:20:09 GMT</pubDate>
-            <description><![CDATA[什么是信息
-什么是信息安全
+            <title><![CDATA[我的 NTFS 怎么突然变成 ext4 了？？？]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</guid>
+            <pubDate>Wed, 10 Nov 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。
 
-信息是对事物不确定性的度量，并进而采用信息量来描述信息。
+在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[修复 Manjaro 的 EFI GRUB 引导]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html</guid>
+            <pubDate>Fri, 15 Oct 2021 16:28:52 GMT</pubDate>
+            <description><![CDATA[Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。
 
-信息安全是保证信息的基本属性所需的全面的管理
-规程和控制。
+博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。
 
-信息安全的基本属性
+本文假定：
 
-完整性
-可用性
-机密性
-可靠性
-不可抵赖性
+使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1
+Manjaro 分区在 /dev/nvme0n1p5
 
-信息安全服务
+从 Manjaro ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[配置 Manjaro]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</guid>
+            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
+            <description><![CDATA[sudo pacman-mirrors -i -c China -m rank
 
-认证
-访问控制
-数据保密
-数据完整性
-非否认
+在弹出来的框里选择一个即可。
 
-安全机制
+然后添加 ArchlinuxCN 源。
 
-加密
-数字签名 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/8edaa57c3948c8b3728994ab744a550f45359320c0bf30c93ee28376ab99171b.png">
+sudo nano /etc/pacman.conf
+
+在最后加上三行，然后保存。
+
+[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[数据结构与算法]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/data-structure-and-algorithm.html</guid>
-            <pubDate>Tue, 04 Feb 2020 12:59:19 GMT</pubDate>
-            <description><![CDATA[这是我大二上修的《数据结构与算法》的笔记。
+            <title><![CDATA[使用 Chocolatey 配置 Windows]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</guid>
+            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
+            <description><![CDATA[为了更好的使用 Chocolatey，最好能够有梯子。此处略。
 
-数据结构绪论
+以及记得配置 HTTPPROXY 和 HTTPSPROXY。
 
-数据相关术语
+下载 Chocolatey
 
-数据：所有能被计算机识别的符号集合
-数据元素：是数据（结构）中的一个个体（一个人出生日期的年、月、日）
-数据项：是数据结构中讨论的最小单位（一个人的出生日期）
-数据对象：具有相同性质的数据元素的集合（迷宫的每一个点）
+> 参考：Chocolatey Software | Installing Chocolatey
 
-数据结构相关术语
+在管理员权限下 Powershell 执行：
 
-数据结构：带结构的数据元素的集合。全面的来说，$DS ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/./data-structure-and-algorithm/avl-ll.gif">
+` ...]]></description>
+            <enclosure url="https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png">
             </enclosure>
         </item>
         <item>
-            <title><![CDATA[算法设计]]></title>
-            <link>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</link>
-            <guid>https://blog.lyh543.cn/notes/computer-science/classnotes/design-and-analysis-of-algorithms.html</guid>
-            <pubDate>Sun, 27 Oct 2019 16:00:00 GMT</pubDate>
-            <description><![CDATA[该篇博客为肖鸣宇老师所开的 Design and Analysis of Algorithms 课程的笔记。
+            <title><![CDATA[常用 Dockerfile + docker-compose 片段]]></title>
+            <link>https://blog.lyh543.cn/notes/linux/docker-snippets.html</link>
+            <guid>https://blog.lyh543.cn/notes/linux/docker-snippets.html</guid>
+            <pubDate>Tue, 28 Sep 2021 21:15:25 GMT</pubDate>
+            <description><![CDATA[Maven + Spring Boot
 
-绪论
-
-算法解决的三种问题
-
-Desicion Problem（判断是否）
-Optimal（最优化的结果/解）
-Numeric Calculation（数字计算、解方程）
-
-问题的分类（按复杂度）
-
-P: a solutuon can be ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/P_np_np-complete_np-hard.svg">
+FROM maven:3-openjdk-16
+WORKDIR /code
+RUN mkdir -p /root/.m2 && curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml
+COPY pom.xml pom.xm ...]]></description>
+            <enclosure url="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
             </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[常用 Java 代码片段]]></title>
+            <link>https://blog.lyh543.cn/notes/java/java-snippets.html</link>
+            <guid>https://blog.lyh543.cn/notes/java/java-snippets.html</guid>
+            <pubDate>Thu, 16 Sep 2021 21:15:25 GMT</pubDate>
+            <description><![CDATA[InputStream ByteArrayOutputStream String byte[] 互相转换
+
+这四者的直接相互转换关系如下图所示。其中 OutputStream 仅支持 ByteArrayOutputStream 转换为其他类，因为只有该类将内容输出到了内存，其他 OutputStream 可能已经将内容输出到文件或其他地方，无法再次获取其内容。
+
+![InputStre ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/inputstream-outputstream-string-bytearray.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[常用 GitHub Actions 代码片段]]></title>
+            <link>https://blog.lyh543.cn/notes/development/github-actions-snippets.html</link>
+            <guid>https://blog.lyh543.cn/notes/development/github-actions-snippets.html</guid>
+            <pubDate>Tue, 07 Sep 2021 17:49:46 GMT</pubDate>
+            <description><![CDATA[name: Deploy Backend
+on:
+  push:
+    branches:
+      'master'
+env:
+  TZ: Asia/Shanghai
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+如果需要 docker 镜像，可以在这里添加
+
+    steps:
+      uses: acti ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Maven 使用技巧]]></title>
+            <link>https://blog.lyh543.cn/notes/java/maven-tips.html</link>
+            <guid>https://blog.lyh543.cn/notes/java/maven-tips.html</guid>
+            <pubDate>Tue, 07 Sep 2021 10:46:32 GMT</pubDate>
+            <description><![CDATA[更换镜像源
+
+打包成一个 jar 并部署
+
+对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：
+
+            ]]></description>
+        </item>
+        <item>
+            <title><![CDATA[在 WSL 2 中开发]]></title>
+            <link>https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html</link>
+            <guid>https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html</guid>
+            <pubDate>Mon, 16 Aug 2021 15:17:12 GMT</pubDate>
+            <description><![CDATA[WSL 2 安装、代理配置
+
+WSL2来了！但是能正常使用并不简单 | 0x1C.dev
+
+不需要挂梯子就不用看了。
+
+Java & Idea
+
+[打造IDEA+wsl2的Java开发环境（zsh jdk maven） - 知乎](https://zhu ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hive SQL 安装 + 教程指路]]></title>
+            <link>https://blog.lyh543.cn/notes/database/hive.html</link>
+            <guid>https://blog.lyh543.cn/notes/database/hive.html</guid>
+            <pubDate>Tue, 10 Aug 2021 10:39:13 GMT</pubDate>
+            <description><![CDATA[Hive 是一个用 Java 编写的、基于 Hadoop 的分布式数据仓库。
+
+数据仓库和数据库的区别在于：数据库对读写性能都有较高要求，适合于跑业务；而数据仓库只对读性能有非常高的要求，适合于数据分析。
+
+其实 Hive 的 SQL 语法和 MySQL 等其他数据库的语法都大差不差。配好环境写 SQL 还是很容易上手的。
+
+Docker 部署 Hive 测试环境
+
+Hive 生产环境需要在 ...]]></description>
         </item>
     </channel>
 </rss>
