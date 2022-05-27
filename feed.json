@@ -108,8 +108,8 @@
         {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
-            "title": "使用 Chocolatey 配置 Windows",
-            "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\n> 参考：Chocolatey Software | Installing Chocolatey\n\n在管理员权限下 Powershell 执行：\n\n` ...",
+            "title": "使用 Chocolatey 和 winget 配置 Windows",
+            "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\nwinget 应该不用下载，Chocolatey 需要下载。\n\n> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...",
             "image": "https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png",
             "date_modified": "2021-09-29T19:34:56.000Z"
         },

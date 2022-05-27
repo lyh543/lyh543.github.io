@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>使用 Chocolatey 配置 Windows | 小灰灰灰灰的博客</title>
+    <title>使用 Chocolatey 和 winget 配置 Windows | 小灰灰灰灰的博客</title>
     <meta name="generator" content="VuePress 1.8.2">
     <link rel="icon" href="/theme/favicon.png">
     <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
@@ -17,40 +17,41 @@
 
 下载 Chocolatey
 
-> 参考：Chocolatey Software | Installing Chocolatey
+winget 应该不用下载，Chocolatey 需要下载。
 
-在管理员权限下 Powershell 执行：
-
-` ...">
+> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.f50846a0.js" as="script"><link rel="preload" href="/assets/js/189.6f4dc47d.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.ea89770a.js" as="script"><link rel="preload" href="/assets/js/189.46f23e43.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="下载梯子"><a href="#下载梯子" class="header-anchor">#</a> 下载梯子</h2> <p>为了更好的使用 Chocolatey，最好能够有梯子。此处略。</p> <p>以及记得配置 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code>。</p> <h2 id="下载-chocolatey"><a href="#下载-chocolatey" class="header-anchor">#</a> 下载 Chocolatey</h2> <blockquote><p>参考：<a href="https://chocolatey.org/install" target="_blank" rel="noopener noreferrer">Chocolatey Software | Installing Chocolatey<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <p>在管理员权限下 Powershell 执行：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token function">Set-ExecutionPolicy</span> Bypass <span class="token operator">-</span>Scope <span class="token keyword">Process</span> <span class="token operator">-</span>Force<span class="token punctuation">;</span> <span class="token namespace">[System.Net.ServicePointManager]</span>::SecurityProtocol = <span class="token namespace">[System.Net.ServicePointManager]</span>::SecurityProtocol <span class="token operator">-bor</span> 3072<span class="token punctuation">;</span> <span class="token function">iex</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">New-Object</span> System<span class="token punctuation">.</span>Net<span class="token punctuation">.</span>WebClient<span class="token punctuation">)</span><span class="token punctuation">.</span>DownloadString<span class="token punctuation">(</span><span class="token string">'https://community.chocolatey.org/install.ps1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="下载梯子"><a href="#下载梯子" class="header-anchor">#</a> 下载梯子</h2> <p>为了更好的使用 Chocolatey，最好能够有梯子。此处略。</p> <p>以及记得配置 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code>。</p> <h2 id="下载-chocolatey"><a href="#下载-chocolatey" class="header-anchor">#</a> 下载 Chocolatey</h2> <p>winget 应该不用下载，Chocolatey 需要下载。</p> <blockquote><p>参考：<a href="https://chocolatey.org/install" target="_blank" rel="noopener noreferrer">Chocolatey Software | Installing Chocolatey<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <p>在管理员权限下 Powershell 执行：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token function">Set-ExecutionPolicy</span> Bypass <span class="token operator">-</span>Scope <span class="token keyword">Process</span> <span class="token operator">-</span>Force<span class="token punctuation">;</span> <span class="token namespace">[System.Net.ServicePointManager]</span>::SecurityProtocol = <span class="token namespace">[System.Net.ServicePointManager]</span>::SecurityProtocol <span class="token operator">-bor</span> 3072<span class="token punctuation">;</span> <span class="token function">iex</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">New-Object</span> System<span class="token punctuation">.</span>Net<span class="token punctuation">.</span>WebClient<span class="token punctuation">)</span><span class="token punctuation">.</span>DownloadString<span class="token punctuation">(</span><span class="token string">'https://community.chocolatey.org/install.ps1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 </code></pre></div><p>测试是否安装成功：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code>choco <span class="token operator">-</span>?
 </code></pre></div><h2 id="为-chocolatey-配置代理"><a href="#为-chocolatey-配置代理" class="header-anchor">#</a> 为 Chocolatey 配置代理</h2> <div class="language-powershell extra-class"><pre class="language-powershell"><code>choco config <span class="token function">set</span> proxy <span class="token string">&quot;http://localhost:17296/&quot;</span>
-</code></pre></div><h2 id="安装软件"><a href="#安装软件" class="header-anchor">#</a> 安装软件</h2> <h3 id="搜索-chocolatey-库"><a href="#搜索-chocolatey-库" class="header-anchor">#</a> 搜索 Chocolatey 库</h3> <p><code>choco info</code> 实在是太慢了，如果自己需要下载软件，不如直接去<a href="https://community.chocolatey.org/packages" target="_blank" rel="noopener noreferrer">官网<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>搜索。</p> <h3 id="安装常用软件"><a href="#安装常用软件" class="header-anchor">#</a> 安装常用软件</h3> <p>按需安装：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code>choco install <span class="token operator">-</span>y `
-    tim `
-    wechat `
-    netease<span class="token operator">-</span>cloudmusic `
-    potplayer `
-    obs<span class="token operator">-</span>studio<span class="token punctuation">.</span>install `
-    photogimp `
-    googlechrome `
-    bandizip `
-    internet<span class="token operator">-</span>download<span class="token operator">-</span>manager `
-    steam<span class="token operator">-</span>client `
-    powertoys `
-    glasswire `
-    fiddler `
-    spacesniffer `
-    carnac `
-    teamviewer `
-    synctrayzor `
-    zerotier<span class="token operator">-</span>one `
-    geforce<span class="token operator">-</span>experience <span class="token comment"># for Nvidia GPU only</span>
-</code></pre></div><p>如果部分失败了，可以重新执行一遍，Choco 会跳过已经安装的。</p> <h3 id="安装命令行工具"><a href="#安装命令行工具" class="header-anchor">#</a> 安装命令行工具</h3> <div class="language-powershell extra-class"><pre class="language-powershell"><code>choco install <span class="token operator">-</span>y `
+</code></pre></div><h2 id="安装软件"><a href="#安装软件" class="header-anchor">#</a> 安装软件</h2> <blockquote><p>2022.5.27 更新：日常软件还是 winget 比较全，大家贡献起来都很有动力。命令行工具还是 choco 比较全（winget 看起来只支持安装包的软件），开发环境 choco 稍微全一点（比如现在 winget 还没有 jdk18 和 flutter）。</p></blockquote> <h3 id="搜索-chocolatey-库"><a href="#搜索-chocolatey-库" class="header-anchor">#</a> 搜索 Chocolatey 库</h3> <p><code>choco info</code> 实在是太慢了，如果自己需要下载软件，不如直接去<a href="https://community.chocolatey.org/packages" target="_blank" rel="noopener noreferrer">官网<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>搜索。</p> <h3 id="安装常用软件"><a href="#安装常用软件" class="header-anchor">#</a> 安装常用软件</h3> <p>使用 winget 安装大部分包，不支持的部分包使用 choco 安装。</p> <p>下面的列表按需安装：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># winget 怎么还不支持一次安装多个包</span>
+winget install <span class="token operator">-</span>s winget TIM
+winget install <span class="token operator">-</span>s winget Wechat
+winget install <span class="token operator">-</span>s winget Feishu
+winget install <span class="token operator">-</span>s winget NetEase<span class="token punctuation">.</span>CloudMusic
+winget install <span class="token operator">-</span>s winget SogouInput
+winget install <span class="token operator">-</span>s winget potplayer
+winget install <span class="token operator">-</span>s winget OBSStudio
+winget install <span class="token operator">-</span>s winget chrome
+winget install <span class="token operator">-</span>s winget bandizip
+winget install <span class="token operator">-</span>s winget InternetDownloadManager
+winget install <span class="token operator">-</span>s winget Steam
+winget install <span class="token operator">-</span>s winget powertoys
+winget install <span class="token operator">-</span>s winget glasswire
+winget install <span class="token operator">-</span>s winget fiddler
+winget install <span class="token operator">-</span>s winget todesk
+winget install <span class="token operator">-</span>s winget carnac
+winget install <span class="token operator">-</span>s winget synctrayzor
+winget install <span class="token operator">-</span>s winget ZeroTierOne
+winget install <span class="token operator">-</span>s winget GeForceExperience <span class="token comment"># for Nvidia GPU only</span>
+
+choco install <span class="token operator">-</span>y photogimp spacesniffer
+</code></pre></div><p>如果部分失败了，可以重新执行一遍，Choco 会跳过已经安装的。</p> <h3 id="安装命令行工具"><a href="#安装命令行工具" class="header-anchor">#</a> 安装命令行工具</h3> <div class="language-powershell extra-class"><pre class="language-powershell"><code>winget install <span class="token operator">-</span>s winget openssh
+choco install <span class="token operator">-</span>y `
     oh<span class="token operator">-</span>my<span class="token operator">-</span>posh `
     tldr `
     ffmpeg `
@@ -78,8 +79,18 @@ mkdir ~<span class="token operator">/</span><span class="token punctuation">.</s
 <span class="token function">Install-Module</span> <span class="token operator">-</span>Scope CurrentUser `
     posh<span class="token operator">-</span>git<span class="token punctuation">,</span> DockerCompletion 
 </code></pre></div><p><a href="https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Meslo.zip" target="_blank" rel="noopener noreferrer">下载<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>并安装这一堆字体（只安装需要的那两个应该也可以）。修改 Windows Termial 字体为  <code>MesloLGM Nerd Font</code>（某些主题用带 Mono 的字体好一点，有些用不带的好一点，修改主题以后需要自己尝试）：</p> <p><img src="/images/d33b7ac9d9b357e5fe6522621e1c10eefe274caf514d6c43d7ce90420275c360.png" alt="修改 Windows Termial 字体"></p> <p>记得还要修改 VSCode terminal 和 JetBrains IDE 的字体。</p> <p><code>code $PROFILE</code>，写入以下内容并保存：</p> <div class="language-powershell extra-class"><pre class="language-powershell"><code><span class="token comment"># git, docker, choco 的补全模块</span>
-<span class="token function">Import-Module</span> posh<span class="token operator">-</span>git<span class="token punctuation">,</span> DockerCompletion
+<span class="token function">Import-Module</span>  posh<span class="token operator">-</span>git<span class="token punctuation">,</span> DockerCompletion
 <span class="token function">Import-Module</span> “<span class="token variable">$env</span>:ChocolateyInstall\helpers\chocolateyProfile<span class="token punctuation">.</span>psm1” <span class="token operator">-</span>Force
+<span class="token comment"># winget 的补全</span>
+<span class="token function">Register-ArgumentCompleter</span> <span class="token operator">-</span>Native <span class="token operator">-</span>CommandName winget <span class="token operator">-</span>ScriptBlock <span class="token punctuation">{</span>
+    <span class="token keyword">param</span><span class="token punctuation">(</span><span class="token variable">$wordToComplete</span><span class="token punctuation">,</span> <span class="token variable">$commandAst</span><span class="token punctuation">,</span> <span class="token variable">$cursorPosition</span><span class="token punctuation">)</span>
+        <span class="token namespace">[Console]</span>::InputEncoding = <span class="token namespace">[Console]</span>::OutputEncoding = <span class="token variable">$OutputEncoding</span> = <span class="token namespace">[System.Text.Utf8Encoding]</span>::new<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token variable">$Local</span>:word = <span class="token variable">$wordToComplete</span><span class="token punctuation">.</span>Replace<span class="token punctuation">(</span><span class="token string">'&quot;'</span><span class="token punctuation">,</span> <span class="token string">'&quot;&quot;'</span><span class="token punctuation">)</span>
+        <span class="token variable">$Local</span>:ast = <span class="token variable">$commandAst</span><span class="token punctuation">.</span>ToString<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Replace<span class="token punctuation">(</span><span class="token string">'&quot;'</span><span class="token punctuation">,</span> <span class="token string">'&quot;&quot;'</span><span class="token punctuation">)</span>
+        winget complete <span class="token operator">--</span>word=<span class="token string">&quot;<span class="token variable">$Local</span>:word&quot;</span> <span class="token operator">--</span>commandline <span class="token string">&quot;<span class="token variable">$Local</span>:ast&quot;</span> <span class="token operator">--</span>position <span class="token variable">$cursorPosition</span> <span class="token punctuation">|</span> <span class="token function">ForEach-Object</span> <span class="token punctuation">{</span>
+            <span class="token namespace">[System.Management.Automation.CompletionResult]</span>::new<span class="token punctuation">(</span><span class="token variable">$_</span><span class="token punctuation">,</span> <span class="token variable">$_</span><span class="token punctuation">,</span> <span class="token string">'ParameterValue'</span><span class="token punctuation">,</span> <span class="token variable">$_</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
 <span class="token comment"># 更多主题：https://ohmyposh.dev/docs/themes</span>
 <span class="token comment"># 我觉得还不错的主题：</span>
@@ -90,8 +101,8 @@ oh<span class="token operator">-</span>my<span class="token operator">-</span>po
 <span class="token function">Set-PSReadLineOption</span> <span class="token operator">-</span>PredictionSource History <span class="token comment"># 设置预测文本来源为历史记录</span>
 <span class="token comment"># Set-PSReadlineKeyHandler -Key Tab -Function Complete # 设置 Tab 为补全</span>
 <span class="token function">Set-PSReadlineKeyHandler</span> <span class="token operator">-</span>Key Tab <span class="token operator">-</span><span class="token keyword">Function</span> MenuComplete <span class="token comment"># 设置 Tab 为菜单补全和 Intellisense</span>
-<span class="token comment"># Set-PSReadLineKeyHandler -Key &quot;Ctrl+d&quot; -Function MenuComplete # 设置 Ctrl+d 为菜单补全和 Intellisense</span>
-<span class="token function">Set-PSReadLineKeyHandler</span> <span class="token operator">-</span>Key <span class="token string">&quot;Ctrl+z&quot;</span> <span class="token operator">-</span><span class="token keyword">Function</span> Undo <span class="token comment"># 设置 Ctrl+z 为撤销</span>
+<span class="token comment"># Set-PSReadLineKeyHandler -Key &quot;Ctrl+d</span><span class="token string">&quot; -Function MenuComplete # 设置 Ctrl+d 为菜单补全和 Intellisense
+Set-PSReadLineKeyHandler -Key &quot;</span>Ctrl<span class="token operator">+</span>z&quot; <span class="token operator">-</span><span class="token keyword">Function</span> Undo <span class="token comment"># 设置 Ctrl+z 为撤销</span>
 <span class="token function">Set-PSReadlineOption</span> <span class="token operator">-</span>BellStyle None <span class="token comment"># 禁止补全时的 Beep 声</span>
 <span class="token comment"># 设置向上键为后向搜索历史记录</span>
 <span class="token function">Set-PSReadLineKeyHandler</span> <span class="token operator">-</span>Key UpArrow <span class="token operator">-</span>ScriptBlock <span class="token punctuation">{</span>
@@ -122,6 +133,6 @@ git clone git@github<span class="token punctuation">.</span>com:lyh543<span clas
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.f50846a0.js" defer></script><script src="/assets/js/189.6f4dc47d.js" defer></script>
+    <script src="/assets/js/app.ea89770a.js" defer></script><script src="/assets/js/189.46f23e43.js" defer></script>
   </body>
 </html>
