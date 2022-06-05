@@ -4,7 +4,7 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Fri, 27 May 2022 13:40:08 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 05 Jun 2022 06:01:15 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
@@ -148,6 +148,23 @@ Manjaro 分区在 /dev/nvme0n1p5
 从 Manjaro ...]]></description>
         </item>
         <item>
+            <title><![CDATA[使用 Chocolatey 和 winget 配置 Windows]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</guid>
+            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
+            <description><![CDATA[为了更好的使用 Chocolatey，最好能够有梯子。此处略。
+
+以及记得配置 HTTPPROXY 和 HTTPSPROXY。
+
+下载 Chocolatey
+
+winget 应该不用下载，Chocolatey 需要下载。
+
+> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...]]></description>
+            <enclosure url="https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png">
+            </enclosure>
+        </item>
+        <item>
             <title><![CDATA[配置 Manjaro]]></title>
             <link>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</link>
             <guid>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</guid>
@@ -165,23 +182,6 @@ sudo nano /etc/pacman.conf
 [archlinuxcn]
 Server = https://mirrors.tuna.tsinghua ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[使用 Chocolatey 和 winget 配置 Windows]]></title>
-            <link>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</link>
-            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</guid>
-            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
-            <description><![CDATA[为了更好的使用 Chocolatey，最好能够有梯子。此处略。
-
-以及记得配置 HTTPPROXY 和 HTTPSPROXY。
-
-下载 Chocolatey
-
-winget 应该不用下载，Chocolatey 需要下载。
-
-> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...]]></description>
-            <enclosure url="https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png">
             </enclosure>
         </item>
         <item>
