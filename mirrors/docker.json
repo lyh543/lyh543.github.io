@@ -1,5 +1,10 @@
 {
     "registry-mirrors": [
         "https://registry.cn-hangzhou.aliyuncs.com"
-    ]
+    ],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "10m",
+        "max-file": "3"
+    }
 }
