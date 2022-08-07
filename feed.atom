@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2022-06-23T06:09:50.034Z</updated>
+    <updated>2022-08-07T08:26:14.183Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[面经集合 - 2022]]></title>
+        <id>https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html</id>
+        <link href="https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html">
+        </link>
+        <updated>2022-07-10T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[推荐搭配 面试相关知识 食用。
+
+本来是准备留在创业公司的，结果疫情严重、经济下行，正好公司的业务是上海的线下娱乐（剧本杀）行业，短时间内不少投资人都撤资了，长时间的话也需要很长一段时间才能复苏。综合考虑，还是选择离职，回到大厂来。
+
+由于校招有毕业时间限制，这个情况是没法走校招了。走三年以下经验岗位的社招也还行，就是 hc 没有校招那么集中就是了。
+
+博乐科技 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[写泥电毕设时遇到的 Word 排版问题]]></title>
         <id>https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html</id>
@@ -253,21 +267,5 @@ WSL2来了！但是能正常使用并不简单 | 0x1C.dev
 Java & Idea
 
 [打造IDEA+wsl2的Java开发环境（zsh jdk maven） - 知乎](https://zhu ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hive SQL 安装 + 教程指路]]></title>
-        <id>https://blog.lyh543.cn/notes/database/hive.html</id>
-        <link href="https://blog.lyh543.cn/notes/database/hive.html">
-        </link>
-        <updated>2021-08-10T10:39:13.000Z</updated>
-        <summary type="html"><![CDATA[Hive 是一个用 Java 编写的、基于 Hadoop 的分布式数据仓库。
-
-数据仓库和数据库的区别在于：数据库对读写性能都有较高要求，适合于跑业务；而数据仓库只对读性能有非常高的要求，适合于数据分析。
-
-其实 Hive 的 SQL 语法和 MySQL 等其他数据库的语法都大差不差。配好环境写 SQL 还是很容易上手的。
-
-Docker 部署 Hive 测试环境
-
-Hive 生产环境需要在 ...]]></summary>
     </entry>
 </feed>
