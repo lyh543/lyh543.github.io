@@ -4,10 +4,22 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Mon, 05 Sep 2022 06:36:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 06 Sep 2022 10:14:38 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-09-01-formal-system.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-09-01-formal-system.html</guid>
+            <pubDate>Thu, 01 Sep 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[元数学就是研究数学的数学。
+
+皮亚诺公理和形式系统都是在定义数学的微缩模型：
+
+皮亚诺公理定义了自然数和加法运算。
+[形式系统](https://zh.m.wikipedia.org/zh-my/%E5%BD%A2%E5%BC%8 ...]]></description>
+        </item>
         <item>
             <title><![CDATA[面经集合 - 2022]]></title>
             <link>https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html</link>
@@ -259,21 +271,6 @@ jobs:
 对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：
 
             ]]></description>
-        </item>
-        <item>
-            <title><![CDATA[在 WSL 2 中开发]]></title>
-            <link>https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html</link>
-            <guid>https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html</guid>
-            <pubDate>Mon, 16 Aug 2021 15:17:12 GMT</pubDate>
-            <description><![CDATA[WSL 2 安装、代理配置
-
-WSL2来了！但是能正常使用并不简单 | 0x1C.dev
-
-不需要挂梯子就不用看了。
-
-Java & Idea
-
-[打造IDEA+wsl2的Java开发环境（zsh jdk maven） - 知乎](https://zhu ...]]></description>
         </item>
     </channel>
 </rss>

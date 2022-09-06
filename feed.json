@@ -6,6 +6,13 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
+            "url": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
+            "title": "皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记",
+            "summary": "元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n皮亚诺公理定义了自然数和加法运算。\n[形式系统](https://zh.m.wikipedia.org/zh-my/%E5%BD%A2%E5%BC%8 ...",
+            "date_modified": "2022-09-01T00:00:00.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html",
             "url": "https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html",
             "title": "面经集合 - 2022",
@@ -150,13 +157,6 @@
             "title": "Maven 使用技巧",
             "summary": "更换镜像源\n\n打包成一个 jar 并部署\n\n对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：\n\n            ",
             "date_modified": "2021-09-07T10:46:32.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html",
-            "url": "https://blog.lyh543.cn/notes/microsoft/windows/develop-with-wsl2.html",
-            "title": "在 WSL 2 中开发",
-            "summary": "WSL 2 安装、代理配置\n\nWSL2来了！但是能正常使用并不简单 | 0x1C.dev\n\n不需要挂梯子就不用看了。\n\nJava & Idea\n\n[打造IDEA+wsl2的Java开发环境（zsh jdk maven） - 知乎](https://zhu ...",
-            "date_modified": "2021-08-16T15:17:12.000Z"
         }
     ]
 }
