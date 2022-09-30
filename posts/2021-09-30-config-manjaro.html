@@ -24,7 +24,7 @@ sudo nano /etc/pacman.conf
 [archlinuxcn]
 Server = https://mirrors.tuna.tsinghua ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.aad22335.js" as="script"><link rel="preload" href="/assets/js/189.3541f54c.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.3a788b50.js" as="script"><link rel="preload" href="/assets/js/189.6b85cd61.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -53,9 +53,9 @@ newgrp docker   <span class="token comment"># log in to docker group</span>
 docker <span class="token function">ps</span>       <span class="token comment"># 验证更改成功</span>
 </code></pre></div><h3 id="安装常用软件"><a href="#安装常用软件" class="header-anchor">#</a> 安装常用软件</h3> <p>接下来使用 <code>yay</code> 代替 <code>pacman</code>。<code>yay</code> 完全兼容 <code>pacman</code> 的语法和仓库，且额外支持 <a href="https://wiki.archlinux.org/title/Arch_User_Repository_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)" target="_blank" rel="noopener noreferrer"><code>AUR</code><span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 库，这个仓库有常用、但非官方的软件（如 QQ、网易云、Chrome 等）。</p> <p>为 <code>yay</code> 的 AUR 换清华源：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay --aururl <span class="token string">&quot;https://aur.tuna.tsinghua.edu.cn&quot;</span> --save
 </code></pre></div><p>安装常用应用（注意，yay 不推荐使用 <code>sudo</code>，而是会在命令执行时申请管理员密码）：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay -S --needed <span class="token punctuation">\</span>
-    mailspring <span class="token punctuation">\</span>
     netease-cloud-music <span class="token punctuation">\</span>
     com.qq.tim.spark <span class="token punctuation">\</span>
+    wemeet-bin <span class="token punctuation">\</span>
     google-chrome <span class="token punctuation">\</span>
     xrdp
 </code></pre></div><p>这里用 <code>mailspring</code> 替代自带的 <code>thunderbird</code>，用 <code>google-chrome</code> 替代自带的 <code>firefox</code>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yay -Rs thunderbird firefox
@@ -162,6 +162,6 @@ vncviewer
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.aad22335.js" defer></script><script src="/assets/js/189.3541f54c.js" defer></script>
+    <script src="/assets/js/app.3a788b50.js" defer></script><script src="/assets/js/189.6b85cd61.js" defer></script>
   </body>
 </html>
