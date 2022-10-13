@@ -4,10 +4,21 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Fri, 30 Sep 2022 06:29:20 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 13 Oct 2022 14:46:06 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[抓包安卓的流量]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html</guid>
+            <pubDate>Thu, 13 Oct 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。
+
+> 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/6690c92cc89d832857fbaf069b49514a1545f1909285334676e5be07f96da915.png">
+            </enclosure>
+        </item>
         <item>
             <title><![CDATA[皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记]]></title>
             <link>https://blog.lyh543.cn/posts/2022-09-01-formal-system.html</link>
@@ -258,19 +269,6 @@ jobs:
 
     steps:
       uses: acti ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[Maven 使用技巧]]></title>
-            <link>https://blog.lyh543.cn/notes/java/maven-tips.html</link>
-            <guid>https://blog.lyh543.cn/notes/java/maven-tips.html</guid>
-            <pubDate>Tue, 07 Sep 2021 10:46:32 GMT</pubDate>
-            <description><![CDATA[更换镜像源
-
-打包成一个 jar 并部署
-
-对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：
-
-            ]]></description>
         </item>
     </channel>
 </rss>

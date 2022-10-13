@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html",
+            "url": "https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html",
+            "title": "抓包安卓的流量",
+            "summary": "由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。\n\n> 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...",
+            "image": "https://blog.lyh543.cn/images/6690c92cc89d832857fbaf069b49514a1545f1909285334676e5be07f96da915.png",
+            "date_modified": "2022-10-13T00:00:00.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
             "url": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
             "title": "皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记",
@@ -150,13 +158,6 @@
             "title": "常用 GitHub Actions 代码片段",
             "summary": "name: Deploy Backend\non:\n  push:\n    branches:\n      'master'\nenv:\n  TZ: Asia/Shanghai\njobs:\n  build:\n    runs-on: ubuntu-latest\n\n如果需要 docker 镜像，可以在这里添加\n\n    steps:\n      uses: acti ...",
             "date_modified": "2021-09-07T17:49:46.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/java/maven-tips.html",
-            "url": "https://blog.lyh543.cn/notes/java/maven-tips.html",
-            "title": "Maven 使用技巧",
-            "summary": "更换镜像源\n\n打包成一个 jar 并部署\n\n对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：\n\n            ",
-            "date_modified": "2021-09-07T10:46:32.000Z"
         }
     ]
 }
