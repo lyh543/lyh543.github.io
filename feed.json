@@ -121,19 +121,19 @@
             "date_modified": "2021-10-15T16:28:52.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "title": "配置 Manjaro",
-            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
-            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
             "title": "使用 Chocolatey 和 winget 配置 Windows",
             "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\nwinget 应该不用下载，Chocolatey 需要下载。\n\n> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...",
             "image": "https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "title": "配置 Manjaro",
+            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
+            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
             "date_modified": "2021-09-29T19:34:56.000Z"
         },
         {
