@@ -10,7 +10,7 @@
             "url": "https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html",
             "title": "在安卓上抓包",
             "summary": "由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。\n\n> 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...",
-            "image": "https://blog.lyh543.cn/images/6690c92cc89d832857fbaf069b49514a1545f1909285334676e5be07f96da915.png",
+            "image": "https://github.com/topjohnwu/Magisk/blob/master/docs/images/logo.png?raw=true",
             "date_modified": "2022-10-13T00:00:00.000Z"
         },
         {
@@ -18,6 +18,7 @@
             "url": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
             "title": "皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记",
             "summary": "元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n皮亚诺公理定义了自然数和加法运算。\n[形式系统](https://zh.m.wikipedia.org/zh-my/%E5%BD%A2%E5%BC%8 ...",
+            "image": "https://blog.lyh543.cn/images/94b5a58e74e531d3716b2c8d59608bb05b180cb683ddc2e5c578f9585c3549cd.png",
             "date_modified": "2022-09-01T00:00:00.000Z"
         },
         {
@@ -121,19 +122,19 @@
             "date_modified": "2021-10-15T16:28:52.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
-            "title": "使用 Chocolatey 和 winget 配置 Windows",
-            "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\nwinget 应该不用下载，Chocolatey 需要下载。\n\n> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...",
-            "image": "https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
             "title": "配置 Manjaro",
             "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
             "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
+            "title": "使用 Chocolatey 和 winget 配置 Windows",
+            "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\nwinget 应该不用下载，Chocolatey 需要下载。\n\n> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...",
+            "image": "https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png",
             "date_modified": "2021-09-29T19:34:56.000Z"
         },
         {
