@@ -31,7 +31,7 @@ curl https://get.docker.com/ | sudo bash
 
 为 `doc ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.03d9db5c.js" as="script"><link rel="preload" href="/assets/js/190.6f8b9024.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.8382663b.js" as="script"><link rel="preload" href="/assets/js/190.10cac3ee.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -56,7 +56,7 @@ docker <span class="token function">ps</span>       <span class="token comment">
 <span class="token comment"># install powerlevel10k</span>
 <span class="token function">git</span> clone --depth<span class="token operator">=</span><span class="token number">1</span> https://github.com/romkatv/powerlevel10k.git <span class="token variable">${ZSH_CUSTOM<span class="token operator">:-</span>$HOME<span class="token operator">/</span>.oh-my-zsh<span class="token operator">/</span>custom}</span>/themes/powerlevel10k
 </code></pre></div><p>安装 Meslo 系字体：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">curl</span> -L https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Meslo.zip -o ~/Meslo.zip
-<span class="token function">unzip</span> ~/Meslo.zip -d ~/.local/share/fonts
+<span class="token function">unzip</span> -j ~/Meslo.zip *.ttf -d ~/.local/share/fonts
 <span class="token function">rm</span> ~/Meslo.zip
 fc-cache -fv
 fc-list <span class="token operator">|</span>  <span class="token function">grep</span> <span class="token string">'Meslo'</span>
@@ -75,6 +75,6 @@ fc-list <span class="token operator">|</span>  <span class="token function">grep
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.03d9db5c.js" defer></script><script src="/assets/js/190.6f8b9024.js" defer></script>
+    <script src="/assets/js/app.8382663b.js" defer></script><script src="/assets/js/190.10cac3ee.js" defer></script>
   </body>
 </html>
