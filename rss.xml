@@ -4,7 +4,7 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sun, 30 Oct 2022 07:48:24 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 31 Oct 2022 04:08:30 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
@@ -208,6 +208,33 @@ Server = https://mirrors.tuna.tsinghua ...]]></description>
             </enclosure>
         </item>
         <item>
+            <title><![CDATA[配置 Ubuntu 服务器]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html</guid>
+            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
+            <description><![CDATA[略。
+
+安装软件
+
+安装基础软件
+
+sudo apt install -y \
+    curl \
+    git \
+    htop \
+    micro \
+    neofetch \
+    zsh
+
+安装 docker
+
+curl https://get.docker.com/ | sudo bash
+
+为 `doc ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png">
+            </enclosure>
+        </item>
+        <item>
             <title><![CDATA[使用 Chocolatey 和 winget 配置 Windows]]></title>
             <link>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</link>
             <guid>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</guid>
@@ -250,27 +277,6 @@ COPY pom.xml pom.xm ...]]></description>
 ![InputStre ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/inputstream-outputstream-string-bytearray.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[常用 GitHub Actions 代码片段]]></title>
-            <link>https://blog.lyh543.cn/notes/development/github-actions-snippets.html</link>
-            <guid>https://blog.lyh543.cn/notes/development/github-actions-snippets.html</guid>
-            <pubDate>Tue, 07 Sep 2021 17:49:46 GMT</pubDate>
-            <description><![CDATA[name: Deploy Backend
-on:
-  push:
-    branches:
-      'master'
-env:
-  TZ: Asia/Shanghai
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-如果需要 docker 镜像，可以在这里添加
-
-    steps:
-      uses: acti ...]]></description>
         </item>
     </channel>
 </rss>

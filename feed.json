@@ -130,6 +130,14 @@
             "date_modified": "2021-09-29T19:34:56.000Z"
         },
         {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "title": "配置 Ubuntu 服务器",
+            "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
+            "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
             "title": "使用 Chocolatey 和 winget 配置 Windows",
@@ -152,13 +160,6 @@
             "summary": "InputStream ByteArrayOutputStream String byte[] 互相转换\n\n这四者的直接相互转换关系如下图所示。其中 OutputStream 仅支持 ByteArrayOutputStream 转换为其他类，因为只有该类将内容输出到了内存，其他 OutputStream 可能已经将内容输出到文件或其他地方，无法再次获取其内容。\n\n![InputStre ...",
             "image": "https://blog.lyh543.cn/images/inputstream-outputstream-string-bytearray.png",
             "date_modified": "2021-09-16T21:15:25.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/development/github-actions-snippets.html",
-            "url": "https://blog.lyh543.cn/notes/development/github-actions-snippets.html",
-            "title": "常用 GitHub Actions 代码片段",
-            "summary": "name: Deploy Backend\non:\n  push:\n    branches:\n      'master'\nenv:\n  TZ: Asia/Shanghai\njobs:\n  build:\n    runs-on: ubuntu-latest\n\n如果需要 docker 镜像，可以在这里添加\n\n    steps:\n      uses: acti ...",
-            "date_modified": "2021-09-07T17:49:46.000Z"
         }
     ]
 }
