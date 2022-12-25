@@ -4,10 +4,21 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Mon, 19 Dec 2022 12:15:48 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 25 Dec 2022 11:41:58 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[在 pytest 中 mock]]></title>
+            <link>https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html</link>
+            <guid>https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html</guid>
+            <pubDate>Sun, 25 Dec 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[最近开始用 pytest 写单元测试，发现 pytest 官方教程内容非常多，而且 pytest 里也有很多 unittest 的内容，很容易让人摸不着头脑。pytest 的 example 也很少/很抽象，因此写篇博客记录一下自己的使用。
+
+由于 pytest 和 unittest 用法的变种很多（如 Mock.asserthascalls 的多个变种，patch 的函数形式和装饰器 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/853fc7ee1c766674b4d931aee0b2d21459555370d90c4bc8b84f644f31ef6cae.png">
+            </enclosure>
+        </item>
         <item>
             <title><![CDATA[在安卓上抓包]]></title>
             <link>https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html</link>
@@ -263,19 +274,6 @@ WORKDIR /code
 RUN mkdir -p /root/.m2 && curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml
 COPY pom.xml pom.xm ...]]></description>
             <enclosure url="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[常用 Java 代码片段]]></title>
-            <link>https://blog.lyh543.cn/notes/java/java-snippets.html</link>
-            <guid>https://blog.lyh543.cn/notes/java/java-snippets.html</guid>
-            <pubDate>Thu, 16 Sep 2021 21:15:25 GMT</pubDate>
-            <description><![CDATA[InputStream ByteArrayOutputStream String byte[] 互相转换
-
-这四者的直接相互转换关系如下图所示。其中 OutputStream 仅支持 ByteArrayOutputStream 转换为其他类，因为只有该类将内容输出到了内存，其他 OutputStream 可能已经将内容输出到文件或其他地方，无法再次获取其内容。
-
-![InputStre ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/inputstream-outputstream-string-bytearray.png">
             </enclosure>
         </item>
     </channel>
