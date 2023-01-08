@@ -15,7 +15,7 @@ Win32 API 的函数大多名称较长，如果不是有意向专门学习的话�
 
 微软公司出产的各种 API，都可以在 msdn 找到详细的文档和简单的例 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.304d7d10.js" as="script"><link rel="preload" href="/assets/js/68.87caab0c.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0eda1ac1.css" as="style"><link rel="preload" href="/assets/js/app.c2263bbc.js" as="script"><link rel="preload" href="/assets/js/68.6b3b3f7a.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0eda1ac1.css">
   </head>
   <body>
@@ -53,7 +53,7 @@ __LINE__:11
 </code></pre></div><p><code>mode</code> 语句有更多的用处<s>不过看不懂</s></p> <h2 id="光标部分"><a href="#光标部分" class="header-anchor">#</a> 光标部分</h2> <h3 id="获取光标位置"><a href="#获取光标位置" class="header-anchor">#</a> 获取光标位置</h3> <p>命令行上的光标位置是用 <code>HANDLE</code> 定义的。关于 <code>HANDLE</code> 是什么，可以自行 Google 或看这篇<a href="/notes/computer-science/handle.html">博客</a>。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code>HANDLE handle <span class="token operator">=</span> <span class="token function">GetStdHandle</span><span class="token punctuation">(</span>STD_OUTPUT_HANDLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><p>注意到这个 handle 是随着输出的位置动态变化的，因此不需要在输入前后反复获取。</p> <h3 id="设置光标的颜色-以后输出内容的颜色"><a href="#设置光标的颜色-以后输出内容的颜色" class="header-anchor">#</a> 设置光标的颜色——以后输出内容的颜色</h3> <div class="language-cpp extra-class"><pre class="language-cpp"><code>HANDLE handle <span class="token operator">=</span> <span class="token function">GetStdHandle</span><span class="token punctuation">(</span>STD_OUTPUT_HANDLE<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">SetConsoleTextAttribute</span><span class="token punctuation">(</span>handle<span class="token punctuation">,</span> <span class="token punctuation">(</span>fc<span class="token operator">&lt;&lt;</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">+</span> bc<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>fc 和 bc 分别是用 16 进制数字表示的 foreground color 和 background color。具体对应关系可以自己在命令行中输入 <code>color /?</code>。</p> <p>顺便附 https://github.com/guyaqi/backups/blob/master/notes/cpp1-2.md 的<a href="./homework_change_text_color.cpp">作业 CPP 文件</a>。</p> <p>下面是摘自 https://github.com/guyaqi/backups/blob/master/notes/cpp1-2.md 的一个 C++ 程序。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+</code></pre></div><p>fc 和 bc 分别是用 16 进制数字表示的 foreground color 和 background color。具体对应关系可以自己在命令行中输入 <code>color /?</code>。</p> <p>顺便附 https://github.com/guyaqi/backups/blob/master/notes/cpp1-2.md 的<a href="/blob/windows-console/homework_change_text_color.cpp">作业 CPP 文件</a>。</p> <p>下面是摘自 https://github.com/guyaqi/backups/blob/master/notes/cpp1-2.md 的一个 C++ 程序。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;time.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Windows.h&gt;</span></span>
@@ -102,6 +102,6 @@ SHORT <span class="token function">GetAsyncKeyState</span><span class="token pun
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.304d7d10.js" defer></script><script src="/assets/js/68.87caab0c.js" defer></script>
+    <script src="/assets/js/app.c2263bbc.js" defer></script><script src="/assets/js/68.6b3b3f7a.js" defer></script>
   </body>
 </html>
