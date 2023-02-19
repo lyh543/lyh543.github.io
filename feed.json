@@ -130,19 +130,19 @@
             "date_modified": "2021-10-15T16:28:52.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "title": "配置 Manjaro",
-            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
-            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
             "title": "配置 Ubuntu 服务器",
             "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
             "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "title": "配置 Manjaro",
+            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
+            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
             "date_modified": "2021-09-29T19:34:56.000Z"
         },
         {
