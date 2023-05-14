@@ -6,6 +6,22 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
+            "url": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
+            "title": "搭建手游私服",
+            "summary": "最近又有个手游停服了，是一款日本音游，叫 HoneyWorks Premium Live。为了能在停服后继续玩这款游戏（搓屏幕），我们尝试搭建游戏的私服。在我们搭建到一半的时候，被 HoneyWorks 国内代理制止，只好就此作罢（毕竟是实名上网的人，不太想在国内搞事情）。不过在这个过程中学到了不少东西，也证明了私服的可行性，故写一篇博客作作记录。\n\n音游和其他游戏（如 LOL、绝地求生等）不同的 ...",
+            "image": "https://blog.lyh543.cn/images/68a4ea581ccfd8fb84daf9369908a62b4803e676b44e0d29f6fbdbce7ada9e12.png",
+            "date_modified": "2023-04-28T00:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html",
+            "url": "https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html",
+            "title": "2023 年了，该尝试用 Corepack 安装 pnpm 了",
+            "summary": "正如 IE 的唯一作用是安装 Chrome，npm 的作用也是用来安装 yarn/pnpm\n\n最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。\n\nCorepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...",
+            "image": "https://blog.lyh543.cn/images/632230d281d7cc81a66aed8e61474f2ce255ca62c0bcf4a970b46946e5d101f0.png",
+            "date_modified": "2023-04-28T00:00:00.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html",
             "url": "https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html",
             "title": "在 pytest 中 mock",
@@ -130,14 +146,6 @@
             "date_modified": "2021-10-15T16:28:52.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
-            "title": "配置 Ubuntu 服务器",
-            "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
-            "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
             "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
             "title": "配置 Manjaro",
@@ -146,20 +154,12 @@
             "date_modified": "2021-09-29T19:34:56.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html",
-            "title": "使用 Chocolatey 和 winget 配置 Windows",
-            "summary": "为了更好的使用 Chocolatey，最好能够有梯子。此处略。\n\n以及记得配置 HTTPPROXY 和 HTTPSPROXY。\n\n下载 Chocolatey\n\nwinget 应该不用下载，Chocolatey 需要下载。\n\n> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...",
-            "image": "https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png",
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "title": "配置 Ubuntu 服务器",
+            "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
+            "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
             "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/linux/docker-snippets.html",
-            "url": "https://blog.lyh543.cn/notes/linux/docker-snippets.html",
-            "title": "常用 Dockerfile + docker-compose 片段",
-            "summary": "Maven + Spring Boot\n\nFROM maven:3-openjdk-16\nWORKDIR /code\nRUN mkdir -p /root/.m2 && curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml\nCOPY pom.xml pom.xm ...",
-            "image": "https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png",
-            "date_modified": "2021-09-28T21:15:25.000Z"
         }
     ]
 }

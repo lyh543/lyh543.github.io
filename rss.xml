@@ -4,10 +4,34 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sun, 19 Feb 2023 14:06:40 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 14 May 2023 08:55:47 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[搭建手游私服]]></title>
+            <link>https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html</link>
+            <guid>https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html</guid>
+            <pubDate>Fri, 28 Apr 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[最近又有个手游停服了，是一款日本音游，叫 HoneyWorks Premium Live。为了能在停服后继续玩这款游戏（搓屏幕），我们尝试搭建游戏的私服。在我们搭建到一半的时候，被 HoneyWorks 国内代理制止，只好就此作罢（毕竟是实名上网的人，不太想在国内搞事情）。不过在这个过程中学到了不少东西，也证明了私服的可行性，故写一篇博客作作记录。
+
+音游和其他游戏（如 LOL、绝地求生等）不同的 ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/68a4ea581ccfd8fb84daf9369908a62b4803e676b44e0d29f6fbdbce7ada9e12.png">
+            </enclosure>
+        </item>
+        <item>
+            <title><![CDATA[2023 年了，该尝试用 Corepack 安装 pnpm 了]]></title>
+            <link>https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html</link>
+            <guid>https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html</guid>
+            <pubDate>Fri, 28 Apr 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[正如 IE 的唯一作用是安装 Chrome，npm 的作用也是用来安装 yarn/pnpm
+
+最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。
+
+Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/632230d281d7cc81a66aed8e61474f2ce255ca62c0bcf4a970b46946e5d101f0.png">
+            </enclosure>
+        </item>
         <item>
             <title><![CDATA[在 pytest 中 mock]]></title>
             <link>https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html</link>
@@ -199,6 +223,26 @@ Manjaro 分区在 /dev/nvme0n1p5
 从 Manjaro ...]]></description>
         </item>
         <item>
+            <title><![CDATA[配置 Manjaro]]></title>
+            <link>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</link>
+            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</guid>
+            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
+            <description><![CDATA[sudo pacman-mirrors -i -c China -m rank
+
+在弹出来的框里选择一个即可。
+
+然后添加 ArchlinuxCN 源。
+
+sudo nano /etc/pacman.conf
+
+在最后加上三行，然后保存。
+
+[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png">
+            </enclosure>
+        </item>
+        <item>
             <title><![CDATA[配置 Ubuntu 服务器]]></title>
             <link>https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html</link>
             <guid>https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html</guid>
@@ -223,57 +267,6 @@ curl https://get.docker.com/ | sudo bash
 
 为 `doc ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[配置 Manjaro]]></title>
-            <link>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</link>
-            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</guid>
-            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
-            <description><![CDATA[sudo pacman-mirrors -i -c China -m rank
-
-在弹出来的框里选择一个即可。
-
-然后添加 ArchlinuxCN 源。
-
-sudo nano /etc/pacman.conf
-
-在最后加上三行，然后保存。
-
-[archlinuxcn]
-Server = https://mirrors.tuna.tsinghua ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[使用 Chocolatey 和 winget 配置 Windows]]></title>
-            <link>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</link>
-            <guid>https://blog.lyh543.cn/posts/2021-09-30-config-windows-with-chocolatey.html</guid>
-            <pubDate>Wed, 29 Sep 2021 19:34:56 GMT</pubDate>
-            <description><![CDATA[为了更好的使用 Chocolatey，最好能够有梯子。此处略。
-
-以及记得配置 HTTPPROXY 和 HTTPSPROXY。
-
-下载 Chocolatey
-
-winget 应该不用下载，Chocolatey 需要下载。
-
-> 参考：[Chocolatey Software | Installing Chocolatey](https://chocolatey.org/ins ...]]></description>
-            <enclosure url="https://www.cnet.com/a/img/h6jj8hR9fDGlD4m5jKBALy9CnkM=/2021/06/24/e58fceb6-e7c1-40fb-bf6d-b29e81f9a713/screen-shot-2021-06-24-at-11-45-41-am-2.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[常用 Dockerfile + docker-compose 片段]]></title>
-            <link>https://blog.lyh543.cn/notes/linux/docker-snippets.html</link>
-            <guid>https://blog.lyh543.cn/notes/linux/docker-snippets.html</guid>
-            <pubDate>Tue, 28 Sep 2021 21:15:25 GMT</pubDate>
-            <description><![CDATA[Maven + Spring Boot
-
-FROM maven:3-openjdk-16
-WORKDIR /code
-RUN mkdir -p /root/.m2 && curl -sL https://blog.lyh543.cn/mirrors/maven.xml -o /root/.m2/settings.xml
-COPY pom.xml pom.xm ...]]></description>
-            <enclosure url="https://www.docker.com/sites/default/files/d8/2019-07/horizontal-logo-monochromatic-white.png">
             </enclosure>
         </item>
     </channel>
