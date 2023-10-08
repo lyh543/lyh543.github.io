@@ -16,8 +16,8 @@ InputStream ByteArrayOutputStream String byte[] 互相转换
 
 ![InputStre ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/85.770536ad.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/86.46d751cc.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="i-o"><a href="#i-o" class="header-anchor">#</a> I/O</h2> <h3 id="inputstream-bytearrayoutputstream-string-byte-互相转换"><a href="#inputstream-bytearrayoutputstream-string-byte-互相转换" class="header-anchor">#</a> InputStream ByteArrayOutputStream String byte[] 互相转换</h3> <p>这四者的直接相互转换关系如下图所示。其中 OutputStream 仅支持 ByteArrayOutputStream 转换为其他类，因为只有该类将内容输出到了内存，其他 OutputStream 可能已经将内容输出到文件或其他地方，无法再次获取其内容。</p> <p><img src="/images/inputstream-outputstream-string-bytearray.png" alt="InputStream ByteArrayOutputStream String byte[] 互相转换"></p> <p>实际代码编写时，按照上图所述步骤编写即可。</p> <h3 id="多线程"><a href="#多线程" class="header-anchor">#</a> 多线程</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">MyThread</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
@@ -73,6 +73,6 @@ InputStream ByteArrayOutputStream String byte[] 互相转换
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/85.770536ad.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/86.46d751cc.js" defer></script>
   </body>
 </html>

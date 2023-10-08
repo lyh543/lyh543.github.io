@@ -6,6 +6,21 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2023-10-07-debug-on-react-performance-problem-with-react-profiler.html",
+            "url": "https://blog.lyh543.cn/posts/2023-10-07-debug-on-react-performance-problem-with-react-profiler.html",
+            "title": "实际开发中借助 React Profiler 调试 React Web app 性能问题",
+            "summary": "最近写 React 遇到一个性能问题，调试了一段时间都没什么思路。后来以尝试的心态玩了玩\nReact Developer Tools 的 React Profiler，得到了一点线索，最终找到了问题 ...",
+            "image": "https://blog.lyh543.cn/images/db2a9de943eb7357f208564aa9f6cc53204fadd95df7c231ea9c69d1dd0cc91a.png",
+            "date_modified": "2023-10-07T22:23:22.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/notes/front-end/css-tips.html",
+            "url": "https://blog.lyh543.cn/notes/front-end/css-tips.html",
+            "title": "CSS 笔记",
+            "summary": ".code-example {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  margin: 40px 0;\n}\n\n居中 Center\n\n在我浅薄的前端经历中，常遇到两种居中的场景。一种是在一个 div 中放一个 d ...",
+            "date_modified": "2023-07-02T16:29:59.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
             "url": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
             "title": "搭建手游私服",
@@ -41,7 +56,7 @@
             "id": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
             "url": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
             "title": "皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记",
-            "summary": "元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n皮亚诺公理定义了自然数和加法运算。\n[形式系统](https://zh.m.wikipedia.org/zh-my/%E5%BD%A2%E5%BC%8 ...",
+            "summary": "2023.9.30 编：毕导出了一期视频讲解哥德尔不完备（第一、第二）定理，还蛮不错的，推荐观看。这里是链接：https://www.bilibili.com/video/BV19u4y1D7GT\n\n元数学是什么\n\n元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n[皮亚诺公理](https://zh.wikipedia.org/wiki/%E7%9A% ...",
             "image": "https://blog.lyh543.cn/images/94b5a58e74e531d3716b2c8d59608bb05b180cb683ddc2e5c578f9585c3549cd.png",
             "date_modified": "2022-09-01T00:00:00.000Z"
         },
@@ -144,22 +159,6 @@
             "title": "修复 Manjaro 的 EFI GRUB 引导",
             "summary": "Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。\n\n博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。\n\n本文假定：\n\n使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1\nManjaro 分区在 /dev/nvme0n1p5\n\n从 Manjaro ...",
             "date_modified": "2021-10-15T16:28:52.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "title": "配置 Manjaro",
-            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
-            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
-            "title": "配置 Ubuntu 服务器",
-            "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
-            "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
         }
     ]
 }

@@ -13,8 +13,8 @@
 
 由于 pytest 和 unittest 用法的变种很多（如 Mock.asserthascalls 的多个变种，patch 的函数形式和装饰器 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/203.2542c157.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/204.59527a06.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近开始用 pytest 写单元测试，发现 pytest 官方教程内容非常多，而且 pytest 里也有很多 unittest 的内容，很容易让人摸不着头脑。pytest 的 example 也很少/很抽象，因此写篇博客记录一下自己的使用。</p> <p>由于 pytest 和 unittest 用法的变种很多（如 <code>Mock.assert_has_calls</code> 的多个变种，<code>patch</code> 的函数形式和装饰器形式），这里不会事无巨细地讲所有用法，只会讲我偏好的用法。</p> <p>博客对应的代码可以在 <a href="https://github.com/lyh543/pytest-mock-example" target="_blank" rel="noopener noreferrer">Github<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 上找到。</p> <h2 id="初始化项目"><a href="#初始化项目" class="header-anchor">#</a> 初始化项目</h2> <p>这篇博客使用的 Python 为 3.10.4，<code>pytest</code> 和 <code>pytest-mock</code> 版本为：</p> <div class="language- extra-class"><pre class="language-text"><code>pytest-mock==3.10.0
@@ -22,7 +22,7 @@ pytest==7.2.0
 </code></pre></div><p>为了让 pytest 能够正确按照模块识别路径，记得在项目根目录放一个 <code>pytest.ini</code> 或 <code>pyproject.toml</code>（<a href="https://stackoverflow.com/a/50610630/12208030" target="_blank" rel="noopener noreferrer">Reference<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>）：</p> <div class="language-ini extra-class"><pre class="language-ini"><code><span class="token comment"># pytest.ini</span>
 <span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">pytest</span><span class="token punctuation">]</span></span>
 <span class="token key attr-name">pythonpath</span> <span class="token punctuation">=</span> <span class="token value attr-value">.</span>
-</code></pre></div><h2 id="对库函数和类进行-mock"><a href="#对库函数和类进行-mock" class="header-anchor">#</a> 对库函数和类进行 mock</h2> <p>这种常见的场景是测试对象会调用库函数，可能是外部的库函数（如 <code>os.getlogin()</code>、<code>time.time()</code>），也可能是项目中编写的库函数。</p> <p>我们需要 mock 库函数以保证相同的、不依赖外部环境、快速的输出（stub），同时监测库函数被调用的次数、每次调用的参数等（spy）。</p> <p>这种场景下，我们可以使用 <code>unittest.mock.patch</code> 装饰器，也可以使用 pytest 提供的 <code>mocker.patch</code> 方法。</p> <h3 id="对库函数进行-mock"><a href="#对库函数进行-mock" class="header-anchor">#</a> 对库函数进行 mock</h3> <p>测试对象在 <code>app/greetings.py</code>，测试函数在 <code>test/test_mocking_lib_function.py</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># app/greetings.py</span>
+</code></pre></div><h2 id="对库函数和类进行-mock"><a href="#对库函数和类进行-mock" class="header-anchor">#</a> 对库函数和类进行 mock</h2> <p>这种常见的场景是测试对象会调用库函数，可能是外部的库函数（如 <code>os.getlogin()</code>、<code>time.time()</code>），也可能是项目中编写的库函数。</p> <p>我们需要 mock 库函数以保证相同的、不依赖外部环境、快速的输出（stub），同时监测库函数被调用的次数、每次调用的参数等（spy）。</p> <p>这种场景下，我们可以使用 <code>unittest.mock.patch</code> 装饰器，也可以使用 pytest 提供的 <code>mocker.patch</code> 方法。</p> <h3 id="对库函数进行-mock-mocker-patch"><a href="#对库函数进行-mock-mocker-patch" class="header-anchor">#</a> 对库函数进行 mock (mocker.patch)</h3> <blockquote><p>实际使用中发现 <code>mocker.patch.object()</code> 也可以 mock 库函数，并且语法更优雅，因此<strong>更推荐下面的 <code>mocker.patch.object</code> 方案</strong>。</p></blockquote> <p>测试对象在 <code>app/greetings.py</code>，测试函数在 <code>test/test_mocking_lib_function.py</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># app/greetings.py</span>
 <span class="token keyword">from</span> os <span class="token keyword">import</span> getlogin
 
 <span class="token keyword">def</span> <span class="token function">get_greeting_string_from_import_function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -31,9 +31,9 @@ pytest==7.2.0
 
 
 <span class="token comment"># test/test_mocking_lib_function.py</span>
-<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockFixture
+<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockerFixture
 
-<span class="token keyword">def</span> <span class="token function">test_get_greeting_string_from_import_function</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">test_get_greeting_string_from_import_function</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># you should mock `app.greetings.getlogin` instead of `os.login`</span>
     mocked_getlogin <span class="token operator">=</span> mocker<span class="token punctuation">.</span>patch<span class="token punctuation">(</span><span class="token string">'app.greetings.getlogin'</span><span class="token punctuation">,</span> return_value<span class="token operator">=</span><span class="token string">'user'</span><span class="token punctuation">)</span>
     <span class="token keyword">assert</span> get_greeting_string_from_import_function<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'Greetings, user'</span>
@@ -43,7 +43,7 @@ pytest==7.2.0
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
     <span class="token comment"># you can also use assert_called_with</span>
     mocked_getlogin<span class="token punctuation">.</span>assert_called_with<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre></div><p>注：</p> <ol><li>如果测试对象 <code>app.greetings</code> 使用的是 <code>from x import y</code> 的形式 import 需要 mock 的函数，<strong><code>mocker.patch('x.y')</code> 会失效</strong>，需要 <code>mocker.patch('app.greetings.y')</code> 才能生效</li> <li><code>MockFixture.assert_has_calls()</code> 有很多变种，可以根据 IDE 提示选择合适的变种</li> <li>也可以使用由 <code>unittest</code> 提供的、装饰器风格的 <code>mock.patch</code>。函数对应的 Mock 会作为第一个参数传入测试函数</li></ol> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> unittest<span class="token punctuation">.</span>mock <span class="token keyword">import</span> Mock<span class="token punctuation">,</span> patch<span class="token punctuation">,</span> call
+</code></pre></div><p>注：</p> <ol><li>如果测试对象 <code>app.greetings</code> 使用的是 <code>from x import y</code> 的形式 import 需要 mock 的函数，<strong><code>mocker.patch('x.y')</code> 会失效</strong>，需要 <code>mocker.patch('app.greetings.y')</code> 才能生效</li> <li><code>MockerFixture.assert_has_calls()</code> 有很多变种，可以根据 IDE 提示选择合适的变种</li> <li>也可以使用由 <code>unittest</code> 提供的、装饰器风格的 <code>mock.patch</code>。函数对应的 Mock 会作为第一个参数传入测试函数</li></ol> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> unittest<span class="token punctuation">.</span>mock <span class="token keyword">import</span> Mock<span class="token punctuation">,</span> patch<span class="token punctuation">,</span> call
 
 <span class="token comment"># decorator-style of mocker.patch</span>
 <span class="token decorator annotation punctuation">@patch</span><span class="token punctuation">(</span><span class="token string">'app.greetings.getlogin'</span><span class="token punctuation">,</span> return_value<span class="token operator">=</span><span class="token string">'user'</span><span class="token punctuation">)</span>
@@ -53,6 +53,13 @@ pytest==7.2.0
     mocked_get_login<span class="token punctuation">.</span>assert_has_calls<span class="token punctuation">(</span><span class="token punctuation">[</span>
         call<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="对库函数进行-mock-mocker-patch-object"><a href="#对库函数进行-mock-mocker-patch-object" class="header-anchor">#</a> 对库函数进行 mock (mocker.patch.object)</h3> <p>这里使用 <code>mocker.patch.object</code> 来 mock 库函数，它的用法和 <code>mocker.patch</code> 类似，只是参数从函数的完整路径变为了 module + 方法名。它的返回值也是类方法对应的 Mock，可以使用 <code>assert_has_calls</code> 进行断言。</p> <p>这种写法的优点在于，可以 import 需要 mock 的 module，而不需要将整个 module 的路径作为字符串传给 <code>mocker.patch()</code>。因此在实际使用中，我更偏好这种风格的 mock。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">import</span> os
+
+<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockerFixture
+
+<span class="token keyword">def</span> <span class="token function">test_get_greeting_string_from_import_function</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># mocked_getlogin = mocker.patch('app.greetings.getlogin', return_value='user')</span>
+    mocked_getlogin <span class="token operator">=</span> mocker<span class="token punctuation">.</span>patch<span class="token punctuation">.</span><span class="token builtin">object</span><span class="token punctuation">(</span>os<span class="token punctuation">,</span> <span class="token string">'getlogin'</span><span class="token punctuation">,</span> return_value<span class="token operator">=</span><span class="token string">'user'</span><span class="token punctuation">)</span>
 </code></pre></div><h3 id="对库中的类进行-mock"><a href="#对库中的类进行-mock" class="header-anchor">#</a> 对库中的类进行 mock</h3> <p>对库中的类可以使用 <code>mocker.patch.object</code> 进行 mock，用法也类似，只是参数从函数名变为了类+方法名。它的返回值也是类方法对应的 Mock，可以使用 <code>assert_has_calls</code> 进行断言。</p> <p>如果需要对一个类的多个方法进行 mock，对同一个类执行多次 <code>patch.object</code> 即可。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># lib/utils.py</span>
 <span class="token keyword">from</span> os <span class="token keyword">import</span> getlogin<span class="token punctuation">,</span> curdir
 
@@ -77,10 +84,10 @@ pytest==7.2.0
 
 
 <span class="token comment"># test/test_mocking_lib_function.py</span>
-<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockFixture
+<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockerFixture
 <span class="token keyword">from</span> lib<span class="token punctuation">.</span>utils <span class="token keyword">import</span> HostUtils
 
-<span class="token keyword">def</span> <span class="token function">test_get_greeting_string_from_import_class_method</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">test_get_greeting_string_from_import_class_method</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
     mocked_get_username <span class="token operator">=</span> mocker<span class="token punctuation">.</span>patch<span class="token punctuation">.</span><span class="token builtin">object</span><span class="token punctuation">(</span>HostUtils<span class="token punctuation">,</span> <span class="token string">'get_username'</span><span class="token punctuation">,</span> return_value<span class="token operator">=</span><span class="token string">'user'</span><span class="token punctuation">)</span>
     mocked_get_current_path <span class="token operator">=</span> mocker<span class="token punctuation">.</span>patch<span class="token punctuation">.</span><span class="token builtin">object</span><span class="token punctuation">(</span>HostUtils<span class="token punctuation">,</span> <span class="token string">'get_current_path'</span><span class="token punctuation">,</span> return_value<span class="token operator">=</span><span class="token string">'/'</span><span class="token punctuation">)</span>
     <span class="token keyword">assert</span> get_greeting_string_from_import_class_method<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'Greetings, user'</span>
@@ -92,7 +99,7 @@ pytest==7.2.0
     mocked_get_current_path<span class="token punctuation">.</span>assert_has_calls<span class="token punctuation">(</span><span class="token punctuation">[</span>
         mocker<span class="token punctuation">.</span>call<span class="token punctuation">(</span><span class="token string">'qwerty'</span><span class="token punctuation">)</span>
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
-</code></pre></div><p>同样也可以使用 <code>unittest</code> 提供的、装饰器风格的 <code>mock.patch.object</code>。不过需要注意，由于装饰器的执行顺序是由下至上（最靠近函数的最先执行），方法对应的 Mock 版本的传入顺序是和装饰器执行顺序一致。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> unittest<span class="token punctuation">.</span>mock <span class="token keyword">import</span> Mock<span class="token punctuation">,</span> patch<span class="token punctuation">,</span> call
+</code></pre></div><p>实际使用中发现 <code>mocker.call()</code> mypy 类型检查时可能会报错，虽然不影响运行，但是红色下划线比较影响开发体验。可以改为 <code>unittest.mock.call()</code> 来解决报错。</p> <p>同样也可以使用 <code>unittest</code> 提供的、装饰器风格的 <code>mock.patch.object</code>。不过需要注意，由于装饰器的执行顺序是由下至上（最靠近函数的最先执行），方法对应的 Mock 版本的传入顺序是和装饰器执行顺序一致。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> unittest<span class="token punctuation">.</span>mock <span class="token keyword">import</span> Mock<span class="token punctuation">,</span> patch<span class="token punctuation">,</span> call
 <span class="token keyword">from</span> lib<span class="token punctuation">.</span>utils <span class="token keyword">import</span> HostUtils
 
 <span class="token comment"># decorator-style of mocker.patch.object</span>
@@ -128,10 +135,10 @@ pytest==7.2.0
 
 
 <span class="token comment"># tests/test_mocking_param.py</span>
-<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockFixture
+<span class="token keyword">from</span> pytest_mock <span class="token keyword">import</span> MockerFixture
 <span class="token keyword">from</span> lib<span class="token punctuation">.</span>request_manager <span class="token keyword">import</span> request_ten_times<span class="token punctuation">,</span> call_ten_times
 
-<span class="token keyword">def</span> <span class="token function">test_call_with_mock_function</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">test_call_with_mock_function</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
     mocked_func <span class="token operator">=</span> mocker<span class="token punctuation">.</span>Mock<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token comment"># treat Mock as a function</span>
     call_ten_times<span class="token punctuation">(</span>mocked_func<span class="token punctuation">)</span>
@@ -141,7 +148,7 @@ pytest==7.2.0
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
 
 
-<span class="token keyword">def</span> <span class="token function">test_call_with_mock_object</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">test_call_with_mock_object</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
     mocked_request <span class="token operator">=</span> mocker<span class="token punctuation">.</span>Mock<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token comment"># treat Mock as an object</span>
     request_ten_times<span class="token punctuation">(</span>mocked_request<span class="token punctuation">)</span>
@@ -151,7 +158,7 @@ pytest==7.2.0
         mocker<span class="token punctuation">.</span>call<span class="token punctuation">.</span>get<span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token keyword">for</span> index <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
     <span class="token punctuation">]</span><span class="token punctuation">)</span>
 </code></pre></div><p>可以通过一个简单的测试证明 <code>Mock 对象的任意属性也是一个 Mock 对象</code>。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token comment"># tests/test_mocking_param.py</span>
-<span class="token keyword">def</span> <span class="token function">test_type_of_mock_field</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token keyword">def</span> <span class="token function">test_type_of_mock_field</span><span class="token punctuation">(</span>mocker<span class="token punctuation">:</span> MockerFixture<span class="token punctuation">)</span><span class="token punctuation">:</span>
     mock <span class="token operator">=</span> mocker<span class="token punctuation">.</span>Mock<span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token keyword">assert</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>mock<span class="token punctuation">,</span> mocker<span class="token punctuation">.</span>Mock<span class="token punctuation">)</span>
     <span class="token keyword">assert</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>mock<span class="token punctuation">.</span>get<span class="token punctuation">,</span> mocker<span class="token punctuation">.</span>Mock<span class="token punctuation">)</span>
@@ -168,6 +175,6 @@ pytest==7.2.0
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/203.2542c157.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/204.59527a06.js" defer></script>
   </body>
 </html>

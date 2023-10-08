@@ -17,8 +17,8 @@
 
 MATLAB 为 GUIDE 编写的 Hello World 级别教程：https:/ ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/114.55b4e48f.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/115.549e6111.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>第一次从命令行到 GUI，总是不那么顺利的，尤其是 GUIDE 快被 MATLAB 弃用了，导致一向以文档详细著称的 MATLAB，也没有花多少笔墨在 GUIDE 上。</p> <p>我因为数模需要速成 GUI，无奈没有很好的教程，走了很多弯路。因此我在数模交完论文之后，简单理一下速成 GUI 的思路。</p> <h2 id="实例代码"><a href="#实例代码" class="header-anchor">#</a> 实例代码</h2> <p>MATLAB 为 GUIDE 编写的 Hello World 级别教程：https://ww2.mathworks.cn/help/matlab/creating_guis/about-the-simple-guide-gui-example.html</p> <h2 id="简单概念"><a href="#简单概念" class="header-anchor">#</a> 简单概念</h2> <h3 id="fig-和-m-的关系"><a href="#fig-和-m-的关系" class="header-anchor">#</a> fig 和 m 的关系</h3> <p>按上面的教程，打开 guide 并绘制了图形，就会自动生成一个 m 文件。简单的来说，fig 文件保存了 GUI 的窗口的样子，而 m 将会保存程序的逻辑。</p> <h3 id="各类函数的意义"><a href="#各类函数的意义" class="header-anchor">#</a> 各类函数的意义</h3> <p>接着上文说，你会看到创建了一堆函数，那么具体是什么呢？</p> <p>现在假设我们想创建一个加法器（不是），具有两个按钮 <code>+</code> 和 <code>-</code> 和一个文本框，前者会使文本框内内容 +1，后者会 -1。</p> <p>通过在 <code>guide</code> 命令新建的 fig 文件上，我们能很快糊出下面的图，并且把两个按钮改名为 <code>+</code> 和 <code>-</code>：</p> <p><img src="/images/8ecbacbfa2c19457b2e24d9783601dc23468d54ba6adcd63bcaa99d23b1e5f4f.png" alt="fig 文件"></p> <p>然后保存，得到 m 文件，虽然代码有很多注释，但为读者方便对比差异（如果有），我还是完整贴一下代码如下：</p> <div class="language-matlab extra-class"><pre class="language-matlab"><code><span class="token keyword">function</span> varargout <span class="token operator">=</span> <span class="token function">test_gui</span><span class="token punctuation">(</span>varargin<span class="token punctuation">)</span>
@@ -191,6 +191,6 @@ handles<span class="token punctuation">.</span>counter <span class="token operat
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/114.55b4e48f.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/115.549e6111.js" defer></script>
   </body>
 </html>

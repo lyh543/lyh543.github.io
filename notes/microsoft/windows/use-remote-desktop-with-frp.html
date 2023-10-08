@@ -19,8 +19,8 @@
 
 * ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/141.f13fff78.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/142.a6b609cd.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><blockquote><p>2019.12.5 更新：内网穿透还有更简单、更好的实现方法，具体看<a href="#%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%B9%E6%A1%88">文末</a></p></blockquote> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>平时带一台轻薄的笔记本，打开远程家里/寝室里的台式，进行远程桌面，在有网速保证的前提下，既能获得笔记本的轻便型，也能获得台式电脑的强大性能，更能最大化笔记本的续航，更重要的是可以在同一台机器上进行办公、开发，无需资料同步。是很不错的选择。</p> <p>我体验过的几款远程桌面软件里，</p> <ul><li>Teamviewer 是一个很优秀的选择；</li> <li>向日葵免费版有 300kbps 的限速，几乎等于不能用；</li> <li>Anydesk 国内网速太慢，不可用；</li> <li>应急的话，还可以用 QQ 的远程协助。（用 QQ 的远程协助启动 Teamviewer 的远程协助）</li></ul> <p>除了以上选择以外，其实微软自带了远程桌面 <code>mstsc</code>。在局域网内你就可以通过远程 <code>*.*.*.*:3389</code> （你的电脑 ip）体验到远程桌面，体验同样是相当不错的，几乎和 Teamviewer 是一样的（所以一般的同学就可以直接选 Teamviewer 了）。</p> <p>但是，如果在外网体验的话，就不大好了。原因是，你在外网里找不到被远程端的 ip 地址（未经强调，本文所有 ip 指 ipv4，此处是因为 ipv6 在中国还没普及）。</p> <h2 id="nat-及内网穿透的原理"><a href="#nat-及内网穿透的原理" class="header-anchor">#</a> NAT 及内网穿透的原理</h2> <p>ip 是一台机器在互联网上的唯一地址，可以通过你的机器 ip，从互联网的任何一端找到你的机器。</p> <p>然而， ipv4 的数量是极其有限的，只有 256*256*256*256=4294967296 四十亿个（想想现在地球多少人口）。<br>
@@ -79,6 +79,6 @@ bat 内容如下：</li></ol> <div class="language-batch extra-class"><pre class
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/141.f13fff78.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/142.a6b609cd.js" defer></script>
   </body>
 </html>

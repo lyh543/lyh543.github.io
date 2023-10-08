@@ -15,8 +15,8 @@
 
 测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/171.2a79cf29.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/172.b2efef80.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近写的项目用到了 Gravatar 服务，但是 Gravatar 几个服务器都在外国，考虑到项目的用户有相当规模是没有梯子的国内用户，我开始寻找 Gravatar CDN。</p> <p>网上 Gravatar CDN 参差不齐，有大站建的 CDN，也有网友自建的 CDN，于是简单写了一个 Python 脚本用于测速。</p> <p>测试内容是两项：图片命中，和图片不命中后跳转到 GitHub 上的图片。各测试十次，取时间平均值，如果出现一次超时等 error 即报错。</p> <blockquote><p>脚本和测试结果均写于 2021.4.29，部分信息可能已失效。</p></blockquote> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">from</span> timeit <span class="token keyword">import</span> timeit
@@ -68,6 +68,6 @@
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/171.2a79cf29.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/172.b2efef80.js" defer></script>
   </body>
 </html>

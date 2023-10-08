@@ -15,8 +15,8 @@
 
 Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...">
     
-    <link rel="preload" href="/assets/css/0.styles.63001777.css" as="style"><link rel="preload" href="/assets/js/app.8f32a78c.js" as="script"><link rel="preload" href="/assets/js/205.a6840d2e.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.63001777.css">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.f112248e.js" as="script"><link rel="preload" href="/assets/js/206.7b64b742.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p><s>正如 IE 的唯一作用是安装 Chrome，npm 的作用也是用来安装 yarn/pnpm</s></p> <p>最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。</p> <p>Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 Node.js 的版本，Corepack 可以一行命令安装、切换 npm / yarn / pnpm 的版本。</p> <p><strong>除此之外，Corepack 还有一个特性，能够读取项目的 <code>packge.json</code> 中的 <code>pacakgeManager</code> 字段，从而自动切换到对应版本的包管理器</strong>。这在多人、多项目协作开发中非常有用，比如 <code>pnpm@7.0.0</code> 和 <code>pnpm@8</code> 不兼容彼此的 <code>pnpm-lock.yaml</code>，如果 pnpm 版本不统一，很容易出问题。</p> <p>使用 corepack 安装 pnpm 的方法：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>corepack <span class="token builtin class-name">enable</span>
@@ -35,6 +35,6 @@ corepack prepare pnpm@latest --activate <span class="token comment"># 旧版 Nod
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.8f32a78c.js" defer></script><script src="/assets/js/205.a6840d2e.js" defer></script>
+    <script src="/assets/js/app.f112248e.js" defer></script><script src="/assets/js/206.7b64b742.js" defer></script>
   </body>
 </html>
