@@ -11,7 +11,7 @@
     <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
     <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
     
-    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.6d09be0b.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.0067288d.css" as="style"><link rel="preload" href="/assets/js/app.3f743f32.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.0067288d.css">
   </head>
   <body>
@@ -161,6 +161,19 @@ Home 和 End 按键
   计算机科学
 </span></a><a href="/tags/转载/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default blue white--text"><span class="v-chip__content">
   转载
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/computer-science/handle.html"> <a href="/notes/computer-science/handle.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              句柄（handle）
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-20">2019-08-20</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          参考链接：https://zh.wikipedia.org/wiki/%E5%8F%A5%E6%9F%84
+&gt; https://www.zhihu.com/question/27656256
+
+句柄（HANDLE）是什么？
+
+维基百科：
+
+&gt; 在程序设计中，句柄（handle）是 Windows 操作系统用来标识被应用程序所创建或使用的对象的整数。其本质相当于带有引用计数的智能指针。当一个 ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/计算机科学/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default lime white--text"><span class="v-chip__content">
+  计算机科学
 </span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/cpp/cpp-grammar/c-byte-alignment.html"> <a href="/notes/cpp/cpp-grammar/c-byte-alignment.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
               C/C++ 字节对齐（Byte alignment）
             </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-20">2019-08-20</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
@@ -171,20 +184,6 @@ Home 和 End 按键
 如果一个变量的内存地址正好位于它长度的整数倍，他就被称做自然对齐。比如在 32 位 CPU 下，假设一个整型变量的地址为 0x00000004（下面简写为 0x04），那它就是自然对齐的。
 
 需要字节对齐的根 ...
-        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/测试/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
-  测试
-</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
-  C++
-</span></a><a href="/tags/C++语法/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
-  C++语法
-</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/cpp/cpp-grammar/cpp-calculating-efficiency.html"> <a href="/notes/cpp/cpp-grammar/cpp-calculating-efficiency.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
-              C++ 基本计算的速度
-            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2019-8-20">2019-08-20</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
-          
-
-ACM 时，曾经测试过 Lutece 的速度，毕竟 OJ 运算速度直接关系到了每一次写的代码的复杂度。
-
-脱坑 ACM 以后，在编程珠玑里面看到了自己的电脑的运算速度应该作为常识记住，于是就花一天的时间测了一下，并进行了简要分析。附测试的[代码](/blob/cpp-calculating-efficiency/computer_calcu ...
         </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/测试/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
   测试
 </span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
@@ -202,6 +201,6 @@ ACM 时，曾经测试过 Lutece 的速度，毕竟 OJ 运算速度直接关系�
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.6d09be0b.js" defer></script>
+    <script src="/assets/js/app.3f743f32.js" defer></script>
   </body>
 </html>
