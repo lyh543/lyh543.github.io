@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2023-10-31T15:11:26.281Z</updated>
+    <updated>2023-12-03T12:11:49.583Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[开始做 iOS 和安卓双机党]]></title>
+        <id>https://blog.lyh543.cn/posts/2023-12-02-start-using-ios-and-android-together.html</id>
+        <link href="https://blog.lyh543.cn/posts/2023-12-02-start-using-ios-and-android-together.html">
+        </link>
+        <updated>2023-12-02T21:29:22.000Z</updated>
+        <summary type="html"><![CDATA[最近买了第一部 iPhone，开始做安卓 + iOS 双持党。体验了半个月以后，觉得 iOS 和安卓各有优劣，双机党是个不错的选择。
+
+为什么要做双机党
+
+从准备买到下单 iPhone 只间隔了几个小时，很像是一次冲动消费。但其实我在之前很长一段时间都在考虑，用什么手机才能获得更好的体验。
+
+在疫情那段时间（20 年初）我给自己的小米 MIX 2S 刷了类原生，从此对类原生的流畅不掉帧的动画 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[实际开发中借助 React Profiler 调试 React Web app 性能问题]]></title>
         <id>https://blog.lyh543.cn/posts/2023-10-07-debug-on-react-performance-problem-with-react-profiler.html</id>
@@ -223,22 +237,5 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
         <summary type="html"><![CDATA[日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。
 
 在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[修复 Manjaro 的 EFI GRUB 引导]]></title>
-        <id>https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html</id>
-        <link href="https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html">
-        </link>
-        <updated>2021-10-15T16:28:52.000Z</updated>
-        <summary type="html"><![CDATA[Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。
-
-博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。
-
-本文假定：
-
-使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1
-Manjaro 分区在 /dev/nvme0n1p5
-
-从 Manjaro ...]]></summary>
     </entry>
 </feed>
