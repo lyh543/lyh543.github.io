@@ -4,10 +4,19 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Tue, 19 Dec 2023 14:29:37 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 06 Jan 2024 08:44:24 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[调试 Flask 服务超时问题]]></title>
+            <link>https://blog.lyh543.cn/posts/2024-01-06-debug-on-flask-memory-leak.html</link>
+            <guid>https://blog.lyh543.cn/posts/2024-01-06-debug-on-flask-memory-leak.html</guid>
+            <pubDate>Sat, 06 Jan 2024 06:24:00 GMT</pubDate>
+            <description><![CDATA[最近在项目里遇到个 Flask 内存泄漏的问题，前前后后 debug 了几天。
+
+起因是有人报错，发现某个 Flask 服务出现了请求超过 3 分钟还没有返回结果。查服务日志有很多的 WORKER TIMEOUT，是 gunicorn 的进程超时后 kill 的机制。但是日志只能看到超时的进程 id，看不到是哪个请求超时了。正好这个服务上有一个比较耗时的 API（下称 API A），平均耗时在 ...]]></description>
+        </item>
         <item>
             <title><![CDATA[开始做 iOS 和安卓双机党]]></title>
             <link>https://blog.lyh543.cn/posts/2023-12-02-start-using-ios-and-android-together.html</link>
@@ -239,15 +248,6 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 ![编辑器](/images/a08acf4334 ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/d7791dab69351205e63ec66f72e3c7460e7208cefdae905c1942823221657d07.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[我的 NTFS 怎么突然变成 ext4 了？？？]]></title>
-            <link>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</link>
-            <guid>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</guid>
-            <pubDate>Wed, 10 Nov 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。
-
-在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...]]></description>
         </item>
     </channel>
 </rss>
