@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>为 TypeScript 项目的 JS 依赖补充类型 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="本文使用的 TypeScript 版本为 5.3.2。示例代码已上传到 GitHub。
+
+在 TypeScript 项目中难免会用到一些 JS 库，TypeScript 官方支持使用 @types/ 的同名库来作为 JS 库的类型定义。如果 @types/ ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.94ecd5c7.css" as="style"><link rel="preload" href="/assets/js/app.3b9afbbd.js" as="script"><link rel="preload" href="/assets/js/209.4473afc5.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.94ecd5c7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><blockquote><p>本文使用的 TypeScript 版本为 5.3.2。示例代码已上传到 <a href="https://github.com/lyh543-lab/typescript-custom-typing-example" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</p></blockquote> <p>在 TypeScript 项目中难免会用到一些 JS 库，TypeScript 官方支持使用 <code>@types/</code> 的同名库来作为 JS 库的类型定义。如果 <code>@types/</code> 里对应的库不存在，或者类型不全，开发者仍然需要自行补充类型。</p> <h2 id="向-definitelytyped-提-pr"><a href="#向-definitelytyped-提-pr" class="header-anchor">#</a> 向 DefinitelyTyped 提 PR</h2> <p>如果 <code>@types/</code> 里对应的库不存在，或者类型不全，可以直接向 <a href="https://github.com/DefinitelyTyped/DefinitelyTyped" target="_blank" rel="noopener noreferrer">DefinitelyTyped/DefinitelyTyped<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 提 PR，创建或者更新对应的库。</p> <p>DefinitelyTyped 虽然是一个非常庞大的 monorepo，但是有很完善的贡献代码和 review 的流程：首先会 request 包作者的 review，如果包作者没有 review，会邀请项目的维护者来 review。提完 PR 以后大概一个月之内就能合并，合并之后等待发版，安装新的 <code>@types/</code> 就能用上我们贡献的类型了，不需要在我们的项目中做更多的配置。</p> <hr> <p>当然，并不是所有场景都适合向 DefinitelyTyped 提 PR。比如：</p> <ol><li>项目需要立即使用这些类型，等待 PR 合并的流程太过漫长</li> <li>项目只用到了 JS 库的一小部分代码，为 JS 库创建一个完整的 <code>@types</code> 库会耗费过多精力</li></ol> <p>在这些情况下，我们仍然可以在自己的项目中为 JS 库中补充类型。不过大部分博客都没有讲到如何在本地库添加类型、补充类型，这也是本文的目的所在。</p> <h2 id="为-js-库扩展类型"><a href="#为-js-库扩展类型" class="header-anchor">#</a> 为 JS 库扩展类型</h2> <p>如果你使用的库具有 <code>@types</code> 库，但是库不全，你可以为其补充类型。</p> <p>有下面一段 JS 代码，可以正常运行，但缺少 <code>BMapGL.DistrictLayer</code> 类和 <code>BMapGL.Map.addDistrictLayer()</code> <code>BMapGL.Map.removeDistrictLayer()</code> 方法的类型。</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">// https://github.com/lyh543-lab/typescript-custom-typing-example/blob/main/src/App.tsx#L10</span>
+<span class="token keyword">function</span> <span class="token function">CustomDistrictLayer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span>map<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useMapContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// map 的类型是 BMapGL.Map</span>
+  <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>map<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> districtLayer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BMapGL</span><span class="token punctuation">.</span><span class="token function">DistrictLayer</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      name<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'北京市'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map<span class="token punctuation">.</span><span class="token function">addDistrictLayer</span><span class="token punctuation">(</span>districtLayer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> map<span class="token punctuation">.</span><span class="token function">removeDistrictLayer</span><span class="token punctuation">(</span>districtLayer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>map<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>我们可以直接新建 <code>src/global.d.ts</code>（或者别的 <code>src/**/*.d.ts</code>），写入以下内容：</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">/// &lt;reference types=&quot;react-bmapgl/types/bmapgl&quot; /&gt;</span>
+
+<span class="token keyword">declare</span> <span class="token keyword">namespace</span> BMapGL <span class="token punctuation">{</span>
+  <span class="token comment">/**
+   * @link https://lbsyun.baidu.com/index.php?title=district
+   */</span>
+  <span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">DistrictLayer</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span>options<span class="token operator">:</span> <span class="token punctuation">{</span>
+      name<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+      kind<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+      strokeColor<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+      strokeOpacity<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">;</span>
+      fillColor<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">Map</span> <span class="token punctuation">{</span>
+    <span class="token function">addDistrictLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> DistrictLayer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+    <span class="token function">removeDistrictLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> DistrictLayer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>/// &lt;reference types=&quot;react-bmapgl/types/bmapgl&quot; /&gt;</code> 可以理解成 <code>.d.ts</code> 之间的 <code>import</code>，不过 <code>import</code> 更倾向于执行包里的声明语句然后引入一部分命名，<code>&lt;reference /&gt;</code> 更倾向于引入一个库并追加更多的类型。</p> <p>这样可以在 BMapGL 下新定义 <code>DistrictLayer</code> 类，然后为 <code>Map</code> 类拓展两个新的方法。新建完跑一下 <code>pnpm run tsc</code> 就可以确认没问题了。</p> <h2 id="为-js-库添加类型"><a href="#为-js-库添加类型" class="header-anchor">#</a> 为 JS 库添加类型</h2> <p>如果你使用的库是纯 JS 库，也没有一点 TS 定义，你可以选择创建一个新的目录，作为这个库的类型定义。</p> <p>下面的例子中，<code>mapvgl</code> 就是一个纯 JS 库。</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">// https://github.com/lyh543-lab/typescript-custom-typing-example/blob/main/src/App.tsx#L26</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> mapvgl <span class="token keyword">from</span> <span class="token string">'mapvgl'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">CustomMapVGLLayer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span>map<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useMapContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>map<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> view <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mapvgl</span><span class="token punctuation">.</span><span class="token function">View</span><span class="token punctuation">(</span><span class="token punctuation">{</span>map<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> layer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mapvgl</span><span class="token punctuation">.</span><span class="token function">PointLayer</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      color<span class="token operator">:</span> <span class="token string">'#E91E63'</span><span class="token punctuation">,</span>
+      shape<span class="token operator">:</span> <span class="token string">'circle'</span><span class="token punctuation">,</span> <span class="token comment">// 默认为圆形，可传square改为正方形</span>
+      blend<span class="token operator">:</span> <span class="token string">'lighter'</span><span class="token punctuation">,</span>
+      size<span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+      data<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        geometry<span class="token operator">:</span> <span class="token punctuation">{</span>
+          type<span class="token operator">:</span> <span class="token string">'Point'</span><span class="token punctuation">,</span>
+          coordinates<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">116.402544</span><span class="token punctuation">,</span> <span class="token number">39.928216</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  view<span class="token punctuation">.</span><span class="token function">addLayer</span><span class="token punctuation">(</span>layer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> view<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>map<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>为此，可以创建一个 <code>src/@types/mapvgl/index.d.ts</code>（或者别的 <code>src/**/mapvgl/index.d.ts</code>），定义自己项目里需要的那些 API：</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">// https://github.com/lyh543-lab/typescript-custom-typing-example/blob/main/src/%40types/mapvgl/index.d.ts</span>
+
+<span class="token comment">/// &lt;reference types=&quot;react-bmapgl/types/bmapgl&quot; /&gt;</span>
+
+<span class="token comment">// docs: https://mapv.baidu.com/gl/docs/index.html</span>
+<span class="token comment">// You can send docs into ChatGPT to generate typescript definitions</span>
+
+<span class="token comment">/* eslint-disable @typescript-eslint/no-explicit-any */</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ViewOptions</span> <span class="token punctuation">{</span>
+  map<span class="token operator">:</span> BMapGL<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
+  mapType<span class="token operator">?</span><span class="token operator">:</span> <span class="token string">'bmap'</span> <span class="token operator">|</span> <span class="token string">'blank'</span> <span class="token operator">|</span> <span class="token string">'cesium'</span><span class="token punctuation">;</span>
+  effects<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">Array</span><span class="token operator">&lt;</span><span class="token builtin">any</span><span class="token operator">&gt;</span><span class="token punctuation">;</span> <span class="token comment">// The specific effect type can replace 'any' if available</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * @link https://mapv.baidu.com/gl/docs/View.html
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">View</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>options<span class="token operator">:</span> ViewOptions<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">addLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> Layer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">removeLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> Layer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">removeAllLayers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">getAllLayers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Layer<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token function">getAllThreeLayers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> ThreeLayer<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token function">hide</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">hideLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> Layer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">showLayer</span><span class="token punctuation">(</span>layer<span class="token operator">:</span> Layer<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+  <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">void</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ...</span>
+</code></pre></div><p>定义完以后跑 <code>pnpm run tsc</code>，会发现仍然会报错，tsc 提示不存在 <code>@types/mapvgl</code> 这个库。我们虽然定义了 <code>ViewOptions</code> 接口和 <code>View</code> 类，但 tsc 并不知道我们定义的是 <code>mapvgl</code> 库里的 <code>ViewOptions</code> 和 <code>View</code>。所以需要在 <code>tsconfig.json</code> 里关联一下：</p> <div class="language-jsonc extra-class"><pre class="language-text"><code>// https://github.com/lyh543-lab/typescript-custom-typing-example/blob/main/tsconfig.json
+{
+  &quot;compilerOptions&quot;: {
+    // works on TypeScript 4.7+
+    &quot;paths&quot;: {
+      &quot;mapvgl&quot;: [&quot;./src/@types/mapvgl/index.d.ts&quot;],
+    },
+    // works on TypeScript 4.6
+    // on TypeScript 4.7+, typeRoots seems not working without defining paths
+    &quot;typeRoots&quot;: [ &quot;./src/types&quot;, &quot;./node_modules/@types&quot;],
+  }
+}
+</code></pre></div><p>再跑 tsc 就没问题啦。</p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-4e5e014a><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-4e5e014a></script></div></div></div></article></div> <!----></div></div> <div class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.3b9afbbd.js" defer></script><script src="/assets/js/209.4473afc5.js" defer></script>
+  </body>
+</html>

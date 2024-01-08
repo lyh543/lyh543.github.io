@@ -13,28 +13,28 @@
 
 起因是有人报错，发现某个 Flask 服务出现了请求超过 3 分钟还没有返回结果。查服务日志有很多的 WORKER TIMEOUT，是 gunicorn 的进程超时后 kill 的机制。但是日志只能看到超时的进程 id，看不到是哪个请求超时了。正好这个服务上有一个比较耗时的 API（下称 API A），平均耗时在 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.94ecd5c7.css" as="style"><link rel="preload" href="/assets/js/app.bbdfc38e.js" as="script"><link rel="preload" href="/assets/js/209.eba56141.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.94ecd5c7.css" as="style"><link rel="preload" href="/assets/js/app.3b9afbbd.js" as="script"><link rel="preload" href="/assets/js/210.82f61204.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.94ecd5c7.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近在项目里遇到个 Flask 内存泄漏的问题，前前后后 debug 了几天。</p> <p>起因是有人报错，发现某个 Flask 服务出现了请求超过 3 分钟还没有返回结果。查服务日志有很多的 <code>WORKER TIMEOUT</code>，是 gunicorn 的进程超时后 kill 的机制。但是日志只能看到超时的进程 id，看不到是哪个请求超时了。正好这个服务上有一个比较耗时的 API（下称 API A），平均耗时在 1-2 分钟，因此我们<strong>初步怀疑是 API A 最近变慢了</strong>，超过了 3 分钟触发了超时。至于为什么其它服务超时，一种合理的解释是前端的重试机制使得多次请求了 API A，导致 gunicorn 的 8 个进程都在处理这个 API，没有多的进程处理其它 API，别的 API 也就一起跟着超时了。</p> <p>我们这样怀疑，但是并没有证据就是 API A 导致的超时。因此简单写了一个中间件来在每个请求开始和结束的时候输出一条日志，记录每个 API 是由哪个进程处理。同时为了缓解超时的问题，把 WORKER 数量翻倍到 16，避免 API A 把服务的所有进程一下子打满。</p> <div class="language-py3 extra-class"><pre class="language-text"><code>class LoggingMiddleware:
-    def __init__(self, app):
-        self.app = app
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div class="container"><div class="row justify-center"><div class="col-sm-9 col-12"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近在项目里遇到个 Flask 内存泄漏的问题，前前后后 debug 了几天。</p> <p>起因是有人报错，发现某个 Flask 服务出现了请求超过 3 分钟还没有返回结果。查服务日志有很多的 <code>WORKER TIMEOUT</code>，是 gunicorn 的进程超时后 kill 的机制。但是日志只能看到超时的进程 id，看不到是哪个请求超时了。正好这个服务上有一个比较耗时的 API（下称 API A），平均耗时在 1-2 分钟，因此我们<strong>初步怀疑是 API A 最近变慢了</strong>，超过了 3 分钟触发了超时。至于为什么其它服务超时，一种合理的解释是前端的重试机制使得多次请求了 API A，导致 gunicorn 的 8 个进程都在处理这个 API，没有多的进程处理其它 API，别的 API 也就一起跟着超时了。</p> <p>我们这样怀疑，但是并没有证据就是 API A 导致的超时。因此简单写了一个中间件来在每个请求开始和结束的时候输出一条日志，记录每个 API 是由哪个进程处理。同时为了缓解超时的问题，把 WORKER 数量翻倍到 16，避免 API A 把服务的所有进程一下子打满。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">class</span> <span class="token class-name">LoggingMiddleware</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> app<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>app <span class="token operator">=</span> app
 
-    def __call__(self, environ, start_response):
-        process_id = os.getpid()
-        http_method = environ['REQUEST_METHOD']
-        http_path = environ['PATH_INFO']
-        start = time()
-        logging.info(f'[LoggingMiddleware] [{process_id}] starts {http_method} {http_path}')
-        response = self.app(environ, start_response)
-        end = time()
-        logging.info(f'[LoggingMiddleware] [{process_id}] finishes {http_method} {http_path} in {round(end - start, 4)}s')
-        return response
+    <span class="token keyword">def</span> <span class="token function">__call__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> environ<span class="token punctuation">,</span> start_response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        process_id <span class="token operator">=</span> os<span class="token punctuation">.</span>getpid<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        http_method <span class="token operator">=</span> environ<span class="token punctuation">[</span><span class="token string">'REQUEST_METHOD'</span><span class="token punctuation">]</span>
+        http_path <span class="token operator">=</span> environ<span class="token punctuation">[</span><span class="token string">'PATH_INFO'</span><span class="token punctuation">]</span>
+        start <span class="token operator">=</span> time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        logging<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'[LoggingMiddleware] [</span><span class="token interpolation"><span class="token punctuation">{</span>process_id<span class="token punctuation">}</span></span><span class="token string">] starts </span><span class="token interpolation"><span class="token punctuation">{</span>http_method<span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>http_path<span class="token punctuation">}</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>
+        response <span class="token operator">=</span> self<span class="token punctuation">.</span>app<span class="token punctuation">(</span>environ<span class="token punctuation">,</span> start_response<span class="token punctuation">)</span>
+        end <span class="token operator">=</span> time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        logging<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'[LoggingMiddleware] [</span><span class="token interpolation"><span class="token punctuation">{</span>process_id<span class="token punctuation">}</span></span><span class="token string">] finishes </span><span class="token interpolation"><span class="token punctuation">{</span>http_method<span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>http_path<span class="token punctuation">}</span></span><span class="token string"> in </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">round</span><span class="token punctuation">(</span>end <span class="token operator">-</span> start<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">s'</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> response
 
 
-app = Flask(APP_NAME)
-app.wsgi_app = LoggingMiddleware(app.wsgi_app)
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>APP_NAME<span class="token punctuation">)</span>
+app<span class="token punctuation">.</span>wsgi_app <span class="token operator">=</span> LoggingMiddleware<span class="token punctuation">(</span>app<span class="token punctuation">.</span>wsgi_app<span class="token punctuation">)</span>
 </code></pre></div><hr> <p>如此设置并上线后，一两天以后又出现了超时。这也合理，毕竟我们只是加了日志，改了一下配置，并没有从根本解决问题。不过至少我们有日志了。</p> <p>分析日志以后发现，<strong>不少 API 都出现了超时，并且是随机出现的</strong>。比如另一个查询数据库的 API 某次耗时 150s，而我们再调用相同的 API 时，都只耗时 0.1s 左右。上面的推测解释不了这个现象。</p> <p>我们考虑从新的方向来追查。之前有同事搭建了 Grafana 服务，并导入了 k8s 集群的数据，可以方便地查看每个 pod 的 CPU、内存占用等数据。我们发现此时<strong>这个服务的 pod 的 CPU 和内存都满了，占用 90% 以上</strong>。重启服务后 CPU 和内存占用均正常。因此新的推测是应用出现了<strong>内存泄漏</strong>，长时间运行后内存占用就满了，进而触发频繁的交换和 gc，导致 CPU 也跟着满了。也有一种可能是，<strong>服务确实需要 4 GB 以上的内存来作缓存和其它用途</strong>，只给 4GB 就会 OOM。</p> <p>因此，我们将 pod 的内存翻倍到 8GB，同时将 WORKER 数量调回到 8（更多的 WORKER 会占用更高的内存），尝试缓解这个问题。除此以外没有做更多操作，观察服务是否能够把 8GB 吃满，如果吃满了，内存泄漏的嫌疑就很大了；反之如果内存稳定在一个数，可能是服务的确需要这么多内存。</p> <hr> <p>再次上线后，过了几天，8GB 也被占满了。这下<strong>内存泄漏石锤了</strong>。</p> <p>确认是内存泄漏以后，就需要定位内存泄漏的地方了。对于一般的 Python 脚本，可以使用 <a href="https://pypi.org/project/memory-profiler/" target="_blank" rel="noopener noreferrer">memory_profiler<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 来查询运行一次的内存占用，或者内存占用随时间的变化。但是这个工具对于一个 Flask 服务不太好用，一是 Flask 服务需要长期运行，二是这个服务上有很多 API，需要确定到具体哪个 API 有内存泄漏。</p> <p>于是又手搓了一个中间件，用于输出 API 开始和结束时的内存占用差，看有没有什么 API 是在持续增加内存使用的。</p> <div class="language-py extra-class"><pre class="language-py"><code><span class="token keyword">import</span> logging
 <span class="token keyword">import</span> os
 
@@ -147,6 +147,6 @@ turn <span class="token number">659</span><span class="token punctuation">,</spa
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.bbdfc38e.js" defer></script><script src="/assets/js/209.eba56141.js" defer></script>
+    <script src="/assets/js/app.3b9afbbd.js" defer></script><script src="/assets/js/210.82f61204.js" defer></script>
   </body>
 </html>

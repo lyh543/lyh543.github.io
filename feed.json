@@ -13,6 +13,13 @@
             "date_modified": "2024-01-06T06:24:00.000Z"
         },
         {
+            "id": "https://blog.lyh543.cn/posts/2023-12-03-typescript-add-custom-typings.html",
+            "url": "https://blog.lyh543.cn/posts/2023-12-03-typescript-add-custom-typings.html",
+            "title": "为 TypeScript 项目的 JS 依赖补充类型",
+            "summary": "本文使用的 TypeScript 版本为 5.3.2。示例代码已上传到 GitHub。\n\n在 TypeScript 项目中难免会用到一些 JS 库，TypeScript 官方支持使用 @types/ 的同名库来作为 JS 库的类型定义。如果 @types/ ...",
+            "date_modified": "2023-12-03T14:12:48.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2023-12-02-start-using-ios-and-android-together.html",
             "url": "https://blog.lyh543.cn/posts/2023-12-02-start-using-ios-and-android-together.html",
             "title": "开始做 iOS 和安卓双机党",
@@ -151,14 +158,6 @@
             "summary": "我在 Windows 使用的脚本，从 cmd 到 WSL 1 到 WSL 2，最后又回到了 PowerShell。Shell 在 Linux/Mac OS 上确实好用，但如果要用 IDE 开发，WSL 1 的开发环境不受 JetBrains 支持了，而从 JetBrains 的 Windows 版本访问 WSL 2 会巨慢。所以还是回归到 PowerShell 吧。而且，PowerShell 正如 ...",
             "image": "https://blog.lyh543.cn/images/5d647b6852131ec69d3fca041475f941e2188a784f33f2b73f031dfe3539410e.png",
             "date_modified": "2022-01-01T13:14:01.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/latex/recommended-texstudio-config.html",
-            "url": "https://blog.lyh543.cn/notes/latex/recommended-texstudio-config.html",
-            "title": "推荐 TeXStudio 配置",
-            "summary": "构建\n\n快捷键\n\n![编辑器](/images/a08acf4334 ...",
-            "image": "https://blog.lyh543.cn/images/d7791dab69351205e63ec66f72e3c7460e7208cefdae905c1942823221657d07.png",
-            "date_modified": "2021-11-17T17:26:31.000Z"
         }
     ]
 }
