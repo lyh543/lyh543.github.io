@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-02-20T02:47:50.902Z</updated>
+    <updated>2024-02-21T08:50:13.728Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
@@ -49,24 +49,6 @@
         <updated>2023-10-07T22:23:22.000Z</updated>
         <summary type="html"><![CDATA[最近写 React 遇到一个性能问题，调试了一段时间都没什么思路。后来以尝试的心态玩了玩
 React Developer Tools 的 React Profiler，得到了一点线索，最终找到了问题 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CSS 笔记]]></title>
-        <id>https://blog.lyh543.cn/notes/front-end/css-tips.html</id>
-        <link href="https://blog.lyh543.cn/notes/front-end/css-tips.html">
-        </link>
-        <updated>2023-07-02T16:29:59.000Z</updated>
-        <summary type="html"><![CDATA[.code-example {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 40px 0;
-}
-
-居中 Center
-
-在我浅薄的前端经历中，常遇到两种居中的场景。一种是在一个 div 中放一个 d ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[搭建手游私服]]></title>
@@ -125,30 +107,6 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 皮亚诺公理和形式系统都是在定义数学的微缩模型：
 
 [皮亚诺公理](https://zh.wikipedia.org/wiki/%E7%9A% ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[面经集合 - 2022]]></title>
-        <id>https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html</id>
-        <link href="https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html">
-        </link>
-        <updated>2022-07-10T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[推荐搭配 面试相关知识 食用。
-
-本来是准备留在创业公司的，结果疫情严重、经济下行，正好公司的业务是上海的线下娱乐（剧本杀）行业，短时间内不少投资人都撤资了，长时间的话也需要很长一段时间才能复苏。综合考虑，还是选择离职，回到大厂来。
-
-由于校招有毕业时间限制，这个情况是没法走校招了。走三年以下经验岗位的社招也还行，就是 hc 没有校招那么集中就是了。
-
-博乐科技 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[写泥电毕设时遇到的 Word 排版问题]]></title>
-        <id>https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html</id>
-        <link href="https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html">
-        </link>
-        <updated>2022-04-23T14:14:34.000Z</updated>
-        <summary type="html"><![CDATA[为了查重，毕设论文必须用 Word 写（查重系统不支持 PDF），完完全全就是开历史倒车。对于我这种 Office 半吊子来说，用 Word 排版真的是让人高血压。精通是不可能精通的，有这个时间不如多学几门编程语言。只能遇到问题谷歌一下，把论文混完，（但愿）再也接触不到 Word 了。
-
-本文中使用的 Word 是 Office 365，版本 2203。使用的论文模板可以在[这里](/blob/电 ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[逛开源社区]]></title>
@@ -229,11 +187,75 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 管理员 ...]]></summary>
     </entry>
     <entry>
-        <title type="html"><![CDATA[PowerShell 7 学习笔记]]></title>
-        <id>https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html</id>
-        <link href="https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html">
+        <title type="html"><![CDATA[我的 NTFS 怎么突然变成 ext4 了？？？]]></title>
+        <id>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</id>
+        <link href="https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html">
         </link>
-        <updated>2022-01-01T13:14:01.000Z</updated>
-        <summary type="html"><![CDATA[我在 Windows 使用的脚本，从 cmd 到 WSL 1 到 WSL 2，最后又回到了 PowerShell。Shell 在 Linux/Mac OS 上确实好用，但如果要用 IDE 开发，WSL 1 的开发环境不受 JetBrains 支持了，而从 JetBrains 的 Windows 版本访问 WSL 2 会巨慢。所以还是回归到 PowerShell 吧。而且，PowerShell 正如 ...]]></summary>
+        <updated>2021-11-10T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。
+
+在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[修复 Manjaro 的 EFI GRUB 引导]]></title>
+        <id>https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html</id>
+        <link href="https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html">
+        </link>
+        <updated>2021-10-15T16:28:52.000Z</updated>
+        <summary type="html"><![CDATA[Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。
+
+博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。
+
+本文假定：
+
+使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1
+Manjaro 分区在 /dev/nvme0n1p5
+
+从 Manjaro ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[配置 Manjaro]]></title>
+        <id>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</id>
+        <link href="https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html">
+        </link>
+        <updated>2021-09-29T19:34:56.000Z</updated>
+        <summary type="html"><![CDATA[sudo pacman-mirrors -i -c China -m rank
+
+在弹出来的框里选择一个即可。
+
+然后添加 ArchlinuxCN 源。
+
+sudo nano /etc/pacman.conf
+
+在最后加上三行，然后保存。
+
+[archlinuxcn]
+Server = https://mirrors.tuna.tsinghua ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[配置 Ubuntu 服务器]]></title>
+        <id>https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html</id>
+        <link href="https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html">
+        </link>
+        <updated>2021-09-29T19:34:56.000Z</updated>
+        <summary type="html"><![CDATA[略。
+
+安装软件
+
+安装基础软件
+
+sudo apt install -y \
+    curl \
+    git \
+    htop \
+    micro \
+    neofetch \
+    zsh
+
+安装 docker
+
+curl https://get.docker.com/ | sudo bash
+
+为 `doc ...]]></summary>
     </entry>
 </feed>

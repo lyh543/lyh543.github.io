@@ -35,13 +35,6 @@
             "date_modified": "2023-10-07T22:23:22.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/front-end/css-tips.html",
-            "url": "https://blog.lyh543.cn/notes/front-end/css-tips.html",
-            "title": "CSS 笔记",
-            "summary": ".code-example {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  margin: 40px 0;\n}\n\n居中 Center\n\n在我浅薄的前端经历中，常遇到两种居中的场景。一种是在一个 div 中放一个 d ...",
-            "date_modified": "2023-07-02T16:29:59.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
             "url": "https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html",
             "title": "搭建手游私服",
@@ -80,22 +73,6 @@
             "summary": "2023.9.30 编：毕导出了一期视频讲解哥德尔不完备（第一、第二）定理，还蛮不错的，推荐观看。这里是链接：https://www.bilibili.com/video/BV19u4y1D7GT\n\n元数学是什么\n\n元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n[皮亚诺公理](https://zh.wikipedia.org/wiki/%E7%9A% ...",
             "image": "https://blog.lyh543.cn/images/94b5a58e74e531d3716b2c8d59608bb05b180cb683ddc2e5c578f9585c3549cd.png",
             "date_modified": "2022-09-01T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html",
-            "url": "https://blog.lyh543.cn/notes/carrers/interview-experience/2022.html",
-            "title": "面经集合 - 2022",
-            "summary": "推荐搭配 面试相关知识 食用。\n\n本来是准备留在创业公司的，结果疫情严重、经济下行，正好公司的业务是上海的线下娱乐（剧本杀）行业，短时间内不少投资人都撤资了，长时间的话也需要很长一段时间才能复苏。综合考虑，还是选择离职，回到大厂来。\n\n由于校招有毕业时间限制，这个情况是没法走校招了。走三年以下经验岗位的社招也还行，就是 hc 没有校招那么集中就是了。\n\n博乐科技 ...",
-            "image": "https://blog.lyh543.cn/images/96a4cc00eadd8e5df0dd78a9bd368efc3e5eda52d6e61ba6f037e3c6c42a4a2c.png",
-            "date_modified": "2022-07-10T16:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html",
-            "url": "https://blog.lyh543.cn/notes/microsoft/office/word-typesettings-problems-when-im-writing-thesis.html",
-            "title": "写泥电毕设时遇到的 Word 排版问题",
-            "summary": "为了查重，毕设论文必须用 Word 写（查重系统不支持 PDF），完完全全就是开历史倒车。对于我这种 Office 半吊子来说，用 Word 排版真的是让人高血压。精通是不可能精通的，有这个时间不如多学几门编程语言。只能遇到问题谷歌一下，把论文混完，（但愿）再也接触不到 Word 了。\n\n本文中使用的 Word 是 Office 365，版本 2203。使用的论文模板可以在[这里](/blob/电 ...",
-            "image": "https://blog.lyh543.cn/images/70beb5321c299dd82d9effa98f5ffccf4a7f30ada3d6b0c30141745dc6291ce7.png",
-            "date_modified": "2022-04-23T14:14:34.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html",
@@ -152,12 +129,34 @@
             "date_modified": "2022-01-13T18:50:19.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html",
-            "url": "https://blog.lyh543.cn/notes/microsoft/powershell/powershell-learning-notes.html",
-            "title": "PowerShell 7 学习笔记",
-            "summary": "我在 Windows 使用的脚本，从 cmd 到 WSL 1 到 WSL 2，最后又回到了 PowerShell。Shell 在 Linux/Mac OS 上确实好用，但如果要用 IDE 开发，WSL 1 的开发环境不受 JetBrains 支持了，而从 JetBrains 的 Windows 版本访问 WSL 2 会巨慢。所以还是回归到 PowerShell 吧。而且，PowerShell 正如 ...",
-            "image": "https://blog.lyh543.cn/images/5d647b6852131ec69d3fca041475f941e2188a784f33f2b73f031dfe3539410e.png",
-            "date_modified": "2022-01-01T13:14:01.000Z"
+            "id": "https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html",
+            "url": "https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html",
+            "title": "我的 NTFS 怎么突然变成 ext4 了？？？",
+            "summary": "日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。\n\n在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...",
+            "date_modified": "2021-11-10T00:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html",
+            "url": "https://blog.lyh543.cn/posts/2021-10-15-fix-efi-grub-on-manjaro.html",
+            "title": "修复 Manjaro 的 EFI GRUB 引导",
+            "summary": "Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。\n\n博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。\n\n本文假定：\n\n使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1\nManjaro 分区在 /dev/nvme0n1p5\n\n从 Manjaro ...",
+            "date_modified": "2021-10-15T16:28:52.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
+            "title": "配置 Manjaro",
+            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
+            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-ubuntu-server.html",
+            "title": "配置 Ubuntu 服务器",
+            "summary": "略。\n\n安装软件\n\n安装基础软件\n\nsudo apt install -y \\\n    curl \\\n    git \\\n    htop \\\n    micro \\\n    neofetch \\\n    zsh\n\n安装 docker\n\ncurl https://get.docker.com/ | sudo bash\n\n为 `doc ...",
+            "image": "https://blog.lyh543.cn/images/92d833b52c048641ca010953bda8a1cebdd6a0ca3995b2318c3241f24660d083.png",
+            "date_modified": "2021-09-29T19:34:56.000Z"
         }
     ]
 }
