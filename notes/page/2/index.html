@@ -11,11 +11,68 @@
     <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
     <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
     
-    <link rel="preload" href="/assets/css/0.styles.94ecd5c7.css" as="style"><link rel="preload" href="/assets/js/app.cc8d6c4f.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.94ecd5c7.css" as="style"><link rel="preload" href="/assets/js/app.ba06a0b0.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.94ecd5c7.css">
   </head>
   <body>
-    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div id="base-list-layout"><div class="container ui-posts itemscope itemtype"><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/database/hive.html"> <a href="/notes/database/hive.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><div id="base-list-layout"><div class="container ui-posts itemscope itemtype"><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/development/github-actions-snippets.html"> <a href="/notes/development/github-actions-snippets.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              常用 GitHub Actions 代码片段
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-09-07T17:49:46.000Z">2021-09-08</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+name: Deploy Backend
+on:
+  push:
+    branches:
+      'master'
+env:
+  TZ: Asia/Shanghai
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+如果需要 docker 镜像，可以在这里添加
+
+    steps:
+      uses: acti ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/GitHub/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
+  GitHub
+</span></a><a href="/tags/snippets/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
+  snippets
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/java/maven-tips.html"> <a href="/notes/java/maven-tips.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              Maven 使用技巧
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-09-07T10:46:32.000Z">2021-09-07</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+
+更换镜像源
+
+打包成一个 jar 并部署
+
+对于一般项目，可以在 pom.xml 中添加以下插件（注意修改 com.example.Main 为你的 main 函数所在类名）：
+
+            &lt;arti ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Java/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
+  Java
+</span></a><a href="/tags/Maven/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-orange white--text"><span class="v-chip__content">
+  Maven
+</span></a><a href="/tags/tips/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default yellow white--text"><span class="v-chip__content">
+  tips
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/microsoft/windows/develop-with-wsl2.html"> <a href="/notes/microsoft/windows/develop-with-wsl2.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              在 WSL 2 中开发
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-08-16T15:17:12.000Z">2021-08-16</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          
+WSL 2 安装、代理配置
+
+WSL2来了！但是能正常使用并不简单 | 0x1C.dev
+
+不需要挂梯子就不用看了。
+
+Java &amp; Idea
+
+[打造IDEA+wsl2的Java开发环境（zsh jdk maven） - 知乎](https://zhu ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Windows/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default pink white--text"><span class="v-chip__content">
+  Windows
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/database/hive.html"> <a href="/notes/database/hive.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
               Hive SQL 安装 + 教程指路
             </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-08-10T10:39:13.000Z">2021-08-10</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
           Hive 是一个用 Java 编写的、基于 Hadoop 的分布式数据仓库。
@@ -119,66 +176,6 @@ JavaScript 自带 [Date] 类，也带了非常多的工具，但是可能真要�
   JavaScript
 </span></a><a href="/tags/前端/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
   前端
-</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/front-end/vue-debug.html"> <a href="/notes/front-end/vue-debug.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
-              Vue 的调试方法
-            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-04-22T22:11:39.000Z">2021-04-23</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
-          写算法、写后端开发的时候，在 IDE 打断点、条件断点、检测变量用的飞起，但是在 JS 以及 Vue 的前端开发中，这一套就有一些变化了。一是因为调试工具从各家 IDE 变为了浏览器，二是因为 Vue 的每个组件的变量不能在浏览器中直接访问，三是因为 Vue 代码需要转化为原生 JS 执行，所以看报错总会有一堆 vue.runtime.esm.js 之类的、来自 Vue 框架本身代码的报错，而 ...
-        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/前端/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
-  前端
-</span></a><a href="/tags/Vue/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
-  Vue
-</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/carrers/interview-notes.html"> <a href="/notes/carrers/interview-notes.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
-              后台开发面试相关知识
-            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-3-27">2021-03-27</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
-          以下知识均在后台开发面试中实际出现过、总结而来。
-
-C++
-
-多态的实现
-
-即虚函数表。
-
-STL 容器库
-
-容器库 - cppreference.com
-
-unordered_map 和 map 的区别
-
-略。
-
-multimap 和 map 的区别
-
-略。
- ...
-        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/打工人/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default yellow white--text"><span class="v-chip__content">
-  打工人
-</span></a><a href="/tags/计算机网络/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default blue white--text"><span class="v-chip__content">
-  计算机网络
-</span></a><a href="/tags/操作系统/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
-  操作系统
-</span></a><a href="/tags/C++/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default cyan white--text"><span class="v-chip__content">
-  C++
-</span></a><a href="/tags/Java/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-blue white--text"><span class="v-chip__content">
-  Java
-</span></a><a href="/tags/面经集合/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default deep-purple white--text"><span class="v-chip__content">
-  面经集合
-</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/notes/android/android-flashing-notes.html"> <a href="/notes/android/android-flashing-notes.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
-              安卓刷机记录
-            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2021-03-12T09:37:36.000Z">2021-03-12</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
-          
-手机选择
-
-如果是为了刷原生而买手机，买一加，或者小米吧。这两个适配的很快（还是用户群体比较给力），一加 8T 在发布后一个半月后就有了官方 Pixel Experience，而一年前的小米 10 现在还只有 Unofficial PE。
-
-一定要买膏通削龙的 SoC，联发科和麒麟目前暂时别想用原生了。
-
-ROM 选择
-
-有条件还是搞个梯子，不然 ROM 很难下的。
-
-[ ...
-        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/杂谈/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default light-green white--text"><span class="v-chip__content">
-  杂谈
 </span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div></div> <nav role="navigation" aria-label="Pagination Navigation"><ul class="v-pagination theme--light"><li><button type="button" aria-label="Previous page" class="v-pagination__navigation"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-left theme--light"></i></button></li><li><button type="button" aria-label="Goto Page 1" class="v-pagination__item">1</button></li><li><button type="button" aria-current="true" aria-label="Current Page, Page 2" class="v-pagination__item v-pagination__item--active primary">2</button></li><li><button type="button" aria-label="Goto Page 3" class="v-pagination__item">3</button></li><li><span class="v-pagination__more">...</span></li><li><button type="button" aria-label="Goto Page 13" class="v-pagination__item">13</button></li><li><button type="button" aria-label="Goto Page 14" class="v-pagination__item">14</button></li><li><button type="button" aria-label="Goto Page 15" class="v-pagination__item">15</button></li><li><button type="button" aria-label="Next page" class="v-pagination__navigation"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-right theme--light"></i></button></li></ul></nav></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2022</span>
         |
       <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
@@ -190,6 +187,6 @@ ROM 选择
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.cc8d6c4f.js" defer></script>
+    <script src="/assets/js/app.ba06a0b0.js" defer></script>
   </body>
 </html>
