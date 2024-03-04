@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-03-03-ota-design-of-ubuntu-core.html",
+            "url": "https://blog.lyh543.cn/posts/2024-03-03-ota-design-of-ubuntu-core.html",
+            "title": "Ubuntu Core 如何在 IoT 设备上实现 OTA",
+            "summary": "白皮书入口 | 下载链接\n\nOTA 的目标\n\nOTA 的场景，和边 ...",
+            "image": "https://blog.lyh543.cn/images/ubutu-core-ota-title.png",
+            "date_modified": "2024-03-03T21:30:45.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-02-29-boot-from-an-efi-shell.html",
             "url": "https://blog.lyh543.cn/posts/2024-02-29-boot-from-an-efi-shell.html",
             "title": "从 EFI Shell 引导系统（转载）",
@@ -149,14 +157,6 @@
             "title": "修复 Manjaro 的 EFI GRUB 引导",
             "summary": "Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。\n\n博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。\n\n本文假定：\n\n使用 EFI 进行引导，EFI 分区在 /dev/nvme0n1p1\nManjaro 分区在 /dev/nvme0n1p5\n\n从 Manjaro ...",
             "date_modified": "2021-10-15T16:28:52.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "url": "https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html",
-            "title": "配置 Manjaro",
-            "summary": "sudo pacman-mirrors -i -c China -m rank\n\n在弹出来的框里选择一个即可。\n\n然后添加 ArchlinuxCN 源。\n\nsudo nano /etc/pacman.conf\n\n在最后加上三行，然后保存。\n\n[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua ...",
-            "image": "https://blog.lyh543.cn/images/7874af89c12b04d397b8153f02418b08a8a65b62db1a18fb73d89fafc1f48f6c.png",
-            "date_modified": "2021-09-29T19:34:56.000Z"
         }
     ]
 }

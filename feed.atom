@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-02-29T06:19:39.841Z</updated>
+    <updated>2024-03-04T07:50:23.985Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Ubuntu Core 如何在 IoT 设备上实现 OTA]]></title>
+        <id>https://blog.lyh543.cn/posts/2024-03-03-ota-design-of-ubuntu-core.html</id>
+        <link href="https://blog.lyh543.cn/posts/2024-03-03-ota-design-of-ubuntu-core.html">
+        </link>
+        <updated>2024-03-03T21:30:45.000Z</updated>
+        <summary type="html"><![CDATA[白皮书入口 | 下载链接
+
+OTA 的目标
+
+OTA 的场景，和边 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[从 EFI Shell 引导系统（转载）]]></title>
         <id>https://blog.lyh543.cn/posts/2024-02-29-boot-from-an-efi-shell.html</id>
@@ -224,24 +236,5 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 Manjaro 分区在 /dev/nvme0n1p5
 
 从 Manjaro ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[配置 Manjaro]]></title>
-        <id>https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html</id>
-        <link href="https://blog.lyh543.cn/posts/2021-09-30-config-manjaro.html">
-        </link>
-        <updated>2021-09-29T19:34:56.000Z</updated>
-        <summary type="html"><![CDATA[sudo pacman-mirrors -i -c China -m rank
-
-在弹出来的框里选择一个即可。
-
-然后添加 ArchlinuxCN 源。
-
-sudo nano /etc/pacman.conf
-
-在最后加上三行，然后保存。
-
-[archlinuxcn]
-Server = https://mirrors.tuna.tsinghua ...]]></summary>
     </entry>
 </feed>
