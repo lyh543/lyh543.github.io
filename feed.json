@@ -6,6 +6,13 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
+            "url": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
+            "title": "不同电子设备上的阅读体验",
+            "summary": "有次在北京大兴机场候机，在机场里的国家图书馆分馆借了本书看，觉得偶尔看看书也挺不错，捡回了这个习惯。随着我对自己的阅读需求和体验了解得更加清晰，我阅读的设备也从 Kindle 变到平板电脑、电脑显示器。有句话叫差生文具多，我就先对号入座了。\n\n阅读设备\n\n纸质书\n\n不得不说，阅读纸质书的感觉很好，比如书本印刷的味道，还有翻书时的刷刷声。不过纸质书的收纳、整理和搬运就比较蛋疼了，高 ...",
+            "date_modified": "2024-04-09T12:59:00.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-03-30-keep-aosp-smooth.html",
             "url": "https://blog.lyh543.cn/posts/2024-03-30-keep-aosp-smooth.html",
             "title": "优化 AOSP 流畅度一记",
@@ -150,13 +157,6 @@
             "summary": "和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。\n\n查询是否被其他应用占用\n\n在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：\n\n管理员 ...",
             "image": "https://blog.lyh543.cn/images/2a17482e2c835c9e3ef8fde3db60c6476f3f10a9dcc75ca76f3e23efe4cb7f3a.png",
             "date_modified": "2022-01-13T18:50:19.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html",
-            "url": "https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html",
-            "title": "我的 NTFS 怎么突然变成 ext4 了？？？",
-            "summary": "日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。\n\n在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...",
-            "date_modified": "2021-11-10T00:00:00.000Z"
         }
     ]
 }

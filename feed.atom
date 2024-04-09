@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-04-07T07:30:06.618Z</updated>
+    <updated>2024-04-09T12:58:06.073Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[不同电子设备上的阅读体验]]></title>
+        <id>https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html</id>
+        <link href="https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html">
+        </link>
+        <updated>2024-04-09T12:59:00.000Z</updated>
+        <summary type="html"><![CDATA[有次在北京大兴机场候机，在机场里的国家图书馆分馆借了本书看，觉得偶尔看看书也挺不错，捡回了这个习惯。随着我对自己的阅读需求和体验了解得更加清晰，我阅读的设备也从 Kindle 变到平板电脑、电脑显示器。有句话叫差生文具多，我就先对号入座了。
+
+阅读设备
+
+纸质书
+
+不得不说，阅读纸质书的感觉很好，比如书本印刷的味道，还有翻书时的刷刷声。不过纸质书的收纳、整理和搬运就比较蛋疼了，高 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[优化 AOSP 流畅度一记]]></title>
         <id>https://blog.lyh543.cn/posts/2024-03-30-keep-aosp-smooth.html</id>
@@ -221,15 +235,5 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：
 
 管理员 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[我的 NTFS 怎么突然变成 ext4 了？？？]]></title>
-        <id>https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html</id>
-        <link href="https://blog.lyh543.cn/posts/2021-11-10-my-ntfs-became-ext4.html">
-        </link>
-        <updated>2021-11-10T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[日常在 Manjaro 和 Windows 双系统穿梭的我，某天进 Windows 前，突然发现 D 盘“未格式化”。这次 Windows 开机的时候还显示 □□□□□□□□ (D: ): 100%。大概率是 Windows 磁盘检查的锅。
-
-在 Windows 下使用傲梅分区助手看了一下，发现我的 D 盘变成 ext4 了。嗯？他重启前不还是 NTFS 的吗？因此，我猜测是 Window ...]]></summary>
     </entry>
 </feed>
