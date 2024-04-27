@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html",
+            "url": "https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html",
+            "title": "使用 Grafana 监控 Kubernetes",
+            "summary": "Grafana 收集 K8s 指标的拓扑图\n\n上图是 Grafana 收集 Kubernetes 指标的拓扑图。\n\ncAdvisor 和 [kube-state-metrics](https://github.com/kuber ...",
+            "image": "https://blog.lyh543.cn/images/grafana-collect-k8s-metric.png",
+            "date_modified": "2024-04-27T20:52:59.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
             "url": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
             "title": "不同电子设备上的阅读体验",
@@ -149,14 +157,6 @@
             "title": "Git 根据路径设置邮箱名",
             "summary": "对于同时在写开源项目和公司私有项目的码农，不同的项目可能就需要选择不同的邮箱。\n\n最直接的方案是给每个 repo 设置一遍，毕竟 Git 自带了 --local --global --system 三个级别的设置。我之前的办法就是 global 写个人邮箱，然后写一个脚本用于设置当前项目的邮箱为公司邮箱（大概如下），放在 PATH 下，每新建 / clone 一个 repo 的时候 ...",
             "date_modified": "2022-01-31T22:02:19.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html",
-            "url": "https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html",
-            "title": "Windows 端口占用的解决方法",
-            "summary": "和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。\n\n查询是否被其他应用占用\n\n在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：\n\n管理员 ...",
-            "image": "https://blog.lyh543.cn/images/2a17482e2c835c9e3ef8fde3db60c6476f3f10a9dcc75ca76f3e23efe4cb7f3a.png",
-            "date_modified": "2022-01-13T18:50:19.000Z"
         }
     ]
 }

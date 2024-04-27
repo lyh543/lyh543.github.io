@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-04-09T12:58:06.073Z</updated>
+    <updated>2024-04-27T05:31:14.729Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[使用 Grafana 监控 Kubernetes]]></title>
+        <id>https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html</id>
+        <link href="https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html">
+        </link>
+        <updated>2024-04-27T20:52:59.000Z</updated>
+        <summary type="html"><![CDATA[Grafana 收集 K8s 指标的拓扑图
+
+上图是 Grafana 收集 Kubernetes 指标的拓扑图。
+
+cAdvisor 和 [kube-state-metrics](https://github.com/kuber ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[不同电子设备上的阅读体验]]></title>
         <id>https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html</id>
@@ -221,19 +233,5 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
         <summary type="html"><![CDATA[对于同时在写开源项目和公司私有项目的码农，不同的项目可能就需要选择不同的邮箱。
 
 最直接的方案是给每个 repo 设置一遍，毕竟 Git 自带了 --local --global --system 三个级别的设置。我之前的办法就是 global 写个人邮箱，然后写一个脚本用于设置当前项目的邮箱为公司邮箱（大概如下），放在 PATH 下，每新建 / clone 一个 repo 的时候 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 端口占用的解决方法]]></title>
-        <id>https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html</id>
-        <link href="https://blog.lyh543.cn/posts/2022-01-04-solution-to-windows-port-occupied.html">
-        </link>
-        <updated>2022-01-13T18:50:19.000Z</updated>
-        <summary type="html"><![CDATA[和其他操作系统一样，Windows 的端口占用问题是老生常谈的话题了。不过，由于 Hyper-V 技术的出现，端口占用的原因也不只一种，导致原来的方法可能不奏效。因此记录一下 Windows 端口占用的两种情况以及对应的解决方法。
-
-查询是否被其他应用占用
-
-在管理员下的 powershell（2202 年了，也该学一下 powershell 了）：
-
-管理员 ...]]></summary>
     </entry>
 </feed>
