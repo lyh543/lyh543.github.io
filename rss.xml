@@ -4,10 +4,22 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sat, 27 Apr 2024 05:31:14 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 14 May 2024 12:22:12 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[《深入剖析 Kubernetes》 笔记 - 云原生]]></title>
+            <link>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html</link>
+            <guid>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html</guid>
+            <pubDate>Sun, 12 May 2024 19:58:49 GMT</pubDate>
+            <description><![CDATA[虽然现在提到云原生，大家就会想到 Kubernetes，但是云原生并不仅仅是 Kubernetes。云原生是一种基础设施架构的设计思想和理念，而 Kubernetes 是云原生这张蓝图上的一个组件。
+
+> 云原生的本质是一系列最佳实践的结合。云原生为实践者指定了一条低心智负担的，能够以可扩展、可复制的方式，最大化地利用云的能力发挥云的价值和最佳路径。
+> **云原生并不指代某种开源设计和技术， ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/aws-cloud-native-evolution.png">
+            </enclosure>
+        </item>
         <item>
             <title><![CDATA[使用 Grafana 监控 Kubernetes]]></title>
             <link>https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html</link>
@@ -22,6 +34,23 @@ cAdvisor 和 [kube-state-metrics](https://github.com/kuber ...]]></description>
             </enclosure>
         </item>
         <item>
+            <title><![CDATA[《深入剖析 Kubernetes》 笔记 - 存储]]></title>
+            <link>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/2-storage.html</link>
+            <guid>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/2-storage.html</guid>
+            <pubDate>Sun, 21 Apr 2024 19:56:49 GMT</pubDate>
+            <description><![CDATA[本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。
+
+PersistentVolumeClaim & PersistentVolume
+
+Pod 一章讲过了这两个概念，这里再复制一遍。
+
+> Pod -> PVC -> PV
+>
+> PVC 是定义接口（大小、AccessModes 等），PV 是实现（实际存储位置、认证信息等）。而 Pod 只需要在配置里面把 PVC ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/k8s-csi-framework.jpg">
+            </enclosure>
+        </item>
+        <item>
             <title><![CDATA[不同电子设备上的阅读体验]]></title>
             <link>https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html</link>
             <guid>https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html</guid>
@@ -33,6 +62,22 @@ cAdvisor 和 [kube-state-metrics](https://github.com/kuber ...]]></description>
 纸质书
 
 不得不说，阅读纸质书的感觉很好，比如书本印刷的味道，还有翻书时的刷刷声。不过纸质书的收纳、整理和搬运就比较蛋疼了，高 ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[《深入剖析 Kubernetes》 笔记 - 容器和 Pod]]></title>
+            <link>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html</link>
+            <guid>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html</guid>
+            <pubDate>Tue, 02 Apr 2024 19:55:49 GMT</pubDate>
+            <description><![CDATA[本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。
+
+第五章《Kubernetes 编排原理》讲的内容都还比较实用，基本上都是在使用 Kubernetes 中就会接触到的概念和功能。
+
+Kubectl Cheatsheet
+
+创建/更新一个 yaml 文件：kubectl apply -f xxx.yaml
+查询资源列表：kubectl get pods， ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/k8s-controller-workflow.jpg">
+            </enclosure>
         </item>
         <item>
             <title><![CDATA[优化 AOSP 流畅度一记]]></title>
@@ -205,41 +250,6 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 当然，改架构 ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/93c4cacac6cdaf060a59ccd81e44668721ea53e24c26315c37d39dd0069370c8.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[配置 Flutter 开发环境的踩坑记录]]></title>
-            <link>https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html</link>
-            <guid>https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html</guid>
-            <pubDate>Fri, 08 Apr 2022 16:06:02 GMT</pubDate>
-            <description><![CDATA[最近想学 Flutter，但是配环境的时候踩了一路坑。
-
-下载 Flutter
-
-可以在官网或者国内镜像下载，也可以走包管理器。Windows 如果安装了 Chocolatey 可以直接 `choco i ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/9b733d585a9f291fd958dce32fd600e606fbbc5f2656c1df4f30ccde5bc8fa6b.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[《关于我把笔记本变成服务器这件事》]]></title>
-            <link>https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html</link>
-            <guid>https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html</guid>
-            <pubDate>Wed, 23 Mar 2022 22:33:38 GMT</pubDate>
-            <description><![CDATA[大学第一年入坑了服务器，阿里云和腾讯云给学生的套餐还不错，2C 2G 40G 5M 每月只需要 10 RMB。但是脱离学生套餐，国内服务器的价格真的不要太高吗，10 元的学生套餐每个月要 100。
-
-阿里云轻量应用服务器
-
-当时就 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/5d49145029debe0d919bc2d47516a7708b8f88715a286ab28270ddd54e01cc8e.png">
-            </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[Git 根据路径设置邮箱名]]></title>
-            <link>https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html</link>
-            <guid>https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html</guid>
-            <pubDate>Mon, 31 Jan 2022 22:02:19 GMT</pubDate>
-            <description><![CDATA[对于同时在写开源项目和公司私有项目的码农，不同的项目可能就需要选择不同的邮箱。
-
-最直接的方案是给每个 repo 设置一遍，毕竟 Git 自带了 --local --global --system 三个级别的设置。我之前的办法就是 global 写个人邮箱，然后写一个脚本用于设置当前项目的邮箱为公司邮箱（大概如下），放在 PATH 下，每新建 / clone 一个 repo 的时候 ...]]></description>
         </item>
     </channel>
 </rss>

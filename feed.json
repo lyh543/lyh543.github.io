@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 云原生",
+            "summary": "虽然现在提到云原生，大家就会想到 Kubernetes，但是云原生并不仅仅是 Kubernetes。云原生是一种基础设施架构的设计思想和理念，而 Kubernetes 是云原生这张蓝图上的一个组件。\n\n> 云原生的本质是一系列最佳实践的结合。云原生为实践者指定了一条低心智负担的，能够以可扩展、可复制的方式，最大化地利用云的能力发挥云的价值和最佳路径。\n> **云原生并不指代某种开源设计和技术， ...",
+            "image": "https://blog.lyh543.cn/images/aws-cloud-native-evolution.png",
+            "date_modified": "2024-05-12T19:58:49.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html",
             "url": "https://blog.lyh543.cn/posts/2024-04-27-use-grafana-to-monitor-on-kubernetes.html",
             "title": "使用 Grafana 监控 Kubernetes",
@@ -14,11 +22,27 @@
             "date_modified": "2024-04-27T20:52:59.000Z"
         },
         {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/2-storage.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/2-storage.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 存储",
+            "summary": "本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。\n\nPersistentVolumeClaim & PersistentVolume\n\nPod 一章讲过了这两个概念，这里再复制一遍。\n\n> Pod -> PVC -> PV\n>\n> PVC 是定义接口（大小、AccessModes 等），PV 是实现（实际存储位置、认证信息等）。而 Pod 只需要在配置里面把 PVC ...",
+            "image": "https://blog.lyh543.cn/images/k8s-csi-framework.jpg",
+            "date_modified": "2024-04-21T19:56:49.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
             "url": "https://blog.lyh543.cn/posts/2024-04-09-reading-experience-on-diverse-digital-devices.html",
             "title": "不同电子设备上的阅读体验",
             "summary": "有次在北京大兴机场候机，在机场里的国家图书馆分馆借了本书看，觉得偶尔看看书也挺不错，捡回了这个习惯。随着我对自己的阅读需求和体验了解得更加清晰，我阅读的设备也从 Kindle 变到平板电脑、电脑显示器。有句话叫差生文具多，我就先对号入座了。\n\n阅读设备\n\n纸质书\n\n不得不说，阅读纸质书的感觉很好，比如书本印刷的味道，还有翻书时的刷刷声。不过纸质书的收纳、整理和搬运就比较蛋疼了，高 ...",
             "date_modified": "2024-04-09T12:59:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 容器和 Pod",
+            "summary": "本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。\n\n第五章《Kubernetes 编排原理》讲的内容都还比较实用，基本上都是在使用 Kubernetes 中就会接触到的概念和功能。\n\nKubectl Cheatsheet\n\n创建/更新一个 yaml 文件：kubectl apply -f xxx.yaml\n查询资源列表：kubectl get pods， ...",
+            "image": "https://blog.lyh543.cn/images/k8s-controller-workflow.jpg",
+            "date_modified": "2024-04-02T19:55:49.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/2024-03-30-keep-aosp-smooth.html",
@@ -134,29 +158,6 @@
             "summary": "最近学习了 monorepo 这个东西，发现非常适合我们公司的前端架构，于是跟大家讨论了以后，用周末两天的时间将原来的“每个包一个 repo” 的 multirepo 架构重构成“一个 repo 里放所有包”的 monorepo 架构。目前前端大佬还有一些顾虑，所以还没有马上将开发工作迁移过去，不过我个人在测试 monorepo 的各个包是否正常工作的时候，用着感觉是非常爽的。\n\n当然，改架构 ...",
             "image": "https://blog.lyh543.cn/images/93c4cacac6cdaf060a59ccd81e44668721ea53e24c26315c37d39dd0069370c8.png",
             "date_modified": "2022-04-18T13:51:52.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html",
-            "url": "https://blog.lyh543.cn/posts/2022-04-09-setup-flutter-develop-environment.html",
-            "title": "配置 Flutter 开发环境的踩坑记录",
-            "summary": "最近想学 Flutter，但是配环境的时候踩了一路坑。\n\n下载 Flutter\n\n可以在官网或者国内镜像下载，也可以走包管理器。Windows 如果安装了 Chocolatey 可以直接 `choco i ...",
-            "image": "https://blog.lyh543.cn/images/9b733d585a9f291fd958dce32fd600e606fbbc5f2656c1df4f30ccde5bc8fa6b.png",
-            "date_modified": "2022-04-08T16:06:02.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html",
-            "url": "https://blog.lyh543.cn/posts/2022-03-24-i-turned-my-laptop-into-a-server.html",
-            "title": "《关于我把笔记本变成服务器这件事》",
-            "summary": "大学第一年入坑了服务器，阿里云和腾讯云给学生的套餐还不错，2C 2G 40G 5M 每月只需要 10 RMB。但是脱离学生套餐，国内服务器的价格真的不要太高吗，10 元的学生套餐每个月要 100。\n\n阿里云轻量应用服务器\n\n当时就 ...",
-            "image": "https://blog.lyh543.cn/images/5d49145029debe0d919bc2d47516a7708b8f88715a286ab28270ddd54e01cc8e.png",
-            "date_modified": "2022-03-23T22:33:38.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html",
-            "url": "https://blog.lyh543.cn/posts/2022-02-01-git-set-email-depending-on-path.html",
-            "title": "Git 根据路径设置邮箱名",
-            "summary": "对于同时在写开源项目和公司私有项目的码农，不同的项目可能就需要选择不同的邮箱。\n\n最直接的方案是给每个 repo 设置一遍，毕竟 Git 自带了 --local --global --system 三个级别的设置。我之前的办法就是 global 写个人邮箱，然后写一个脚本用于设置当前项目的邮箱为公司邮箱（大概如下），放在 PATH 下，每新建 / clone 一个 repo 的时候 ...",
-            "date_modified": "2022-01-31T22:02:19.000Z"
         }
     ]
 }
