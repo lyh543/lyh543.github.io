@@ -21,8 +21,8 @@
 
 在 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.ff3e7255.css" as="style"><link rel="preload" href="/assets/js/app.2bb0ed60.js" as="script"><link rel="preload" href="/assets/js/57.2d4e9669.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.ff3e7255.css">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.b5817314.js" as="script"><link rel="preload" href="/assets/js/58.21f36b64.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="继承和派生"><a href="#继承和派生" class="header-anchor">#</a> 继承和派生</h2> <p>派生，就是从原来的大类，通过增加新的东西、特性、条件，变成了新的小类。如，从哺乳动物通过增加特性（汪汪叫、喵喵叫），派生到狗、猫。</p> <p>狗和猫，都继承了哺乳动物的特点（胎生等），派生的时候，狗、猫都会自动继承哺乳动物有的特点，无需重复声明。</p> <p>名称上，被派生的（哺乳动物）叫基类（父类），派生出来的猫、狗叫做派生类（子类）。他们间的继承关系，是由派生类到大类。</p> <p>（貌似继承和派生是反义词）</p> <p>在 C++ 中，除了单继承，还可以多继承（狗同时继承了哺乳动物和岸生动物的特点）。</p> <p>派生类的功能：</p> <ol><li>继承了基类的所有成员；</li> <li>可以改造基类的成员；</li> <li>添加新的成员。</li></ol> <h3 id="继承类的定义"><a href="#继承类的定义" class="header-anchor">#</a> 继承类的定义</h3> <p>定义继承类的语法格式如下：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">class</span> <span class="token class-name">Dog</span><span class="token operator">:</span> <span class="token base-clause"><span class="token operator">&lt;</span>继承方式<span class="token operator">&gt;</span> <span class="token class-name">Terrestrial</span><span class="token punctuation">,</span> <span class="token operator">&lt;</span>继承方式<span class="token operator">&gt;</span> <span class="token class-name">Mammalia</span></span>
@@ -164,6 +164,6 @@ A1
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.2bb0ed60.js" defer></script><script src="/assets/js/57.2d4e9669.js" defer></script>
+    <script src="/assets/js/app.b5817314.js" defer></script><script src="/assets/js/58.21f36b64.js" defer></script>
   </body>
 </html>

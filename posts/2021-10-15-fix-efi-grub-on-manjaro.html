@@ -20,8 +20,8 @@ Manjaro 分区在 /dev/nvme0n1p5
 
 1. 从 Manjaro ...">
     
-    <link rel="preload" href="/assets/css/0.styles.ff3e7255.css" as="style"><link rel="preload" href="/assets/js/app.2bb0ed60.js" as="script"><link rel="preload" href="/assets/js/196.6f2aed4e.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.ff3e7255.css">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.b5817314.js" as="script"><link rel="preload" href="/assets/js/197.d911f035.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>Linux 用户不是在修 GRUB，就是在修 GRUB 的路上。</p> <p>博主只知道更新 Windows 容易把 Linux 覆盖掉，没想到最近更新 BIOS，把 EFI 还是什么改了，引导不了 Manjaro 了。</p> <p>本文假定：</p> <ul><li>使用 EFI 进行引导，EFI 分区在 <code>/dev/nvme0n1p1</code></li> <li>Manjaro 分区在 <code>/dev/nvme0n1p5</code></li></ul> <h2 id="_1-从-manjaro-live-cd-启动到硬盘里的-manjaro"><a href="#_1-从-manjaro-live-cd-启动到硬盘里的-manjaro" class="header-anchor">#</a> 1. 从 Manjaro Live CD 启动到硬盘里的 Manjaro</h2> <p>进入 Manjaro Live CD 后，需要挂载硬盘里的 Manjaro，就可以 <code>chroot</code> 到硬盘里的 Manjaro。</p> <p>查看分区情况，确认分区号：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token punctuation">[</span>manjaro@manjaro ~<span class="token punctuation">]</span>$ <span class="token function">sudo</span> <span class="token function">fdisk</span> -l
@@ -64,6 +64,6 @@ Installation finished. No error reported.
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.2bb0ed60.js" defer></script><script src="/assets/js/196.6f2aed4e.js" defer></script>
+    <script src="/assets/js/app.b5817314.js" defer></script><script src="/assets/js/197.d911f035.js" defer></script>
   </body>
 </html>

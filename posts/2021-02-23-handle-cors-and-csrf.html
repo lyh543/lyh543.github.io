@@ -17,8 +17,8 @@ CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不
 
 浏览器、前端和后端的关系大概是：前端 ` 浏览器 ` 后端。前端告诉浏览器它需要访问什么，浏览 ...">
     
-    <link rel="preload" href="/assets/css/0.styles.ff3e7255.css" as="style"><link rel="preload" href="/assets/js/app.2bb0ed60.js" as="script"><link rel="preload" href="/assets/js/173.58221ac0.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.ff3e7255.css">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.b5817314.js" as="script"><link rel="preload" href="/assets/js/174.18488322.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>写前后端的时候遇到了这个问题，花了三天时间解决，就还是简单地写一写。写到最后才发现，这里面涉及的知识量也太大了，也请各位读者耐心阅读。</p> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>CORS 和 CSRF 这两个概念很容易混淆，即使我在这篇博客前也不是很清楚二者的区别，于是就再搜了一下，顺便把另外两个概念也聊一聊。</p> <p>浏览器、前端和后端的关系大概是：前端 <code>&lt;-&gt;</code> 浏览器 <code>&lt;-&gt;</code> 后端。前端告诉浏览器它需要访问什么，浏览器就向后端发请求，然后把应答给前端。</p> <p>而同源策略、CORS、CSRF、HttpOnly 和 SameSite 都在围绕一件事情：如何防止<strong>恶意前端</strong>误导用户和<strong>浏览器</strong>，在用户不知情的情况下以用户的身份恶意访问<strong>后端</strong>（删除数据、转账等等）。</p> <h2 id="同源策略"><a href="#同源策略" class="header-anchor">#</a> 同源策略</h2> <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener noreferrer">浏览器的同源策略 - Web 安全| MDN<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <blockquote><p>同源：两个 Protocol、Port 和 Host 都相同的 URL 是同源的；
@@ -121,6 +121,6 @@ CSRF_TRUSTED_ORIGINS <span class="token operator">=</span> <span class="token pu
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.2bb0ed60.js" defer></script><script src="/assets/js/173.58221ac0.js" defer></script>
+    <script src="/assets/js/app.b5817314.js" defer></script><script src="/assets/js/174.18488322.js" defer></script>
   </body>
 </html>

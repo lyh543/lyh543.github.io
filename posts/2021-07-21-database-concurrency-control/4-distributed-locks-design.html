@@ -19,8 +19,8 @@
 
 乐观锁和悲观锁不是具体的并发控制方法，而是两种并发控制的思想， ...">
     
-    <link rel="preload" href="/assets/css/0.styles.ff3e7255.css" as="style"><link rel="preload" href="/assets/js/app.2bb0ed60.js" as="script"><link rel="preload" href="/assets/js/191.0ff861fb.js" as="script">
-    <link rel="stylesheet" href="/assets/css/0.styles.ff3e7255.css">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.b5817314.js" as="script"><link rel="preload" href="/assets/js/192.0bcc2291.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>前面聊到的是数据库自带的那些并发控制机制。最后我们来聊聊在数据库自带的事务、锁、多版本并发控制等的基础上，自己写的锁。</p> <ul><li>乐观锁，又称乐观并发控制（Optimistic CC, OCC）</li> <li>悲观锁，又称悲观并发控制（Pessimistic CC, PCC）</li> <li>多版本并发控制（Multi Version CC, MVCC）</li></ul> <p>乐观锁和悲观锁不是具体的并发控制方法，而是两种并发控制的思想，由这两种思想会产生基于这两种思想的很多种方法。</p> <h2 id="系列目录"><a href="#系列目录" class="header-anchor">#</a> 系列目录</h2> <ul><li><a href="/posts/2021-07-21-database-concurrency-control/1-transactions.html">数据库并发控制 (1) -- 事务</a></li> <li><a href="/posts/2021-07-21-database-concurrency-control/2-innodb-mvcc.html">数据库并发控制 (2) -- InnoDB 并发控制</a></li> <li><a href="/posts/2021-07-21-database-concurrency-control/3-innodb-locks.html">数据库并发控制 (3) -- InnoDB 锁</a></li> <li><a href="/posts/2021-07-21-database-concurrency-control/4-distributed-locks-design.html" aria-current="page" class="router-link-exact-active router-link-active">数据库并发控制 (4) -- 分布式锁的设计</a></li></ul> <h2 id="悲观并发控制"><a href="#悲观并发控制" class="header-anchor">#</a> 悲观并发控制</h2> <p>悲观并发控制（又称悲观锁）是悲观地假设，事务间的读写冲突/写写冲突很多。因此，在并发控制设计的方法上，就会倾向于在冲突很多的场景下提升性能。</p> <p>悲观并发控制的一种实现就是利用数据库锁，在数据库层对数据进行上锁，别的进程就不能读写上了锁的数据，非常简洁地保证了一致性。其缺点是并发度会降低，在写多读少的情形下为了保证一致性，降低并发度是必要的，但在读多写少的情形下性能损失就会很大了。且可能发生死锁。</p> <p>一个简单的实现如下：</p> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token comment">-- 加锁</span>
@@ -48,6 +48,6 @@
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.2bb0ed60.js" defer></script><script src="/assets/js/191.0ff861fb.js" defer></script>
+    <script src="/assets/js/app.b5817314.js" defer></script><script src="/assets/js/192.0bcc2291.js" defer></script>
   </body>
 </html>

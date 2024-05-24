@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-05-22-layer-4-load-balance.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-22-layer-4-load-balance.html",
+            "title": "四层负载均衡漫谈（转载）",
+            "summary": "转载自 四层负载均衡漫谈 | 卡瓦邦噶！。一篇既有广度也有深度，讲述过程深入浅出的好文。\n\n对于四层负载均衡，我一直只是作为一个使用者，把它当作一个简单 TCP 层的反向代理来使用。但是随着在项目中使用的越来越多，我发现我对这个技术存在很多误解！\n\n比如，我一直以为这是一个它是一个完整的 TCP 实现，和外部的客 ...",
+            "image": "https://blog.lyh543.cn/./2024-05-22-layer-4-load-balance/dig-google-ip-address.png",
+            "date_modified": "2024-05-22T00:00:00.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html",
             "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html",
             "title": "《深入剖析 Kubernetes》 笔记 - 云原生",
@@ -150,14 +158,6 @@
             "title": "重构博客结构",
             "summary": "从大一以来写博客，一直是把博客当做一个笔记来写。一来原生支持 Markdown 和 LaTeX 公式（印象笔记虽然支持 Markdown，但是刚支持那个时候的 Markdown 真的很难用），二来 Hexo、Jekyll 等等框架的各种主题又好看，三来把自己的笔记分享给别人也很方便，所以一直这么做，近三年来，从 Hexo 到 VuePress，灌水了 240 多篇笔记。\n\n直到最近开始用 RSS， ...",
             "date_modified": "2022-04-19T23:16:19.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-04-18-migrate-npm-multirepo-to-pnpm-monorepo.html",
-            "url": "https://blog.lyh543.cn/posts/2022-04-18-migrate-npm-multirepo-to-pnpm-monorepo.html",
-            "title": "将 npm 项目迁移到 pnpm + monorepo",
-            "summary": "最近学习了 monorepo 这个东西，发现非常适合我们公司的前端架构，于是跟大家讨论了以后，用周末两天的时间将原来的“每个包一个 repo” 的 multirepo 架构重构成“一个 repo 里放所有包”的 monorepo 架构。目前前端大佬还有一些顾虑，所以还没有马上将开发工作迁移过去，不过我个人在测试 monorepo 的各个包是否正常工作的时候，用着感觉是非常爽的。\n\n当然，改架构 ...",
-            "image": "https://blog.lyh543.cn/images/93c4cacac6cdaf060a59ccd81e44668721ea53e24c26315c37d39dd0069370c8.png",
-            "date_modified": "2022-04-18T13:51:52.000Z"
         }
     ]
 }
