@@ -4,10 +4,25 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Fri, 24 May 2024 10:46:30 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 30 Jun 2024 11:27:16 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[《深入剖析 Kubernetes》 笔记 - 网络]]></title>
+            <link>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html</link>
+            <guid>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html</guid>
+            <pubDate>Sun, 30 Jun 2024 19:57:49 GMT</pubDate>
+            <description><![CDATA[本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。
+
+本章讲述了 Kubernetes 的网络模型，会相较于 Pod、存储章更难一些，且需要有一定的计算机网络的知识作为前置。
+
+单机容器网络架构
+
+在单机容器网络架构中，容器和宿主机、容器和容器之间的通信，需要借助两样东西，一是网桥（Bridge），二是虚拟网卡（Veth Pair, Vet ...]]></description>
+            <enclosure url="https://blog.lyh543.cn/images/docker-bridge.jpg">
+            </enclosure>
+        </item>
         <item>
             <title><![CDATA[四层负载均衡漫谈（转载）]]></title>
             <link>https://blog.lyh543.cn/posts/2024-05-22-layer-4-load-balance.html</link>
@@ -243,15 +258,6 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
 是什么让我突然有这个兴趣的呢？让我想一想。第一个是 Hacker Newsletter。最初是在 B 站上看到有人在以视频的形式做每期 Hacker Newsletter 的概览，我发现这个东西讲的是一些非常前沿的一些偏开发的科技资讯（偏硬件的可以关注 Linu ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/bc5fdde35a1877a4e8b1dc0fc3ba75ccb55c7dc6200eb80abc4266c171398fcc.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[重构博客结构]]></title>
-            <link>https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html</link>
-            <guid>https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html</guid>
-            <pubDate>Tue, 19 Apr 2022 23:16:19 GMT</pubDate>
-            <description><![CDATA[从大一以来写博客，一直是把博客当做一个笔记来写。一来原生支持 Markdown 和 LaTeX 公式（印象笔记虽然支持 Markdown，但是刚支持那个时候的 Markdown 真的很难用），二来 Hexo、Jekyll 等等框架的各种主题又好看，三来把自己的笔记分享给别人也很方便，所以一直这么做，近三年来，从 Hexo 到 VuePress，灌水了 240 多篇笔记。
-
-直到最近开始用 RSS， ...]]></description>
         </item>
     </channel>
 </rss>

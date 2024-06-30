@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 网络",
+            "summary": "本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。\n\n本章讲述了 Kubernetes 的网络模型，会相较于 Pod、存储章更难一些，且需要有一定的计算机网络的知识作为前置。\n\n单机容器网络架构\n\n在单机容器网络架构中，容器和宿主机、容器和容器之间的通信，需要借助两样东西，一是网桥（Bridge），二是虚拟网卡（Veth Pair, Vet ...",
+            "image": "https://blog.lyh543.cn/images/docker-bridge.jpg",
+            "date_modified": "2024-06-30T19:57:49.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-05-22-layer-4-load-balance.html",
             "url": "https://blog.lyh543.cn/posts/2024-05-22-layer-4-load-balance.html",
             "title": "四层负载均衡漫谈（转载）",
@@ -151,13 +159,6 @@
             "summary": "最近突然开始逛开源社区，看 GitHub 大佬用英文聊天也挺好玩的。\n\n是什么让我突然有这个兴趣的呢？让我想一想。第一个是 Hacker Newsletter。最初是在 B 站上看到有人在以视频的形式做每期 Hacker Newsletter 的概览，我发现这个东西讲的是一些非常前沿的一些偏开发的科技资讯（偏硬件的可以关注 Linu ...",
             "image": "https://blog.lyh543.cn/images/bc5fdde35a1877a4e8b1dc0fc3ba75ccb55c7dc6200eb80abc4266c171398fcc.png",
             "date_modified": "2022-04-21T10:31:21.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html",
-            "url": "https://blog.lyh543.cn/posts/2022-04-19-refactor-blog.html",
-            "title": "重构博客结构",
-            "summary": "从大一以来写博客，一直是把博客当做一个笔记来写。一来原生支持 Markdown 和 LaTeX 公式（印象笔记虽然支持 Markdown，但是刚支持那个时候的 Markdown 真的很难用），二来 Hexo、Jekyll 等等框架的各种主题又好看，三来把自己的笔记分享给别人也很方便，所以一直这么做，近三年来，从 Hexo 到 VuePress，灌水了 240 多篇笔记。\n\n直到最近开始用 RSS， ...",
-            "date_modified": "2022-04-19T23:16:19.000Z"
         }
     ]
 }
