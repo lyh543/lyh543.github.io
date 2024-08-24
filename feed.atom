@@ -2,11 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-06-30T11:27:16.448Z</updated>
+    <updated>2024-08-24T05:26:05.134Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[降低 CPU 功耗]]></title>
+        <id>https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html</id>
+        <link href="https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html">
+        </link>
+        <updated>2024-08-24T12:20:01.000Z</updated>
+        <summary type="html"><![CDATA[前段时间买了国产的 Ryzen 7840H 迷你主机 24 小时开着当服务器，它的整机待机功耗也就 10-15W，比动辄 100W 的桌面端省电不少。但据说桌面端 CPU 也可以通过调节 BIOS 降低待机功耗，毕竟桌面端和移动端是同一个架构，只是出厂调节不一样。所以今天浅浅尝试了一下降低台式的功耗。
+
+省流：通过调节 Curve Optimizer，低负载下 CPU 封装功耗从 65w 降到了 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《深入剖析 Kubernetes》 笔记 - 网络]]></title>
         <id>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html</id>
@@ -32,6 +42,29 @@
 对于四层负载均衡，我一直只是作为一个使用者，把它当作一个简单 TCP 层的反向代理来使用。但是随着在项目中使用的越来越多，我发现我对这个技术存在很多误解！
 
 比如，我一直以为这是一个它是一个完整的 TCP 实现，和外部的客 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《深入剖析 Kubernetes》 笔记 - 调度、容器运行时接口、监控、日志]]></title>
+        <id>https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html</id>
+        <link href="https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html">
+        </link>
+        <updated>2024-05-19T19:57:49.000Z</updated>
+        <summary type="html"><![CDATA[本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。
+
+这几个主题需要介绍的部分都比较少，所以放在一篇博客里了。
+
+调度
+
+资源模型和管理
+
+Kubernetes 里可以给容器指定分配 CPU 和内存资源的多少。
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "500m"
+  limits:
+ ...]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[《深入剖析 Kubernetes》 笔记 - 云原生]]></title>
@@ -221,31 +254,5 @@ Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一
         <summary type="html"><![CDATA[由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。
 
 > 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记]]></title>
-        <id>https://blog.lyh543.cn/posts/2022-09-01-formal-system.html</id>
-        <link href="https://blog.lyh543.cn/posts/2022-09-01-formal-system.html">
-        </link>
-        <updated>2022-09-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[2023.9.30 编：毕导出了一期视频讲解哥德尔不完备（第一、第二）定理，还蛮不错的，推荐观看。这里是链接：https://www.bilibili.com/video/BV19u4y1D7GT
-
-元数学是什么
-
-元数学就是研究数学的数学。
-
-皮亚诺公理和形式系统都是在定义数学的微缩模型：
-
-[皮亚诺公理](https://zh.wikipedia.org/wiki/%E7%9A% ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[逛开源社区]]></title>
-        <id>https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html</id>
-        <link href="https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html">
-        </link>
-        <updated>2022-04-21T10:31:21.000Z</updated>
-        <summary type="html"><![CDATA[最近突然开始逛开源社区，看 GitHub 大佬用英文聊天也挺好玩的。
-
-是什么让我突然有这个兴趣的呢？让我想一想。第一个是 Hacker Newsletter。最初是在 B 站上看到有人在以视频的形式做每期 Hacker Newsletter 的概览，我发现这个东西讲的是一些非常前沿的一些偏开发的科技资讯（偏硬件的可以关注 Linu ...]]></summary>
     </entry>
 </feed>

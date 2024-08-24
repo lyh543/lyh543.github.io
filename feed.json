@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html",
+            "url": "https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html",
+            "title": "降低 CPU 功耗",
+            "summary": "前段时间买了国产的 Ryzen 7840H 迷你主机 24 小时开着当服务器，它的整机待机功耗也就 10-15W，比动辄 100W 的桌面端省电不少。但据说桌面端 CPU 也可以通过调节 BIOS 降低待机功耗，毕竟桌面端和移动端是同一个架构，只是出厂调节不一样。所以今天浅浅尝试了一下降低台式的功耗。\n\n省流：通过调节 Curve Optimizer，低负载下 CPU 封装功耗从 65w 降到了 ...",
+            "image": "https://blog.lyh543.cn/images/ryzen-master-change-curve-optimizer.png",
+            "date_modified": "2024-08-24T12:20:01.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html",
             "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/3-network.html",
             "title": "《深入剖析 Kubernetes》 笔记 - 网络",
@@ -20,6 +28,14 @@
             "summary": "转载自 四层负载均衡漫谈 | 卡瓦邦噶！。一篇既有广度也有深度，讲述过程深入浅出的好文。\n\n对于四层负载均衡，我一直只是作为一个使用者，把它当作一个简单 TCP 层的反向代理来使用。但是随着在项目中使用的越来越多，我发现我对这个技术存在很多误解！\n\n比如，我一直以为这是一个它是一个完整的 TCP 实现，和外部的客 ...",
             "image": "https://blog.lyh543.cn/./2024-05-22-layer-4-load-balance/dig-google-ip-address.png",
             "date_modified": "2024-05-22T00:00:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 调度、容器运行时接口、监控、日志",
+            "summary": "本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。\n\n这几个主题需要介绍的部分都比较少，所以放在一篇博客里了。\n\n调度\n\n资源模型和管理\n\nKubernetes 里可以给容器指定分配 CPU 和内存资源的多少。\n\nresources:\n  requests:\n    memory: \"64Mi\"\n    cpu: \"500m\"\n  limits:\n ...",
+            "image": "https://blog.lyh543.cn/images/k8s-scheduler-framework.jpeg",
+            "date_modified": "2024-05-19T19:57:49.000Z"
         },
         {
             "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/5-cloud-native.html",
@@ -143,22 +159,6 @@
             "summary": "由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。\n\n> 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...",
             "image": "https://github.com/topjohnwu/Magisk/blob/master/docs/images/logo.png?raw=true",
             "date_modified": "2022-10-13T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
-            "url": "https://blog.lyh543.cn/posts/2022-09-01-formal-system.html",
-            "title": "皮亚诺公理、形式系统和元数学——《数学女孩3：哥德尔不完备定理》笔记",
-            "summary": "2023.9.30 编：毕导出了一期视频讲解哥德尔不完备（第一、第二）定理，还蛮不错的，推荐观看。这里是链接：https://www.bilibili.com/video/BV19u4y1D7GT\n\n元数学是什么\n\n元数学就是研究数学的数学。\n\n皮亚诺公理和形式系统都是在定义数学的微缩模型：\n\n[皮亚诺公理](https://zh.wikipedia.org/wiki/%E7%9A% ...",
-            "image": "https://blog.lyh543.cn/images/94b5a58e74e531d3716b2c8d59608bb05b180cb683ddc2e5c578f9585c3549cd.png",
-            "date_modified": "2022-09-01T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html",
-            "url": "https://blog.lyh543.cn/posts/2022-04-21-hang-around-open-source-community.html",
-            "title": "逛开源社区",
-            "summary": "最近突然开始逛开源社区，看 GitHub 大佬用英文聊天也挺好玩的。\n\n是什么让我突然有这个兴趣的呢？让我想一想。第一个是 Hacker Newsletter。最初是在 B 站上看到有人在以视频的形式做每期 Hacker Newsletter 的概览，我发现这个东西讲的是一些非常前沿的一些偏开发的科技资讯（偏硬件的可以关注 Linu ...",
-            "image": "https://blog.lyh543.cn/images/bc5fdde35a1877a4e8b1dc0fc3ba75ccb55c7dc6200eb80abc4266c171398fcc.png",
-            "date_modified": "2022-04-21T10:31:21.000Z"
         }
     ]
 }

@@ -11,7 +11,7 @@
     <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
     <meta name="description" content="正在开发中的 Material Design 风格 Vuepress">
     
-    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.1f2009bd.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.759e92b6.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
@@ -25,6 +25,29 @@
 单机容器网络架构
 
 在单机容器网络架构中，容器和宿主机、容器和容器之间的通信，需要借助两样东西，一是网桥（Bridge），二是虚拟网卡（Veth Pair, Vet ...
+        </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Kubernetes/" aria-current="page" tabindex="0" draggable="true" class="v-slide-item--active v-chip--active v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
+  Kubernetes
+</span></a><a href="/tags/《深入剖析 Kubernetes》读书笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
+  《深入剖析 Kubernetes》读书笔记
+</span></a></div></div><div class="v-slide-group__next v-slide-group__next--disabled"><!----></div></div></div></footer></div></a></article></div></div><div class="row justify-center"><div class="pa-5 col-sm-9 col-12"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html"> <a href="/posts/2024-05-12-deep-dive-into-kubernetes-note/4-scheduling-cri-monitor-log.html" class="no-decoration"><div class="v-card v-sheet theme--light"><div class="v-image v-responsive theme--light" style="height:240px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-image__placeholder"><div class="v-responsive"><div class="v-responsive__content"><div aria-busy="true" aria-live="polite" role="alert" class="v-skeleton-loader v-skeleton-loader--is-loading theme--light"><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div><div class="v-skeleton-loader__image v-skeleton-loader__bone"></div></div></div></div></div><div class="v-responsive__content"> <div style="position:absolute;bottom:0;"><div class="v-card__title post-entry-card-title"><header itemprop="name headline" class="ui-post-title">
+              《深入剖析 Kubernetes》 笔记 - 调度、容器运行时接口、监控、日志
+            </header></div> <div class="v-card__subtitle post-entry-card-subtitle"><time itemprop="datePublished" datetime="2024-05-19T19:57:49.000Z">2024-05-20</time></div></div></div></div> <div class="v-card__text post-summary"><p itemprop="description">
+          本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。
+
+这几个主题需要介绍的部分都比较少，所以放在一篇博客里了。
+
+调度
+
+资源模型和管理
+
+Kubernetes 里可以给容器指定分配 CPU 和内存资源的多少。
+
+resources:
+  requests:
+    memory: &quot;64Mi&quot;
+    cpu: &quot;500m&quot;
+  limits:
+ ...
         </p></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <footer><div class="v-card__actions tag-list-area py-0"><div class="v-item-group theme--light v-slide-group v-chip-group v-chip-group--column"><div class="v-slide-group__prev v-slide-group__prev--disabled"><!----></div><div class="v-slide-group__wrapper"><div class="v-slide-group__content"><a href="/tags/Kubernetes/" aria-current="page" tabindex="0" draggable="true" class="v-slide-item--active v-chip--active v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default orange white--text"><span class="v-chip__content">
   Kubernetes
 </span></a><a href="/tags/《深入剖析 Kubernetes》读书笔记/" tabindex="0" draggable="true" class="v-chip v-chip--clickable v-chip--draggable v-chip--link theme--light v-size--default teal white--text"><span class="v-chip__content">
@@ -96,6 +119,6 @@ Kubectl Cheatsheet
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.1f2009bd.js" defer></script>
+    <script src="/assets/js/app.759e92b6.js" defer></script>
   </body>
 </html>
