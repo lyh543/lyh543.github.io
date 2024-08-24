@@ -4,7 +4,7 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Sat, 24 Aug 2024 05:26:05 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 24 Aug 2024 05:34:47 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
@@ -228,7 +228,7 @@ React Developer Tools 的 React Profiler，得到了一点线索，最终找到�
             <description><![CDATA[最近又有个手游停服了，是一款日本音游，叫 HoneyWorks Premium Live。为了能在停服后继续玩这款游戏（搓屏幕），我们尝试搭建游戏的私服。在我们搭建到一半的时候，被 HoneyWorks 国内代理制止，只好就此作罢（毕竟是实名上网的人，不太想在国内搞事情）。不过在这个过程中学到了不少东西，也证明了私服的可行性，故写一篇博客作作记录。
 
 音游和其他游戏（如 LOL、绝地求生等）不同的 ...]]></description>
-            <enclosure url="https://blog.lyh543.cn/images/68a4ea581ccfd8fb84daf9369908a62b4803e676b44e0d29f6fbdbce7ada9e12.png">
+            <enclosure url="https://blog.lyh543.cn/images/68a4ea581ccfd8fb84daf9369908a62b4803e676b44e0d29f6fbdbce7ada9e12.jpg">
             </enclosure>
         </item>
         <item>
