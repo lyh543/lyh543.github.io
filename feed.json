@@ -6,6 +6,13 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2024-10-25-collect-tiktok-merchant-data.html",
+            "url": "https://blog.lyh543.cn/posts/2024-10-25-collect-tiktok-merchant-data.html",
+            "title": "采集 Tiktok 商家数据",
+            "summary": "前几天和原来的同学聊天，同学之前一直都是做跨境电商的，最近开始做起了Tiktok。他之前没做过兴趣电商，也不了解这个怎么做，就问问我能不能帮忙在上面弄点数据下来，他来研究研究。正好我也想看看TK的系统是怎么设计的，一拍即合，我就接下了这个活。大概的需求就是通过商家后台去爬取一些达人客户还有订单的数据和自动上架一些产品。\n\n调研\n\n认证\n\nTK的认证和所有的HTTP服务都一样，都是采用 ...",
+            "date_modified": "2024-10-25T16:17:22.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html",
             "url": "https://blog.lyh543.cn/posts/2024-08-24-reduce-cpu-power.html",
             "title": "降低 CPU 功耗",
@@ -151,14 +158,6 @@
             "summary": "最近开始用 pytest 写单元测试，发现 pytest 官方教程内容非常多，而且 pytest 里也有很多 unittest 的内容，很容易让人摸不着头脑。pytest 的 example 也很少/很抽象，因此写篇博客记录一下自己的使用。\n\n由于 pytest 和 unittest 用法的变种很多（如 Mock.asserthascalls 的多个变种，patch 的函数形式和装饰器 ...",
             "image": "https://blog.lyh543.cn/images/853fc7ee1c766674b4d931aee0b2d21459555370d90c4bc8b84f644f31ef6cae.png",
             "date_modified": "2022-12-25T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html",
-            "url": "https://blog.lyh543.cn/posts/2022-10-13-capture-android-traffic.html",
-            "title": "在安卓上抓包",
-            "summary": "由于 https 的广泛使用，现在需要抓包的时候，就不得不考虑解密 https 流量。抓包软件解密 https 流量的原理很简单，运用了非常经典的攻击方法——中间人攻击。\n\n> 中间人攻击的原理是，攻击者在客户端和服务器之间建立一个代理，代理会将客户端的请求转发给服务器，同时将服务器的响应转发给客户端。这样，客户端和服务器之间的通信就变成了客户端和代理之间的通信，代理和服务器之间的通信。这样，攻击 ...",
-            "image": "https://github.com/topjohnwu/Magisk/blob/master/docs/images/logo.png?raw=true",
-            "date_modified": "2022-10-13T00:00:00.000Z"
         }
     ]
 }
