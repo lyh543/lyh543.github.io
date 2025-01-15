@@ -2,11 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2024-12-26T09:16:10.392Z</updated>
+    <updated>2025-01-15T08:59:17.849Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[使用 Pyenv 和 Pipenv 配置 Python 开发环境]]></title>
+        <id>https://blog.lyh543.cn/posts/2025-01-18-setup-python-dev-environment-with-pyenv-and-pipenv.html</id>
+        <link href="https://blog.lyh543.cn/posts/2025-01-18-setup-python-dev-environment-with-pyenv-and-pipenv.html">
+        </link>
+        <updated>2025-01-18T15:41:43.000Z</updated>
+        <summary type="html"><![CDATA[Linux 和 MacOS 系统都自带了 Python，对于初学者来说是件好事，不用安装也能直接使用。但是在工程开发上往往需要在不同的项目使用不同的 Python 版本，相同的 Python 下使用不同的依赖。
+
+在最新的 Ubuntu、Manjaro 等系统中直接使用 pip install 安装依赖时，会提示可能会破坏系统依赖（[PEP 668](https://peps.python.o ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[采集 Tiktok 商家数据]]></title>
         <id>https://blog.lyh543.cn/posts/2024-10-25-collect-tiktok-merchant-data.html</id>
@@ -248,15 +258,5 @@ React Developer Tools 的 React Profiler，得到了一点线索，最终找到�
 最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。
 
 Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[在 pytest 中 mock]]></title>
-        <id>https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html</id>
-        <link href="https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html">
-        </link>
-        <updated>2022-12-25T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[最近开始用 pytest 写单元测试，发现 pytest 官方教程内容非常多，而且 pytest 里也有很多 unittest 的内容，很容易让人摸不着头脑。pytest 的 example 也很少/很抽象，因此写篇博客记录一下自己的使用。
-
-由于 pytest 和 unittest 用法的变种很多（如 Mock.asserthascalls 的多个变种，patch 的函数形式和装饰器 ...]]></summary>
     </entry>
 </feed>

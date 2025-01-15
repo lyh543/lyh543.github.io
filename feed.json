@@ -6,6 +6,13 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2025-01-18-setup-python-dev-environment-with-pyenv-and-pipenv.html",
+            "url": "https://blog.lyh543.cn/posts/2025-01-18-setup-python-dev-environment-with-pyenv-and-pipenv.html",
+            "title": "使用 Pyenv 和 Pipenv 配置 Python 开发环境",
+            "summary": "Linux 和 MacOS 系统都自带了 Python，对于初学者来说是件好事，不用安装也能直接使用。但是在工程开发上往往需要在不同的项目使用不同的 Python 版本，相同的 Python 下使用不同的依赖。\n\n在最新的 Ubuntu、Manjaro 等系统中直接使用 pip install 安装依赖时，会提示可能会破坏系统依赖（[PEP 668](https://peps.python.o ...",
+            "date_modified": "2025-01-18T15:41:43.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2024-10-25-collect-tiktok-merchant-data.html",
             "url": "https://blog.lyh543.cn/posts/2024-10-25-collect-tiktok-merchant-data.html",
             "title": "采集 Tiktok 商家数据",
@@ -150,14 +157,6 @@
             "summary": "正如 IE 的唯一作用是安装 Chrome，npm 的作用也是用来安装 yarn/pnpm\n\n最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。\n\nCorepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...",
             "image": "https://blog.lyh543.cn/images/632230d281d7cc81a66aed8e61474f2ce255ca62c0bcf4a970b46946e5d101f0.png",
             "date_modified": "2023-04-28T00:00:00.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html",
-            "url": "https://blog.lyh543.cn/posts/2022-12-25-mocking-in-pytest.html",
-            "title": "在 pytest 中 mock",
-            "summary": "最近开始用 pytest 写单元测试，发现 pytest 官方教程内容非常多，而且 pytest 里也有很多 unittest 的内容，很容易让人摸不着头脑。pytest 的 example 也很少/很抽象，因此写篇博客记录一下自己的使用。\n\n由于 pytest 和 unittest 用法的变种很多（如 Mock.asserthascalls 的多个变种，patch 的函数形式和装饰器 ...",
-            "image": "https://blog.lyh543.cn/images/853fc7ee1c766674b4d931aee0b2d21459555370d90c4bc8b84f644f31ef6cae.png",
-            "date_modified": "2022-12-25T00:00:00.000Z"
         }
     ]
 }
