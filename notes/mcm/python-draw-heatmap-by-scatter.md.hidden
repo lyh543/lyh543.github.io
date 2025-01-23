@@ -1,0 +1,77 @@
+---
+title: Python 使用散点图绘制热力图
+date: 2021-09-10 11:15:36
+image: 
+tags:
+- Python
+- 数学建模
+- 插值和拟合
+---
+
+参考代码：https://github.com/Anne-kj/keyboard-design/blob/master/lib/spelling_type/heatmap.py
+
+## 插值
+
+三种插值库，封装成以下三个函数。推荐程度：`RBFInterpolator` > `griddata` > `interp2d`
+
+```py
+# x, y, z 均为 n*1 的 numpy.ndarray，表示观测点的坐标
+# x1 y1 为表示插值区域的一维 numpy.ndarray
+# x2 y2 为表示插值区域的二维 numpy.ndarray
+# z2 为表示插值结果的二维 numpy.ndarray
+
+x1 = np.arange(100, 1050)
+y1 = np.arange(200, 500)
+x2, y2 = np.meshgrid(x1, y1)
+
+def interpolate_interp2d(x, y, z, x1, y1, x2, y2):
+    ip = interp2d(x, y, z, kind="linear")
+    z2 = ip(x1, y1)
+    return z2
+
+def interpolate_griddata(x, y, z, x1, y1, x2, y2):
+    z2 = griddata((x, y), z, (x2, y2), method="linear")
+    return z2
+
+def interpolate_rbf(x, y, z, x1, y1, x2, y2):
+    xy = np.stack([x.ravel(), y.ravel()], -1)
+    x2y2 = np.stack([x2.ravel(), y2.ravel()], -1)
+    ip = RBFInterpolator(xy, z.ravel(), smoothing=0, kernel="cubic")
+    z2 = ip(x2y2).reshape(x2.shape)
+    return z2
+```
+
+## 绘制热力图和三维图
+
+```py
+# x2 y2 为表示插值区域的二维 numpy.ndarray
+# z2 为表示插值结果的二维 numpy.ndarray
+
+# 绘制热力图
+def draw_heatmap():
+    fig = plt.figure(dpi=300)
+    ax = plt.axes()
+    img = plt.imread(KEYBOARD_BACKGROUND) # 见参考代码
+    ax.imshow(img)
+    im = ax.pcolormesh(x2, y2, z2, cmap="coolwarm", alpha=0.5)
+    # im = ax.contourf(x2, y2, z2, np.arange(0, 3000, 100),cmap="coolwarm", alpha=0.5, vmax=3000, vmin=0)
+    ax.scatter(x, y)  # 绘制散点
+    fig.colorbar(im, orientation="vertical")
+    plt.show()
+
+# 绘制 3d 图
+def draw_3d():
+    fig = plt.figure(dpi=300)
+    ax = plt.axes(projection="3d")
+    ax.plot_surface(x2, y2, z2, cmap="rainbow", vmax=2600, vmin=0)
+    # ax.contour(X,Y,Z, zdim="z",offset=-2，cmap="rainbow)
+    plt.show()
+```
+
+细节处理上，这段代码不仅采集了键盘的 26 个点的坐标，还采集了键盘的边界的坐标并全部设为 0。不然很可能出现边界的值异常大的情况。
+
+## 效果图
+
+![热力图](/images/00d74b4b7aef8a4c9ab362c407e6c418b78042f5517599aac9bcc985e978ab2c.png)  
+
+![3d图](/images/96414411c114430e6151d96769a008132f40c6f345e29b7facea94a311975391.png)  

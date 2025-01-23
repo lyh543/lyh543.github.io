@@ -1,0 +1,111 @@
+---
+title: 新建一个 Vue 3 项目
+date: 2022-02-05 18:04:36
+image:
+tags:
+- 前端
+- Vue
+---
+
+初始化一个前端项目，可以配置的东西也太多了吧。记录一下，方便以后找。
+
+## 初始化 Vue 3 + TypeScript 项目
+
+初始化一个名叫  `vue-project` 的项目， 并安装依赖：
+
+```sh
+pnpm create vite vue-project -- --template vue-ts
+cd vue-project
+pnpm i
+```
+
+## 配置 Element Plus
+
+```
+pnpm i element-plus
+```
+
+按照 [快速开始 | Element Plus](https://element-plus.gitee.io/zh-CN/guide/quickstart.html) 中任选一种方法引入 Element Plus（下面的示例使用的是`按需引入——自动导入`）。
+
+## 配置 ESLint 和 Prettier
+
+安装依赖：
+
+```sh
+pnpm i typescript eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin -D
+pnpm i prettier eslint-config-prettier eslint-plugin-prettier -D
+```
+
+新建一个 `.eslintrc.js` 文件，内容如下：
+
+```js
+module.exports = {
+  parser: "vue-eslint-parser",
+  parserOptions: {
+    parser: "@typescript-eslint/parser",
+    ecmaVersion: 2020,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  extends: [
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+  ],
+  rules: {
+    quotes: ["error", "single"],
+    semi: ["error", "always"],
+  },
+};
+```
+
+新建一个 `.prettierrc` 文件，内容如下：
+
+```json
+{
+  "singleQuote": true
+}
+```
+
+在 `package.json` 中添加内容如下：
+
+```json
+{
+  "scripts": {
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,vue}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx,vue}\" --fix"
+  }
+}
+```
+
+<!-- ## 配置 Lint-staged 和 husky
+
+```sh
+pnpm i lint-staged husky -D
+```
+
+新建一个 `.lintstagedrc.json` 文件，内容如下：
+
+```json
+{
+  "*.{js,jsx,ts,tsx,vue}": ["eslint", "prettier --write"],
+  "*.{less,scss,css,json,md}": "prettier --write"
+}
+```
+
+在 `package.json` 中添加内容如下：
+
+```json
+{
+  "scripts": {
+    "prepare": "husky install",
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
+``` -->
