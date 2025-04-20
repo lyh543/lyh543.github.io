@@ -2,11 +2,35 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2025-02-17T08:24:57.390Z</updated>
+    <updated>2025-04-20T04:06:30.525Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Python 内存占用分析]]></title>
+        <id>https://blog.lyh543.cn/posts/2025-04-19-profile-python-memory-usage.html</id>
+        <link href="https://blog.lyh543.cn/posts/2025-04-19-profile-python-memory-usage.html">
+        </link>
+        <updated>2025-04-19T06:45:00.000Z</updated>
+        <summary type="html"><![CDATA[最近公司的 Python 后端服务内存占用偏高，所以花了一些时间分析后端的内存占用。也梳理了一些比较好用的工具和分析方法。
+
+在我们的场景下，我们发现内存占用异常是在服务运行了一段时间以后，所以下面的工具链更偏向于分析应用运行时的内存占用长期持续增长趋势。
+
+tracemalloc
+
+提到 Python 内存分析，一定会有 tracemalloc，毕竟是内置的内存追踪工具。
+
+但是实 ...]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用 SeaTunnel 将数据从 PostgreSQL 同步到 Doris]]></title>
+        <id>https://blog.lyh543.cn/posts/2025-03-09-seatunnel.html</id>
+        <link href="https://blog.lyh543.cn/posts/2025-03-09-seatunnel.html">
+        </link>
+        <updated>2025-03-09T11:02:56.000Z</updated>
+        <summary type="html"><![CDATA[最近有个需求是把 PostgreSQL（百万行数据规模）的数据准实时同步到 Doris。问了一圈 ChatGPT，ChatGPT 有提到 Flink 和 Apache SeaTunnel。Flink 是鼎鼎有名的 ETL 工具，而 SeaTunnel 之前没听说过。多问了 ChatGPT 几轮，了解到 SeaTunnel 是一个轻量化、上手快的工具。体验了一下，果然非常省事，开发效率很高，对于 ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[使用 Pyenv 和 Pipenv 配置 Python 开发环境]]></title>
         <id>https://blog.lyh543.cn/posts/2025-01-18-setup-python-dev-environment-with-pyenv-and-pipenv.html</id>
@@ -236,27 +260,5 @@ OTA 的场景，和边 ...]]></summary>
         <updated>2023-10-07T22:23:22.000Z</updated>
         <summary type="html"><![CDATA[最近写 React 遇到一个性能问题，调试了一段时间都没什么思路。后来以尝试的心态玩了玩
 React Developer Tools 的 React Profiler，得到了一点线索，最终找到了问题 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[搭建手游私服]]></title>
-        <id>https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html</id>
-        <link href="https://blog.lyh543.cn/posts/2023-04-05-setup-private-game-server.html">
-        </link>
-        <updated>2023-04-28T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[最近又有个手游停服了，是一款日本音游，叫 HoneyWorks Premium Live。为了能在停服后继续玩这款游戏（搓屏幕），我们尝试搭建游戏的私服。在我们搭建到一半的时候，被 HoneyWorks 国内代理制止，只好就此作罢（毕竟是实名上网的人，不太想在国内搞事情）。不过在这个过程中学到了不少东西，也证明了私服的可行性，故写一篇博客作作记录。
-
-音游和其他游戏（如 LOL、绝地求生等）不同的 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2023 年了，该尝试用 Corepack 安装 pnpm 了]]></title>
-        <id>https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html</id>
-        <link href="https://blog.lyh543.cn/posts/2023-04-28-install-pnpm-by-corepack.html">
-        </link>
-        <updated>2023-04-28T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[正如 IE 的唯一作用是安装 Chrome，npm 的作用也是用来安装 yarn/pnpm
-
-最近 pnpm 8 发布，把公司 monorepo 的 pnpm 版本升级到 8 了，借机测试了一下安装 pnpm 的各种方法，最后发现 Node.js 推出的Corepack 是最好用的。
-
-Corepack 是 Node.js 推出的包管理器的管理器。类似于 nvm 可以一行命令安装、切换 N ...]]></summary>
     </entry>
 </feed>
