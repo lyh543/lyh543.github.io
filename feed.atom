@@ -2,11 +2,23 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.lyh543.cn/</id>
     <title>小灰灰灰灰的博客</title>
-    <updated>2025-04-20T04:06:30.525Z</updated>
+    <updated>2025-09-18T03:42:16.185Z</updated>
     <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
     <link rel="alternate" href="https://blog.lyh543.cn/"/>
     <link rel="self" href="https://blog.lyh543.cn/feed.atom"/>
     <subtitle>正在开发中的 Material Design 风格 Vuepress</subtitle>
+    <entry>
+        <title type="html"><![CDATA[两个 FRP 客户端共享服务器上的同一个 HTTPS 443 端口]]></title>
+        <id>https://blog.lyh543.cn/posts/2025-09-14-two-frp-clients-share-same-https-port-on-server.html</id>
+        <link href="https://blog.lyh543.cn/posts/2025-09-14-two-frp-clients-share-same-https-port-on-server.html">
+        </link>
+        <updated>2025-09-18T11:09:32.000Z</updated>
+        <summary type="html"><![CDATA[如果你用过 frp，应该知道可以把家里服务器的 80 和 443 端口映射到公网服务器的 80 和 443 端口，再配合 Caddy / Nginx 服务，就可以用域名访问家里服务器上的网站了。
+
+这个方案的优点有：
+家里服务器不需要有公网 IP，也不需要暴露 80 和 443 端口（frpc 每次会使用随机端口连接到服务器），因此也没有被运营商封端口的风险
+后续 HTTP/HTTPS ...]]></summary>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Python 内存占用分析]]></title>
         <id>https://blog.lyh543.cn/posts/2025-04-19-profile-python-memory-usage.html</id>
@@ -251,14 +263,5 @@ OTA 的场景，和边 ...]]></summary>
 从准备买到下单 iPhone 只间隔了几个小时，很像是一次冲动消费。但其实我在之前很长一段时间都在考虑，用什么手机才能获得更好的体验。
 
 在疫情那段时间（20 年初）我给自己的小米 MIX 2S 刷了类原生，从此对类原生的流畅不掉帧的动画 ...]]></summary>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[实际开发中借助 React Profiler 调试 React Web app 性能问题]]></title>
-        <id>https://blog.lyh543.cn/posts/2023-10-07-debug-on-react-performance-problem-with-react-profiler.html</id>
-        <link href="https://blog.lyh543.cn/posts/2023-10-07-debug-on-react-performance-problem-with-react-profiler.html">
-        </link>
-        <updated>2023-10-07T22:23:22.000Z</updated>
-        <summary type="html"><![CDATA[最近写 React 遇到一个性能问题，调试了一段时间都没什么思路。后来以尝试的心态玩了玩
-React Developer Tools 的 React Profiler，得到了一点线索，最终找到了问题 ...]]></summary>
     </entry>
 </feed>
