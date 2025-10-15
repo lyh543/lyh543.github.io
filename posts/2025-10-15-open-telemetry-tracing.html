@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>OpenTelemetry tracing 实测 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="
+
+OpenTelemetry (OTel) 是一个开源可观测性框架，可允许开发团队以统一的单一格式生成、处理和传输遥测数据。它是由云原生计算基金会 (CNCF) 开发的，旨在提供标准协议和工具，以便收集指标、日志和跟踪并将其发送到监测平台。
+
+OpenTelemetry 提供独立于供应商的 SDK、API 和工具，以便您可以将数据发 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.6706b3d0.js" as="script"><link rel="preload" href="/assets/js/232.725a1bc8.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><h2 id="opentelemetry"><a href="#opentelemetry" class="header-anchor">#</a> OpenTelemetry</h2> <p><strong>OpenTelemetry (OTel) 是一个开源可观测性框架，可允许开发团队以统一的单一格式生成、处理和传输遥测数据</strong>。它是由云原生计算基金会 (<a href="https://www.cncf.io/" target="_blank" rel="noopener noreferrer">CNCF<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>) 开发的，旨在提供标准协议和工具，以便收集指标、日志和跟踪并将其发送到监测平台。</p> <p>OpenTelemetry 提供<strong>独立于供应商</strong>的 SDK、API 和工具，以便您可以将数据发送到任何可观测性后端进行分析。</p> <p><a href="https://opentelemetry.io/" target="_blank" rel="noopener noreferrer">OpenTelemetry<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 正在快速成为云原生应用程序领域内主导的可观测性遥测数据标准。如果组织想要做好准备以满足未来的数据需求，而且不想被锁定到某一特定供应商，也不想受限于其既有技术，那么采用 OpenTelemetry 对其至为关键。</p> <h3 id="架构"><a href="#架构" class="header-anchor">#</a> 架构</h3> <p><img src="/images/output.png" alt="alt text"></p> <p>由于OpenTelemetry旨在成为一个为厂商和可观察性后端提供的跨语言框架，因此它非常灵活且可扩展，但同时也很复杂。OpenTelemetry的默认实现中，其架构可以分为如下三部分：</p> <ol><li>OpenTelemetry API</li> <li>OpenTelemetry SDK，包括
+<ul><li>Tracer pipeline</li> <li>Meter pipeline</li> <li>Shared Context layer</li></ul></li> <li>Collector</li></ol> <p>对于数据追踪的需求，使用 Tracer Pipeline 的功能即可。</p> <h3 id="概念"><a href="#概念" class="header-anchor">#</a> 概念</h3> <ul><li>trace：一个 trace 对应一整条调用链路，包括从客户端到服务端、服务端内部调用 db 和 redis，服务端调用其它微服务、服务端返回结果，等等。</li> <li>span：一个 span 代表一段连续的过程，比如客户端开始调用服务端到接收服务端结束可以是一个 span。
+<ul><li>span 的生命周期常常是函数开始时创建，函数结束时停止。</li> <li>各 span 可以是重叠的（如客户端调用服务端的 span 和服务端处理的 span 是重合的，如下图），也可以是不重叠的（服务 A 处理完数据，将数据存到 db；一分钟后服务 B 从 db 取出数据进行下一步，这两个 span 没有重叠）</li> <li>一个 trace 链路上可以有一个或多个 span。</li></ul></li></ul> <p><img src="/images/output(1).png" alt="alt text"></p> <h3 id="tracer-示例"><a href="#tracer-示例" class="header-anchor">#</a> Tracer 示例</h3> <h4 id="创建-span"><a href="#创建-span" class="header-anchor">#</a> 创建 span</h4> <p>Go 里只需要将 ctx 包裹一层 newSpan，就可以记录函数的调用时间等信息。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// GetUser retrieves and returns hard coded user data for demonstration.</span>
+<span class="token keyword">func</span> <span class="token function">GetUser</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">int</span><span class="token punctuation">)</span> g<span class="token punctuation">.</span>Map <span class="token punctuation">{</span>
+        ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> gtrace<span class="token punctuation">.</span><span class="token function">NewSpan</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token string">&quot;GetUser&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        m <span class="token operator">:=</span> g<span class="token punctuation">.</span>Map<span class="token punctuation">{</span><span class="token punctuation">}</span>
+        gutil<span class="token punctuation">.</span><span class="token function">MapMerge</span><span class="token punctuation">(</span>
+                m<span class="token punctuation">,</span>
+                <span class="token function">GetInfo</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token function">GetDetail</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                <span class="token function">GetScores</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span>
+        <span class="token keyword">return</span> m
+<span class="token punctuation">}</span>
+
+<span class="token comment">// GetInfo retrieves and returns hard coded user info for demonstration.</span>
+<span class="token keyword">func</span> <span class="token function">GetInfo</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> id <span class="token builtin">int</span><span class="token punctuation">)</span> g<span class="token punctuation">.</span>Map <span class="token punctuation">{</span>
+        ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> gtrace<span class="token punctuation">.</span><span class="token function">NewSpan</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token string">&quot;GetInfo&quot;</span><span class="token punctuation">)</span>
+        <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> id <span class="token operator">==</span> <span class="token number">100</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> g<span class="token punctuation">.</span>Map<span class="token punctuation">{</span>
+                        <span class="token string">&quot;id&quot;</span><span class="token punctuation">:</span>     <span class="token number">100</span><span class="token punctuation">,</span>
+                        <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span>   <span class="token string">&quot;john&quot;</span><span class="token punctuation">,</span>
+                        <span class="token string">&quot;gender&quot;</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Python 里也类似，也是把 trace 调用链路放到 context 里。不过 Python 不需要显式传递 context，因为 opentelemetry 基于 Python 的 contextvars 模块来实现隐式传递 context。</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> opentelemetry <span class="token keyword">import</span> trace
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>trace <span class="token keyword">import</span> Tracer
+
+tracer <span class="token operator">=</span> trace<span class="token punctuation">.</span>get_tracer<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">get_user</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> tracer<span class="token punctuation">.</span>start_as_current_span<span class="token punctuation">(</span><span class="token string">&quot;get_user&quot;</span><span class="token punctuation">)</span> <span class="token keyword">as</span> span<span class="token punctuation">:</span>
+        user <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        user<span class="token punctuation">.</span>update<span class="token punctuation">(</span>get_info<span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        user<span class="token punctuation">.</span>update<span class="token punctuation">(</span>get_detail<span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        user<span class="token punctuation">.</span>update<span class="token punctuation">(</span>get_scores<span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> user
+<span class="token keyword">def</span> <span class="token function">get_info</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> tracer<span class="token punctuation">.</span>start_as_current_span<span class="token punctuation">(</span><span class="token string">&quot;get_info&quot;</span><span class="token punctuation">)</span> <span class="token keyword">as</span> span<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">id</span> <span class="token operator">==</span> <span class="token number">100</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                <span class="token string">&quot;id&quot;</span><span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+                <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;john&quot;</span><span class="token punctuation">,</span>
+                <span class="token string">&quot;gender&quot;</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+            <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+</code></pre></div><h4 id="在-orm、缓存层启用追踪"><a href="#在-orm、缓存层启用追踪" class="header-anchor">#</a> 在 ORM、缓存层启用追踪</h4> <p>只要 ORM、缓存层有对应的 OpenTelemetry 包，安装库并在代码中完成初始化以后，ORM 和缓存层在识别到存在 trace 上下文后，就会记录信息并发送，无需修改业务逻辑。
+<img src="/images/output(3).png" alt="alt text"></p> <p>常用的中间件都有 OpenTelemetry 的支持：</p> <ul><li>Gin：<a href="https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin" target="_blank" rel="noopener noreferrer">otelgin<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li>Go-Frame：<a href="https://goframe.org/pages/viewpage.action?pageId=3673713" target="_blank" rel="noopener noreferrer">链路跟踪-HTTP示例<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li>GORM：<a href="https://github.com/go-gorm/opentelemetry" target="_blank" rel="noopener noreferrer">GitHub - go-gorm/opentelemetry: opentelemetry for gorm<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li>ent.io（通过追踪 database/sql 的执行情况）：<a href="https://uptrace.dev/get/instrument/opentelemetry-ent.html#what-is-opentelemetry" target="_blank" rel="noopener noreferrer">OpenTelemetry Go Ent monitoring [otelent]<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul> <p>Python 也有类似的中间件，在 <a href="https://opentelemetry-python-contrib.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener noreferrer">OpenTelemetry-Python-Contrib — OpenTelemetry Python Contrib documentation<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 有官方对大多数 Python 框架和库的支持，如 Django、Flask、FastAPI、requests、aiohttp、Redis、kafka、SQLAlchemy、Psycopg、PyMySQL、pymongo 等。</p> <h3 id="traceid-注入和获取"><a href="#traceid-注入和获取" class="header-anchor">#</a> TraceID 注入和获取</h3> <p>在链路跟踪中，TraceID 作为在各个服务间传递的唯一标识，用于串联服务间请求关联关系，是非常重要的一项数据。</p> <h4 id="单一应用里的-traceid-流转-context"><a href="#单一应用里的-traceid-流转-context" class="header-anchor">#</a> 单一应用里的 TraceID 流转：context</h4> <p>在单一的应用里，TraceID 常常放在 context 里，在函数中进行流转。在输出日志时也需要将 TraceID 一并输出，方便追查数据流转。</p> <h4 id="应用之间的-traceid-流转-traceparent-header-propagator"><a href="#应用之间的-traceid-流转-traceparent-header-propagator" class="header-anchor">#</a> 应用之间的 TraceID 流转：traceparent header &amp; Propagator</h4> <p>对于应用之间的 TraceID 流转，W3C 定义了 <a href="https://www.w3.org/TR/trace-context/" target="_blank" rel="noopener noreferrer">traceparent header<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 字段。这个字段由四个部分拼接而成：</p> <ul><li>version</li> <li>trace-id</li> <li>parent-id</li> <li>trace-flags
+<img src="/images/output(4).png" alt="alt text">
+通常约定，Traceparent 在 HTTP 协议中放在 HTTP Header 中传输，在 GRPC 协议中放在 Metadata 里传输。
+基于这个约定：</li> <li>客户端：在客户端发起请求时，需要向请求头注入traceparent。如果客户端请求时的 context 已经有 TraceID 和 SpanID，就从 context 读出来拼成 traceparent 注入到 header 或 metadata。如果没有就不注入。</li> <li>在服务端接收请求时，需要从请求的 header 或 metadata 获取 traceparent、解析 traceID，然后注入到 context 里。如果请求头中没有 TraceID，则会新生成一个 TraceID 并注入到 context 里。</li></ul> <p>上述服务端或客户端如果没有自带 TraceID 的生成、注入和获取的中间件，则可以自己花十几行代码调用 OpenTelemetry 自带的 Propagator 实现一个中间件。下面以 Go 为示例：</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/propagation&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// 服务端/客户端启动时设置全局 Propagator</span>
+propagator <span class="token operator">:=</span> propagation<span class="token punctuation">.</span>TraceContext<span class="token punctuation">{</span><span class="token punctuation">}</span>
+otel<span class="token punctuation">.</span><span class="token function">SetTextMapPropagator</span><span class="token punctuation">(</span>propagator<span class="token punctuation">)</span>
+
+<span class="token comment">// 客户端每次请求时调用 propagator 将 traceparent 注入 HTTP header</span>
+propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+propagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>Header<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 服务端每次请求时调用 propagator 从 HTTP Header 提取 traceparent</span>
+propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ctx <span class="token operator">:=</span> propagator<span class="token punctuation">.</span><span class="token function">Extract</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span><span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>Header<span class="token punctuation">)</span><span class="token punctuation">)</span>
+TraceContextPropagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 的原理基本如下：
+<span class="token comment">// 从请求上下文中获取当前的 Span</span>
+span <span class="token operator">:=</span> trace<span class="token punctuation">.</span><span class="token function">SpanFromContext</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+spanContext <span class="token operator">:=</span> span<span class="token punctuation">.</span><span class="token function">SpanContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> spanContext<span class="token punctuation">.</span><span class="token function">IsValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 构建 traceparent header</span>
+    traceparent <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;00-%s-%s-%02s&quot;</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">TraceID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">SpanID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">TraceFlags</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>trace<span class="token punctuation">.</span>FlagsSampled<span class="token punctuation">,</span>
+    <span class="token punctuation">)</span>
+    
+    <span class="token comment">// 在请求头中添加 traceparent</span>
+    req<span class="token punctuation">.</span>Header<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span><span class="token string">&quot;traceparent&quot;</span><span class="token punctuation">,</span> traceparent<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>可见，如果按照上述的约定传递 traceID，就可以直接使用自带的 TraceContextPropagator 来完成 traceID 的注入和提取。</p> <p>如果 traceID 的传递不是按照上面的约定，依然可以自己实现一个 Propagator 来完成 traceID 的注入和提取。</p> <p>reference
+https://www.elastic.co/cn/what-is/opentelemetry
+https://goframe.org/pages/viewpage.action?pageId=148537351
+https://go-kratos.dev/en/docs/component/middleware/tracing/</p> <p>代码仓库：https://gitlab.carizon.work/IS1IICO/go-kratos-example</p> <h2 id="实测结论"><a href="#实测结论" class="header-anchor">#</a> 实测结论</h2> <ul><li>Kratos 服务端、客户端：GRPC/HTTP 均包含 tracing 中间件可以直接使用。（10/10）</li> <li>net/http 客户端、服务端：可以基于现成的 Propagator 实现一个中间件。（9/10）</li> <li>Google GRPC 客户端、服务端：需要实现一个对 metadata 注入和提取字段的 TextMapCarrier，然后基于现成的 Propagator 实现中间件。（8/10）</li> <li>Python Flask HTTP 客户端：包含 tracing 中间件可以直接使用。（10/10）</li></ul> <h2 id="部署-jaeger"><a href="#部署-jaeger" class="header-anchor">#</a> 部署 jaeger</h2> <p>Jaeger 是 tracing 的后端，用于接收整个链路的 tracing 请求。</p> <p>部署测试 jaeger-all-in-one：https://www.jaegertracing.io/docs/1.62/getting-started/</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">docker</span> run -d --name jaeger <span class="token punctuation">\</span>
+  -e <span class="token assign-left variable">COLLECTOR_ZIPKIN_HOST_PORT</span><span class="token operator">=</span>:9411 <span class="token punctuation">\</span>
+  -p <span class="token number">6831</span>:6831/udp <span class="token punctuation">\</span>
+  -p <span class="token number">6832</span>:6832/udp <span class="token punctuation">\</span>
+  -p <span class="token number">5778</span>:5778 <span class="token punctuation">\</span>
+  -p <span class="token number">16686</span>:16686 <span class="token punctuation">\</span>
+  -p <span class="token number">4317</span>:4317 <span class="token punctuation">\</span>
+  -p <span class="token number">4318</span>:4318 <span class="token punctuation">\</span>
+  -p <span class="token number">14250</span>:14250 <span class="token punctuation">\</span>
+  -p <span class="token number">14268</span>:14268 <span class="token punctuation">\</span>
+  -p <span class="token number">14269</span>:14269 <span class="token punctuation">\</span>
+  -p <span class="token number">9411</span>:9411 <span class="token punctuation">\</span>
+  jaegertracing/all-in-one:1.62.0
+</code></pre></div><h2 id="实测过程"><a href="#实测过程" class="header-anchor">#</a> 实测过程</h2> <h3 id="kratos-服务端创建-trace"><a href="#kratos-服务端创建-trace" class="header-anchor">#</a> Kratos 服务端创建 trace</h3> <p>按照 https://go-kratos.dev/en/docs/component/middleware/tracing/ 在 Kratos 初始化 HTTPServer 和 GRPCServer 时初始化 Tracer。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">package</span> utils
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;context&quot;</span>
+  <span class="token string">&quot;time&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/attribute&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/sdk/resource&quot;</span>
+  tracesdk <span class="token string">&quot;go.opentelemetry.io/otel/sdk/trace&quot;</span>
+  semconv <span class="token string">&quot;go.opentelemetry.io/otel/semconv/v1.4.0&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc/credentials/insecure&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// https://go-kratos.dev/en/docs/component/middleware/tracing/</span>
+<span class="token comment">// Set global trace provider</span>
+<span class="token keyword">func</span> <span class="token function">InitTracer</span><span class="token punctuation">(</span>endpoint <span class="token builtin">string</span><span class="token punctuation">,</span> serviceName <span class="token builtin">string</span><span class="token punctuation">,</span> nodeType <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>tracesdk<span class="token punctuation">.</span>TracerProvider<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 创建 OTLP exporter</span>
+  conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> grpc<span class="token punctuation">.</span><span class="token function">NewClient</span><span class="token punctuation">(</span>endpoint<span class="token punctuation">,</span> grpc<span class="token punctuation">.</span><span class="token function">WithTransportCredentials</span><span class="token punctuation">(</span>insecure<span class="token punctuation">.</span><span class="token function">NewCredentials</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err
+  <span class="token punctuation">}</span>
+  exp<span class="token punctuation">,</span> err <span class="token operator">:=</span> otlptracegrpc<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span>
+    context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    otlptracegrpc<span class="token punctuation">.</span><span class="token function">WithGRPCConn</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    otlptracegrpc<span class="token punctuation">.</span><span class="token function">WithTimeout</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>Second<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> err
+  <span class="token punctuation">}</span>
+
+  tp <span class="token operator">:=</span> tracesdk<span class="token punctuation">.</span><span class="token function">NewTracerProvider</span><span class="token punctuation">(</span>
+    <span class="token comment">// 将基于父span的采样率设置为100%</span>
+    tracesdk<span class="token punctuation">.</span><span class="token function">WithSampler</span><span class="token punctuation">(</span>tracesdk<span class="token punctuation">.</span><span class="token function">ParentBased</span><span class="token punctuation">(</span>tracesdk<span class="token punctuation">.</span><span class="token function">TraceIDRatioBased</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    tracesdk<span class="token punctuation">.</span><span class="token function">WithSyncer</span><span class="token punctuation">(</span>exp<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 在资源中记录有关此应用程序的信息</span>
+    tracesdk<span class="token punctuation">.</span><span class="token function">WithResource</span><span class="token punctuation">(</span>resource<span class="token punctuation">.</span><span class="token function">NewSchemaless</span><span class="token punctuation">(</span>
+      semconv<span class="token punctuation">.</span>ServiceNameKey<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span>serviceName<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      attribute<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token string">&quot;exporter&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;jaeger&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      attribute<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token string">&quot;node&quot;</span><span class="token punctuation">,</span> nodeType<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span>
+  otel<span class="token punctuation">.</span><span class="token function">SetTracerProvider</span><span class="token punctuation">(</span>tp<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> tp<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// NewGRPCServer new a gRPC server.</span>
+<span class="token keyword">func</span> <span class="token function">NewGRPCServer</span><span class="token punctuation">(</span>c <span class="token operator">*</span>conf<span class="token punctuation">.</span>Server<span class="token punctuation">,</span> greeter <span class="token operator">*</span>service<span class="token punctuation">.</span>GreeterService<span class="token punctuation">,</span> logger log<span class="token punctuation">.</span>Logger<span class="token punctuation">)</span> <span class="token operator">*</span>grpc<span class="token punctuation">.</span>Server <span class="token punctuation">{</span>
+  <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;kratos-server&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;client&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> opts <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>grpc<span class="token punctuation">.</span>ServerOption<span class="token punctuation">{</span>
+    grpc<span class="token punctuation">.</span><span class="token function">Middleware</span><span class="token punctuation">(</span>
+      recovery<span class="token punctuation">.</span><span class="token function">Recovery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      tracing<span class="token punctuation">.</span><span class="token function">Server</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Network <span class="token operator">!=</span> <span class="token string">&quot;&quot;</span> <span class="token punctuation">{</span>
+    opts <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>opts<span class="token punctuation">,</span> grpc<span class="token punctuation">.</span><span class="token function">Network</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Network<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Addr <span class="token operator">!=</span> <span class="token string">&quot;&quot;</span> <span class="token punctuation">{</span>
+    opts <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>opts<span class="token punctuation">,</span> grpc<span class="token punctuation">.</span><span class="token function">Address</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Addr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Timeout <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    opts <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>opts<span class="token punctuation">,</span> grpc<span class="token punctuation">.</span><span class="token function">Timeout</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>Grpc<span class="token punctuation">.</span>Timeout<span class="token punctuation">.</span><span class="token function">AsDuration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  srv <span class="token operator">:=</span> grpc<span class="token punctuation">.</span><span class="token function">NewServer</span><span class="token punctuation">(</span>opts<span class="token operator">...</span><span class="token punctuation">)</span>
+  v1<span class="token punctuation">.</span><span class="token function">RegisterGreeterServer</span><span class="token punctuation">(</span>srv<span class="token punctuation">,</span> greeter<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> srv
+<span class="token punctuation">}</span>
+</code></pre></div><p>重新运行后多了 traceId 和 spanId。</p> <p><img src="/images/output(5).png" alt="alt text"></p> <p>访问 jaeger http://localhost:16686/ 即可看到该 trace 和 span。</p> <p><img src="/images/output(6).png" alt="alt text"></p> <h3 id="kratos-grpc-客户端创建-trace"><a href="#kratos-grpc-客户端创建-trace" class="header-anchor">#</a> Kratos GRPC 客户端创建 trace</h3> <p>如果是使用 kratos 的客户端 github.com/go-kratos/kratos/v2/transport/grpc，请求的时候就会带上 traceparent，服务端能够直接解析出同一个 traceId。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">func</span> <span class="token function">grpcCli</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>googlegrpc<span class="token punctuation">.</span>ClientConn<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to init tracer: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> grpc<span class="token punctuation">.</span><span class="token function">DialInsecure</span><span class="token punctuation">(</span>
+    context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    grpc<span class="token punctuation">.</span><span class="token function">WithEndpoint</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:9000&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    grpc<span class="token punctuation">.</span><span class="token function">WithMiddleware</span><span class="token punctuation">(</span>
+      tracing<span class="token punctuation">.</span><span class="token function">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;kratos_grpc_client&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;client&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">grpcCli</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to connect: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">defer</span> conn<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 创建 gRPC 客户端</span>
+  client <span class="token operator">:=</span> pb<span class="token punctuation">.</span><span class="token function">NewGreeterClient</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span>
+
+  ctx <span class="token operator">:=</span> context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// 调用 gRPC 方法</span>
+  response<span class="token punctuation">,</span> err <span class="token operator">:=</span> client<span class="token punctuation">.</span><span class="token function">SayHello</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token operator">&amp;</span>pb<span class="token punctuation">.</span>HelloRequest<span class="token punctuation">{</span>Name<span class="token punctuation">:</span> <span class="token string">&quot;Kratos&quot;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Could not greet: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;Greeting: %s&quot;</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span>Message<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><img src="/images/output(7).png" alt="alt text">
+访问 jaeger http://localhost:16686/ 即可看到该 trace 和 span。
+<img src="/images/output(8).png" alt="alt text">
+不过需要注意的是，如果客户端调用时 ctx 里没有 traceId，kratos 中间件会生成 traceId，但请求完以后是拿不到 traceId 的。如果有这个需求，可以自己负责创建 span 的逻辑，然后用在新的 ctx 里发请求（）。</p> <h3 id="原生-grpc-客户端创建-trace"><a href="#原生-grpc-客户端创建-trace" class="header-anchor">#</a> 原生 GRPC 客户端创建 trace</h3> <p>Google GRPC 没有这个中间件，需要自己造轮子，实现一个中间件拼 traceparent。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;context&quot;</span>
+  <span class="token string">&quot;fmt&quot;</span>
+  <span class="token string">&quot;log&quot;</span>
+
+  pb <span class="token string">&quot;go-kratos-ent-example/api/helloworld/v1&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/attribute&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/exporters/jaeger&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/sdk/resource&quot;</span>
+  tracesdk <span class="token string">&quot;go.opentelemetry.io/otel/sdk/trace&quot;</span>
+  semconv <span class="token string">&quot;go.opentelemetry.io/otel/semconv/v1.4.0&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/trace&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc/metadata&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">traceUnaryClientInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> grpc<span class="token punctuation">.</span>UnaryClientInterceptor <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">func</span><span class="token punctuation">(</span>
+    ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span>
+    method <span class="token builtin">string</span><span class="token punctuation">,</span>
+    req<span class="token punctuation">,</span> reply <span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    cc <span class="token operator">*</span>grpc<span class="token punctuation">.</span>ClientConn<span class="token punctuation">,</span>
+    invoker grpc<span class="token punctuation">.</span>UnaryInvoker<span class="token punctuation">,</span>
+    opts <span class="token operator">...</span>grpc<span class="token punctuation">.</span>CallOption<span class="token punctuation">,</span>
+  <span class="token punctuation">)</span> <span class="token builtin">error</span> <span class="token punctuation">{</span>
+    tracer <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">Tracer</span><span class="token punctuation">(</span><span class="token string">&quot;your-tracer-name&quot;</span><span class="token punctuation">)</span>
+    ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> tracer<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> method<span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    spanContext <span class="token operator">:=</span> span<span class="token punctuation">.</span><span class="token function">SpanContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// TODO：可以实现一个 GrpcMetadataCarrier，然后使用 propagator 完成注入</span>
+    <span class="token comment">// 参考源代码：https://github.com/open-telemetry/opentelemetry-go/blob/v1.32.0/propagation/trace_context.go#L52</span>
+    <span class="token comment">// Inject the trace context into the metadata</span>
+    md <span class="token operator">:=</span> metadata<span class="token punctuation">.</span><span class="token function">Pairs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> trace<span class="token punctuation">.</span><span class="token function">SpanContextFromContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">IsValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      traceparent <span class="token operator">:=</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">&quot;00-%s-%s-%2s&quot;</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">TraceID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">SpanID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        spanContext<span class="token punctuation">.</span><span class="token function">TraceFlags</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> trace<span class="token punctuation">.</span>FlagsSampled<span class="token punctuation">,</span>
+      <span class="token punctuation">)</span>
+      log<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>traceparent<span class="token punctuation">)</span>
+      md<span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span><span class="token string">&quot;traceparent&quot;</span><span class="token punctuation">,</span> traceparent<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Add metadata to outgoing context</span>
+    ctx <span class="token operator">=</span> metadata<span class="token punctuation">.</span><span class="token function">NewOutgoingContext</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> md<span class="token punctuation">)</span>
+
+    <span class="token comment">// Invoke the original request</span>
+    <span class="token keyword">return</span> <span class="token function">invoker</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> method<span class="token punctuation">,</span> req<span class="token punctuation">,</span> reply<span class="token punctuation">,</span> cc<span class="token punctuation">,</span> opts<span class="token operator">...</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">grpcCli</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>grpc<span class="token punctuation">.</span>ClientConn<span class="token punctuation">,</span> <span class="token operator">*</span>tracesdk<span class="token punctuation">.</span>TracerProvider<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  tp<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;google_grpc_client&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;client&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to init tracer: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> grpc<span class="token punctuation">.</span><span class="token function">Dial</span><span class="token punctuation">(</span>
+    <span class="token string">&quot;localhost:9000&quot;</span><span class="token punctuation">,</span>
+    grpc<span class="token punctuation">.</span><span class="token function">WithInsecure</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 不安全连接</span>
+    grpc<span class="token punctuation">.</span><span class="token function">WithStatsHandler</span><span class="token punctuation">(</span>otelgrpc<span class="token punctuation">.</span><span class="token function">NewClientHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    grpc<span class="token punctuation">.</span><span class="token function">WithUnaryInterceptor</span><span class="token punctuation">(</span><span class="token function">traceUnaryClientInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">nil</span><span class="token punctuation">,</span> tp<span class="token punctuation">,</span> err
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> conn<span class="token punctuation">,</span> tp<span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  conn<span class="token punctuation">,</span> tp<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">grpcCli</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to connect: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">defer</span> conn<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 创建 gRPC 客户端</span>
+  client <span class="token operator">:=</span> pb<span class="token punctuation">.</span><span class="token function">NewGreeterClient</span><span class="token punctuation">(</span>conn<span class="token punctuation">)</span>
+
+  ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">Tracer</span><span class="token punctuation">(</span><span class="token string">&quot;example-client&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;SayHello&quot;</span><span class="token punctuation">)</span>
+  <span class="token comment">// 调用 gRPC 方法</span>
+  response<span class="token punctuation">,</span> err <span class="token operator">:=</span> client<span class="token punctuation">.</span><span class="token function">SayHello</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token operator">&amp;</span>pb<span class="token punctuation">.</span>HelloRequest<span class="token punctuation">{</span>Name<span class="token punctuation">:</span> <span class="token string">&quot;Kratos&quot;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Could not greet: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;Greeting: %s&quot;</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span>Message<span class="token punctuation">)</span>
+
+  <span class="token comment">// 从 span 中获取 Trace ID</span>
+  traceID <span class="token operator">:=</span> span<span class="token punctuation">.</span><span class="token function">SpanContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">TraceID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;Greeting: %s&quot;</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span>Message<span class="token punctuation">)</span>
+  log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;TraceID: %s&quot;</span><span class="token punctuation">,</span> traceID<span class="token punctuation">)</span>
+
+  tp<span class="token punctuation">.</span><span class="token function">ForceFlush</span><span class="token punctuation">(</span>ctx<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>实现了以后也可以正常创建 trace 并跨应用传递。</p> <p><img src="/images/output(9).png" alt="alt text"></p> <h3 id="kratos-http-客户端创建-trace"><a href="#kratos-http-客户端创建-trace" class="header-anchor">#</a> Kratos HTTP 客户端创建 trace</h3> <p>tracing.Client 同时支持 HTTP 和 GRPC 协议。不过需要注意的是，Client.Do() 方法请求时不会调用中间件，只有 Client.Invoke() 才会。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;context&quot;</span>
+  <span class="token string">&quot;fmt&quot;</span>
+  <span class="token string">&quot;go-kratos-ent-example/internal/utils&quot;</span>
+  <span class="token string">&quot;log&quot;</span>
+
+  <span class="token string">&quot;github.com/go-kratos/kratos/v2/transport/http&quot;</span>
+
+  <span class="token string">&quot;github.com/go-kratos/kratos/v2/middleware/tracing&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/otel/propagation&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">httpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>http<span class="token punctuation">.</span>Client<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> http<span class="token punctuation">.</span><span class="token function">NewClient</span><span class="token punctuation">(</span>
+    context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    http<span class="token punctuation">.</span><span class="token function">WithEndpoint</span><span class="token punctuation">(</span><span class="token string">&quot;127.0.0.1:8000&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    http<span class="token punctuation">.</span><span class="token function">WithMiddleware</span><span class="token punctuation">(</span>
+      tracing<span class="token punctuation">.</span><span class="token function">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span>
+  <span class="token keyword">return</span> conn<span class="token punctuation">,</span> err
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;net_http_client&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;client&quot;</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 设置全局 Propagator</span>
+  propagator <span class="token operator">:=</span> propagation<span class="token punctuation">.</span>TraceContext<span class="token punctuation">{</span><span class="token punctuation">}</span>
+  otel<span class="token punctuation">.</span><span class="token function">SetTextMapPropagator</span><span class="token punctuation">(</span>propagator<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to initialize tracer: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  client<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">httpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to initialize client: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 创建一个新的请求上下文</span>
+  tracer <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">Tracer</span><span class="token punctuation">(</span><span class="token string">&quot;example-tracer&quot;</span><span class="token punctuation">)</span>
+  ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> tracer<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;client-request&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  args <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+  response <span class="token operator">:=</span> <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token keyword">interface</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token comment">// 发起请求</span>
+  err <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">Invoke</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token string">&quot;GET&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;/helloworld/http&quot;</span><span class="token punctuation">,</span> args<span class="token punctuation">,</span> <span class="token operator">&amp;</span>response<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;Error making request:&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;Response message:&quot;</span><span class="token punctuation">,</span> response<span class="token punctuation">[</span><span class="token string">&quot;message&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="原生-http-客户端创建-trace"><a href="#原生-http-客户端创建-trace" class="header-anchor">#</a> 原生 HTTP 客户端创建 trace</h3> <p>原生 HTTP 客户端没有能直接用的中间件，需要实现一个中间件。由于库里自带的 TextMapPropagator 和 HeaderCarrier 直接可用，实现起来很快。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;context&quot;</span>
+  <span class="token string">&quot;fmt&quot;</span>
+  <span class="token string">&quot;net/http&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/attribute&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/exporters/jaeger&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/sdk/resource&quot;</span>
+  tracesdk <span class="token string">&quot;go.opentelemetry.io/otel/sdk/trace&quot;</span>
+  semconv <span class="token string">&quot;go.opentelemetry.io/otel/semconv/v1.4.0&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/trace&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> roundTripperFunc <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>http<span class="token punctuation">.</span>Response<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f roundTripperFunc<span class="token punctuation">)</span> <span class="token function">RoundTrip</span><span class="token punctuation">(</span>req <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>http<span class="token punctuation">.</span>Response<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">f</span><span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">traceMiddleware</span><span class="token punctuation">(</span>next http<span class="token punctuation">.</span>RoundTripper<span class="token punctuation">)</span> http<span class="token punctuation">.</span>RoundTripper <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">roundTripperFunc</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>req <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span>http<span class="token punctuation">.</span>Response<span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 创建一个新的请求上下文</span>
+    tracer <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">Tracer</span><span class="token punctuation">(</span><span class="token string">&quot;example-tracer&quot;</span><span class="token punctuation">)</span>
+    ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> tracer<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span><span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;client-request&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    propagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>Header<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">&quot;%v&quot;</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span>Header<span class="token punctuation">)</span>
+    <span class="token comment">// 调用下一个 RoundTripper</span>
+    <span class="token keyword">return</span> next<span class="token punctuation">.</span><span class="token function">RoundTrip</span><span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">httpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span>http<span class="token punctuation">.</span>Client <span class="token punctuation">{</span>
+  <span class="token comment">// 创建一个 HTTP 客户端</span>
+  client <span class="token operator">:=</span> <span class="token operator">&amp;</span>http<span class="token punctuation">.</span>Client<span class="token punctuation">{</span>
+    Transport<span class="token punctuation">:</span> <span class="token function">traceMiddleware</span><span class="token punctuation">(</span>http<span class="token punctuation">.</span>DefaultTransport<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> client
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;net_http_client&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;client&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to initialize tracer: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  
+  client <span class="token operator">:=</span> <span class="token function">httpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  req<span class="token punctuation">,</span> err <span class="token operator">:=</span> http<span class="token punctuation">.</span><span class="token function">NewRequestWithContext</span><span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">Background</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;GET&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;http://localhost:8000/helloworld/http&quot;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 发起请求</span>
+  resp<span class="token punctuation">,</span> err <span class="token operator">:=</span> client<span class="token punctuation">.</span><span class="token function">Do</span><span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;Error making request:&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">defer</span> resp<span class="token punctuation">.</span>Body<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;Response status:&quot;</span><span class="token punctuation">,</span> resp<span class="token punctuation">.</span>Status<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="原生-http-服务端-需要手动创建-tracer-和-span"><a href="#原生-http-服务端-需要手动创建-tracer-和-span" class="header-anchor">#</a> 原生 HTTP 服务端：需要手动创建 tracer 和 span</h3> <p>配置好 TextMapPropagator 就可以读取 traceparent，解析出 traceId。然后再使用 tracer.Start 创建一个新的 span。</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;fmt&quot;</span>
+  <span class="token string">&quot;log&quot;</span>
+  <span class="token string">&quot;net/http&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/attribute&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/exporters/jaeger&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/propagation&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/sdk/resource&quot;</span>
+  tracesdk <span class="token string">&quot;go.opentelemetry.io/otel/sdk/trace&quot;</span>
+  semconv <span class="token string">&quot;go.opentelemetry.io/otel/semconv/v1.4.0&quot;</span>
+<span class="token punctuation">)</span>
+
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> utils<span class="token punctuation">.</span><span class="token function">InitTracer</span><span class="token punctuation">(</span><span class="token string">&quot;localhost:4317&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;net_http_server&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;server&quot;</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    log<span class="token punctuation">.</span><span class="token function">Fatalf</span><span class="token punctuation">(</span><span class="token string">&quot;Failed to initialize tracer: %v&quot;</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 初始化 Tracer</span>
+  tracer <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">Tracer</span><span class="token punctuation">(</span><span class="token string">&quot;example-server&quot;</span><span class="token punctuation">)</span>
+
+  <span class="token comment">// 设置全局 Propagator</span>
+  propagator <span class="token operator">:=</span> propagation<span class="token punctuation">.</span>TraceContext<span class="token punctuation">{</span><span class="token punctuation">}</span>
+  otel<span class="token punctuation">.</span><span class="token function">SetTextMapPropagator</span><span class="token punctuation">(</span>propagator<span class="token punctuation">)</span>
+
+  http<span class="token punctuation">.</span><span class="token function">HandleFunc</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 从请求头中提取上下文</span>
+    ctx <span class="token operator">:=</span> propagator<span class="token punctuation">.</span><span class="token function">Extract</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span><span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>Header<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 创建一个新的 Span</span>
+    ctx<span class="token punctuation">,</span> span <span class="token operator">:=</span> tracer<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token string">&quot;server-request&quot;</span><span class="token punctuation">)</span>
+    <span class="token keyword">defer</span> span<span class="token punctuation">.</span><span class="token function">End</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 处理请求</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Fprintf</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> <span class="token string">&quot;Hello, World!&quot;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  log<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">&quot;Server is running on :8080&quot;</span><span class="token punctuation">)</span>
+  log<span class="token punctuation">.</span><span class="token function">Fatal</span><span class="token punctuation">(</span>http<span class="token punctuation">.</span><span class="token function">ListenAndServe</span><span class="token punctuation">(</span><span class="token string">&quot;:8080&quot;</span><span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="python-http-服务端读取-trace、创建-tracer-和-span"><a href="#python-http-服务端读取-trace、创建-tracer-和-span" class="header-anchor">#</a> Python HTTP 服务端读取 trace、创建 tracer 和 span</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask<span class="token punctuation">,</span> request
+<span class="token keyword">from</span> opentelemetry <span class="token keyword">import</span> trace
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>exporter<span class="token punctuation">.</span>jaeger<span class="token punctuation">.</span>thrift <span class="token keyword">import</span> JaegerExporter
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>instrumentation<span class="token punctuation">.</span>flask <span class="token keyword">import</span> FlaskInstrumentor
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>instrumentation<span class="token punctuation">.</span>wsgi <span class="token keyword">import</span> OpenTelemetryMiddleware
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>sdk<span class="token punctuation">.</span>resources <span class="token keyword">import</span> Resource
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>sdk<span class="token punctuation">.</span>trace <span class="token keyword">import</span> TracerProvider
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>sdk<span class="token punctuation">.</span>trace<span class="token punctuation">.</span>export <span class="token keyword">import</span> SimpleSpanProcessor<span class="token punctuation">,</span> BatchSpanProcessor
+<span class="token keyword">from</span> opentelemetry<span class="token punctuation">.</span>propagate <span class="token keyword">import</span> extract
+
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+<span class="token comment"># 设置 TracerProvider</span>
+trace<span class="token punctuation">.</span>set_tracer_provider<span class="token punctuation">(</span>TracerProvider<span class="token punctuation">(</span>
+    resource<span class="token operator">=</span>Resource<span class="token punctuation">.</span>create<span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token string">&quot;service.name&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;python-http-server&quot;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 配置 Jaeger 导出器</span>
+jaeger_exporter <span class="token operator">=</span> JaegerExporter<span class="token punctuation">(</span>
+    agent_host_name<span class="token operator">=</span><span class="token string">&quot;python-http-server&quot;</span><span class="token punctuation">,</span>
+    agent_port<span class="token operator">=</span><span class="token number">6831</span><span class="token punctuation">,</span>
+    collector_endpoint<span class="token operator">=</span><span class="token string">&quot;http://localhost:14268/api/traces&quot;</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment"># 添加 Span Processor 和 Exporter</span>
+span_processor <span class="token operator">=</span> SimpleSpanProcessor<span class="token punctuation">(</span>jaeger_exporter<span class="token punctuation">)</span>
+trace<span class="token punctuation">.</span>get_tracer_provider<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>add_span_processor<span class="token punctuation">(</span>span_processor<span class="token punctuation">)</span>
+
+<span class="token comment"># 自动为 Flask 应用添加中间件</span>
+FlaskInstrumentor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>instrument_app<span class="token punctuation">(</span>app<span class="token punctuation">)</span>
+
+<span class="token comment"># 手动添加 WSGI 中间件</span>
+app<span class="token punctuation">.</span>wsgi_app <span class="token operator">=</span> OpenTelemetryMiddleware<span class="token punctuation">(</span>app<span class="token punctuation">.</span>wsgi_app<span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">&quot;/helloworld/:name&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 从请求头中提取上下文</span>
+    ctx <span class="token operator">=</span> extract<span class="token punctuation">(</span>request<span class="token punctuation">.</span>headers<span class="token punctuation">)</span>
+    tracer <span class="token operator">=</span> trace<span class="token punctuation">.</span>get_tracer<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+    <span class="token comment"># 创建一个新的 Span</span>
+    <span class="token keyword">with</span> tracer<span class="token punctuation">.</span>start_as_current_span<span class="token punctuation">(</span><span class="token string">&quot;server-request&quot;</span><span class="token punctuation">,</span> context<span class="token operator">=</span>ctx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">&quot;Hello, World!&quot;</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">&quot;__main__&quot;</span><span class="token punctuation">:</span>
+    app<span class="token punctuation">.</span>run<span class="token punctuation">(</span>debug<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">8000</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="propagator-的接口和造轮子"><a href="#propagator-的接口和造轮子" class="header-anchor">#</a> Propagator 的接口和造轮子</h3> <p>接口：</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// TextMapPropagator propagates cross-cutting concerns as key-value text</span>
+<span class="token comment">// pairs within a carrier that travels in-band across process boundaries.</span>
+<span class="token keyword">type</span> TextMapPropagator <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Inject set cross-cutting concerns from the Context into the carrier.</span>
+  <span class="token function">Inject</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> carrier TextMapCarrier<span class="token punctuation">)</span>
+
+  <span class="token comment">// Extract reads cross-cutting concerns from the carrier into a Context.</span>
+  <span class="token function">Extract</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> carrier TextMapCarrier<span class="token punctuation">)</span> context<span class="token punctuation">.</span>Context
+  
+  <span class="token comment">// Fields returns the keys whose values are set with Inject.</span>
+  <span class="token function">Fields</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>封装：</p> <div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// pkg/common/trace/propagators.go</span>
+<span class="token comment">// 这个文件实现了多个函数，使得从不同的结构体里存、取 trace 信息。</span>
+
+<span class="token keyword">package</span> trace
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;context&quot;</span>
+  <span class="token string">&quot;net/http&quot;</span>
+
+  <span class="token string">&quot;go.opentelemetry.io/otel&quot;</span>
+  <span class="token string">&quot;go.opentelemetry.io/otel/propagation&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc/metadata&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// InjectTraceToMap 将 ctx 里的 Trace 信息注入到 map 里，以传递给其它服务</span>
+<span class="token keyword">func</span> <span class="token function">InjectTraceToMap</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> m <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>any<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  propagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token function">mapCarrier</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ExtractTraceFromMap 从 map 里提取 Trace 信息，以恢复上下文</span>
+<span class="token keyword">func</span> <span class="token function">ExtractTraceFromMap</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> m <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>any<span class="token punctuation">)</span> context<span class="token punctuation">.</span>Context <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> propagator<span class="token punctuation">.</span><span class="token function">Extract</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token function">mapCarrier</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// InjectTraceToHeader 将 ctx 里的 Trace 信息注入到 http.Header 里，以传递给其它服务</span>
+<span class="token keyword">func</span> <span class="token function">InjectTraceToHeader</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> h http<span class="token punctuation">.</span>Header<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  propagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ExtractTraceFromHeader 从 http.Header 里提取 Trace 信息，以恢复上下文</span>
+<span class="token keyword">func</span> <span class="token function">ExtractTraceFromHeader</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> h http<span class="token punctuation">.</span>Header<span class="token punctuation">)</span> context<span class="token punctuation">.</span>Context <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> propagator<span class="token punctuation">.</span><span class="token function">Extract</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> propagation<span class="token punctuation">.</span><span class="token function">HeaderCarrier</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// InjectTraceToGrpcMetadata 将 ctx 里的 Trace 信息注入到 grpc metadata 里，以传递给其它服务</span>
+<span class="token comment">//</span>
+<span class="token comment">// 如何将 metadata 注入 ctx： ctx := metadata.NewOutgoingContext(ctx, md)</span>
+<span class="token keyword">func</span> <span class="token function">InjectTraceToGrpcMetadata</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> md metadata<span class="token punctuation">.</span>MD<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  propagator<span class="token punctuation">.</span><span class="token function">Inject</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> grpcMetadataCarrier<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ExtractTraceFromGrpcMetadata 从 grpc metadata 里提取 Trace 信息，以恢复上下文</span>
+<span class="token comment">//</span>
+<span class="token comment">// 如何从 ctx 里获取 metadata：md, ok := metadata.FromIncomingContext(ctx)</span>
+<span class="token keyword">func</span> <span class="token function">ExtractTraceFromGrpcMetadata</span><span class="token punctuation">(</span>ctx context<span class="token punctuation">.</span>Context<span class="token punctuation">,</span> md metadata<span class="token punctuation">.</span>MD<span class="token punctuation">)</span> context<span class="token punctuation">.</span>Context <span class="token punctuation">{</span>
+  propagator <span class="token operator">:=</span> otel<span class="token punctuation">.</span><span class="token function">GetTextMapPropagator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> propagator<span class="token punctuation">.</span><span class="token function">Extract</span><span class="token punctuation">(</span>ctx<span class="token punctuation">,</span> <span class="token function">grpcMetadataCarrier</span><span class="token punctuation">(</span>md<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="language-go extra-class"><pre class="language-go"><code><span class="token comment">// pkg/common/trace/textcarriers.go</span>
+<span class="token comment">// 这个文件使用不同的私有类型实现了 propagation.TextMapCarrier 接口，目的是让 propagators 可以从不同的结构体里存、取 trace 信息。</span>
+
+<span class="token keyword">package</span> trace
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+  <span class="token string">&quot;golang.org/x/exp/maps&quot;</span>
+  <span class="token string">&quot;google.golang.org/grpc/metadata&quot;</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> mapCarrier <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span>any
+
+<span class="token comment">// Get implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m mapCarrier<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> v<span class="token punctuation">,</span> ok <span class="token operator">:=</span> m<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> ok <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> v<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token string">&quot;&quot;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Keys implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m mapCarrier<span class="token punctuation">)</span> <span class="token function">Keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> maps<span class="token punctuation">.</span><span class="token function">Keys</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Set implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m mapCarrier<span class="token punctuation">)</span> <span class="token function">Set</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">,</span> value <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  m<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> grpcMetadataCarrier metadata<span class="token punctuation">.</span>MD
+
+<span class="token comment">// Get implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m grpcMetadataCarrier<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+  values <span class="token operator">:=</span> metadata<span class="token punctuation">.</span><span class="token function">MD</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> values<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token string">&quot;&quot;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Keys implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m grpcMetadataCarrier<span class="token punctuation">)</span> <span class="token function">Keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> maps<span class="token punctuation">.</span><span class="token function">Keys</span><span class="token punctuation">(</span>metadata<span class="token punctuation">.</span><span class="token function">MD</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Set implements propagation.TextMapCarrier.</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m grpcMetadataCarrier<span class="token punctuation">)</span> <span class="token function">Set</span><span class="token punctuation">(</span>key <span class="token builtin">string</span><span class="token punctuation">,</span> value <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  metadata<span class="token punctuation">.</span><span class="token function">MD</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-54a1e472><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-54a1e472></script></div></div></div></article></div> <!----></container> <div class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2024</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.6706b3d0.js" defer></script><script src="/assets/js/232.725a1bc8.js" defer></script>
+  </body>
+</html>
