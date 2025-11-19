@@ -4,10 +4,34 @@
         <title>小灰灰灰灰的博客</title>
         <link>https://blog.lyh543.cn/</link>
         <description>正在开发中的 Material Design 风格 Vuepress</description>
-        <lastBuildDate>Mon, 20 Oct 2025 09:12:56 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 19 Nov 2025 07:06:19 GMT</lastBuildDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <generator>https://github.com/webmasterish/vuepress-plugin-feed</generator>
         <atom:link href="https://blog.lyh543.cn/feed.atom" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[PostgreSQL 性能优化小技巧]]></title>
+            <link>https://blog.lyh543.cn/posts/2025-11-16-postgres-performance-optimization.tips.html</link>
+            <guid>https://blog.lyh543.cn/posts/2025-11-16-postgres-performance-optimization.tips.html</guid>
+            <pubDate>Sun, 16 Nov 2025 16:25:07 GMT</pubDate>
+            <description><![CDATA[在 PostgreSQL 中，EXPLAIN 命令可以帮助我们了解查询的执行计划，包括使用什么索引、使用的 JOIN 算法、在哪里耗时最多。
+
+通过结合 ChatGPT，我们即使刚接触 EXPLAIN 也能快速理解执行计划中的各个部分。只需将 EXPLAIN 的输出复制粘贴到 ChatGPT 中，并询问它关于查询性能的建议，ChatGPT 可以帮助我们识别潜在的瓶颈并提供优化建议。
+ ...]]></description>
+        </item>
+        <item>
+            <title><![CDATA[【WIP】 《量产自动驾驶》笔记]]></title>
+            <link>https://blog.lyh543.cn/posts/2025-10-25-mass-production-autonomous-driving.html</link>
+            <guid>https://blog.lyh543.cn/posts/2025-10-25-mass-production-autonomous-driving.html</guid>
+            <pubDate>Sat, 25 Oct 2025 16:17:22 GMT</pubDate>
+            <description><![CDATA[1986 年：卡梅隆大学 NavLab 1，神经网络，五台 PC，20km/h
+1995 年：卡梅隆大学 NavLab 5，加装前视摄像头、GPS
+2009 年：Google 研发自动驾驶汽车
+2013 年：百度深度学习研究院启动自动驾驶项目
+
+Robotaxi 成本不敏感，硬件可以在汽车量产后加装，计算平台可以使用 x86。
+
+量产自动驾驶对成本敏感，硬件需要在整车设计阶段考 ...]]></description>
+        </item>
         <item>
             <title><![CDATA[OpenTelemetry tracing 实测]]></title>
             <link>https://blog.lyh543.cn/posts/2025-10-15-open-telemetry-tracing.html</link>
@@ -244,24 +268,6 @@ OTA 的场景，和边 ...]]></description>
 ![启动错误](/images/boot-error.png ...]]></description>
             <enclosure url="https://blog.lyh543.cn/images/uefi-init.png">
             </enclosure>
-        </item>
-        <item>
-            <title><![CDATA[为 TypeScript 项目的 JS 依赖补充类型]]></title>
-            <link>https://blog.lyh543.cn/posts/2023-12-03-typescript-add-custom-typings.html</link>
-            <guid>https://blog.lyh543.cn/posts/2023-12-03-typescript-add-custom-typings.html</guid>
-            <pubDate>Mon, 08 Jan 2024 23:12:48 GMT</pubDate>
-            <description><![CDATA[本文使用的 TypeScript 版本为 5.3.2。示例代码已上传到 GitHub。
-
-在 TypeScript 项目中难免会用到一些 JS 库，TypeScript 官方支持使用 @types/ 的同名库来作为 JS 库的类型定义。如果 @types/ ...]]></description>
-        </item>
-        <item>
-            <title><![CDATA[调试 Flask 服务超时问题]]></title>
-            <link>https://blog.lyh543.cn/posts/2024-01-06-debug-on-flask-memory-leak.html</link>
-            <guid>https://blog.lyh543.cn/posts/2024-01-06-debug-on-flask-memory-leak.html</guid>
-            <pubDate>Sat, 06 Jan 2024 06:24:00 GMT</pubDate>
-            <description><![CDATA[最近在项目里遇到个 Flask 内存泄漏的问题，前前后后 debug 了几天。
-
-起因是有人报错，发现某个 Flask 服务出现了请求超过 3 分钟还没有返回结果。查服务日志有很多的 WORKER TIMEOUT，是 gunicorn 的进程超时后 kill 的机制。但是日志只能看到超时的进程 id，看不到是哪个请求超时了。正好这个服务上有一个比较耗时的 API（下称 API A），平均耗时在 ...]]></description>
         </item>
     </channel>
 </rss>
