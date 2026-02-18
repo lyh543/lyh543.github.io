@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nushell 环境配置 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="最近看《Unix 编程艺术》的时候看到一段，
+
+&gt; 也许 Unix 最持久的异议恰恰来自 Unix 哲学的一个特性，这一条特性是 X window 设计者首先明确提出的。X 致力于提供一套“机制，而不是策略”，以支持一套极端通用的图形操作，从而把使用工具箱和界面的“观感”（策略）推后到应用层。 Unix 其它系统级的服务也有类似的倾向：行为的最终逻辑被尽可能推后到使用端。Unix用户可以在多种 s ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.9c9ee6ba.js" as="script"><link rel="preload" href="/assets/js/235.829a0534.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>最近看《Unix 编程艺术》的时候看到一段，</p> <blockquote><p>也许 Unix 最持久的异议恰恰来自 Unix 哲学的一个特性，这一条特性是 X window 设计者首先明确提出的。X 致力于提供一套“机制，而不是策略”，以支持一套极端通用的图形操作，从而把使用工具箱和界面的“观感”（策略）推后到应用层。 Unix 其它系统级的服务也有类似的倾向：行为的最终逻辑被尽可能推后到使用端。Unix用户可以在多种 shell 中进行选择。而 Unix 应用程序通常会提供很多的行为选项和令人眼花缭乱的定制功能。</p></blockquote> <p>于是我想要尝试一些 zsh 以外的 shell。让豆包推荐了几个 shell 以后，选择了跨平台的 Nushell，作为老 Windows 用户不得不支持一下。</p> <p>豆包推荐的几个里很有特色的：</p> <ol><li>Nushell (Nu) — 最现代、数据型 Shell
+<ul><li>主打：像写代码一样用 Shell，结构化数据</li> <li>输出不是纯文本，是表格 / JSON / 对象</li> <li>天生支持：ls 彩色、语法高亮、自动补全</li> <li>跨平台：Linux/macOS/Windows 完全一致</li> <li>语法干净、现代，比 Bash 强太多</li> <li>适合：开发者、喜欢清爽结构化命令的人</li></ul></li> <li>Xonsh — Python 风格的 Shell
+<ul><li>主打：Python + Shell 混合写</li> <li>直接在命令行写 Python 代码</li> <li>兼容 Bash 命令</li> <li>可高度可编程</li> <li>适合：Python 开发者</li></ul></li></ol> <p>但是 Nushell 也有缺点：</p> <ul><li>Nushell 不兼容 POSIX 标准，导致不支持 <code>export</code> <code>source</code> <code>eval</code> 等语法，<strong>无法直接使用 <code>source ~/.profile</code> 完全无痛迁移 shell 通用的配置</strong>，一些工具链配置 shell 环境的时候也会有问题。Nushell 文档里提供了一个函数来导入其它脚本的变量，可以参考<a href="https://www.nushell.sh/zh-CN/cookbook/foreign_shell_scripts.html" target="_blank" rel="noopener noreferrer">官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>。</li></ul> <p><img src="/images/nushell-preview.png" alt="Preview Nushell"></p> <h2 id="安装-nushell"><a href="#安装-nushell" class="header-anchor">#</a> 安装 Nushell</h2> <ul><li>Linux：从包管理器安装，或者从 <a href="https://github.com/nushell/nushell/releases" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 下载。</li> <li>Windows：<code>choco install -y nushell starship</code>，或者从 <a href="https://github.com/nushell/nushell/releases" target="_blank" rel="noopener noreferrer">GitHub<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 下载。安装以后重启终端，Nushell 就出现在终端 App 的选项里了。</li></ul> <h2 id="nushell-启动"><a href="#nushell-启动" class="header-anchor">#</a> Nushell 启动</h2> <div class="language-sh extra-class"><pre class="language-sh"><code>nu
+</code></pre></div><h2 id="nushell-导入其它-shell-的环境变量"><a href="#nushell-导入其它-shell-的环境变量" class="header-anchor">#</a> Nushell 导入其它 Shell 的环境变量</h2> <p>以下摘自<a href="https://www.nushell.sh/zh-CN/cookbook/foreign_shell_scripts.html" target="_blank" rel="noopener noreferrer">官方文档<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>：</p> <blockquote><p>nu 的一个常见问题是，其他应用程序将环境变量或功能导出为 shell 脚本，这些脚本期望由你的 shell 运行。
+但许多应用程序只考虑最常用的 shell，如 bash 或 zsh。不幸的是，nu 与这些 shell 的语法完全不兼容，因此无法直接运行或 source 这些脚本。
+通常，通过调用 zsh 本身（如果已安装）来运行 zsh 脚本没有任何障碍。但不幸的是，这将不允许 nu 访问导出的环境变量：</p></blockquote> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 这可以工作，使用 zsh 打印 &quot;Hello&quot;</span>
+<span class="token string">'echo Hello'</span> <span class="token operator">|</span> <span class="token function">zsh</span> -c <span class="token variable">$in</span>
+
+<span class="token comment"># 这会退出并报错，因为 $env.VAR 未定义</span>
+<span class="token string">'export VAR=&quot;Hello&quot;'</span> <span class="token operator">|</span> <span class="token function">zsh</span> -c <span class="token variable">$in</span>
+print <span class="token variable">$env</span>.VAR
+</code></pre></div><p>文档提供了一个函数来解决这个问题。它的原理是启动一个 shell 来运行脚本，捕获运行前后的环境变量，然后比较两者的差异来确定哪些变量被更改了，最后把这些更改的变量导入到 nushell 的环境中。</p> <h2 id="更新-nushell-配置文件"><a href="#更新-nushell-配置文件" class="header-anchor">#</a> 更新 Nushell 配置文件</h2> <p>我的配置文件做了几件事：</p> <ol><li>通过文档提供的函数 <code>capture-foreign-env</code>，捕获 <code>~/.profile</code> 的内容，追加到了 <code>$nu.config-path</code> 里，这样每次启动 Nushell 的时候就会自动导入 <code>~/.profile</code> 里的环境变量了。</li> <li>因为 <code>PATH</code> 变量在 <code>~/.profile</code> 里是一个字符串，而 Nushell 期望它是一个列表，所以这里做了特殊处理，把它转换成列表。</li> <li>手动设置了 <code>LANG</code> 和 <code>LC_ALL</code> 变量，解决了 Nushell 的 locale 错误问题。</li></ol> <p>下面的命令行直接把这些配置写入了 <code>$nu.config-path</code>。</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token string">'def capture-foreign-env [
+    --shell (-s): string = /bin/sh
+    # 运行脚本的 shell
+    #（必须支持 '</span>-c<span class="token string">' 参数和 POSIX '</span><span class="token function">env</span><span class="token string">'、'</span><span class="token builtin class-name">echo</span><span class="token string">'、'</span><span class="token builtin class-name">eval</span><span class="token string">' 命令）
+    --arguments (-a): list&lt;string&gt; = []
+    # 传递给外部 shell 的额外命令行参数
+] {
+    let script_contents = $in;
+    let env_out = with-env { SCRIPT_TO_SOURCE: $script_contents } {
+        ^$shell ...$arguments -c `
+        env
+        echo '</span><span class="token operator">&lt;</span>ENV_CAPTURE_EVAL_FENCE<span class="token operator">&gt;</span><span class="token string">'
+        eval &quot;$SCRIPT_TO_SOURCE&quot;
+        echo '</span><span class="token operator">&lt;</span>ENV_CAPTURE_EVAL_FENCE<span class="token operator">&gt;</span><span class="token string">'
+        env -0 -u _ -u _AST_FEATURES -u SHLVL` # 过滤掉已知的更改变量
+    }
+    | split row '</span><span class="token operator">&lt;</span>ENV_CAPTURE_EVAL_FENCE<span class="token operator">&gt;</span><span class="token string">'
+    | {
+        before: ($in | first | str trim | lines)
+        after: ($in | last | str trim | split row (char --integer 0))
+    }
+
+    # 不幸的假设：
+    # 没有更改的环境变量包含换行符（无法干净解析）
+    $env_out.after
+    | where { |line| $line not-in $env_out.before } # 只获取更改的行
+    | parse &quot;{key}={value}&quot;
+    | transpose --header-row --as-record
+    | if $in == [] { {} } else { $in }
+}
+
+if ('</span>~/.profile<span class="token string">' | path exists) {load-env (open ~/.profile | capture-foreign-env --shell bash)}
+if (($env.PATH | describe) == '</span>string<span class="token string">') { $env.PATH = $env.PATH | split row (char esep) }  # PATH 变量需要特殊处理，因为它是一个字符串，而 nushell 期望它是一个列表
+
+$env.LANG = &quot;en_US.UTF-8&quot;
+$env.LC_ALL = &quot;en_US.UTF-8&quot;
+'</span> <span class="token operator">|</span> save -f <span class="token variable">$nu</span>.config-path
+</code></pre></div><h2 id="nushell-配置图标-starship"><a href="#nushell-配置图标-starship" class="header-anchor">#</a> Nushell 配置图标 (Starship)</h2> <ul><li>Windows 安装：如果上面没有用 choco 安装的话，还可以用 winget 安装：
+<code>winget install --id Starship.Starship</code></li> <li>Linux 安装：从包管理器安装 starship，或者 <code>curl -sS https://starship.rs/install.sh | sh</code></li></ul> <p>安装好以后，执行下面的命令来配置 Nushell 的 Starship：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkdir</span> <span class="token punctuation">(</span><span class="token variable">$nu</span>.data-dir <span class="token operator">|</span> path <span class="token function">join</span> <span class="token string">&quot;vendor/autoload&quot;</span><span class="token punctuation">)</span>
+starship init nu <span class="token operator">|</span> save -f <span class="token punctuation">(</span><span class="token variable">$nu</span>.data-dir <span class="token operator">|</span> path <span class="token function">join</span> <span class="token string">&quot;vendor/autoload/starship.nu&quot;</span><span class="token punctuation">)</span>
+
+<span class="token string">'eval &quot;$(starship init bash)&quot;'</span> <span class="token operator">|</span> save -f ~/.bashrc  <span class="token comment"># 顺便配置一下 bash 的 starship</span>
+
+nu  <span class="token comment"># 重启 Nushell</span>
+</code></pre></div><p>我个人喜欢在 Git Status 里显示数量，所以在 <code>~/.config/starship.toml</code> 里添加了下面的配置：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token string">'[git_status]
+disabled = false
+format = '</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">\</span><span class="token punctuation">[</span><span class="token variable">$all_status</span><span class="token variable">$ahead_behind</span><span class="token punctuation">\</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token variable">$style</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token string">'
+style = &quot;red bold&quot;
+stashed = '</span><span class="token punctuation">\</span>$<span class="token variable">${count}</span><span class="token string">'
+ahead = &quot;⇡${count}&quot;
+behind = &quot;⇣${count}&quot;
+diverged = &quot;⇕${count}&quot;
+conflicted = &quot;=${count}&quot;
+deleted = &quot;✘${count}&quot;
+renamed = &quot;»${count}&quot;
+modified = &quot;!${count}&quot;
+staged = &quot;+${count}&quot;
+untracked = &quot;?${count}&quot;
+'</span> <span class="token operator">|</span> save -f ~/.config/starship.toml
+</code></pre></div></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-54a1e472><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-54a1e472></script></div></div></div></article></div> <!----></container> <div class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2024</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.9c9ee6ba.js" defer></script><script src="/assets/js/235.829a0534.js" defer></script>
+  </body>
+</html>

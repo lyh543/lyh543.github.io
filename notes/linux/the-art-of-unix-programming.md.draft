@@ -1,0 +1,16 @@
+---
+title: 《Unix 编程艺术》读书笔记
+date: 2026-02-18 17:20:39
+image:
+tags:
+- Linux
+- 读书笔记
+---
+
+这本书的 PDF 可以在 [GitHub](https://github.com/lancetw/ebook-1/blob/master/01_programming/UNIX%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF%EF%BC%88%E4%B8%AD%E6%96%87%EF%BC%89.pdf) 上获得。
+
+## Unix 哲学
+
+### Unix 提供的是机制而非策略
+
+作为一个操作系统，它更倾向于提供眼花缭乱的选项（机制）。对于用户使用哪些选项（策略），交给更上层的应用来做。所以 sh、X Window 这些基础的工具会很难用，用户可以采用一些更上层的工具（比如 zsh、QT 等等）。

@@ -6,6 +6,14 @@
     "description": "正在开发中的 Material Design 风格 Vuepress",
     "items": [
         {
+            "id": "https://blog.lyh543.cn/posts/2026-02-18-nushell.html",
+            "url": "https://blog.lyh543.cn/posts/2026-02-18-nushell.html",
+            "title": "Nushell 环境配置",
+            "summary": "最近看《Unix 编程艺术》的时候看到一段，\n\n> 也许 Unix 最持久的异议恰恰来自 Unix 哲学的一个特性，这一条特性是 X window 设计者首先明确提出的。X 致力于提供一套“机制，而不是策略”，以支持一套极端通用的图形操作，从而把使用工具箱和界面的“观感”（策略）推后到应用层。 Unix 其它系统级的服务也有类似的倾向：行为的最终逻辑被尽可能推后到使用端。Unix用户可以在多种 s ...",
+            "image": "https://blog.lyh543.cn/images/nushell-preview.png",
+            "date_modified": "2026-02-18T17:50:30.000Z"
+        },
+        {
             "id": "https://blog.lyh543.cn/posts/2025-11-16-postgres-performance-optimization.tips.html",
             "url": "https://blog.lyh543.cn/posts/2025-11-16-postgres-performance-optimization.tips.html",
             "title": "PostgreSQL 性能优化小技巧",
@@ -147,14 +155,6 @@
             "summary": "白皮书入口 | 下载链接\n\nOTA 的目标\n\nOTA 的场景，和边 ...",
             "image": "https://blog.lyh543.cn/images/ubutu-core-ota-title.png",
             "date_modified": "2024-03-03T21:30:45.000Z"
-        },
-        {
-            "id": "https://blog.lyh543.cn/posts/2024-02-29-boot-from-an-efi-shell.html",
-            "url": "https://blog.lyh543.cn/posts/2024-02-29-boot-from-an-efi-shell.html",
-            "title": "从 EFI Shell 引导系统（转载）",
-            "summary": "本文转载自 halfa 的博文 Boot from an EFI Shell，并进行了翻译。\n\n今天启动 PVE 集群上的几个虚拟机的时候，出现了下图的报错。\n\n![启动错误](/images/boot-error.png ...",
-            "image": "https://blog.lyh543.cn/images/uefi-init.png",
-            "date_modified": "2024-02-28T17:29:16.000Z"
         }
     ]
 }
