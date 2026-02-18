@@ -13,7 +13,7 @@
 
 &gt; 也许 Unix 最持久的异议恰恰来自 Unix 哲学的一个特性，这一条特性是 X window 设计者首先明确提出的。X 致力于提供一套“机制，而不是策略”，以支持一套极端通用的图形操作，从而把使用工具箱和界面的“观感”（策略）推后到应用层。 Unix 其它系统级的服务也有类似的倾向：行为的最终逻辑被尽可能推后到使用端。Unix用户可以在多种 s ...">
     
-    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.9c9ee6ba.js" as="script"><link rel="preload" href="/assets/js/235.829a0534.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.760353ec.js" as="script"><link rel="preload" href="/assets/js/235.8c2e0357.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
@@ -62,8 +62,8 @@ print <span class="token variable">$env</span>.VAR
 if ('</span>~/.profile<span class="token string">' | path exists) {load-env (open ~/.profile | capture-foreign-env --shell bash)}
 if (($env.PATH | describe) == '</span>string<span class="token string">') { $env.PATH = $env.PATH | split row (char esep) }  # PATH 变量需要特殊处理，因为它是一个字符串，而 nushell 期望它是一个列表
 
-$env.LANG = &quot;en_US.UTF-8&quot;
-$env.LC_ALL = &quot;en_US.UTF-8&quot;
+$env.LANG = &quot;zh_CN.UTF-8&quot;
+$env.LC_ALL = &quot;zh_CN.UTF-8&quot;
 '</span> <span class="token operator">|</span> save -f <span class="token variable">$nu</span>.config-path
 </code></pre></div><h2 id="nushell-配置图标-starship"><a href="#nushell-配置图标-starship" class="header-anchor">#</a> Nushell 配置图标 (Starship)</h2> <ul><li>Windows 安装：如果上面没有用 choco 安装的话，还可以用 winget 安装：
 <code>winget install --id Starship.Starship</code></li> <li>Linux 安装：从包管理器安装 starship，或者 <code>curl -sS https://starship.rs/install.sh | sh</code></li></ul> <p>安装好以后，执行下面的命令来配置 Nushell 的 Starship：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkdir</span> <span class="token punctuation">(</span><span class="token variable">$nu</span>.data-dir <span class="token operator">|</span> path <span class="token function">join</span> <span class="token string">&quot;vendor/autoload&quot;</span><span class="token punctuation">)</span>
@@ -98,6 +98,6 @@ untracked = &quot;?${count}&quot;
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.9c9ee6ba.js" defer></script><script src="/assets/js/235.829a0534.js" defer></script>
+    <script src="/assets/js/app.760353ec.js" defer></script><script src="/assets/js/235.8c2e0357.js" defer></script>
   </body>
 </html>
