@@ -13,7 +13,7 @@
 
 &gt; 也许 Unix 最持久的异议恰恰来自 Unix 哲学的一个特性，这一条特性是 X window 设计者首先明确提出的。X 致力于提供一套“机制，而不是策略”，以支持一套极端通用的图形操作，从而把使用工具箱和界面的“观感”（策略）推后到应用层。 Unix 其它系统级的服务也有类似的倾向：行为的最终逻辑被尽可能推后到使用端。Unix用户可以在多种 s ...">
     
-    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.85ad9d8a.js" as="script"><link rel="preload" href="/assets/js/235.8c0e060a.js" as="script">
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.771d04b4.js" as="script"><link rel="preload" href="/assets/js/235.5e4ef844.js" as="script">
     <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
   </head>
   <body>
@@ -66,8 +66,10 @@ http get https://raw.githubusercontent.com/tesujimath/bash-env-json/refs/heads/m
 <span class="token function">chmod</span> a+x ~/.local/bin/bash-env-json
 </code></pre></div><p>更新 <code>config.nu</code> 来加载 <code>bash-env.nu</code> 模块，并从 <code>~/.profile</code> 导入环境变量：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token string">'# 加载 base-env.nu 来从 .profile 中提取环境变量
 $env.PATH ++= [($env.HOME | path join &quot;.local/bin&quot;)]
+$env.NUSHELL_IMPORT_BASH_ENV = 1  # 在 ~/.profile 里可以用这个环境变量来判断是否在 Nushell 里，从而跳过一些不必要的环境变量设置
 use modules/bash-env.nu
 if ('</span>~/.profile<span class="token string">' | path exists) {bash-env ~/.profile | load-env}
+hide-env NUSHELL_IMPORT_BASH_ENV  # 导入完以后就删除这个环境变量
 # PATH 变量需要特殊处理，因为它是一个字符串，而 nushell 期望它是一个列表
 if (($env.PATH | describe) == '</span>string<span class="token string">') { $env.PATH = $env.PATH | split row (char esep) }  
 
@@ -128,6 +130,6 @@ liu <span class="token keyword">in</span> 🌐 Home-Server <span class="token ke
         <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
           vuepress-theme-blog-material
         </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.85ad9d8a.js" defer></script><script src="/assets/js/235.8c0e060a.js" defer></script>
+    <script src="/assets/js/app.771d04b4.js" defer></script><script src="/assets/js/235.5e4ef844.js" defer></script>
   </body>
 </html>
