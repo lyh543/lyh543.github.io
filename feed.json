@@ -13,13 +13,6 @@
             "date_modified": "2026-04-06T11:23:48.000Z"
         },
         {
-            "id": "https://blog.lyh543.cn/posts/2026-04-06-vibe-coding-a-win-ui-gallery-app.html",
-            "url": "https://blog.lyh543.cn/posts/2026-04-06-vibe-coding-a-win-ui-gallery-app.html",
-            "title": "Vibe Coding 写一个 Win UI 相册",
-            "summary": "模型评分：claude sonnet nb。gpt 是什么玩意，写出来的东西连窗口启动不了。\n编辑器评分：cursor ≈ vscode + github copilot chat  > vscode + claude code plugin > claude code cli。claude code cli  不原生支持多 session\n\nc#和windows开发零基础，花了一周时间，实现了7 ...",
-            "date_modified": "2026-04-06T11:23:48.000Z"
-        },
-        {
             "id": "https://blog.lyh543.cn/posts/2026-03-29-conducting-smarter-intelligences-than-me.html",
             "url": "https://blog.lyh543.cn/posts/2026-03-29-conducting-smarter-intelligences-than-me.html",
             "title": "《指挥 LLM 读超大项目的代码、并编写报告》阅读笔记",
@@ -153,6 +146,14 @@
             "title": "不同电子设备上的阅读体验",
             "summary": "有次在北京大兴机场候机，在机场里的国家图书馆分馆借了本书看，觉得偶尔看看书也挺不错，捡回了这个习惯。随着我对自己的阅读需求和体验了解得更加清晰，我阅读的设备也从 Kindle 变到平板电脑、电脑显示器。有句话叫差生文具多，我就先对号入座了。\n\n阅读设备\n\n纸质书\n\n不得不说，阅读纸质书的感觉很好，比如书本印刷的味道，还有翻书时的刷刷声。不过纸质书的收纳、整理和搬运就比较蛋疼了，高 ...",
             "date_modified": "2024-04-09T12:59:00.000Z"
+        },
+        {
+            "id": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html",
+            "url": "https://blog.lyh543.cn/posts/2024-05-12-deep-dive-into-kubernetes-note/1-pod.html",
+            "title": "《深入剖析 Kubernetes》 笔记 - 容器和 Pod",
+            "summary": "本篇是《深入剖析 Kubernetes》 的读书笔记，作者为张磊老师。\n\n第五章《Kubernetes 编排原理》讲的内容都还比较实用，基本上都是在使用 Kubernetes 中就会接触到的概念和功能。\n\nKubectl Cheatsheet\n\n创建/更新一个 yaml 文件：kubectl apply -f xxx.yaml\n查询资源列表：kubectl get pods， ...",
+            "image": "https://blog.lyh543.cn/images/k8s-controller-workflow.jpg",
+            "date_modified": "2024-04-02T19:55:49.000Z"
         }
     ]
 }
