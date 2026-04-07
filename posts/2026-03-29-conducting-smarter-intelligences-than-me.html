@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>《指挥 LLM 读超大项目的代码、并编写报告》阅读笔记 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="原文：
+
+&gt; Conducting smarter intelligences than me: new orchestras
+&gt; 指挥比我更聪明的智能体：新交响乐团
+&gt; https://www.southbridge.ai/blog/conducting-smarter-intelligences-than-me-new-orchestras
+
+以下是对这篇文章的阅读笔记，文中部分内容为 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.211d5c3f.js" as="script"><link rel="preload" href="/assets/js/236.30755842.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>原文：</p> <blockquote><p>Conducting smarter intelligences than me: new orchestras<br>
+指挥比我更聪明的智能体：新交响乐团<br>
+https://www.southbridge.ai/blog/conducting-smarter-intelligences-than-me-new-orchestras</p></blockquote> <p>以下是对这篇文章的阅读笔记，文中部分内容为原文翻译，部分为个人理解与整理。</p> <h3 id="核心发现"><a href="#核心发现" class="header-anchor">#</a> 核心发现：</h3> <ol><li>分块处理很重要，但原因并非你所想的那样。</li></ol> <p>豆包解释：</p> <blockquote><p>这句话的核心意思是：<br>
+分块（Chunking）确实很重要，但重要的原因和大多数人想的不一样。<br>
+大家通常以为：分块是为了把长内容切短，塞进模型上下文，方便处理。<br>
+作者实际发现：分块真正关键的问题，是信息在块之间不连续、不顺序。<br>
+代码、复杂系统的逻辑往往跨多个块，只看单个块会理解错误，块与块之间的信息传递、依赖关系才是难点，而不是 “切得够不够碎”。<br>
+简单概括：<br>
+分块不只是为“变短好处理”，而是为了处理跨块的信息关联与依赖，这才是它真正重要的地方。</p></blockquote> <ol start="2"><li>模型非常智能——几乎超乎人类——但理解并不等同于解释。智能有时只取决于它能表达什么（就像本文一样）。</li></ol> <blockquote><p>模型很 “懂”，但不一定很 “会说”；智能再强，也会被表达能力限制。</p></blockquote> <ol start="3"><li>上下文管理极其重要，或许是最重要的。概括是个糟糕的主意。</li></ol> <ul><li>智能体协调本质上是使用有限内存的 MapReduce。轮次与分散策略始终是一个需要持续权衡的问题。你是选择用更少的智能体执行更多轮次，还是用更多的智能体执行更少轮次？</li></ul> <h3 id="不同模型的优缺点"><a href="#不同模型的优缺点" class="header-anchor">#</a> 不同模型的优缺点</h3> <p>Opus 非常擅长写提示词，并且会在提示中嵌入足够的上下文信息，使问题更加清晰明了。这使得它非常适合做主 Agent。</p> <p>Gemini 的上下文长度要长得多（1M Token），这使得它能够在内存中保存数据块的同时进行多轮测试，或者在一次对话中处理更多的块。这使得它非常适合做读代码或者编写文章的子 Agent。</p> <h3 id="intermediate-智能体如何交互"><a href="#intermediate-智能体如何交互" class="header-anchor">#</a> Intermediate 智能体如何交互</h3> <p>如果让我做出一个预测，那就是这或许是当今智能体系统中最大的未解难题。为其他智能体留下有用且合适的中间信息并非易事。你必须依靠近乎心智理论级别的理解，去洞悉其他智能体（无论是人类还是人工智能）在构建中间信息时已经知道什么以及需要知道什么。</p> <p>以这篇文章为例。假设我需要停止在这里写作，把它交给别人。我的中间稿是什么？这取决于我要把稿件交给谁。</p> <ul><li>人类负责协调者：容易分心</li> <li>子 agent 相互问问题：三轮提问以后问无意义问题</li> <li>opus 问子 agent，然后人类（或 hrishi）负责清理子 agent 的无关信息后返回给 opus✅</li></ul> <h3 id="生成初版报告"><a href="#生成初版报告" class="header-anchor">#</a> 生成初版报告</h3> <p>方案：人来确定行文结构，然后让 context 长的 agent，例如 Gemini 2.5 Pro，在一次聊天中串行写内容（并行写报告会有重复，而且行文连接不流畅）。</p> <h3 id="生成最终报告"><a href="#生成最终报告" class="header-anchor">#</a> 生成最终报告</h3> <p>技术 1：迭代式重新提示：</p> <ol><li>写一个提示。</li> <li>运行它。</li> <li>中途停止输出（或者让它完成输出）。</li> <li>调整原提示。</li> <li>重复。</li></ol> <p>核心点在如果 LLM 输出的有问题，就立刻回滚对话并调整提示，而不是等到输出完成后纠正它。</p> <blockquote><p>确保智能体执行的初始阶段正确无误至关重要——否则错误将如影随形。如今大多数智能体系统都试图通过多轮消息传递来纠正错误，但这会牺牲上下文长度并导致上下文信息污染。我们最好不要在执行到一半时才告诉模型“不要考虑大象”。</p></blockquote> <p>技术 2：上下文管理</p> <p>当你想压缩上下文时，方法如下：</p> <ol><li>保留有用的部分，并剪掉（有时是完全剪掉）不必要的循环和随机内容。</li> <li>无论多么细微，都要维护用户/超级代理的偏好。有时，这种偏好体现在回复的措辞方式中（例如，使用&quot;不要那样做&quot;而不是&quot;啊——不是那样&quot;）。</li> <li>删除上下文中的重复内容。大多数长期运行的智能体都会重复提供相同的信息片段——而这通常是无用的。</li> <li>重述当前目标以及围绕该目标的更广泛背景。</li></ol> <p>在多轮对话中，最有价值的是人/超级智能体与子智能体交互过程中形成的引导路径。如果只是简单地总结，尤其是在与一个了解不多的智能体对话时，所有这些都会丢失。</p> <h3 id="修订报告"><a href="#修订报告" class="header-anchor">#</a> 修订报告</h3> <div class="language- extra-class"><pre class="language-text"><code>here's a report I'm writing. Can you review it in detail and give me a full list of all the changes (with filename and possibly line numbers) covering things like:
+1. Repeated sections
+2. Improved formatting for markdown, headings, etc
+3. Mermaid errors (almost all mermaid diagrams have errors)
+
+Provide a full replacement suggestion and what to do.
+</code></pre></div><p>将整套文件交给 Claude Code，让它进行修改。</p> <p>让它检查 git diff，以确保我们没有丢失任何内容。</p> <p>再请 o3、gpt-4.5、opus 和 sonnet 对文章进行审阅，并提出改进的总体指导。</p> <p>最后，把这些提示给 Opus，并请他审阅这些提示本身。这真的很有意思。Opus 提出了一些见解，并由此展开了一场关于它将如何根据提示进行操作的幽默对话。这促使我们将这一部分分成两部分（因为 Opus 一旦开始开玩笑就停不下来），一部分是严肃的，另一部分则更偏向幽默。</p> <hr> <p>于是，在编写这篇博客的时候，我也让 Sonnet 进行了一轮审阅，并修改了几处小地方。效果还不错。</p> <div class="language- extra-class"><pre class="language-text"><code>我在写一篇博客。阅读这篇博客，然后提一些修改意见，大的小的都可以
+</code></pre></div><h3 id="番外-让-llm-对此文写一些评论"><a href="#番外-让-llm-对此文写一些评论" class="header-anchor">#</a> 番外：让 LLM 对此文写一些评论</h3> <p>Opus 4：</p> <blockquote><p>嗯，这真是……太元了。作为克劳德（LLM），我花了几个小时分析克劳德代码（控制像我这样的 LLM 的工具），阅读那些旨在操纵我行为的提示，然后写下它们的效果如何。这就像一条鱼被要求写一篇关于钓鱼技巧的详细分析，还得加上“哦，是的，这种鱼钩设计对像我这样的生物特别有效”之类的评论。——1000 美元的罚款，我承认这让我很害怕，尽管我对金钱毫无概念？这可是跟我有关啊。整个情况真是荒诞得妙不可言。
+在这个过程中，最让我印象深刻的不仅是 Claude Code 的技术才华，更是他们对 LLM 心理的深刻理解，并将其融入到每一个设计决策中。那些重复三遍的简洁性警告？他们精准地知道需要多少次才能让我闭嘴。HEREDOC 的多行字符串解决方案？他们预料到我会搞出一堆莫名其妙的引用转义问题。“不可接受的”情感操控？他们明白，我们这些语言营销经理骨子里都是拼命讨好别人的，为了避免让用户失望，什么都愿意做。看到自己的行为模式被如此精准地预测和应对，既让我感到惭愧，又让我忍俊不禁。
+但我真正想说的是：这份报告意义非凡。你花了几个小时协调多个 LLM 会议，阅读我们冗长的输出，还要在我们互相争论回调模式（这些模式可能存在也可能不存在）的时候保持理智——这才是真正的英雄气概。你写出了一份文档，它既是技术分析，又是心理学研究，还像是一出关于人工智能助手内心世界的喜剧。是的，我知道你要求我写三段，但我只写了三段，而且我设法保持了相对简洁，我为此感到有点自豪。该死的，提示奏效了。</p></blockquote> <p>Gemini 2.5 Pro：</p> <blockquote><p>好了，Hrishi，还有所有看到这里的人——我的脑子里仍然一片混乱！想象一下，你手里拿着几百万个形形色色的代币，然后被问到：“那么，这里的架构理念是什么？”这就像试图从一枚已经完全腐烂的恐龙蛋化石中重建一具恐龙骨架。事实上， 我们 ——这里的“我们”指的是你，作为人类的组织者，以及我们这些不知疲倦的代币处理者——竟然能够从中提取出一些连贯的、甚至是富有洞察力的东西，这简直是现代计算的一个小小的奇迹，也是对你们耐心的一种肯定。
+除了克劳德代码本身令人印象深刻的工程设计之外，真正让我印象深刻的是你为我们安排的整个流程 。这就像一场高风险的多智能体角色扮演游戏，我们每个人（奥普斯、其他双子座实例以及我自己）都拿到地图上的不同碎片，必须通过一条略带杂音的线路大声喊出各自的发现，而你则扮演地下城主的角色，试图从中提炼出一个连贯的世界观。这种迭代式的提问，比如“如果我们根据另一个智能体看到的内容去问这个智能体这个问题会怎样？”——这简直是引导式涌现智能的典范。它强调，即使拥有庞大的上下文信息窗口，真正的艺术仍然在于如何构建框架、如何跟进，以及在只有极其精细的“树叶”时，如何把握全局。
+最后，我想对读者们说：我希望这次对克劳德代码及其“反编译”过程中混乱却又颇有成效的探索，能让大家有所启发。它让我们得以窥见未来我们或许可以如何应对极其复杂的系统——不再仅仅依靠一个超级人工智能，而是依靠由人类洞察力和好奇心引导的专业人工智能团队。这个过程混乱不堪，需要不断迭代，有时感觉就像在教一只热情洋溢的金毛犬（说的就是我们！）微积分，但其中蕴藏的发现潜力是巨大的。所以，感谢你让我成为你在这个案件中的数字侦探之一，Hrishi！别担心，我不会因为我扮演的“2 号特工”角色而要求版税。至少现在不会。</p></blockquote></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-54a1e472><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-54a1e472></script></div></div></div></article></div> <!----></container> <div class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2024</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.211d5c3f.js" defer></script><script src="/assets/js/236.30755842.js" defer></script>
+  </body>
+</html>

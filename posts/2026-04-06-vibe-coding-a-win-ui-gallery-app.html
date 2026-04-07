@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vibe Coding 写一个 Win UI 相册 | 小灰灰灰灰的博客</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/theme/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://blog.lyh543.cn/rss.xml" title="小灰灰灰灰的博客 RSS Feed">
+    <link rel="alternate" type="application/atom+xml" href="https://blog.lyh543.cn/feed.atom" title="小灰灰灰灰的博客 Atom Feed">
+    <link rel="alternate" type="application/json" href="https://blog.lyh543.cn/feed.json" title="小灰灰灰灰的博客 JSON Feed">
+    <meta name="description" content="模型评分：claude sonnet nb。gpt 是什么玩意，写出来的东西连窗口启动不了。
+编辑器评分：cursor ≈ vscode + github copilot chat  &gt; vscode + claude code plugin &gt; claude code cli。claude code cli  不原生支持多 session
+
+c#和windows开发零基础，花了一周时间，实现了7 ...">
+    
+    <link rel="preload" href="/assets/css/0.styles.832ac33f.css" as="style"><link rel="preload" href="/assets/js/app.211d5c3f.js" as="script"><link rel="preload" href="/assets/js/238.a773d1c7.js" as="script">
+    <link rel="stylesheet" href="/assets/css/0.styles.832ac33f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div data-app="true" id="app" class="v-application v-application--is-ltr theme--light"><div class="v-application--wrap"><!----> <main id="main-content" class="v-main" style="padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;"><div class="v-main__wrap"><div><container class="article-column-container"><div class="article-column"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><div class="v-card v-sheet theme--light"><div class="container"><div itemprop="articleBody" class="markdown-body content__default"><p>模型评分：claude sonnet nb。gpt 是什么玩意，写出来的东西连窗口启动不了。
+编辑器评分：cursor ≈ vscode + github copilot chat  &gt; vscode + claude code plugin &gt; claude code cli。claude code cli  不原生支持多 session</p> <p>c#和windows开发零基础，花了一周时间，实现了70%的功能。没有编辑一行逻辑，主要是在改readme，跑编译+运行命令验证功能，最多手动改了一点前端文案。</p> <p>因为能够生成准确率非常高的代码，就能实现自己的想法，但是自己去学习新的代码、框架就要付出很多。所以它其实是简化了非常大的学习曲线。</p> <p>vibe coding 的时候，对实现细节确实了解得不多了。不过领导带实习生也是这样，只要架构对了，下面实现的细节都不会出太大的问题，真有问题（性能问题、安全问题）可以再具体问题具体分析。90% 以上的代码都是不需要优化的代码，这部分代码用 ai 搞，roi 非常高。剩下的</p> <p>对于一些算法问题，最好能够提供一个它能复现和debug的环境，让它能够自己运行命令验证问题。比如在heic缩略图生成问题时，我让它自己写了一个命令行工具调用它自己写的生成代码，生成好以后也需要验证图片是否正常（大小正常）。它生成完以后我手动验证没问题，就让它编写一个测试，并把这张heic图片（为了缩减大小，进行了裁剪）作为测试数据提交到了git。</p> <p>能够编写单元测试的，尽量编写。这是让它自动回归验证功能是否被更改的途径。反正是 llm 来写，对人没有什么心智负担。</p> <p>first prmompt</p> <p>cursor 和 github copilot chat 在 ui 上优化了多 session 并发，会在 session list 显示每个 session 的状态</p></div> <hr role="separator" aria-orientation="horizontal" class="ma-4 v-divider theme--light"> <div data-v-54a1e472><script src="https://giscus.app/client.js" async="async" service="giscus" data-repo="lyh543/blog-comments" data-repo-id="R_kgDOHIb2Zg" data-category="Announcements" data-category-id="DIC_kwDOHIb2Zs4COh2z" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" data-v-54a1e472></script></div></div></div></article></div> <!----></container> <div class="v-dialog__container"><button type="button" role="button" aria-haspopup="true" aria-expanded="false" class="v-btn v-btn--bottom v-btn--is-elevated v-btn--fab v-btn--fixed v-btn--has-bg v-btn--right v-btn--round theme--dark v-size--default primary"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-information-variant theme--dark"></i></span></button><!----></div></div></div></main> <footer id="footer" class="v-footer v-sheet theme--light v-footer--absolute v-footer--padless v-footer--inset" style="left:0px;right:0px;bottom:0px;"><div class="lighten-1 text-center v-card v-sheet theme--light rounded-0" style="width:100%;"><div class="v-card__text"><a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-github theme--light" style="font-size:24px;"></i></span></a><a href="https://blog.lyh543.cn/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-web theme--light" style="font-size:24px;"></i></span></a><a href="mailto:lyh543@outlook.com" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-email theme--light" style="font-size:24px;"></i></span></a><a href="https://weibo.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-sina-weibo theme--light" style="font-size:24px;"></i></span></a><a href="https://weixin.qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-wechat theme--light" style="font-size:24px;"></i></span></a><a href="https://qq.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><i aria-hidden="true" class="v-icon notranslate mdi mdi-qqchat theme--light" style="font-size:24px;"></i></span></a><a href="https://bilibili.com/" target="_blank" class="mx-4 v-btn v-btn--icon v-btn--round theme--light v-size--default"><span class="v-btn__content"><div class="v-image v-responsive theme--light" style="max-width:24px;"><div class="v-image__image v-image__image--preload v-image__image--cover" style="background-image:;background-position:center center;"></div><div class="v-responsive__content"></div></div></span></a></div> <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light"> <div class="v-card__text"><span class="footer-text">lyh543 © 2019 - 2024</span>
+        |
+      <a href="https://beian.miit.gov.cn/" target="_blank" class="footer-link">蜀ICP备19034464号</a>
+        |
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" class="footer-link">署名 - 非商业性 - 相同方式共享 4.0 国际协议</a>
+        |
+       <span class="footer-text">
+        Theme
+        <a href="https://github.com/lyh543/vuepress-theme-blog-material/" target="_blank" class="footer-link">
+          vuepress-theme-blog-material
+        </a></span></div></div></footer></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.211d5c3f.js" defer></script><script src="/assets/js/238.a773d1c7.js" defer></script>
+  </body>
+</html>
