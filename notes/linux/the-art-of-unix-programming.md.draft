@@ -320,7 +320,7 @@ Glade 是一个用于设计 GTK+ 用户界面的工具。它使用 XML 作为其
 </interface>
 ```
 
-这种声明式语法也大量运用在现代的 UI 框架中，例如 Android 的 XML 布局文件，React 的 JSX，Flutter 的 Dart 代码等等。
+这种声明式语法也大量运用在现代的 UI 框架中，例如 Android 的 XML 布局文件、HTML、Windows 的 XAML 代码等等。
 
 
 
