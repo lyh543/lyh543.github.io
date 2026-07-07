@@ -1,0 +1,166 @@
+---
+title: 服务器一键搭建 V2Ray + WebSocket
+date: 2020-05-22 11:26:55
+tags: 
+- 服务器
+- 代理
+- Linux
+category:
+- Linux
+---
+
+## 前置需求
+
+* 一个域名，且已以 A 记录指向服务器
+
+## Docker 一键安装法
+
+### 安装 Docker
+
+一键脚本安装。如果不行，可以尝试到 Docker 官网上找方法，或者参考[另一篇博文](/notes/linux/docker.html#手动安装)。
+
+```sh
+bash <(curl -s https://get.docker.com)
+```
+
+### 安装 V2Ray 服务器端
+
+一行命令，但是有需要修改的参数。
+
+> 参考：https://github.com/pengchujin/v2rayDocker
+
+```sh
+docker run -d --name v2ray -p 443:443 -p 80:80 -v $HOME/.caddy:/root/.caddy pengchujin/v2ray_ws:0.10 YOURDOMAIN.COM V2RAY_WS && sleep 3s && sudo docker logs v2ray
+```
+
+* `YOURDOMAIN.COM`：指向你的服务器 IP 的域名
+
+修改好上述命令后，粘贴到命令行中执行。
+
+三条命令监控 V2Ray：
+
+```sh
+docker start v2ray      # 启动 v2ray 并重新申请 SSL 证书
+docker stop v2ray       # 停止 v2ray
+docker logs v2ray       # 输出日志，可在这里查看 vmess 链接
+```
+
+链接可在 `docker logs v2ray` 中查看。
+
+logs 中有一个安卓链接，一个 ios 链接，PC 用安卓的链接即可。
+
+### shell 脚本安装法
+
+https://github.com/233boy/v2ray/tree/master
+
+## 客户端推荐
+
+* Windows: [V2RayN](https://github.com/2dust/v2rayN/releases)
+* Android: [V2RayNG](https://github.com/2dust/v2rayNG)
+* Linux: [V2RayA docker](https://hub.docker.com/r/mzz2017/v2raya)  `docker run -d --restart=always --privileged --network=host --name v2raya -v /etc/v2raya:/etc/v2raya mzz2017/v2raya`
+* MacOS: [V2RayA docker](https://hub.docker.com/r/mzz2017/v2raya) `docker run -d -p 2017:2017 -p 20170-20172:20170-20172 --restart=always --name v2raya -v /etc/v2raya:/etc/v2raya mzz2017/v2raya`
+
+
+## 部分错误及解决方案
+
+### 更新 V2Ray 客户端
+
+如果服务器给了 V2Ray 链接，但本地无法使用这个成功连接，可能是镜像中的 V2Ray 版本太老。下面将下载最新的 V2Ray 客户端并替换。
+
+首先进入容器内的命令行：
+
+```sh
+docker exec -it v2ray /bin/sh
+```
+
+在容器中的命令行中依次执行：
+
+```sh
+cd /usr/bin
+wget https://github.com/v2ray/v2ray-core/releases/latest/download/v2ray-linux-64.zip
+unzip v2ray-linux-64.zip v2ray v2ctl
+rm v2ray-linux-64.zip
+exit
+```
+
+退出容器后，再重启 V2Ray 客户端：
+
+```sh
+docker restart v2ray
+```
+
+## 配置 BBR
+
+搭上梯子以后，发现有时候丢包率有 40% 左右。
+
+Google 了一下，说是可以开启 BBR 以实现加速。BBR 是什么、为什么能提升代理的速度、如何开启，可以看下面两篇博客。
+
+注意，BBR 是针对 TCP 发包的，也就是说，设置好以后，对于所有代理软件和服务器上的所有网页等都会生效。
+
+[BBR是什么？](https://tech.jandou.com/CentOS7-Google-BBR.html)
+
+> 转载：[Ubuntu 18.04/18.10快速开启Google BBR的方法](https://www.moerats.com/archives/612/)
+
+提示：Ubuntu 18.10 依然可以用该方法开启 BBR，而对于 19.04 和 20.04、貌似官方直接给你开启了 BBR，不需要重复开启了。
+
+1. 修改系统变量并保存生效
+
+```sh
+sudo su
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p
+```
+
+2. 查看内核是否已开启 BBR
+
+```sh
+$ sysctl net.ipv4.tcp_available_congestion_control
+# 显示以下即已开启：
+net.ipv4.tcp_available_congestion_control = bbr cubic reno
+```
+
+3. 查看 BBR 是否启动
+
+```sh
+$ lsmod | grep bbr
+# 显示以下即启动成功：
+tcp_bbr                20480  14
+```
+
+## 借助国内的服务器进行中转
+
+有些时候会发现，即使开启了 BBR，速度依旧很慢。但是如果经由国内的服务器中转（即本地客户端 \<-\> 国内服务器 \<-\> 国外服务器 \<-\> Google），速度会快一些。
+
+下面将基于国外服务器已经按[上文](#安装-v2ray-服务器端)搭建好 V2Ray 客户端的情形下，在本地客户端进行反向代理。
+
+假设国外服务器的域名为 `proxy-server.mydomain.com`，国内服务器域名为 `transit-server.mydomain.com`。
+
+### 国外服务器
+
+国外服务器已经按照上文搭建好服务器，并得到了其 VMESS 链接。
+
+### 国内服务器
+
+国内服务器需要使用反向代理。可以用 Nginx/Apache 实现，也可以用 Caddy 实现。这里使用 Caddy。
+
+[安装 Caddy](https://caddyserver.com/docs/install) 后，在 `/etc/caddy/Caddyfile` 中写入：
+
+```
+transit-server.mydomain.com {
+    reverse_proxy proxy-server.mydomain.com:443 {
+        header_up Host {http.reverse_proxy.upstream.hostport}
+    }
+}
+```
+
+然后重启（或重载） Caddy：
+
+```sh
+sudo systemctl stop caddy
+sudo systemctl start caddy
+```
+
+### 本地客户端
+
+将国外服务器的 VMESS 链接导入 V2Ray 客户端后显示，配置的服务器域名为 `proxy-server.mydomain.com`。将域名改为 `transit-server.mydomain.com`，其他配置不变即可。
